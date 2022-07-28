@@ -1,0 +1,44 @@
+---
+- name: change default incoming policy changed to 'deny'
+  ufw:
+    direction: incoming
+    default: deny
+  become: true
+
+- name: allow SSH
+  ufw:
+    rule: allow
+    name: OpenSSH
+  become: true
+
+- name: restrict network access within standalone boxes only
+  ufw:
+    rule: allow
+    src: "{{ item }}"
+  with_items: "{{ groups.all }}"
+  become: true
+
+- name: rate limit ssh
+  ufw:
+    rule: limit
+    name: OpenSSH
+  become: true
+
+- name: enable ufw
+  ufw:
+    state: enabled
+  become: true
+
+- name: allow all tcp access to port 80
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+  become: true
+
+- name: allow all tcp access to port 443
+  ufw:
+    rule: allow
+    port: 443
+    proto: tcp
+  become: true

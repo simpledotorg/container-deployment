@@ -1,0 +1,8 @@
+[master_nodes]
+159.89.174.186
+143.244.131.159
+64.227.176.191
+
+# Server groups
+[bd_k3s_demo:children]
+master_nodes
