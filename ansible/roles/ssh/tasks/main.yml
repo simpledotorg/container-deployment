@@ -1,0 +1,6 @@
+- name: add ssh keys for the remote user
+  become: true
+  authorized_key:
+    key: "{{ ssh_keys | join(\"\n\") }}"
+    user: "{{ ansible_ssh_user }}"
+    exclusive: yes
