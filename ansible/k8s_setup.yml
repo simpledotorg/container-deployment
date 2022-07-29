@@ -1,0 +1,4 @@
+---
+- hosts: master_node
+  roles:
+    - { role: argocd}
