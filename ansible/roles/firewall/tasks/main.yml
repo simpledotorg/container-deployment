@@ -18,6 +18,13 @@
   with_items: "{{ groups.all }}"
   become: true
 
+- name: restrict network access within hosts private ip
+  ufw:
+    rule: allow
+    src: "{{ item }}"
+  with_items: "{{ groups['all'] | map('extract', hostvars, [ansible_private_network_interface, 'ipv4', 'address']) }}"
+  become: true
+
 - name: rate limit ssh
   ufw:
     rule: limit
