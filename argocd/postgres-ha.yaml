@@ -1,0 +1,13 @@
+project: default
+source:
+  repoURL: 'https://charts.bitnami.com/bitnami'
+  targetRevision: 9.2.7
+  helm:
+    releaseName: postgres-ha
+  chart: postgresql-ha
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: simple-v1
+syncPolicy:
+  syncOptions:
+    - CreateNamespace=true
