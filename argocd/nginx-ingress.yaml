@@ -1,0 +1,21 @@
+project: default
+source:
+  repoURL: 'https://helm.nginx.com/stable'
+  targetRevision: 0.14.0
+  helm:
+    parameters:
+      - name: controller.hostNetwork
+        value: 'true'
+      - name: controller.setAsDefaultIngress
+        value: 'true'
+      - name: controller.kind
+        value: daemonset
+      - name: controller.service.type
+    releaseName: nginx-ingress
+  chart: nginx-ingress
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: nginx-ingress
+syncPolicy:
+  syncOptions:
+    - CreateNamespace=true
