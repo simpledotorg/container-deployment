@@ -3,4 +3,3 @@
   roles:
     - { role: firewall }
     - { role: ssh }
-    - { role: packages }
