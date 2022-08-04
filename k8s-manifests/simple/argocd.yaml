@@ -47,3 +47,24 @@ spec:
       - Replace=true
       - CreateNamespace=true
       - PruneLast=true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: simple
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s-manifests/simple/manifests
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - Replace=true
+      - CreateNamespace=true
