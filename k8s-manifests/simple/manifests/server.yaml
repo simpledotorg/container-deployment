@@ -18,7 +18,7 @@ spec:
         command: ["bin/rails", "server",  "-b", "0.0.0.0"]
         env:
         - name: SIMPLE_SERVER_DATABASE_HOST
-          value: "postgres-postgresql-ha-postgresql"
+          value: "postgres-postgresql-ha-pgpool"
         - name: SIMPLE_SERVER_DATABASE_USERNAME
           value: "postgres"
         - name: SIMPLE_SERVER_DATABASE_PASSWORD
@@ -40,7 +40,7 @@ spec:
           args: ["/opt/app/script/k8s_db_setup.sh"]
           env:
           - name: SIMPLE_SERVER_DATABASE_HOST
-            value: "postgres-postgresql-ha-postgresql"
+            value: "postgres-postgresql-ha-pgpool"
           - name: SIMPLE_SERVER_DATABASE_USERNAME
             value: "postgres"
           - name: SIMPLE_SERVER_DATABASE_PASSWORD
