@@ -18,13 +18,13 @@ spec:
         command: ["bin/rails", "server",  "-b", "0.0.0.0"]
         env:
         - name: SIMPLE_SERVER_DATABASE_HOST
-          value: "postgres-postgresql-ha-pgpool"
+          value: "postgres-postgresql-ha-postgresql"
         - name: SIMPLE_SERVER_DATABASE_USERNAME
           value: "postgres"
         - name: SIMPLE_SERVER_DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgres-postgresql-ha-pgpool
+              name: postgres-postgresql-ha-postgresql
               key: postgresql-password
               optional: false
         - name: SIDEKIQ_REDIS_HOST
@@ -40,13 +40,13 @@ spec:
           args: ["/opt/app/script/k8s_db_setup.sh"]
           env:
           - name: SIMPLE_SERVER_DATABASE_HOST
-            value: "postgres-postgresql"
+            value: "postgres-postgresql-ha-postgresql"
           - name: SIMPLE_SERVER_DATABASE_USERNAME
             value: "postgres"
           - name: SIMPLE_SERVER_DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgres-postgresql-ha-pgpool
+                name: postgres-postgresql-ha-postgresql
                 key: postgresql-password
                 optional: false
 
