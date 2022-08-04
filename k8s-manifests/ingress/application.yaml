@@ -22,6 +22,8 @@ spec:
           value: DaemonSet
         - name: controller.service.type
           value: ''
+        - name: controller.admissionWebhooks.enabled
+          value: 'false'
   project: default
   syncPolicy:
     automated: null
