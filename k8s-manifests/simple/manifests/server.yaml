@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: simple-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: simple-server
+    spec:
+      containers:
+      - name: simple-server
+        image: roypeter/simple-server:v2
+        command: ["bin/rails", "server",  "-b", "0.0.0.0"]
+        env:
+        - name: SIMPLE_SERVER_DATABASE_HOST
+          value: "postgres-postgresql-ha-pgpool"
+        - name: SIMPLE_SERVER_DATABASE_USERNAME
+          value: "postgres"
+        - name: SIMPLE_SERVER_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-postgresql-ha-pgpool
+              key: postgresql-password
+              optional: false
+        - name: SIDEKIQ_REDIS_HOST
+          value: "redis-master"
+        - name: CALL_SESSION_REDIS_HOST
+          value: "redis-master"
+        - name: RAILS_CACHE_REDIS_URL
+          value: "redis://redis-master:6379/0"
+      initContainers:
+        - name: init-db
+          image: roypeter/simple-server:v2
+          command: ["/bin/bash"]
+          args: ["/opt/app/script/k8s_db_setup.sh"]
+          env:
+          - name: SIMPLE_SERVER_DATABASE_HOST
+            value: "postgres-postgresql"
+          - name: SIMPLE_SERVER_DATABASE_USERNAME
+            value: "postgres"
+          - name: SIMPLE_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-postgresql-ha-pgpool
+                key: postgresql-password
+                optional: false
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-server
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app.kubernetes.io/name: simple-server
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simple-server
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "simple.example.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: simple-server
+            port:
+              number: 3000
