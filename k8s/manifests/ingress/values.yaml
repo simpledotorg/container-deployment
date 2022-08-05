@@ -1,0 +1,10 @@
+ingress-nginx:
+  controller:
+    kind: 'DaemonSet' 
+    hostNetwork: true
+    ingressClassResource:
+      default: true
+    service:
+      type: ''
+    admissionWebhooks:
+      enabled: false
