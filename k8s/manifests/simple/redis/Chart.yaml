@@ -1,0 +1,10 @@
+apiVersion: v2
+name: redis-wrapper
+description: Redis wrapper
+type: application
+version: 0.1.0
+
+dependencies:
+- name: redis
+  version: 17.0.7
+  repository: https://charts.bitnami.com/bitnami

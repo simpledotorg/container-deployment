@@ -1,0 +1,10 @@
+apiVersion: v2
+name: postgresql-ha-wrapper
+description: Postgresql ha wrapper
+type: application
+version: 0.1.0
+
+dependencies:
+- name: postgresql-ha
+  version: 9.2.7
+  repository: https://charts.bitnami.com/bitnami

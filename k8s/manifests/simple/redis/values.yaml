@@ -1,0 +1,5 @@
+redis:
+  auth:
+    enabled: false
+  replica:
+    replicaCount: 0
