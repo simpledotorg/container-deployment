@@ -157,3 +157,23 @@ spec:
     syncOptions:
       - PruneLast=true
       - CreateNamespace=true
+
+---
+
+kind: Application
+metadata:
+  name: secrets
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/argocd-apps/bd-k3s-demo/secrets
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
