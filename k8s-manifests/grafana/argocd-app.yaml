@@ -9,8 +9,8 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: ''
-    repoURL: 'https://bitnami-labs.github.io/grafana'
-    targetRevision: 2.5.2
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    targetRevision: 8.0.7
     chart: grafana
   project: default
   syncPolicy:
