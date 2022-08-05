@@ -25,6 +25,30 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: sealed-secrets
+spec:
+  destination:
+    name: ''
+    namespace: sealed-secrets
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/sealed-secrets
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: argocd-ingress
 spec:
   destination:
