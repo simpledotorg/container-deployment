@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+spec:
+  destination:
+    name: ''
+    namespace: grafana
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://bitnami-labs.github.io/grafana'
+    targetRevision: 2.5.2
+    chart: grafana
+  project: default
+  syncPolicy:
+  syncOptions:
+    - CreateNamespace=true
+    - PruneLast=true
