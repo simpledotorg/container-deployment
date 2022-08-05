@@ -5,15 +5,12 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: grafana
     server: 'https://kubernetes.default.svc'
   source:
-    path: ''
-    repoURL: 'https://charts.bitnami.com/bitnami'
-    targetRevision: 8.0.7
-    chart: grafana
+    path: k8s-manifests/grafana/manifests
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
   project: default
   syncPolicy:
-  syncOptions:
-    - CreateNamespace=true
-    - PruneLast=true
+    syncOptions:
+      - PruneLast=true
