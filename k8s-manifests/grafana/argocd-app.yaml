@@ -5,6 +5,7 @@ metadata:
 spec:
   destination:
     name: ''
+    namespace: grafana
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s-manifests/grafana/manifests
@@ -14,3 +15,4 @@ spec:
   syncPolicy:
     syncOptions:
       - PruneLast=true
+      - CreateNamespace=true
