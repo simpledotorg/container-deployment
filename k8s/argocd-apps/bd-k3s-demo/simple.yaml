@@ -16,6 +16,9 @@ spec:
     syncOptions:
       - PruneLast=true
       - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
 ---
 
@@ -40,6 +43,9 @@ spec:
     syncOptions:
       - PruneLast=true
       - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
 ---
 
@@ -61,3 +67,6 @@ spec:
     syncOptions:
       - PruneLast=true
       - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
