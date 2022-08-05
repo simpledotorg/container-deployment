@@ -11,7 +11,7 @@ spec:
     http:
       paths:
       - path: /grafana
-        pathType: Prefix
+        pathType: Exact
         backend:
           service: 
             name: grafana2

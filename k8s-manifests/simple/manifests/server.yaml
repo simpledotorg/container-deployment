@@ -80,8 +80,8 @@ spec:
   - host: "simple.example.com"
     http:
       paths:
-      - path: /simple
-        pathType: Prefix
+      - path: /
+        pathType: Exact
         backend:
           service: 
             name: simple-server
