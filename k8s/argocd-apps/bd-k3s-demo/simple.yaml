@@ -62,6 +62,9 @@ spec:
     path: k8s/manifests/simple/server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
   project: default
   syncPolicy:
     syncOptions:

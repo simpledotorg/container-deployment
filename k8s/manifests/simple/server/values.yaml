@@ -1,0 +1,3 @@
+image: "roypeter/simple-server:v2"
+ingress:
+  hostname: "simple.example.com"
