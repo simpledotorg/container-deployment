@@ -17,13 +17,13 @@ spec:
         image: {{ .Values.image }}
         command: ["bin/rails", "server",  "-b", "0.0.0.0"]
         envFrom:
-          - secretRef::
-            name: {{ .Values.secret_name }}
+          - secretRef:
+              name: {{ .Values.secret_name }}
       initContainers:
         - name: init-db
           image: {{ .Values.image }}
           command: ["/bin/bash"]
           args: ["/opt/app/script/k8s_db_setup.sh"]
           envFrom:
-            - secretRef::
-              name: {{ .Values.secret_name }}
+            - secretRef:
+                name: {{ .Values.secret_name }}
