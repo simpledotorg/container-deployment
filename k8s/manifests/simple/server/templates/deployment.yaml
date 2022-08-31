@@ -16,36 +16,14 @@ spec:
       - name: simple-server
         image: {{ .Values.image }}
         command: ["bin/rails", "server",  "-b", "0.0.0.0"]
-        env:
-        - name: SIMPLE_SERVER_DATABASE_HOST
-          value: "postgres-postgresql-ha-pgpool"
-        - name: SIMPLE_SERVER_DATABASE_USERNAME
-          value: "postgres"
-        - name: SIMPLE_SERVER_DATABASE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-postgresql-ha-postgresql
-              key: postgresql-password
-              optional: false
-        - name: SIDEKIQ_REDIS_HOST
-          value: "redis-master"
-        - name: CALL_SESSION_REDIS_HOST
-          value: "redis-master"
-        - name: RAILS_CACHE_REDIS_URL
-          value: "redis://redis-master:6379/0"
+        envFrom:
+          - secretRef::
+            name: {{ .Values.secret_name }}
       initContainers:
         - name: init-db
           image: {{ .Values.image }}
           command: ["/bin/bash"]
           args: ["/opt/app/script/k8s_db_setup.sh"]
-          env:
-          - name: SIMPLE_SERVER_DATABASE_HOST
-            value: "postgres-postgresql-ha-pgpool"
-          - name: SIMPLE_SERVER_DATABASE_USERNAME
-            value: "postgres"
-          - name: SIMPLE_SERVER_DATABASE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: postgres-postgresql-ha-postgresql
-                key: postgresql-password
-                optional: false
+          envFrom:
+            - secretRef::
+              name: {{ .Values.secret_name }}
