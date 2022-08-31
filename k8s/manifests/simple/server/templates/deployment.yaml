@@ -19,3 +19,10 @@ spec:
         envFrom:
           - secretRef:
               name: {{ .Values.secret_name }}
+        env:
+          - name: SIMPLE_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.db_secret.name }}
+                key: {{ .Values.db_secret.key }}
+                optional: false
