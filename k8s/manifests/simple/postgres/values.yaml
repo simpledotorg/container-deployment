@@ -1,0 +1,6 @@
+postgresql-ha:
+  global:
+    postgresql:
+      existingSecret: "simple-server-pg"
+    pgpool:
+      existingSecret: "simple-server-pgpool"

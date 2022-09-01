@@ -1,7 +1,7 @@
 image: "roypeter/simple-server:v2"
 secret_name: "simple-server"
 db_secret:
-  name: "postgres-postgresql-ha-postgresql"
+  name: "simple-server-pg"
   key: "postgresql-password"
 ingress:
   hostname: "simple.example.com"
