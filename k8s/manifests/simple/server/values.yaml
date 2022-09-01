@@ -1,5 +1,6 @@
 image: "roypeter/simple-server:v2"
 secret_name: "simple-server"
+configmap_name: "simple-server"
 db_secret:
   name: "simple-server-pg"
   key: "postgresql-password"

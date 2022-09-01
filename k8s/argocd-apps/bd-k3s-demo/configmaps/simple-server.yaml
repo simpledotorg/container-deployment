@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simple-server
+  namespace: simple-v1
+data:
+  DATADOG_ENABLED: "false"
