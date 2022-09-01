@@ -5,3 +5,4 @@ metadata:
   namespace: simple-v1
 data:
   DATADOG_ENABLED: "false"
+  SIMPLE_SERVER_DATABASE_NAME: "simple_prod"
