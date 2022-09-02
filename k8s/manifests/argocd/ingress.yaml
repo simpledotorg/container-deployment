@@ -21,8 +21,8 @@ spec:
             name: argocd-server
             port: 
               name: https
-    host: argocd.example.com
+    host: argocd.bd-k8s-demo.simple.org
   tls:
   - hosts:
-    - argocd.example.com
+    - argocd.bd-k8s-demo.simple.org
     secretName: argocd-secret

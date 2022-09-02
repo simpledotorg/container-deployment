@@ -3,5 +3,5 @@ grafana:
     tag: 9.0.6-debian-11-r1
   ingress:
     enabled: true
-    hostname: "grafana.example.com"
+    hostname: "grafana.bd-k8s-demo.simple.org"
     path: '/'

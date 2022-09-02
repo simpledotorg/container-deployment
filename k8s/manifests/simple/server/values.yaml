@@ -5,4 +5,4 @@ db_secret:
   name: "simple-server-pg"
   key: "postgresql-password"
 ingress:
-  hostname: "simple.example.com"
+  hostname: "api.bd-k8s-demo.simple.org"
