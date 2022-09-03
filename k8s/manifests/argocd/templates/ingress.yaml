@@ -21,8 +21,8 @@ spec:
             name: argocd-server
             port: 
               name: https
-    host: argocd.bd-k8s-demo.simple.org
+    host: {{ .Values.ingress.hostname }}
   tls:
   - hosts:
-    - argocd.bd-k8s-demo.simple.org
+    - {{ .Values.ingress.hostname }}
     secretName: argocd-secret
