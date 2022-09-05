@@ -1,4 +1,4 @@
-# Containerization for simple application and components
+# Containerization
 
 ## Folder structure
 ```
