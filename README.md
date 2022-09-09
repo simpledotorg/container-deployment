@@ -1,4 +1,5 @@
-# Containerization
+# Container deployment
+Automation and manifests for contaner deployment
 
 ## Folder structure
 ```
