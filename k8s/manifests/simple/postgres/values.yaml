@@ -28,3 +28,4 @@ postgresql-ha:
       include_dir = 'conf.d'
       pgaudit.log_catalog = 'off'
       shared_buffers = 1GB
+      effective_cache_size = 3GB
