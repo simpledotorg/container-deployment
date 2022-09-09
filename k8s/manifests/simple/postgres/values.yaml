@@ -27,3 +27,4 @@ postgresql-ha:
       shared_preload_libraries = 'repmgr, pgaudit, repmgr'
       include_dir = 'conf.d'
       pgaudit.log_catalog = 'off'
+      shared_buffers: 1GB
