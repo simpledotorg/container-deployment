@@ -27,17 +27,3 @@ postgresql-ha:
       shared_preload_libraries = 'repmgr, pgaudit, repmgr'
       include_dir = 'conf.d'
       pgaudit.log_catalog = 'off'
-      max_connections: 20
-      shared_buffers: 1GB
-      effective_cache_size: 3GB
-      maintenance_work_mem: 256MB
-      checkpoint_completion_target: 0.9
-      wal_buffers: 16MB
-      default_statistics_target: 100
-      random_page_cost: 1.1
-      effective_io_concurrency: 200
-      work_mem: 5242kB
-      max_worker_processes: 2
-      max_parallel_workers_per_gather: 1
-      max_parallel_workers: 2
-      max_parallel_maintenance_workers: 1
