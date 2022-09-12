@@ -9,7 +9,7 @@ postgresql-ha:
       limits:
         memory: "4Gi"
         cpu: "2"
-      request:
+      requests:
         memory: "4Gi"
         cpu: "2"
     configuration: |-
