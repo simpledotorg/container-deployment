@@ -5,6 +5,14 @@ postgresql-ha:
     pgpool:
       existingSecret: "simple-server-pgpool"
   postgresql:
+    resources:
+      limits:
+        memory: "4Gi"
+        cpu: "2"
+    resources:
+      request:
+        memory: "4Gi"
+        cpu: "2"
     configuration: |-
       listen_addresses = '*'
       port = '5432'
