@@ -28,4 +28,4 @@ postgresql:
       shared_preload_libraries = 'pgaudit'
       include_dir = 'conf.d'
       pgaudit.log_catalog = 'off'
-      shared_buffers = 1GB
+      shared_buffers = 2GB
