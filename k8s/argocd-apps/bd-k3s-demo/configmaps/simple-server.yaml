@@ -6,3 +6,4 @@ metadata:
 data:
   DATADOG_ENABLED: "false"
   SIMPLE_SERVER_DATABASE_NAME: "simple_prod"
+  SIMPLE_SERVER_DATABASE_HOST: "postgres-postgresql-primary"

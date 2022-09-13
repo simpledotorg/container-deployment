@@ -3,6 +3,6 @@ secret_name: "simple-server"
 configmap_name: "simple-server"
 db_secret:
   name: "simple-server-pg"
-  key: "postgresql-password"
+  key: "postgres-password"
 ingress:
   hostname: "api.bd-k8s-demo.simple.org"
