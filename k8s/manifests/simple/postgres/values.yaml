@@ -1,10 +1,10 @@
-postgresql-ha:
+postgresql:
+  architecture: replication
   global:
     postgresql:
-      existingSecret: "simple-server-pg"
-    pgpool:
-      existingSecret: "simple-server-pgpool"
-  postgresql:
+      auth:
+        existingSecret: "simple-server-pg"
+  primary:
     resources:
       limits:
         memory: "4Gi"
@@ -17,35 +17,15 @@ postgresql-ha:
       port = '5432'
       wal_level = 'replica'
       fsync = 'on'
-      archive_mode = 'on'
-      archive_command = '/bin/true'
+      max_wal_size = '400MB'
       max_wal_senders = '16'
-      max_replication_slots = '10'
       wal_keep_size = '128MB'
       hot_standby = 'on'
-      logging_collector = 'on'
-      log_directory = '/opt/bitnami/postgresql/logs'
-      log_filename = 'postgresql.log'
       log_connections = 'false'
       log_disconnections = 'false'
-      log_hostname = 'true'
+      log_hostname = 'false'
       client_min_messages = 'error'
-      shared_preload_libraries = 'repmgr, pgaudit, repmgr'
+      shared_preload_libraries = 'pgaudit'
       include_dir = 'conf.d'
       pgaudit.log_catalog = 'off'
-      max_connections = 200
       shared_buffers = 1GB
-      effective_cache_size = 3GB
-      maintenance_work_mem = 256MB
-      checkpoint_completion_target = 0.9
-      wal_buffers = 16MB
-      default_statistics_target = 100
-      random_page_cost = 1.1
-      effective_io_concurrency = 200
-      work_mem = 5242kB
-      min_wal_size = 1GB
-      max_wal_size = 4GB
-      max_worker_processes = 2
-      max_parallel_workers_per_gather = 1
-      max_parallel_workers = 2
-      max_parallel_maintenance_workers = 1
