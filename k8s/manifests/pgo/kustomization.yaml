@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- github.com/CrunchyData/postgres-operator-examples/kustomize/install/namespace?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
+- github.com/CrunchyData/postgres-operator-examples/kustomize/install/default?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
