@@ -53,5 +53,24 @@ psql -U postgres -h postgres-postgresql-ha-pgpool
 - Step2: Run the decrypt automation script
 ```
 ../scripts/secret-decrypt.py <secret file path> <ip> <ssh user name>
-# Example: ../scripts/secret-decrypt.py argocd-apps/bd-k3s-demo/secrets/basicauth.sealedsecret.yaml 64.227.176.191 ubuntu
+
+# Example 
+# ../scripts/secret-decrypt.py argocd-apps/bd-k3s-demo/secrets/basicauth.sealedsecret.yaml 64.227.176.191 ubuntu
+```
+
+## Encrypt k8s secrets
+
+- Step1: [Install](https://github.com/bitnami-labs/sealed-secrets#installation) kubeseal
+```
+brew install kubeseal
+```
+
+- Step2: [Decrypt](#decrypt-k8s-secrets) or create a new secret [manifest](https://kubernetes.io/docs/concepts/configuration/secret/)
+
+- Step3: Encrypt secret using kubeseal CLI
+```
+kubeseal <secret-file-path.yaml >encrypted-secret-file-path.yaml --cert kubeseal-cert-path.pem -o yaml
+
+# Example
+# kubeseal <../k8s/argocd-apps/bd-k3s-demo/secrets/basicauth.sealedsecret.yaml.decrypted >../k8s/argocd-apps/bd-k3s-demo/secrets/basicauth.sealedsecret.yaml --cert ../scripts/bd-k3s-demo-sealedsecret.pem -o yaml 
 ```
