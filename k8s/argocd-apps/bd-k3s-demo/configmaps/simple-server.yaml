@@ -5,5 +5,5 @@ metadata:
   namespace: simple-v1
 data:
   DATADOG_ENABLED: "false"
-  SIMPLE_SERVER_DATABASE_NAME: "simple_prod"
-  SIMPLE_SERVER_DATABASE_HOST: "postgres-postgresql-primary"
+  SIMPLE_SERVER_DATABASE_NAME: "simple"
+  SIMPLE_SERVER_DATABASE_HOST: "simple-primary"

@@ -2,7 +2,7 @@ image: "simpledotorg/server:6ea10bb0a4c5af5a9af96b01b1452ede8970658e"
 secret_name: "simple-server"
 configmap_name: "simple-server"
 db_secret:
-  name: "simple-server-pg"
-  key: "postgres-password"
+  name: "simple-pguser-simple"
+  key: "password"
 ingress:
   hostname: "api.bd-k8s-demo.simple.org"
