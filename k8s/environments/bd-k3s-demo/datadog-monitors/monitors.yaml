@@ -1,0 +1,12 @@
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: bd-k3s-demo-healthy-host-count-is-low
+  namespace: datadog
+spec:
+  query: "avg(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:bd-k3s-demo} < 3"
+  type: "query alert"
+  name: "bd k3s demo healthy host count is low"
+  message: "bd k3s demo healthy host count is low\n @slack-alerts"
+  tags:
+    - "env:bangladesh-demo"
