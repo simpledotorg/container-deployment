@@ -70,7 +70,20 @@ psql -U postgres -h postgres-postgresql-ha-pgpool
 brew install kubeseal
 ```
 
-- Step2: [Decrypt](#decrypt-k8s-secrets) or create a new secret [manifest](https://kubernetes.io/docs/concepts/configuration/secret/)
+- Step2: [Decrypt](#decrypt-k8s-secrets) or create a new secret [manifest](https://kubernetes.io/docs/concepts/configuration/secret/). Note: Use Base64 encoding for new secrets
+
+```
+# Sample yaml file
+apiVersion: v1
+data:
+  api-key: ZHVtbXktZGF0YS1kb2ctYXBpLWtleQ== #Base64 encoded api key
+kind: Secret
+metadata:
+  creationTimestamp: "2022-09-22T11:11:17Z"
+  name: dummy-secret
+  namespace: datdummy-namespace
+type: Opaque
+```
 
 - Step3: Encrypt secret using kubeseal CLI
 ```
