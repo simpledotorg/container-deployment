@@ -6,6 +6,11 @@ metadata:
 spec:
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.5-1
   postgresVersion: 14
+  users:
+    - name: admin
+      databases:
+        - postgres
+      options: "SUPERUSER"
   instances:
     - name: instance1
       replicas: 2
