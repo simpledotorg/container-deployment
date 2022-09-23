@@ -1,5 +1,5 @@
-datadog:
-  datadog-operator:
-    apiKeyExistingSecret: datadog
-    datadogMonitor:
-      enabled: true
+datadog-operator:
+  apiKeyExistingSecret: datadog
+  appKeyExistingSecret: datadog
+  datadogMonitor:
+    enabled: true
