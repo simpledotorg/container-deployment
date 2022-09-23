@@ -15,3 +15,7 @@ spec:
       enabled: true
     log:
       enabled: false
+  clusterAgent:
+    config:
+      externalMetrics:
+  clusterName: bd-k3s-demo
