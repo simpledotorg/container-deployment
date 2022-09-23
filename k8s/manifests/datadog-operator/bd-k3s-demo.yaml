@@ -1,4 +1,3 @@
 datadog:
-  datadog:
+  datadog-operator:
     apiKeyExistingSecret: datadog
-    clusterName: "bd-k3s-demo"
