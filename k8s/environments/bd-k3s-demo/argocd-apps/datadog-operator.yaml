@@ -13,7 +13,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - bd-k3s-demo.yaml
+        - values.yaml
   project: default
   syncPolicy:
     syncOptions:
