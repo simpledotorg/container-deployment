@@ -4,13 +4,6 @@ metadata:
   name: bd-k3s-demo-healthy-host-count-is-low
   namespace: datadog
 spec:
-  credentials:
-    apiSecret:
-      secretName: datadog
-      keyName: api-key
-    appSecret:
-      secretName: datadog
-      keyName: app-key
   query: "avg(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:bd-k3s-demo} < 3"
   type: "query alert"
   name: "bd k3s demo healthy host count is low"
