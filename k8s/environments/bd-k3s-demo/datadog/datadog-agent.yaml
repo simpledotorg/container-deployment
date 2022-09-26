@@ -23,5 +23,4 @@ spec:
   features:
     prometheusScrape:
       enabled: true
-    serviceEndpoints:
-      enabled: true
+      serviceEndpoints: true
