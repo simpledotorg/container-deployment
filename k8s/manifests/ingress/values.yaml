@@ -8,3 +8,5 @@ ingress-nginx:
       type: ''
     admissionWebhooks:
       enabled: false #TODO: check issues with enabling the same.
+  metrics:
+    enabled: true
