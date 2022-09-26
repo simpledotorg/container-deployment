@@ -19,6 +19,7 @@ spec:
   clusterAgent:
     config:
       externalMetrics:
+      clusterChecksEnabled: true
   clusterName: bd-k3s-demo
   features:
     prometheusScrape:
