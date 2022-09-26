@@ -10,5 +10,5 @@ ingress-nginx:
       enabled: false #TODO: check issues with enabling the same.
   metrics:
     enabled: true
-    serviceMonitor
+    serviceMonitor:
       enabled: true
