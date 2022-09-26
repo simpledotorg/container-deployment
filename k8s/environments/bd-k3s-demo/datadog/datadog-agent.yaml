@@ -20,3 +20,8 @@ spec:
     config:
       externalMetrics:
   clusterName: bd-k3s-demo
+  features:
+    prometheusScrape:
+      enabled: true
+    serviceEndpoints:
+      enabled: true
