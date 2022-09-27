@@ -11,6 +11,9 @@ spec:
       databases:
         - postgres
       options: "SUPERUSER"
+    - name: simple
+      databases:
+        - simple
   instances:
     - name: instance1
       replicas: 2
