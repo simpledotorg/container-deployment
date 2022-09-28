@@ -3,6 +3,10 @@ apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: simple
+  annotations:
+    ad.datadoghq.com/database.check_names: '["openmetrics"]'
+    ad.datadoghq.com/database.init_configs: '[{}]'
+    ad.datadoghq.com/database.instances: '[{"prometheus_url":"http://%%host%%:9187/metrics","namespace": "crunchy_data","metrics": ["*"]}]'
 spec:
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.5-1
   postgresVersion: 14
@@ -37,6 +41,11 @@ spec:
                 matchLabels:
                   postgres-operator.crunchydata.com/cluster: simple
                   postgres-operator.crunchydata.com/instance-set: instance1
+      metadata:
+        labels:
+          tags.datadoghq.com/env: "demo"
+          tags.datadoghq.com/service: "postgrescluster-simple"
+          tags.datadoghq.com/version: "14"
   backups:
     pgbackrest:
       global:
