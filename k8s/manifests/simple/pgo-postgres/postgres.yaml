@@ -65,3 +65,7 @@ spec:
           shared_buffers: 1GB
           work_mem: 2MB
           synchronous_commit: "on"
+  monitoring:
+    pgmonitor:
+      exporter:
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.2.0-0
