@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: datadog-monitors
+  name: datadog-monitors-02
 spec:
   destination:
     name: ''
