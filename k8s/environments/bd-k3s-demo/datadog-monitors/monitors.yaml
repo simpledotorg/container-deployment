@@ -13,3 +13,5 @@ spec:
     noDataTimeframe: 30
   tags:
     - "env:bangladesh-demo"
+    - "generated:kubernetes"
+  
