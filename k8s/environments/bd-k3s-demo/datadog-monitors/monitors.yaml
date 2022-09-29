@@ -33,3 +33,22 @@ spec:
   tags:
     - "env:bangladesh-demo"
     - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: k8s-bd-k3s-demo-host-memory-usage
+  namespace: datadog
+spec:
+  query: "avg(last_5m):avg:kubernetes.memory.usage_pct{kube_cluster_name:bd-k3s-demo} by {host} > 0.9"
+  type: "query alert"
+  name: "k8s bd-k3s-demo host memory usage"
+  message: "k8s bd-k3s-demo host memory usage\n @slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:bangladesh-demo"
+    - "generated:kubernetes"
