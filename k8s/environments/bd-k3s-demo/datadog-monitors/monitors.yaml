@@ -8,21 +8,18 @@ spec:
 	type: "query alert"
 	query: "avg(last_5m):sum:kubernetes_state.node.count{cluster_name:bd-k3s-demo} < 3"
 	message: "test 02 @slack-alerts"
-	tags: []
 	options: {
-		"notify_audit": false,
+		"notify_audit": "false",
 		"silenced": {},
-		"include_tags": true,
+		"include_tags": "true",
 		"thresholds": {
-			"critical": 3
+			"critical": "3"
 		},
-		"require_full_window": false,
-		"new_host_delay": 300,
-		"notify_no_data": true,
-		"renotify_interval": 0,
-		"no_data_timeframe": 30
-	},
-	priority: null
-	restricted_roles: null
+		"require_full_window": "false",
+		"new_host_delay": "300",
+		"notify_no_data": "true"s,
+		"renotify_interval": "0",
+		"no_data_timeframe": "30"
+	}
   tags:
     - "env:bangladesh-demo"
