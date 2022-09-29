@@ -3,5 +3,18 @@ redis:
     enabled: false
   replica:
     replicaCount: 0
-  metrics:
-    enabled: true
+  master:
+    podAnnotations:
+      ad.datadoghq.com/redis.checks: |
+        {
+          "redisdb": {
+            "init_config": {},
+            "instances": [
+              {
+                "host": "%%host%%",
+                "port":"6379",
+                "password":"%%env_REDIS_PASSWORD%%"
+              }
+            ]
+          }
+        } 
