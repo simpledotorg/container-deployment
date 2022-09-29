@@ -52,3 +52,22 @@ spec:
   tags:
     - "env:bangladesh-demo"
     - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: k8s-bd-k3s-demo-host-disk-usage
+  namespace: datadog
+spec:
+  query: "avg(last_5m):(avg:system.disk.used{kube_cluster_name:bd-k3s-demo} by {host} * 100) / avg:system.disk.total{kube_cluster_name:bd-k3s-demo} by {host} > 90"
+  type: "query alert"
+  name: "k8s bd-k3s-demo host disk usage"
+  message: "k8s bd-k3s-demo host disk usage\n @slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:bangladesh-demo"
+    - "generated:kubernetes"
