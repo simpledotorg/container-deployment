@@ -39,7 +39,6 @@ spec:
                   postgres-operator.crunchydata.com/instance-set: instance1
       metadata:
         labels:
-          tags.datadoghq.com/env: "demo"
           tags.datadoghq.com/service: "postgrescluster-simple"
           tags.datadoghq.com/version: "14"
         annotations:
