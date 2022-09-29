@@ -8,9 +8,8 @@ spec:
   type: "query alert"
   name: "test 03"
   message: "test 03\n @slack-alerts"
-  options: {
-    "notify_no_data": "true",
-    "no_data_timeframe" : "30"
-  }
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
   tags:
     - "env:bangladesh-demo"
