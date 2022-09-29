@@ -10,12 +10,6 @@ ingress-nginx:
       enabled: false #TODO: check issues with enabling the same.
     metrics:
       enabled: true
-      # service:
-      #   annotations: {
-      #     prometheus.io/scrape: "true",
-      #     prometheus.io/path: "/metrics",
-      #     prometheus.io/port: "10254"
-      #   }
     config:
       nginx-status-ipv4-whitelist: "10.1.0.0/16"
     podAnnotations:
