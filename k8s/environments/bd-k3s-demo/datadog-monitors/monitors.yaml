@@ -1,17 +1,16 @@
 apiVersion: datadoghq.com/v1alpha1
 kind: DatadogMonitor
 metadata:
-  name: test-03
+  name: k8s-bd-k3s-demo-healthy-host-count
   namespace: datadog
 spec:
   query: "avg(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:bd-k3s-demo} < 3"
   type: "query alert"
-  name: "test 03"
-  message: "test 03\n @slack-alerts"
+  name: "k8s bd-k3s-demo healthy host count"
+  message: "k8s bd-k3s-demo healthy host count\n @slack-alerts"
   options:
     notifyNoData: true
     noDataTimeframe: 30
   tags:
     - "env:bangladesh-demo"
     - "generated:kubernetes"
-  
