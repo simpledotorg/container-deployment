@@ -9,3 +9,7 @@
 - [Reference Grafana dashboards](https://github.com/CrunchyData/postgres-operator-examples/tree/main/kustomize/monitoring/dashboards)
 - [Metrics list](https://access.crunchydata.com/documentation/pgmonitor/4.4/exporter/)
 - [Pgmonitor](https://github.com/CrunchyData/pgmonitor)
+
+## Redis monitoring
+- [Datadog integration](https://docs.datadoghq.com/integrations/redisdb/?tab=kubernetes)
+- [Data collected] (https://docs.datadoghq.com/integrations/redisdb/?tab=kubernetes#data-collected)
