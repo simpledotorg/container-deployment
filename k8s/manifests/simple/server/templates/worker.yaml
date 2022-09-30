@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: simple-worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: simple-worker
+    spec:
+      containers:
+      - name: simple-server
+        image: {{ .Values.image }}
+        command: ["bin/rails", "server",  "-v"]
+        envFrom:
+          - secretRef:
+              name: {{ .Values.secret_name }}
+          - configMapRef:
+              name: {{ .Values.configmap_name }}
+        env:
+          - name: SIMPLE_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.db_secret.name }}
+                key: {{ .Values.db_secret.key }}
+                optional: false
