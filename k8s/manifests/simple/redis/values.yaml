@@ -1,4 +1,8 @@
 redis:
+  image:
+    registry: "docker.io"
+    repository: "bitnami/redis"
+    tag: "7.0.4-debian-11-r7"
   auth:
     enabled: false
   replica:
