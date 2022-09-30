@@ -15,7 +15,7 @@ spec:
       containers:
       - name: simple-server
         image: {{ .Values.image }}
-        command: ["bin/rails", "server",  "-v"]
+        command: ["bin/rails", "sidekiq",  "-C", "config/sidekiq.yml", "-e", "production"]
         envFrom:
           - secretRef:
               name: {{ .Values.secret_name }}
