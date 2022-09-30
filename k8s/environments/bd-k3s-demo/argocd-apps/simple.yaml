@@ -52,6 +52,33 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: worker-redis
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/simple/redis
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: server
 spec:
   destination:
