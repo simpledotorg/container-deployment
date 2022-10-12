@@ -15,7 +15,7 @@ spec:
       containers:
       - name: simple-server
         image: {{ .Values.image }}
-        command: ["bin/docker-cron"]
+        args: ["bin/docker-cron"]
         envFrom:
           - secretRef:
               name: {{ .Values.secret_name }}

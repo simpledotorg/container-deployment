@@ -15,7 +15,7 @@ spec:
       containers:
       - name: simple-server
         image: {{ .Values.image }}
-        command: ["bin/rails", "server",  "-b", "0.0.0.0"]
+        args: ["bin/rails", "server",  "-b", "0.0.0.0"]
         envFrom:
           - secretRef:
               name: {{ .Values.secret_name }}
