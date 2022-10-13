@@ -4,9 +4,9 @@ metadata:
   name: simple-server
 spec:
   ports:
-  - port: 3000
+  - port: 80
     protocol: TCP
-    targetPort: 3000
+    targetPort: 80
   selector:
     app.kubernetes.io/name: simple-server
   sessionAffinity: None
