@@ -4,7 +4,7 @@ metadata:
   name: simple-server
   namespace: simple-v1
 data:
-  DATADOG_ENABLED: "false"
+  DATADOG_ENABLED: "true"
   SIMPLE_SERVER_DATABASE_NAME: "simple"
   SIMPLE_SERVER_DATABASE_HOST: "simple-primary"
   SIMPLE_SERVER_DATABASE_USERNAME: "simple"
