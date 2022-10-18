@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: simple-server
+  labels:
+    app: simple-server
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 80
   selector:
-    app.kubernetes.io/name: simple-server
-  sessionAffinity: None
-  type: ClusterIP
+    app: simple-server

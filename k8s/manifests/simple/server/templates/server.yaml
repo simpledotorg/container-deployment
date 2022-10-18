@@ -1,16 +1,17 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: simple-server
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app.kubernetes.io/name: simple-server
+      app: simple-server
+    serviceName: "simple-server"
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: simple-server
+        app: simple-server
     spec:
       containers:
       - name: simple-server
@@ -28,3 +29,17 @@ spec:
                 name: {{ .Values.db_secret.name }}
                 key: {{ .Values.db_secret.key }}
                 optional: false
+        volumeMounts:
+        - name: logs
+          mountPath: /home/app/log
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: logs
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
