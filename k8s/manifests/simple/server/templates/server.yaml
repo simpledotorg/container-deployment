@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: simple-server
-    serviceName: "simple-server"
+  serviceName: "simple-server"
   template:
     metadata:
       labels:
