@@ -1,5 +1,6 @@
 - name: install common packages
-  apt: 
+  apt:
+    update_cache: yes
     pkg:
       - python3-pip
     state: latest
