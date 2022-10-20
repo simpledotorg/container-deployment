@@ -1,12 +1,4 @@
 ---
-
-# ansible_private_network_interface
-# Network interface of private ip.
-# SSH into one of the node and use `ip a` command to list aviable network interfaces 
-# eg.
-# ansible_private_network_interface: ansible_eth0"
-ansible_private_network_interface: "ansible_eth1"
-
 # ssh_keys
 # A list of SSH keys of developers that require access to the deployment servers.
 # eg.
