@@ -1,0 +1,2 @@
+ingress:
+  hostname: "argocd.k8s-staging.simple.org"

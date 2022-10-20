@@ -1,4 +1,4 @@
-image: "simpledotorg/server:6ea10bb0a4c5af5a9af96b01b1452ede8970658e"
+image: "simpledotorg/server:latest"
 secret_name: "simple-server"
 configmap_name: "simple-server"
 db_secret:
