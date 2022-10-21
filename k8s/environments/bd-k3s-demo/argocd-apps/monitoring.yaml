@@ -52,7 +52,7 @@ spec:
 
 ---
 
-# Datadog agent
+# Datadog agent and monitors
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -62,31 +62,7 @@ spec:
     name: ''
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/bd-k3s-demo/datadog
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
-
----
-
-# Datadog monitors
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: datadog-monitors
-spec:
-  destination:
-    name: ''
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/environments/bd-k3s-demo/datadog-monitors
+    path: k8s/environments/bd-k3s-demo/op-datadog
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
   project: default
