@@ -1,4 +1,5 @@
 ---
+
 - name: Install Argocd
   hosts: node-0 # Use one of k3s master node
   roles:
