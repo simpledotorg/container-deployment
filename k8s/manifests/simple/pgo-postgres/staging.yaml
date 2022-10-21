@@ -1,0 +1,6 @@
+cpu: 1
+memory: 2Gi
+storage: 5Gi
+repo_storage: 10Gi
+shared_buffers: 1GB
+work_mem: 2MB

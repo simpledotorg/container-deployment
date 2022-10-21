@@ -1,0 +1,5 @@
+apiVersion: v2
+name: pgo-postgres
+description: Postgres provisioned using Chrunchy Postgers operator 
+type: application
+version: 0.1.0
