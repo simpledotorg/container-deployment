@@ -1,0 +1,73 @@
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: <env-name>-healthy-host-count
+  namespace: datadog
+spec:
+  query: "avg(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:<env-name>} < 3"
+  type: "query alert"
+  name: "<env-name> healthy host count"
+  message: "<env-name> healthy host count\n @slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:bangladesh-demo"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: <env-name>-host-cpu-usage
+  namespace: datadog
+spec:
+  query: "avg(last_5m):100 - avg:system.cpu.idle{kube_cluster_name:<env-name>} by {host} > 90"
+  type: "query alert"
+  name: "<env-name> host cpu usage"
+  message: "<env-name> host cpu usage\n @slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:bangladesh-demo"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: <env-name>-host-memory-usage
+  namespace: datadog
+spec:
+  query: "avg(last_5m):avg:kubernetes.memory.usage_pct{kube_cluster_name:<env-name>} by {host} > 0.9"
+  type: "query alert"
+  name: "<env-name> host memory usage"
+  message: "<env-name> host memory usage\n @slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:bangladesh-demo"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: <env-name>-host-disk-usage
+  namespace: datadog
+spec:
+  query: "avg(last_5m):(avg:system.disk.used{kube_cluster_name:<env-name>} by {host} * 100) / avg:system.disk.total{kube_cluster_name:<env-name>} by {host} > 90"
+  type: "query alert"
+  name: "<env-name> host disk usage"
+  message: "<env-name> host disk usage\n @slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:<env-name>"
+    - "generated:kubernetes"
