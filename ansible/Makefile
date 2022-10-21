@@ -30,7 +30,7 @@ init: ##@Setup Install ansible plugins and dependencies
 	pip install jmespath
 
 all: ##@Setup Install simple-server on hosts. Runs the all.yml playbook
-	ansible-playbook $@.yml -i hosts/$(hosts)
+	ansible-playbook all.yml -i hosts/$(hosts)
 
 debug: ##@Debug Fetch debug information from hosts
 	ansible-playbook debug.yml -i hosts/$(hosts)
