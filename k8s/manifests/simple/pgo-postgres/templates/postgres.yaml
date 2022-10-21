@@ -19,14 +19,14 @@ spec:
       replicas: 2
       resources:
         limits:
-          cpu: 1.0
-          memory: 2Gi
+          cpu: {{ .Values.cpu }}
+          memory: {{ .Values.memory }}
       dataVolumeClaimSpec:
         accessModes:
         - "ReadWriteOnce"
         resources:
           requests:
-            storage: 5Gi
+            storage: {{ .Values.storage }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -62,7 +62,7 @@ spec:
             - "ReadWriteOnce"
             resources:
               requests:
-                storage: 10Gi
+                storage: {{ .Values.repo_storage }}
   patroni:
     dynamicConfiguration:
       synchronous_mode: true
@@ -70,8 +70,8 @@ spec:
         parameters:
           max_parallel_workers: 2
           max_worker_processes: 2
-          shared_buffers: 1GB
-          work_mem: 2MB
+          shared_buffers: {{ .Values.shared_buffers }}
+          work_mem: {{ .Values.work_mem }}
           synchronous_commit: "on"
   monitoring:
     pgmonitor:
