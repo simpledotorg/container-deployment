@@ -37,9 +37,6 @@ spec:
     path: k8s/environments/staging/op-postgres
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
-    helm:
-      valueFiles:
-        - staging.yaml
   project: default
   syncPolicy:
     syncOptions:
