@@ -1,3 +1,29 @@
+# Postgres operator
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgo
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/pgo
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - Replace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Postgres cluster
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -8,7 +34,7 @@ spec:
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/manifests/simple/pgo-postgres
+    path: k8s/environments/staging/op-postgres
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
     helm:
@@ -25,6 +51,7 @@ spec:
 
 ---
 
+# Redis
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -52,6 +79,7 @@ spec:
 
 ---
 
+# Worker redis
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -79,6 +107,7 @@ spec:
 
 ---
 
+# Simple server, worker and cron
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
