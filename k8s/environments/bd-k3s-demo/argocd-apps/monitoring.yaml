@@ -1,5 +1,5 @@
 
-# Install kube state metrics
+# Kube state metrics
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -21,6 +21,8 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
 
 # Datadog operator
 apiVersion: argoproj.io/v1alpha1
@@ -48,6 +50,8 @@ spec:
       prune: true
       selfHeal: true
 
+---
+
 # Datadog agent
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -69,6 +73,8 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
 
 # Datadog monitors
 apiVersion: argoproj.io/v1alpha1
