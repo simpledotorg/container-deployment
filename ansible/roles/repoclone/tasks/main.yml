@@ -1,0 +1,7 @@
+---
+
+- name: Git checkout
+  ansible.builtin.git:
+    repo: 'https://github.com/simpledotorg/container-deployment.git'
+    dest: /opt/container-deployment
+    version: master

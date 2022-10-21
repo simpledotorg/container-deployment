@@ -1,3 +1,5 @@
+---
+
 - name: install common packages
   apt:
     update_cache: yes

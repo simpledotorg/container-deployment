@@ -1,3 +1,5 @@
+---
+
 - name: add ssh keys for the remote user
   become: true
   authorized_key:
