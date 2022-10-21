@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "migration-job"
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "migration-job"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: simple-server
+        image: {{ .Values.image }}
+        args: ["bundle", "exec", "rails", "db:migrate"]
+        envFrom:
+          - secretRef:
+              name: {{ .Values.secret_name }}
+          - configMapRef:
+              name: {{ .Values.configmap_name }}
+        env:
+          - name: SIMPLE_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.db_secret.name }}
+                key: {{ .Values.db_secret.key }}
+                optional: false
