@@ -14,3 +14,8 @@
   hosts: all
   roles:
     - role: kubeseal
+
+- name: Clone k8s automation repo
+  hosts: all
+  roles:
+    - role: repoclone
