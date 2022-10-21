@@ -15,7 +15,7 @@ spec:
       containers:
       - name: simple-server
         image: {{ .Values.image }}
-        args: ["bundle", "exec", "rails", "db:migrate"]
+        args: ["bundle", "exec", "rake", "db:migrate"]
         envFrom:
           - secretRef:
               name: {{ .Values.secret_name }}
