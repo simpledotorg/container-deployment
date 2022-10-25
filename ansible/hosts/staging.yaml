@@ -24,3 +24,6 @@ all:
       children:
         k3s_master_nodes:
         k3s_worker_nodes:
+    staging:
+      children:
+        k3s_cluster:

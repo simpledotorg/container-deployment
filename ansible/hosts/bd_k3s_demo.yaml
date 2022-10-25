@@ -18,5 +18,4 @@ all:
         k3s_worker_nodes:
     bd_k3s_demo:
       children:
-        k3s_master_nodes:
-        k3s_worker_nodes:
+        k3s_cluster:
