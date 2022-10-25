@@ -6,12 +6,6 @@
   roles:
     - role: firewall
 
-- name: Setup ssh users
-  hosts: all
-  become: true
-  roles:
-    - role: ssh
-
 - name: Install kubeseal
   hosts: all
   become: true
