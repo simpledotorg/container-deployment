@@ -1,3 +1,4 @@
+{{ if .Values.migration.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -28,3 +29,4 @@ spec:
                 name: {{ .Values.db_secret.name }}
                 key: {{ .Values.db_secret.key }}
                 optional: false
+{{ end }}
