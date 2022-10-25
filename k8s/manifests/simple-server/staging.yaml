@@ -6,3 +6,5 @@ db_secret:
   key: "password"
 ingress:
   hostname: "api.k8s-staging.simple.org"
+migration:
+  enabled: false

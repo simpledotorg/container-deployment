@@ -6,3 +6,5 @@ db_secret:
   key: "password"
 ingress:
   hostname: "api.bd-k8s-demo.simple.org"
+migration:
+  enabled: true
