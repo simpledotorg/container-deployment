@@ -25,7 +25,7 @@ Example: k8s/environment/staging
 - Install sealed secret app. `kubectl apply -f sealed-secrets.yaml -n argocd`
 - Run below command to fetch the secrete encryption key. Change `<env-name>-sealedsecret.pem` in the command with new environment name
 ```
-KUBECONFIG=/etc/rancher/k3s/k3s.yaml ./kubeseal --fetch-cert > <env-name>-sealedsecret.pem --controller-namespace sealed-secrets --controller-name=sealed-secrets
+KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubeseal --fetch-cert > <env-name>-sealedsecret.pem --controller-namespace sealed-secrets --controller-name=sealed-secrets
 ```
 - Save the key under `/scripts/<env-name>-sealedsecret.pem` in your local machine and commit the change
 - Install kubeseal on local machine. `brew install kubeseal`
