@@ -43,3 +43,34 @@ argocd.<env-name>.simple.org ip
 ```
 - SSH into one of the master node and cd into `/opt/container-deployment/k8s/environments/<env-name>/argocd-apps` and run `git pull`
 - Install all the components required. `kubectl apply -f ./ -n argocd`
+- Fetch Argocd admin user secrets
+```
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+- Login to the https://argocd.<env-name>.simple.org Argocd app and validate the deployed applications
+
+## Rails setup/commands
+Follow [runbook](RUNBOOK.md) for running Rails/DB specific commands
+
+## Simple server CD integration
+- Create [Github action secrets](https://github.com/simpledotorg/simple-server/settings/secrets/actions) for Argocd credentials in simple-server repo
+```
+<env-name>_ARGOCD_ENDPOINT
+<env-name>_ARGOCD_PASSWORD
+```
+
+- Create configuration for CD. Add a section for new environment in `.github/workflows/container.yml` in simple-server repo and commit/push the changes
+```
+  deploy_simple_server_<env-name>:
+    needs: docker_build_push
+    runs-on: ubuntu-latest
+    container:
+      image: argoproj/argocd:v2.4.11
+    steps:
+      - name: Argocd login
+        run: argocd login ${{ secrets.<env-name>_ARGOCD_ENDPOINT }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.<env-name>_ARGOCD_PASSWORD }} --insecure --config /home/argocd/.config/argocd/config
+      - name: Argocd set simple server image
+        run: argocd app set simple-server --helm-set image=simpledotorg/server:$GITHUB_SHA --config /home/argocd/.config/argocd/config
+      - name: Argocd wait for sync
+        run: argocd app wait simple-server --config /home/argocd/.config/argocd/config
+```
