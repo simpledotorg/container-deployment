@@ -2,6 +2,7 @@
 
 - name: Setup firewall
   hosts: all
+  become: true
   roles:
     - role: firewall
 
@@ -13,10 +14,12 @@
 
 - name: Install kubeseal
   hosts: all
+  become: true
   roles:
     - role: kubeseal
 
 - name: Clone k8s automation repo
   hosts: all
+  become: true
   roles:
     - role: repoclone
