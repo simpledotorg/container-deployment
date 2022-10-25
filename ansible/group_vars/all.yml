@@ -4,15 +4,12 @@ kubeconfig: /etc/rancher/k3s/k3s.yaml
 
 # ansible_private_network_interface
 # Network interface of private ip.
-# SSH into one of the node and use `ip a` command to list aviable network interfaces 
+# SSH into one of the node and use `ip a` command to list available network interfaces 
 ansible_private_network_interface: "ansible_eth1"
 
 # k3s
 k3s_agent:
   flannel-iface: "eth1" # Use private ip networking interface for k3s clustering.
-  write-kubeconfig-mode: "644" # Set kubeconfig file permission to 644.
-  disable:
-  - traefik # Disable traefik ingress controller.
 
 k3s_server:
   flannel-iface: "eth1" # Use private ip networking interface for k3s clustering.

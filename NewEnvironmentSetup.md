@@ -3,11 +3,14 @@
 ## Node provisioning
 - All nodes should be able to communicate with each other with private ip
 - All nodes should have public IP
-- All nodes should have Ubuntu user and ssh access
 
 ## K3s cluster setup using Ansible
 - Create a host entry in ansible/hosts folder. Example: `ansible/hosts/staging.yaml`
 - Create group_vars entry in ansible/group_vars folder. Example: `ansible/group_vars/staging`
+- Create Ubuntu user on all hosts
+```
+ansible-playbook host_ssh_setup.yml -i hosts/staging.yaml --user <hosts-user-name-with-ssh-access>
+```
 - Run Ansible with environment specific file. Example: `make all <env-name>.yaml`
 
 ## K3s setup
