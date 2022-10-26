@@ -10,11 +10,13 @@ spec:
       databases:
         - postgres
       options: "SUPERUSER"
-      password: AlphaNumeric
+      password:
+        type: AlphaNumeric
     - name: simple
       databases:
         - simple
-      password: AlphaNumeric
+      password:
+        type: AlphaNumeric
   instances:
     - name: instance1
       replicas: 2
