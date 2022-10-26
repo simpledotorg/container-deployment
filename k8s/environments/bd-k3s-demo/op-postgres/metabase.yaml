@@ -13,6 +13,10 @@ spec:
     - name: metabase
       databases:
         - metabase
+    - name: test
+      databases:
+        - test
+      password: AlphaNumeric
   instances:
     - name: instance1
       replicas: 2
