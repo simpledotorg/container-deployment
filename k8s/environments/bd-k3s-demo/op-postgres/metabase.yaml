@@ -10,9 +10,11 @@ spec:
       databases:
         - postgres
       options: "SUPERUSER"
+      password: "AlphaNumeric"
     - name: metabase
       databases:
         - metabase
+      password: "AlphaNumeric"
   instances:
     - name: instance1
       replicas: 2
