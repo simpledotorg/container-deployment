@@ -1,3 +1,10 @@
 metabase:
   image:
-    tag: v1.43.7
+    tag: v0.44.5
+  config:
+    database:
+      type: postgres
+  secrets:
+    existingSecret:
+      name: metabase-pguser-metabase
+      connectionURIKey: uri

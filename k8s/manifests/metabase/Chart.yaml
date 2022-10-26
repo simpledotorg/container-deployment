@@ -6,4 +6,4 @@ version: 0.1.0
 
 dependencies:
 - name: metabase
-  version: 1.0.0
+  version: 1.0.0 # https://github.com/metabase/metabase/tree/helm-chart/helm-chart
