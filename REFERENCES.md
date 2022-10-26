@@ -13,3 +13,6 @@
 ## Redis monitoring
 - [Datadog integration](https://docs.datadoghq.com/integrations/redisdb/?tab=kubernetes)
 - [Data collected] (https://docs.datadoghq.com/integrations/redisdb/?tab=kubernetes#data-collected)
+
+## Crunchydata Postgres operator
+- [CRD reference](https://access.crunchydata.com/documentation/postgres-operator/latest/references/crd/)
