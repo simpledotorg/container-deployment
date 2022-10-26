@@ -1,0 +1,10 @@
+metabase:
+  image:
+    tag: v1.43.7
+  database:
+    type: postgres
+  existingSecret: metabase-pguser-metabase
+  existingSecretConnectionURIKey: uri
+  password:
+    complexity: strong
+    length: 12
