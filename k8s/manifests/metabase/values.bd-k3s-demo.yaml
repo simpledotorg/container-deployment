@@ -7,4 +7,7 @@ metabase:
   secrets:
     existingSecret:
       name: metabase-pguser-metabase
-      connectionURIKey: jdbc-uri
+      usernameKey: user
+      passwordKey: password
+    database:
+      dbName: "metabase"
