@@ -8,3 +8,17 @@ metabase:
     existingSecret:
       name: metabase-pguser-metabase
       connectionURIKey: jdbc-uri
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+    hosts:
+      - host: metabase.bd-k8s-demo.simple.org
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - metabase.bd-k8s-demo.simple.org
+      secretName: metabase.bd-k8s-demo.simple.org-tls
