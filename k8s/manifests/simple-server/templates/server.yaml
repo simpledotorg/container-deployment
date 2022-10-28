@@ -13,7 +13,9 @@ spec:
       labels:
         app: simple-server
     spec:
+      {{- if .Values.server.affinity }}
       affinity: {{ .Values.server.affinity }}
+      {{- end }}
       containers:
       - name: simple-server
         image: {{ .Values.image }}
