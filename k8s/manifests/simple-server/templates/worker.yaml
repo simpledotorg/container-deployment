@@ -12,6 +12,7 @@ spec:
       labels:
         app.kubernetes.io/name: simple-worker
     spec:
+      affinity: {{ .Values.worker.affinity }}
       containers:
       - name: simple-server
         image: {{ .Values.image }}

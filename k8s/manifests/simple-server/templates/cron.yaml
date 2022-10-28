@@ -12,6 +12,7 @@ spec:
       labels:
         app.kubernetes.io/name: simple-cron
     spec:
+      affinity: {{ .Values.cron.affinity }}
       containers:
       - name: simple-server
         image: {{ .Values.image }}
