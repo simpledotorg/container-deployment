@@ -8,3 +8,9 @@ ingress:
   hostname: "api.env.example.com"
 migration:
   enabled: false
+cron:
+  affinity: {}
+server:
+  affinity: {}
+worker:
+  affinity: {}
