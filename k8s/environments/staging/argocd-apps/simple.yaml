@@ -52,19 +52,19 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: redis
+  name: cache-redis
 spec:
   destination:
     name: ''
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/manifests/redis
+    path: k8s/manifests/redis-cluster
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
-        - staging.yaml
+        - values.cache.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -87,12 +87,12 @@ spec:
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/manifests/redis
+    path: k8s/manifests/redis-cluster
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
-        - staging.yaml
+        - values.worker.yaml
   project: default
   syncPolicy:
     syncOptions:
