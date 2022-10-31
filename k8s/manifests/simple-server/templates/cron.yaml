@@ -12,8 +12,9 @@ spec:
       labels:
         app.kubernetes.io/name: simple-cron
     spec:
-      {{- if .Values.cron.affinity }}
-      affinity: {{ .Values.cron.affinity }}
+      {{- with .Values.cron.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
       - name: simple-server
