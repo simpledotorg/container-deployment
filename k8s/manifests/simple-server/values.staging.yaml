@@ -1,9 +1,3 @@
-image: "simpledotorg/server:latest"
-secret_name: "simple-server"
-configmap_name: "simple-server"
-db_secret:
-  name: "simple-pguser-simple"
-  key: "password"
 ingress:
   hostname: "api.k8s-staging.simple.org"
 migration:

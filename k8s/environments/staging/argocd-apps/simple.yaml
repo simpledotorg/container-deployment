@@ -120,7 +120,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - staging.yaml
+        - values.staging.yaml
   project: default
   syncPolicy:
     syncOptions:
