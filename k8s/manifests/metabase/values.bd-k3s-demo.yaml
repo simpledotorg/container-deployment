@@ -1,13 +1,4 @@
 metabase:
-  image:
-    tag: v0.44.5
-  config:
-    database:
-      type: postgres
-  secrets:
-    existingSecret:
-      name: metabase-pguser-metabase
-      connectionURIKey: jdbc-uri
   ingress:
     enabled: true
     className: "nginx"
