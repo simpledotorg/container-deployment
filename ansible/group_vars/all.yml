@@ -10,12 +10,14 @@ ansible_private_network_interface: "ansible_eth1"
 # k3s
 k3s_agent:
   flannel-iface: "eth1" # Use private ip networking interface for k3s clustering.
+  node-label: "{{ k3s_node_labels }}"
 
 k3s_server:
   flannel-iface: "eth1" # Use private ip networking interface for k3s clustering.
   write-kubeconfig-mode: "644" # Set kubeconfig file permission to 644.
   disable:
   - traefik # Disable traefik ingress controller.
+  node-label: "{{ k3s_node_labels }}"
 
 k3s_state: installed
 k3s_become: true

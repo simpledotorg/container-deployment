@@ -19,7 +19,7 @@ spec:
       resources:
         limits:
           cpu: 1
-          memory: 2Gi
+          memory: 1Gi
       dataVolumeClaimSpec:
         accessModes:
         - "ReadWriteOnce"
@@ -27,6 +27,14 @@ spec:
           requests:
             storage: 5Gi
       affinity:
+          nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role-db
+                operator: In
+                values:
+                - "true"
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
@@ -46,6 +54,16 @@ spec:
           ad.datadoghq.com/database.instances: '[{"prometheus_url":"http://%%host%%:9187/metrics","namespace": "crunchy_data","metrics": ["*"]}]'
   backups:
     pgbackrest:
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db-backup
+                  operator: In
+                  values:
+                  - "true"
       global:
         repo1-retention-full: "14"
         repo1-retention-full-type: time
@@ -62,15 +80,21 @@ spec:
             resources:
               requests:
                 storage: 10Gi
+      jobs:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db-backup 
+                  operator: In
+                  values:
+                  - "true"
   patroni:
     dynamicConfiguration:
       synchronous_mode: true
       postgresql:
         parameters:
-          max_parallel_workers: 2
-          max_worker_processes: 2
-          shared_buffers: 1GB
-          work_mem: 4MB
           synchronous_commit: "on"
   monitoring:
     pgmonitor:
