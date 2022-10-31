@@ -120,7 +120,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - <env-name>.yaml
+        - values.<env-name>.yaml
   project: default
   syncPolicy:
     syncOptions:
