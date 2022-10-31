@@ -59,7 +59,7 @@ spec:
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/manifests/redis-cluster
+    path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
     helm:
@@ -87,7 +87,7 @@ spec:
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/manifests/redis-cluster
+    path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
     helm:
