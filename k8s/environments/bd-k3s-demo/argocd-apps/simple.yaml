@@ -64,7 +64,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.yaml
+        - values.standalone.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -92,7 +92,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.yaml
+        - values.standalone.yaml
   project: default
   syncPolicy:
     syncOptions:
