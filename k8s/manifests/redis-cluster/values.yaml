@@ -1,8 +1,8 @@
 redis-cluster:
   image:
     registry: "docker.io"
-    repository: "bitnami/redis"
-    tag: "7.0.4-debian-11-r7"
+    repository: "bitnami/redis-cluster"
+    tag: "7.0.5-debian-11-r9"
   usePassword: false
   commonAnnotations:
     ad.datadoghq.com/redis.checks: |
