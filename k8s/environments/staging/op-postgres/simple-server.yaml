@@ -27,7 +27,7 @@ spec:
           requests:
             storage: 5Gi
       affinity:
-          nodeAffinity:
+        nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
@@ -36,7 +36,7 @@ spec:
                 values:
                 - "true"
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
+          requiredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
             podAffinityTerm:
               topologyKey: kubernetes.io/hostname
