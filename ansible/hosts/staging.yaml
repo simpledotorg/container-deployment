@@ -7,15 +7,15 @@ all:
         node-01:
           ansible_host: 10.122.0.6
           k3s_node_labels:
-            - "role-redis-worker=true"
+            - "role-worker-redis=true"
         node-02:
           ansible_host: 10.122.0.8
           k3s_node_labels:
-            - "role-redis-worker=true"
+            - "role-worker-redis=true"
         node-03:
           ansible_host: 10.122.0.16
           k3s_node_labels:
-            - "role-redis-worker=true"
+            - "role-worker-redis=true"
     k3s_worker_nodes:
       hosts:
         node-04:
@@ -46,15 +46,15 @@ all:
         node-10:
           ansible_host: 10.122.0.15
           k3s_node_labels:
-            - "role-redis-cache=true"
+            - "role-cache-redis=true"
         node-11:
           ansible_host: 10.122.0.17
           k3s_node_labels:
-            - "role-redis-cache=true"
+            - "role-cache-redis=true"
         node-12:
           ansible_host: 10.122.0.18
           k3s_node_labels:
-            - "role-redis-cache=true"
+            - "role-cache-redis=true"
     k3s_cluster:
       children:
         k3s_master_nodes:
