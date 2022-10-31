@@ -12,6 +12,10 @@ spec:
     metadata:
       name: "migration-job"
     spec:
+      {{- with .Values.migration.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       restartPolicy: Never
       containers:
       - name: simple-server

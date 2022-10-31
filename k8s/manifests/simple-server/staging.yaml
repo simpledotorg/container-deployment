@@ -38,3 +38,13 @@ worker:
             operator: In
             values:
             - "true"
+migration:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-server
+            operator: In
+            values:
+            - "true"
