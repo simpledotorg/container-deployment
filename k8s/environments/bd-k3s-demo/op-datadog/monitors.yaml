@@ -71,3 +71,22 @@ spec:
   tags:
     - "env:bangladesh-demo"
     - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: k8s-bd-k3s-demo-simple-server-running-pod-count-is-low
+  namespace: datadog
+spec:
+  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_stateful_set:simple-server} < 2"
+  type: "query alert"
+  name: "bd-k3s-demo simple server running pod count is low"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:bangladesh-demo"
+    - "generated:kubernetes"
