@@ -3,4 +3,4 @@ ingress:
 migration:
   enabled: true
 server:
-  replica: 1
+  replica: 2
