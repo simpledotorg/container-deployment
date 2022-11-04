@@ -1,9 +1,10 @@
+{{ if .Values.server.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: simple-server
 spec:
-  replicas: 2
+  replicas: {{ .Values.server.replica }}
   selector:
     matchLabels:
       app: simple-server
@@ -21,6 +22,8 @@ spec:
       - name: simple-server
         image: {{ .Values.image }}
         args: ["/sbin/my_init"]
+        resources:
+          {{- toYaml .Values.server.resources | nindent 12 }}
         envFrom:
           - secretRef:
               name: {{ .Values.secret_name }}
@@ -48,3 +51,4 @@ spec:
         requests:
           storage: 1Gi
       volumeMode: Filesystem
+{{ end }}

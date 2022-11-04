@@ -1,9 +1,10 @@
+{{ if .Values.worker.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: simple-worker
 spec:
-  replicas: 1
+  replicas: {{ .Values.worker.replica }}
   selector:
     matchLabels:
       app.kubernetes.io/name: simple-worker
@@ -20,6 +21,8 @@ spec:
       - name: simple-server
         image: {{ .Values.image }}
         args: ["bundle", "exec", "sidekiq",  "-C", "config/sidekiq.yml", "-e", "production"]
+        resources:
+          {{- toYaml .Values.worker.resources | nindent 12 }}
         envFrom:
           - secretRef:
               name: {{ .Values.secret_name }}
@@ -32,3 +35,4 @@ spec:
                 name: {{ .Values.db_secret.name }}
                 key: {{ .Values.db_secret.key }}
                 optional: false
+{{ end }}

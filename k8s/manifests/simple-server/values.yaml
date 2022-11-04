@@ -6,13 +6,24 @@ db_secret:
   key: "password"
 ingress:
   hostname: "api.env.example.com"
+  enabled: true
 migration:
   enabled: false
 cron:
   affinity: {}
+  enabled: true
+  resources: {}
 server:
   affinity: {}
+  enabled: true
+  replica: 2
+  resources: {}
 worker:
   affinity: {}
+  enabled: true
+  replica: 1
+  resources: {}
 migration:
   affinity: {}
+  enabled: true
+  resources: {}
