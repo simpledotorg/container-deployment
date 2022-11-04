@@ -2,3 +2,5 @@ ingress:
   hostname: "api.bd-k8s-demo.simple.org"
 migration:
   enabled: true
+server:
+  replica: 1
