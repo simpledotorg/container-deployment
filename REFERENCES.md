@@ -24,3 +24,7 @@
 - [Architecture](https://docs.k3s.io/architecture)
 - [K3s server config](https://docs.k3s.io/reference/server-config)
 - [K3s agent config](https://docs.k3s.io/reference/server-config)
+
+# Argocd
+- [Sync options](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/)
+- [Current sync status vs Last sync status in UI](https://github.com/argoproj/argo-cd/issues/7629)
