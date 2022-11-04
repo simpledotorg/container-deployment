@@ -19,10 +19,22 @@ Automation and manifests for contaner deployment
 |   |     ├── op-postgres # Postgres operator manifests
 │   │       
 │   └── manifests # K8s yaml, helm manifests for individual components
-│       ├── argocd
-│       ├── ingress
-│       ├── sealed-secrets
-│       └── simple
+│       └── simple-server # Helm chart for simple server
+│       |    ├── charts # Packaged dependency
+│       |    ├── Chart.yaml # Chart metadata
+│       |    ├── templates # Helm template folder
+│       |    │   ├── cron.yaml
+│       |    │   ├── ingress.yaml
+│       |    │   ├── migration-job.yaml
+│       |    │   ├── server.yaml
+│       |    │   ├── service.yaml
+│       |    │   └── worker.yaml
+│       |    ├── values.bd-k3s-demo.yaml # Override default with demo environment specific values
+│       |    ├── values.staging.yaml # Override default with staging environment specific values
+│       |    └── values.yaml # Default values
+│       ├── argocd # Helm chart for Argocd
+│       ├── ingress # Helm chart for Ingress
+│       ├── sealed-secrets # Helm chart for Bitnami sealed secrets
 ```
 
 ## Metrics integration with Datadog
