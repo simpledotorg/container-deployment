@@ -4,7 +4,7 @@ metadata:
   name: k8s-bd-k3s-demo-healthy-host-count
   namespace: datadog
 spec:
-  query: "avg(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:bd-k3s-demo} < 3"
+  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:bd-k3s-demo} < 3"
   type: "query alert"
   name: "k8s bd-k3s-demo healthy host count"
   message: "k8s bd-k3s-demo healthy host count\n @slack-alerts"
@@ -23,7 +23,7 @@ metadata:
   name: k8s-bd-k3s-demo-host-cpu-usage
   namespace: datadog
 spec:
-  query: "avg(last_5m):100 - avg:system.cpu.idle{kube_cluster_name:bd-k3s-demo} by {host} > 90"
+  query: "max(last_5m):100 - avg:system.cpu.idle{kube_cluster_name:bd-k3s-demo} by {host} > 90"
   type: "query alert"
   name: "k8s bd-k3s-demo host cpu usage"
   message: "k8s bd-k3s-demo host cpu usage\n @slack-alerts"
@@ -42,7 +42,7 @@ metadata:
   name: k8s-bd-k3s-demo-host-memory-usage
   namespace: datadog
 spec:
-  query: "avg(last_5m):avg:kubernetes.memory.usage_pct{kube_cluster_name:bd-k3s-demo} by {host} > 0.9"
+  query: "max(last_5m):avg:kubernetes.memory.usage_pct{kube_cluster_name:bd-k3s-demo} by {host} > 0.9"
   type: "query alert"
   name: "k8s bd-k3s-demo host memory usage"
   message: "k8s bd-k3s-demo host memory usage\n @slack-alerts"
@@ -61,7 +61,7 @@ metadata:
   name: k8s-bd-k3s-demo-host-disk-usage
   namespace: datadog
 spec:
-  query: "avg(last_5m):(avg:system.disk.used{kube_cluster_name:bd-k3s-demo} by {host} * 100) / avg:system.disk.total{kube_cluster_name:bd-k3s-demo} by {host} > 90"
+  query: "max(last_5m):(avg:system.disk.used{kube_cluster_name:bd-k3s-demo} by {host} * 100) / avg:system.disk.total{kube_cluster_name:bd-k3s-demo} by {host} > 90"
   type: "query alert"
   name: "k8s bd-k3s-demo host disk usage"
   message: "k8s bd-k3s-demo host disk usage\n @slack-alerts"
@@ -80,7 +80,7 @@ metadata:
   name: k8s-bd-k3s-demo-simple-server-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_stateful_set:simple-server} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_stateful_set:simple-server} < 2"
   type: "query alert"
   name: "bd-k3s-demo simple server running pod count is low"
   message: "@slack-alerts"
@@ -99,7 +99,7 @@ metadata:
   name: k8s-bd-k3s-demo-simple-cron-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:simple-cron} < 1"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:simple-cron} < 1"
   type: "query alert"
   name: "bd-k3s-demo simple cron running pod count is low"
   message: "@slack-alerts"
@@ -118,7 +118,7 @@ metadata:
   name: k8s-bd-k3s-demo-simple-worker-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:simple-worker} < 1"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:simple-worker} < 1"
   type: "query alert"
   name: "bd-k3s-demo simple worker running pod count is low"
   message: "@slack-alerts"
@@ -137,7 +137,7 @@ metadata:
   name: k8s-bd-k3s-demo-metabase-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:metabase} < 1"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:metabase} < 1"
   type: "query alert"
   name: "bd-k3s-demo metabase running pod count is low"
   message: "@slack-alerts"
@@ -156,7 +156,7 @@ metadata:
   name: k8s-bd-k3s-demo-redis-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:redis} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:redis} < 2"
   type: "query alert"
   name: "bd-k3s-demo redis running pod count is low"
   message: "@slack-alerts"
@@ -175,7 +175,7 @@ metadata:
   name: k8s-bd-k3s-demo-simple-postgres-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,service:postgrescluster-simple} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,service:postgrescluster-simple} < 2"
   type: "query alert"
   name: "bd-k3s-demo simple postgres running pod count is low"
   message: "@slack-alerts"
@@ -194,7 +194,7 @@ metadata:
   name: k8s-bd-k3s-demo-metabase-postgres-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,service:postgrescluster-metabase} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,service:postgrescluster-metabase} < 2"
   type: "query alert"
   name: "bd-k3s-demo metabase postgres running pod count is low"
   message: "@slack-alerts"
@@ -213,7 +213,7 @@ metadata:
   name: k8s-bd-k3s-demo-cert-manager-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:cert-manager} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:cert-manager} < 2"
   type: "query alert"
   name: "bd-k3s-demo cert manager running pod count is low"
   message: "@slack-alerts"
@@ -232,7 +232,7 @@ metadata:
   name: k8s-bd-k3s-demo-ingress-nginx-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:ingress-nginx} < 3"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:ingress-nginx} < 3"
   type: "query alert"
   name: "bd-k3s-demo ingress nginx running pod count is low"
   message: "@slack-alerts"
@@ -251,7 +251,7 @@ metadata:
   name: k8s-bd-k3s-demo-sealed-secrets-running-pod-count
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:sealed-secrets} < 1"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:sealed-secrets} < 1"
   type: "query alert"
   name: "bd-k3s-demo sealed secrets running pod count is low"
   message: "@slack-alerts"
