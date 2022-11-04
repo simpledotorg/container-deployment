@@ -5,11 +5,16 @@ Automation and manifests for contaner deployment
 ```
 ├── ansible # Host level Ansible automation for firewall, ssh, etc
 ├── k8s # All k8s related resources manifests
-│   ├── argocd-apps # Argocd application manifests
-│   │   └── bd-k3s-demo # Environment specific manifests
+│   ├── environments # Base folder for all environments
+│   │   └── <environment-name> # Folder for environment specific manifests
+│   |     ├── argocd-apps # Argocd application manifests
+|   |     ├── configmaps # Configmaps
+|   |     ├── secrets # Sealed secrets files
+|   |     ├── op-datadog # Datadog operator manifests
+|   |     ├── op-postgres # Postgres operator manifests
+│   │       
 │   └── manifests # K8s yaml, helm manifests for individual components
 │       ├── argocd
-│       ├── grafana
 │       ├── ingress
 │       ├── sealed-secrets
 │       └── simple
