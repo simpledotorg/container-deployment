@@ -1,18 +1,26 @@
 # REFERENCES
 
-## Nginx ingress monitoring
-- [Integration and metrics](https://docs.datadoghq.com/integrations/nginx_ingress_controller/?tab=containerized)
+## Nginx ingress
+- [Monitoring integration and metrics](https://docs.datadoghq.com/integrations/nginx_ingress_controller/?tab=containerized)
 - [Datadog integration blog](https://www.arthurkoziel.com/enabled-datadog-nginx-ingress-helm/)
 
-## Crunchydata Postgres monitoring
+## Postgres
 - [Datadog integration blog](https://medium.com/globant/how-to-enable-observability-into-your-crunchy-data-postgresql-clusters-via-datadog-60e0fa7a23a5)
 - [Reference Grafana dashboards](https://github.com/CrunchyData/postgres-operator-examples/tree/main/kustomize/monitoring/dashboards)
 - [Metrics list](https://access.crunchydata.com/documentation/pgmonitor/4.4/exporter/)
 - [Pgmonitor](https://github.com/CrunchyData/pgmonitor)
+- [Crunchy CRD reference](https://access.crunchydata.com/documentation/postgres-operator/latest/references/crd/)
+- [Crunchy tutorials](https://access.crunchydata.com/documentation/postgres-operator/latest/tutorial/)
+- [Benchmarking pgbench](https://www.cloudbees.com/blog/tuning-postgresql-with-pgbench)
 
-## Redis monitoring
+## Redis
 - [Datadog integration](https://docs.datadoghq.com/integrations/redisdb/?tab=kubernetes)
-- [Data collected] (https://docs.datadoghq.com/integrations/redisdb/?tab=kubernetes#data-collected)
+- [Datadog metrics list] (https://docs.datadoghq.com/integrations/redisdb/?tab=kubernetes#data-collected)
+- [Redis helm chart] (https://github.com/bitnami/charts/tree/main/bitnami/redis)
+- [Redis sentinel] (https://redis.io/docs/management/sentinel/)
 
-## Crunchydata Postgres operator
-- [CRD reference](https://access.crunchydata.com/documentation/postgres-operator/latest/references/crd/)
+## K3s
+- [Ansible role](https://github.com/PyratLabs/ansible-role-k3s)
+- [Architecture](https://docs.k3s.io/architecture)
+- [K3s server config](https://docs.k3s.io/reference/server-config)
+- [K3s agent config](https://docs.k3s.io/reference/server-config)
