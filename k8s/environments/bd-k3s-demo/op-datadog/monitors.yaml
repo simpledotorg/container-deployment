@@ -346,7 +346,7 @@ metadata:
   name: k8s-bd-k3s-demo-datadog-operator-running-pod-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:datadog-operator} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_app_name:datadog-operator} < 1"
   type: "query alert"
   name: "bd-k3s-demo datadog-operator running pod count is low"
   message: "@slack-alerts"
