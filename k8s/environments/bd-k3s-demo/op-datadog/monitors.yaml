@@ -261,3 +261,22 @@ spec:
   tags:
     - "env:bangladesh-demo"
     - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: k8s-bd-k3s-demo-argocd-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bd-k3s-demo,kube_namespace:argocd} < 7"
+  type: "query alert"
+  name: "bd-k3s-demo argocd running pod count is low"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:bangladesh-demo"
+    - "generated:kubernetes"
