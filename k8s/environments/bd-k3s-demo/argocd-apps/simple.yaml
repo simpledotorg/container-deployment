@@ -110,7 +110,7 @@ kind: Application
 metadata:
   name: simple-server
   annotations:
-    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: test-01
+    notifications.argoproj.io/subscribe.on-sync-running.slack: test-01
 spec:
   destination:
     name: ''
