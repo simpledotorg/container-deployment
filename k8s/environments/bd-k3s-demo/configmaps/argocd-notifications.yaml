@@ -14,10 +14,10 @@ data:
     - recipients:
       - slack:argocd-alerts
       triggers:
-      - app-sync-failed
-      - app-sync-status-unknown
+      - on-sync-failed
+      - on-sync-status-unknown
       - on-health-degraded
-      - app-sync-succeeded
+      - on-sync-succeeded
   template.app-deployed: |
     email:
       subject: New version of an application {{.app.metadata.name}} is up and running.
