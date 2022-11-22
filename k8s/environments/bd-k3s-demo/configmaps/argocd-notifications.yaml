@@ -4,6 +4,8 @@ metadata:
   name: argocd-notifications-cm
   namespace: argocd
 data:
+  context: |
+    argocdUrl: https://argocd.bd-k8s-demo.simple.org
   service.slack: |
     token: $slack-token
     username: Argocd
