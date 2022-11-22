@@ -12,9 +12,12 @@ data:
     icon: https://argoproj.github.io/argo-cd/assets/logo.png
   subscriptions: |
     - recipients:
-      - slack:test-01
+      - slack:argocd-alerts
       triggers:
-      - on-sync-running
+      - app-sync-failed
+      - app-sync-status-unknown
+      - on-health-degraded
+      - app-sync-succeeded
   template.app-deployed: |
     email:
       subject: New version of an application {{.app.metadata.name}} is up and running.
