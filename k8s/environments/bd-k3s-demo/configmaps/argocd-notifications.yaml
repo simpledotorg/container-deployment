@@ -8,8 +8,11 @@ data:
     token: $slack-token
     username: Argocd
     icon: https://argoproj.github.io/argo-cd/assets/logo.png
-  defaultTriggers: |
-    - on-deployed
+  subscriptions: |
+    - recipients:
+      - slack:test-01
+      triggers:
+      - on-sync-running
   template.app-deployed: |
     email:
       subject: New version of an application {{.app.metadata.name}} is up and running.
