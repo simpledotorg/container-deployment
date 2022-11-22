@@ -1,10 +1,11 @@
 # Container deployment
-Automation and manifests for contaner deployment
+Automation and manifests for container deployment
 
 ## Index
-- [Runbook](./RUNBOOK.md)
-- [New environment creation](./NewEnvironmentSetup.md)
-- [Reference docs](./REFERENCES.md) 
+- [Runbook](./doc/RUNBOOK.md)
+- [Recommended VM requirements](./doc/recommended_vm_requirements.md)
+- [New environment creation](./doc/NewEnvironmentSetup.md)
+- [Reference docs](./doc/REFERENCES.md)
 
 ## Folder structure
 ```
@@ -64,7 +65,7 @@ redis:
               }
             ]
           }
-        } 
+        }
 ```
 
 ### Option2: Using metrics exporters and collecting the same using datadog custom integration
