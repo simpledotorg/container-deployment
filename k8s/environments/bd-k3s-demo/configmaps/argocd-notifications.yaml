@@ -6,8 +6,6 @@ metadata:
 data:
   service.slack: |
     token: $slack-token
-    username: Argocd
-    icon: 🔔
   defaultTriggers: |
     - on-deployed
   template.app-deployed: |
