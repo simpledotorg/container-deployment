@@ -17,7 +17,6 @@ data:
       - on-sync-failed
       - on-sync-status-unknown
       - on-health-degraded
-      - on-sync-succeeded
   template.app-deployed: |
     email:
       subject: New version of an application {{.app.metadata.name}} is up and running.
