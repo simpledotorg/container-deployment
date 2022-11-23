@@ -1,5 +1,22 @@
 ---
 
+- name: Download helm binary
+  ansible.builtin.get_url:
+    url: "https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz"
+    dest: /tmp/
+
+- name: Extract helm binary
+  ansible.builtin.unarchive:
+    src: /tmp/helm-{{ helm_version }}-linux-amd64.tar.gz
+    dest: /usr/local/bin/
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: Remove tar file
+  file:
+    state: absent
+    path: /tmp/helm-{{ helm_version }}-linux-amd64.tar.gz
+
 - name: install common packages
   apt:
     update_cache: yes
@@ -19,16 +36,22 @@
     state: present
     kubeconfig: "{{ kubeconfig }}"
 
-# Download and apply manifest
-- name: Download Argocd manifest to the cluster.
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_version }}/manifests/install.yaml
-    dest: /tmp/argocd.yaml
-    mode: '0664'
+- name: Add argocd helm repo
+  kubernetes.core.helm_repository:
+    name: argo-cd
+    repo_url: "https://argoproj.github.io/argo-helm"
 
-- name: Apply Argocd manifest to the cluster.
-  kubernetes.core.k8s:
-    state: present
-    src: /tmp/argocd.yaml
+- name: Helm install argocd
+  kubernetes.core.helm:
     kubeconfig: "{{ kubeconfig }}"
-    namespace: argocd
+    name: argocd
+    chart_ref: argo-cd/argo-cd
+    chart_version: "{{ argocd_helm_chart_version }}"
+    release_namespace: argocd
+    values:
+      global:
+        image:
+          tag: "{{ argocd_version }}"
+      notifications:
+        secret:
+          create: false
