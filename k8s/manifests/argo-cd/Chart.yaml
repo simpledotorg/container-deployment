@@ -1,0 +1,10 @@
+apiVersion: v2
+name: argo-cd-wrapper
+description: Argocd wrapper
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: argo-cd
+    version: 5.14.1
+    repository: https://argoproj.github.io/argo-helm
