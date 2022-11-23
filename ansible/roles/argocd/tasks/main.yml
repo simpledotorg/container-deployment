@@ -22,7 +22,7 @@
 # Download and apply manifest
 - name: Download Argocd manifest to the cluster.
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    url: https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_version }}/manifests/install.yaml
     dest: /tmp/argocd.yaml
     mode: '0664'
 
