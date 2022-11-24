@@ -1,7 +1,5 @@
 ---
 
-kubeconfig: /etc/rancher/k3s/k3s.yaml
-
 # ansible_private_network_interface
 # Network interface of private ip.
 # SSH into one of the node and use `ip a` command to list available network interfaces 
