@@ -1,0 +1,6 @@
+ingress:
+  hostname: "api.k8s-test.simple.org"
+migration:
+  enabled: true
+server:
+  replica: 2
