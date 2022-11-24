@@ -3,7 +3,7 @@ argo-cd:
     argocdUrl: "https://argocd.k8s-test.simple.org"
   server:
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
