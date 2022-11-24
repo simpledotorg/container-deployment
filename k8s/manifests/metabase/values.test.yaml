@@ -1,0 +1,15 @@
+metabase:
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+    hosts:
+      - host: metabase.k8s-test.simple.org
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - metabase.k8s-test.simple.org
+      secretName: metabase.k8s-test.simple.org-tls
