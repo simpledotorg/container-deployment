@@ -1,3 +1,19 @@
 argo-cd:
   notifications:
     argocdUrl: "https://argocd.k8s-test.simple.org"
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+      ingressClassName: "nginx"
+      hosts:
+        - argocd.k8s-test.simple.org
+      paths:
+        - /
+      pathType: ImplementationSpecific
+      tls:
+        - hosts:
+          - argocd.k8s-test.simple.org
+          secretName: argocd.k8s-test.simple.org-tls
+      https: false
