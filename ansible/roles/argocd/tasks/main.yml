@@ -31,10 +31,11 @@
 
 - name: Create a k8s namespace
   kubernetes.core.k8s:
-    name: argocd
+    name: "{{ item }}"
     kind: Namespace
     state: present
     kubeconfig: "{{ kubeconfig }}"
+  with_items: "{{ k8s_namespaces }}"
 
 - name: Add argocd helm repo
   kubernetes.core.helm_repository:
