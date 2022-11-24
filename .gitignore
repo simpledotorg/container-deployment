@@ -6,3 +6,4 @@
 ssh_keys/*
 tmp
 .vagrant
+*.pem
