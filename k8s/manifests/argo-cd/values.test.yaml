@@ -3,10 +3,11 @@ argo-cd:
     argocdUrl: "https://argocd.k8s-test.simple.org"
   server:
     ingress:
-      enabled: false
+      enabled: true
       annotations:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
       ingressClassName: "nginx"
       hosts:
         - argocd.k8s-test.simple.org
@@ -14,7 +15,7 @@ argo-cd:
         - /
       pathType: Prefix
       tls:
-        - secretName: argocd-secret
+        - secretName: argocd.k8s-test.simple.org-tls
           hosts:
             - argocd.k8s-test.simple.org
       https: false
