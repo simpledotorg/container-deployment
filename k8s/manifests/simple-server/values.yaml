@@ -25,5 +25,5 @@ worker:
   resources: {}
 migration:
   affinity: {}
-  enabled: true
+  enabled: false
   resources: {}
