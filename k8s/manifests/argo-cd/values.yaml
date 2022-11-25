@@ -19,6 +19,8 @@ argo-cd:
     notifiers:
       service.slack: |
         token: $slack-token
+        username: Argocd
+        icon: https://argoproj.github.io/argo-cd/assets/logo.png
     subscriptions:
       - recipients:
         - slack:argocd-alerts
