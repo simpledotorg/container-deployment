@@ -1,7 +1,7 @@
 image: "simpledotorg/server:latest"
-secret_name: "simple-server"
-configmap_name: "simple-server"
-db_secret:
+existingSecret: "simple-server"
+existingConfigmap: "simple-server"
+existingDBSecret:
   name: "simple-pguser-simple"
   key: "password"
 ingress:
