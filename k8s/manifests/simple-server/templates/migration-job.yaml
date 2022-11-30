@@ -12,10 +12,6 @@ spec:
     metadata:
       name: {{ .Values.migration.name }}
     spec:
-      {{- with .Values.migration.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       restartPolicy: Never
       containers:
       - name: {{ .Values.migration.name }}
