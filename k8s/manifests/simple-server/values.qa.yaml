@@ -1,0 +1,3 @@
+ingress:
+  hostname: "api-qa.simple.org"
+  enabled: false
