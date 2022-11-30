@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simple-worker
+  name: {{ .Values.worker.name }}
   annotations:
     configmap.reloader.stakater.com/reload: {{ .Values.secret_name }}
     secret.reloader.stakater.com/reload: {{ .Values.secret_name }}
@@ -10,18 +10,14 @@ spec:
   replicas: {{ .Values.worker.replica }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: simple-worker
+      app.kubernetes.io/name: {{ .Values.worker.name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: simple-worker
+        app.kubernetes.io/name: {{ .Values.worker.name }}
     spec:
-      {{- with .Values.worker.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       containers:
-      - name: simple-server
+      - name: {{ .Values.worker.name }}
         image: {{ .Values.image }}
         args: ["bundle", "exec", "sidekiq",  "-C", "config/sidekiq.yml", "-e", "production"]
         resources:
@@ -38,4 +34,16 @@ spec:
                 name: {{ .Values.db_secret.name }}
                 key: {{ .Values.db_secret.key }}
                 optional: false
+      {{- with .Values.worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.worker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.worker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{ end }}
