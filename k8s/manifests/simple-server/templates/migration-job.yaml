@@ -19,15 +19,15 @@ spec:
         args: ["bundle", "exec", "rake", "db:migrate"]
         envFrom:
           - secretRef:
-              name: {{ .Values.secret_name }}
+              name: {{ .Values.existingSecret }}
           - configMapRef:
-              name: {{ .Values.configmap_name }}
+              name: {{ .Values.existingConfigmap }}
         env:
           - name: SIMPLE_SERVER_DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.db_secret.name }}
-                key: {{ .Values.db_secret.key }}
+                name: {{ .Values.existingDBSecret.name }}
+                key: {{ .Values.existingDBSecret.key }}
                 optional: false
       {{- with .Values.migration.nodeSelector }}
       nodeSelector:

@@ -4,8 +4,8 @@ kind: StatefulSet
 metadata:
   name: {{ .Values.server.name }}
   annotations:
-    configmap.reloader.stakater.com/reload: {{ .Values.secret_name }}
-    secret.reloader.stakater.com/reload: {{ .Values.secret_name }}
+    configmap.reloader.stakater.com/reload: {{ .Values.existingConfigmap }}
+    secret.reloader.stakater.com/reload: {{ .Values.existingSecret }}
 spec:
   replicas: {{ .Values.server.replica }}
   selector:
@@ -29,15 +29,15 @@ spec:
             protocol: TCP
         envFrom:
           - secretRef:
-              name: {{ .Values.secret_name }}
+              name: {{ .Values.existingSecret }}
           - configMapRef:
-              name: {{ .Values.configmap_name }}
+              name: {{ .Values.existingConfigmap }}
         env:
           - name: SIMPLE_SERVER_DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.db_secret.name }}
-                key: {{ .Values.db_secret.key }}
+                name: {{ .Values.existingDBSecret.name }}
+                key: {{ .Values.existingDBSecret.key }}
                 optional: false
         volumeMounts:
         - name: logs
