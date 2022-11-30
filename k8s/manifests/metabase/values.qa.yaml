@@ -9,10 +9,17 @@ metabase:
         paths:
           - path: /
             pathType: ImplementationSpecific
+      - host: metabase2-qa.simple.org
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
     tls:
     - hosts:
       - metabase-qa.simple.org
       secretName: metabase-qa.simple.org-tls
+    - hosts:
+      - metabase2-qa.simple.org
+      secretName: metabase2-qa.simple.org-tls
   secrets:
     existingSecret:
       name: simple-pguser-metabase
