@@ -6,8 +6,8 @@ metadata:
     app: simple-server
 spec:
   ports:
-  - port: 80
+  - port: {{ .Values.service.port }}
     protocol: TCP
-    targetPort: 80
+    targetPort: http
   selector:
     app: simple-server

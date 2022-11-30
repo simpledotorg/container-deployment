@@ -26,3 +26,5 @@ migration:
   affinity: {}
   enabled: false
   resources: {}
+service:
+  port: 80
