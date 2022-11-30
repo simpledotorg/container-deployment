@@ -8,7 +8,14 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+    - host: dashboard-qa-k8s.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
   tls:
   - hosts:
     - api-qa-k8s.simple.org
     secretName: api-qa-k8s.simple.org-tls
+  - hosts:
+    - dashboard-qa-k8s.simple.org
+    secretName: dashboard-qa-k8s.simple.org-tls
