@@ -1,9 +1,10 @@
 {{ if .Values.ingress.enabled }}
 {{- $svcPort := .Values.service.port -}}
+{{- $svcName := .Values.server.name -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: simple-server
+  name: {{ $svcName }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -30,7 +31,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: simple-server
+                name: {{ $svcName }}
                 port:
                   number: {{ $svcPort }}
           {{- end }}
