@@ -9,7 +9,7 @@ spec:
   source:
     path: k8s/manifests/pgo
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: develop
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
@@ -36,7 +36,7 @@ spec:
   source:
     path: k8s/environments/test/op-postgres
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: develop
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
@@ -61,7 +61,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: develop
+    targetRevision: master
     helm:
       valueFiles:
         - values.standalone.yaml
@@ -89,7 +89,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: develop
+    targetRevision: master
     helm:
       valueFiles:
         - values.standalone.yaml
@@ -117,7 +117,7 @@ spec:
   source:
     path: k8s/manifests/simple-server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: develop
+    targetRevision: v0.1.0
     helm:
       valueFiles:
         - values.test.yaml
@@ -145,7 +145,7 @@ spec:
   source:
     path: k8s/manifests/metabase
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: develop
+    targetRevision: master
     helm:
       valueFiles:
         - values.test.yaml
