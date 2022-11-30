@@ -1,0 +1,19 @@
+metabase:
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+    hosts:
+      - host: metabase-qa.simple.org
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - metabase-qa.simple.org
+      secretName: metabase-qa.simple.org-tls
+  secrets:
+    existingSecret:
+      name: simple-pguser-metabase
+      connectionURIKey: jdbc-uri
