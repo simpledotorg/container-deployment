@@ -17,6 +17,7 @@ spec:
         - simple
       password:
         type: AlphaNumeric
+      options: "SUPERUSER"
     - name: metabase
       databases:
         - metabase
