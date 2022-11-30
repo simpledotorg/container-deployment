@@ -42,9 +42,41 @@ data "aws_ami" "ubuntu" {
   }
 }
 
+module "k8s_server_sg_qa" {
+  source = "terraform-aws-modules/security-group/aws"
+  version = "4.16.2"
+
+  name        = "${local.qa_server_name_sufix}-sg"
+  description = "Security group for k8s servers"
+
+  # Allow all traffic within k8s instances
+  ingress_with_self = [
+    { rule = "all-all" }
+  ]
+
+  # Allow all egress traffic
+  egress_rules = ["all-all"]
+
+  # Other port specific rules
+  ingress_with_cidr_blocks = [
+    {
+      rule        = "https-443-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      rule        = "http-80-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      rule        = "ssh-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    }
+  ]
+}
+
 module "k8s_server_qa" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "~> 3.0"
+  version = "4.2.1"
 
   count = local.qa_server_count
 
@@ -56,11 +88,7 @@ module "k8s_server_qa" {
   monitoring                  = true
   associate_public_ip_address = true
   vpc_security_group_ids = [
-    "sg-0846a983060a48121",
-    "sg-05cb8fd0ec3b6120d",
-    "sg-069238f5efa92bae5",
-    "sg-033da50a0726b041c",
-    "sg-0a94d4ba83cf3437c"
+    module.k8s_server_sg_qa.security_group_id
   ]
   subnet_id = "subnet-dea591b6"
 
@@ -88,6 +116,7 @@ resource "aws_eip" "eip_qa" {
   vpc   = true
 }
 
+# QA outputs
 output "k8s_server_qa_id" {
   value = module.k8s_server_qa.*.id
 }
@@ -98,4 +127,8 @@ output "k8s_server_qa_public_ip" {
 
 output "k8s_server_qa_private_ip" {
   value = module.k8s_server_qa.*.private_ip
+}
+
+output "k8s_server_qa_sg_id" {
+  value = module.k8s_server_sg_qa.security_group_id
 }
