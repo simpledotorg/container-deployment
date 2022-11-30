@@ -1,0 +1,21 @@
+---
+
+all:
+  children:
+    k3s_master_nodes:
+      hosts:
+        node-01:
+          ansible_host: 172.31.46.178
+        node-02:
+          ansible_host: 172.31.32.138
+        node-03:
+          ansible_host: 172.31.37.111
+    k3s_worker_nodes:
+      hosts:
+    k3s_cluster:
+      children:
+        k3s_master_nodes:
+        k3s_worker_nodes:
+    qa:
+      children:
+        k3s_cluster:
