@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: simple-server
+  name: {{ .Values.server.name }}
   labels:
-    app: simple-server
+    app: {{ .Values.server.name }}
 spec:
   ports:
   - port: {{ .Values.service.port }}
     protocol: TCP
     targetPort: http
   selector:
-    app: simple-server
+    app: {{ .Values.server.name }}

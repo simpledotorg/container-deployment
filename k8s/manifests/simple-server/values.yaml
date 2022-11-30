@@ -9,21 +9,35 @@ ingress:
 migration:
   enabled: false
 cron:
+  name: "simple-cron"
+  nodeSelector: {}
   affinity: {}
+  tolerations: []
   enabled: true
   resources: {}
 server:
+  name: "simple-server"
+  nodeSelector: {}
   affinity: {}
+  tolerations: []
   enabled: true
   replica: 2
   resources: {}
+  log:
+    storage: 1Gi
 worker:
+  name: "simple-worker"
+  nodeSelector: {}
   affinity: {}
+  tolerations: []
   enabled: true
   replica: 1
   resources: {}
 migration:
+  name: "migration-job"
+  nodeSelector: {}
   affinity: {}
+  tolerations: []
   enabled: false
   resources: {}
 service:
