@@ -1,3 +1,2 @@
 ingress:
-  hostname: "api-qa.simple.org"
-  enabled: false
+  hostname: "api-qa-k8s.simple.org"
