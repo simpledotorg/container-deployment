@@ -89,7 +89,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: 26b9d56b8d7c7b18bdaab1f47905bd82c3c9c047
     helm:
       valueFiles:
         - values.standalone.yaml
