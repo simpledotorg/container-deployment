@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: simple-server
+  name: {{ .Values.server.name }}
   annotations:
     configmap.reloader.stakater.com/reload: {{ .Values.secret_name }}
     secret.reloader.stakater.com/reload: {{ .Values.secret_name }}
@@ -10,19 +10,15 @@ spec:
   replicas: {{ .Values.server.replica }}
   selector:
     matchLabels:
-      app: simple-server
-  serviceName: "simple-server"
+      app: {{ .Values.server.name }}
+  serviceName: {{ .Values.server.name }}
   template:
     metadata:
       labels:
-        app: simple-server
+        app: {{ .Values.server.name }}
     spec:
-      {{- with .Values.server.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       containers:
-      - name: simple-server
+      - name: {{ .Values.server.name }}
         image: {{ .Values.image }}
         args: ["/sbin/my_init"]
         resources:
@@ -46,6 +42,18 @@ spec:
         volumeMounts:
         - name: logs
           mountPath: /home/app/log
+      {{- with .Values.server.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
@@ -56,6 +64,6 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 1Gi
+          storage: {{ .Values.server.log.storage }}
       volumeMode: Filesystem
 {{ end }}
