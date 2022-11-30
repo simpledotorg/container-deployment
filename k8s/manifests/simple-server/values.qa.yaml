@@ -1,2 +1,14 @@
 ingress:
-  hostname: "api-qa-k8s.simple.org"
+  enabled: true
+  className: "nginx"
+  annotations:
+    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+  hosts:
+    - host: api-qa-k8s.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-qa-k8s.simple.org
+    secretName: api-qa-k8s.simple.org-tls
