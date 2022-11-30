@@ -27,6 +27,18 @@ spec:
         args: ["/sbin/my_init"]
         resources:
           {{- toYaml .Values.server.resources | nindent 12 }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /api/v3/ping
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /api/v3/ping
+            port: http
         envFrom:
           - secretRef:
               name: {{ .Values.secret_name }}
