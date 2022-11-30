@@ -1,6 +1,16 @@
 ingress:
-  hostname: "api.bd-k8s-demo.simple.org"
+  enabled: true
+  className: "nginx"
+  annotations:
+    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+  hosts:
+    - host: api.bd-k8s-demo.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api.bd-k8s-demo.simple.org
+    secretName: api.bd-k8s-demo.simple.org-tls
 migration:
   enabled: true
-server:
-  replica: 2

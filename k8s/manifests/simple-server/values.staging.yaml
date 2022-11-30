@@ -1,5 +1,18 @@
 ingress:
-  hostname: "api.k8s-staging.simple.org"
+  enabled: true
+  className: "nginx"
+  annotations:
+    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+  hosts:
+    - host: api.k8s-staging.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api.k8s-staging.simple.org
+    secretName: api.k8s-staging.simple.org-tls
+
 migration:
   enabled: true
 cron:
