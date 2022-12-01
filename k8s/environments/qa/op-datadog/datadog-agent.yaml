@@ -16,11 +16,14 @@ spec:
       enabled: true
     log:
       enabled: false
+    env:
+      - name: DD_ENV
+        value: "qa"
   clusterAgent:
     config:
       externalMetrics:
       clusterChecksEnabled: true
-  clusterName: qa
+  clusterName: "qa"
   features:
     prometheusScrape:
       enabled: true
