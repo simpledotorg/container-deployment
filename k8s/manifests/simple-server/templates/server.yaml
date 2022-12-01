@@ -23,7 +23,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.server.name }}
-        image: {{ .Values.image }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: ["/sbin/my_init"]
         resources:
           {{- toYaml .Values.server.resources | nindent 12 }}

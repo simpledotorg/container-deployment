@@ -22,7 +22,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.worker.name }}
-        image: {{ .Values.image }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: ["bundle", "exec", "sidekiq",  "-C", "config/sidekiq.yml", "-e", "production"]
         resources:
           {{- toYaml .Values.worker.resources | nindent 12 }}
