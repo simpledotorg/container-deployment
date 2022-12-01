@@ -4,18 +4,18 @@ ingress:
   annotations:
     "cert-manager.io/cluster-issuer": "letsencrypt-prod"
   hosts:
-    - host: api-qa-k8s.simple.org
+    - host: api-qa.simple.org
       paths:
         - path: /
           pathType: ImplementationSpecific
-    - host: dashboard-qa-k8s.simple.org
+    - host: dashboard-qa.simple.org
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
   - hosts:
-    - api-qa-k8s.simple.org
-    secretName: api-qa-k8s.simple.org-tls
+    - api-qa.simple.org
+    secretName: api-qa.simple.org-tls
   - hosts:
-    - dashboard-qa-k8s.simple.org
-    secretName: dashboard-qa-k8s.simple.org-tls
+    - dashboard-qa.simple.org
+    secretName: dashboard-qa.simple.org-tls
