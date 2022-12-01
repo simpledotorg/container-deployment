@@ -14,6 +14,7 @@ cron:
   affinity: {}
   tolerations: []
   enabled: true
+  replicaCount: 1
   resources: {}
 server:
   name: "simple-server"
@@ -21,7 +22,7 @@ server:
   affinity: {}
   tolerations: []
   enabled: true
-  replica: 2
+  replicaCount: 2
   resources: {}
   log:
     storage: 1Gi
@@ -31,7 +32,7 @@ worker:
   affinity: {}
   tolerations: []
   enabled: true
-  replica: 1
+  replicaCount: 1
   resources: {}
 migration:
   name: "migration-job"

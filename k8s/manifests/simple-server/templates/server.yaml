@@ -7,7 +7,7 @@ metadata:
     configmap.reloader.stakater.com/reload: {{ .Values.existingConfigmap }}
     secret.reloader.stakater.com/reload: {{ .Values.existingSecret }}
 spec:
-  replicas: {{ .Values.server.replica }}
+  replicas: {{ .Values.server.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Values.server.name }}
