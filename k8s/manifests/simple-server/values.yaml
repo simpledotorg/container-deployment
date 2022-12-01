@@ -1,4 +1,7 @@
-image: "simpledotorg/server:latest"
+image:
+  repository: simpledotorg/server
+  pullPolicy: IfNotPresent
+  tag: latest
 existingSecret: "simple-server"
 existingConfigmap: "simple-server"
 existingDBSecret:
@@ -38,7 +41,7 @@ worker:
   resources: {}
   podAnnotations: {}
 migration:
-  name: "migration-job"
+  name: migration-job"
   nodeSelector: {}
   affinity: {}
   tolerations: []

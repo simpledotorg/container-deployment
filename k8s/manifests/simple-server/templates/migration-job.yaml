@@ -19,7 +19,8 @@ spec:
       restartPolicy: Never
       containers:
       - name: {{ .Values.migration.name }}
-        image: {{ .Values.image }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: ["bundle", "exec", "rake", "db:migrate"]
         envFrom:
           - secretRef:
