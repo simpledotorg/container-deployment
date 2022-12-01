@@ -41,7 +41,7 @@ worker:
   resources: {}
   podAnnotations: {}
 migration:
-  name: migration-job"
+  name: "migration-job"
   nodeSelector: {}
   affinity: {}
   tolerations: []
