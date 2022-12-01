@@ -1,0 +1,27 @@
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogAgent
+metadata:
+  name: datadog-agent
+  namespace: datadog
+spec:
+  credentials:
+    apiSecret:
+      secretName: datadog
+      keyName: api-key
+    appSecret:
+      secretName: datadog
+      keyName: app-key
+  agent:
+    apm:
+      enabled: true
+    log:
+      enabled: false
+  clusterAgent:
+    config:
+      externalMetrics:
+      clusterChecksEnabled: true
+  clusterName: qa
+  features:
+    prometheusScrape:
+      enabled: true
+      serviceEndpoints: true
