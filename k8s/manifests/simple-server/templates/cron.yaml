@@ -22,7 +22,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.cron.name }}
-        image: {{ .Values.image }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: ["bin/docker-cron"]
         resources:
           {{- toYaml .Values.cron.resources | nindent 12 }}
