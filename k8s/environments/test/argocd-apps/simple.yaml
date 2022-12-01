@@ -117,7 +117,7 @@ spec:
   source:
     path: k8s/manifests/simple-server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: overhaul-simple-helm
+    targetRevision: v0.3.0
     helm:
       valueFiles:
         - values.test.yaml
