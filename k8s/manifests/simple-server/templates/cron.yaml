@@ -7,7 +7,7 @@ metadata:
     configmap.reloader.stakater.com/reload: {{ .Values.existingConfigmap }}
     secret.reloader.stakater.com/reload: {{ .Values.existingSecret }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.cron.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Values.cron.name }}
