@@ -11,6 +11,10 @@ spec:
   template:
     metadata:
       name: {{ .Values.migration.name }}
+      {{- with .Values.migration.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       restartPolicy: Never
       containers:

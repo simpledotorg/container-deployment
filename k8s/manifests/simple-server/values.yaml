@@ -16,6 +16,7 @@ cron:
   enabled: true
   replicaCount: 1
   resources: {}
+  podAnnotations: {}
 server:
   name: "simple-server"
   nodeSelector: {}
@@ -24,6 +25,7 @@ server:
   enabled: true
   replicaCount: 2
   resources: {}
+  podAnnotations: {}
   log:
     storage: 1Gi
 worker:
@@ -34,6 +36,7 @@ worker:
   enabled: true
   replicaCount: 1
   resources: {}
+  podAnnotations: {}
 migration:
   name: "migration-job"
   nodeSelector: {}
@@ -41,5 +44,6 @@ migration:
   tolerations: []
   enabled: false
   resources: {}
+  podAnnotations: {}
 service:
   port: 80
