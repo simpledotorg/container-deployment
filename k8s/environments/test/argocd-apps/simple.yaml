@@ -117,7 +117,7 @@ spec:
   source:
     path: k8s/manifests/simple-server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: v0.3.1
+    targetRevision: master
     helm:
       valueFiles:
         - values.test.yaml
