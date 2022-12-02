@@ -12,6 +12,3 @@ ingress:
   - hosts:
     - api.k8s-test.simple.org
     secretName: api.k8s-test.simple.org-tls
-server:
-  log:
-    storage: 2Gi
