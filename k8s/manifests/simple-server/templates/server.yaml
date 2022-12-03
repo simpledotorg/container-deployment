@@ -32,6 +32,18 @@ spec:
           - name: http
             containerPort: {{ .Values.service.port }}
             protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /api/v3/ping
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/v3/ping
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
         envFrom:
           - secretRef:
               name: {{ .Values.existingSecret }}
