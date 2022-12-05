@@ -12,7 +12,6 @@ redis:
       ad.datadoghq.com/redis.checks: |
         {
           "redisdb": {
-            "init_config": {},
             "instances": [
               {
                 "host": "%%host%%",
