@@ -32,6 +32,18 @@ spec:
           - name: http
             containerPort: {{ .Values.service.port }}
             protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - bin/docker-health-check
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - bin/docker-health-check
+          initialDelaySeconds: 60
+          periodSeconds: 10
         envFrom:
           - secretRef:
               name: {{ .Values.existingSecret }}
