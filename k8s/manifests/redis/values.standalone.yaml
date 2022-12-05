@@ -15,8 +15,7 @@ redis:
             "instances": [
               {
                 "host": "%%host%%",
-                "port":"6379",
-                "password":"%%env_REDIS_PASSWORD%%"
+                "port":"6379"
               }
             ]
           }
