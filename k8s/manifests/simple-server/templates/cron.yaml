@@ -11,6 +11,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Values.cron.name }}
+  serviceName: {{ .Values.cron.name }}
   template:
     metadata:
       labels:
