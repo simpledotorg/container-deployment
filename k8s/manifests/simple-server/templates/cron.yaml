@@ -1,6 +1,6 @@
 {{ if .Values.cron.enabled }}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Values.cron.name }}
   annotations:
@@ -39,6 +39,9 @@ spec:
                 name: {{ .Values.existingDBSecret.name }}
                 key: {{ .Values.existingDBSecret.key }}
                 optional: false
+        volumeMounts:
+        - name: logs
+          mountPath: /home/deploy/apps/simple-server/shared/log
       {{- with .Values.cron.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -51,4 +54,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: logs
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .Values.cron.log.storage }}
+      volumeMode: Filesystem
 {{ end }}
