@@ -20,6 +20,8 @@ cron:
   replicaCount: 1
   resources: {}
   podAnnotations: {}
+  log:
+    storage: 1Gi # When storage class is local-path, size will have no effect
 server:
   name: "simple-server"
   nodeSelector: {}
@@ -30,7 +32,7 @@ server:
   resources: {}
   podAnnotations: {}
   log:
-    storage: 1Gi
+    storage: 1Gi # When storage class is local-path, size will have no effect
 worker:
   name: "simple-worker"
   nodeSelector: {}
