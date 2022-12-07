@@ -33,6 +33,9 @@ server:
   podAnnotations: {}
   log:
     storage: 1Gi # When storage class is local-path, size will have no effect
+  podSecurityContext: {
+    fsGroup: 9999
+  }
 worker:
   name: "simple-worker"
   nodeSelector: {}
@@ -42,6 +45,9 @@ worker:
   replicaCount: 1
   resources: {}
   podAnnotations: {}
+  podSecurityContext: {
+    fsGroup: 9999
+  }
 migration:
   name: "migration-job"
   nodeSelector: {}
@@ -50,5 +56,8 @@ migration:
   enabled: false
   resources: {}
   podAnnotations: {}
+  podSecurityContext: {
+    fsGroup: 9999
+  }
 service:
   port: 80
