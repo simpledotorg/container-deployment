@@ -1,6 +1,6 @@
 {{ if .Values.worker.enabled }}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Values.worker.name }}
   annotations:
@@ -11,6 +11,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Values.worker.name }}
+  serviceName: {{ .Values.worker.name }}
   template:
     metadata:
       labels:
@@ -41,6 +42,9 @@ spec:
                 name: {{ .Values.existingDBSecret.name }}
                 key: {{ .Values.existingDBSecret.key }}
                 optional: false
+        volumeMounts:
+        - name: logs
+          mountPath: /home/app/log
       {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -53,4 +57,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: logs
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .Values.worker.log.storage }}
+      volumeMode: Filesystem
 {{ end }}
