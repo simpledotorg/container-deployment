@@ -45,6 +45,8 @@ worker:
   replicaCount: 1
   resources: {}
   podAnnotations: {}
+  log:
+    storage: 1Gi # When storage class is local-path, size will have no effect
   podSecurityContext: {
     fsGroup: 9999
   }
