@@ -27,7 +27,7 @@ Example: k8s/environment/staging
 ```
 KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubeseal --fetch-cert > <env-name>-sealedsecret.pem --controller-namespace sealed-secrets --controller-name=sealed-secrets
 ```
-- Save the key under `/scripts/<env-name>-sealedsecret.pem` in your local machine and commit the change
+- Save the key under `/scripts/<env-name>-sealedsecret.pem` in your local machine and save it in 1Password
 - Install kubeseal on local machine. `brew install kubeseal`
 - Update the secrets under `k8s/environment/<env-name>/secrets` with valid base64 encoded keys
 - Encrypt the secret using kubeseal. Replace `<env-name>` in the command with new environment name and commit the secrets to git
