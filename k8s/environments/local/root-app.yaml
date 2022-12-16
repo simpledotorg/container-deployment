@@ -8,7 +8,7 @@ spec:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/test/argocd-apps
+    path: k8s/environments/local/argocd-apps
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: local
   project: default
