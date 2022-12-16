@@ -13,7 +13,7 @@ spec:
     targetRevision: local
     helm:
       valueFiles:
-        - values.test.yaml
+        - values.local.yaml
   project: default
   syncPolicy:
     syncOptions:
