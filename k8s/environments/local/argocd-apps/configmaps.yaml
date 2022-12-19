@@ -7,7 +7,7 @@ spec:
     name: ''
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/test/configmaps
+    path: k8s/environments/local/configmaps
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: local
   project: default
