@@ -2,6 +2,7 @@
 Automation and manifests for container deployment
 
 ## Index
+- [Local setup using Minikube](./doc/LocalSetup.md)
 - [Runbook](./doc/RUNBOOK.md)
 - [Recommended VM requirements](./doc/recommended_vm_requirements.md)
 - [New environment creation](./doc/NewEnvironmentSetup.md)
