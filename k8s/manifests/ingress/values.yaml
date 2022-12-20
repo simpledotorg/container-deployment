@@ -12,6 +12,8 @@ ingress-nginx:
       enabled: true
     config:
       nginx-status-ipv4-whitelist: "10.0.0.0/8,172.16.0.0/12"
+      proxy-body-size: "4g"
+      keep-alive: 10
     podAnnotations:
       ad.datadoghq.com/controller.checks: |
         {
