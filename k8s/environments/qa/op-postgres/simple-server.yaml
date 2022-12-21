@@ -74,6 +74,8 @@ spec:
       postgresql:
         parameters:
           synchronous_commit: "on"
+          shared_buffers: "2GB"
+          
   monitoring:
     pgmonitor:
       exporter:
