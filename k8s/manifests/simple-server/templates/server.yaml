@@ -37,8 +37,8 @@ spec:
         livenessProbe:
           exec:
             command:
-            - bin/docker-health-check
-            - 60
+            - "bin/docker-health-check"
+            - "60"
           initialDelaySeconds: 60
           periodSeconds: 60
           timeoutSeconds: 60
