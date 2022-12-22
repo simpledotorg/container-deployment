@@ -37,15 +37,19 @@ spec:
         livenessProbe:
           exec:
             command:
-            - bin/docker-health-check
+            - "bin/docker-health-check"
+            - "10"
           initialDelaySeconds: 60
-          periodSeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 10
         readinessProbe:
           exec:
             command:
-            - bin/docker-health-check
+            - "bin/docker-health-check"
+            - "10"
           initialDelaySeconds: 60
-          periodSeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 10
         envFrom:
           - secretRef:
               name: {{ .Values.existingSecret }}
