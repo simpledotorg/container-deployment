@@ -45,9 +45,11 @@ spec:
         readinessProbe:
           exec:
             command:
-            - bin/docker-health-check
+            - "bin/docker-health-check"
+            - "60"
           initialDelaySeconds: 60
-          periodSeconds: 10
+          periodSeconds: 60
+          timeoutSeconds: 60
         envFrom:
           - secretRef:
               name: {{ .Values.existingSecret }}
