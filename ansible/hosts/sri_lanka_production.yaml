@@ -1,0 +1,66 @@
+---
+
+all:
+  children:
+    k3s_master_node:
+      hosts:
+        moh-hrms-simple-05:
+          ansible_host: 192.168.1.221
+    k3s_master_nodes:
+      children:
+        k3s_master_node:
+      hosts:
+        moh-hrms-simple-09:
+          ansible_host: 192.168.1.207
+        moh-hrms-simple-13:
+          ansible_host: 192.168.1.204
+    k3s_worker_nodes:
+      hosts:
+        moh-hrms-simple-01:
+          ansible_host: 192.168.1.243
+          k3s_node_labels:
+            - "role-db=true"
+        moh-hrms-simple-02:
+          ansible_host: 192.168.1.241
+          k3s_node_labels:
+            - "role-db=true"
+        moh-hrms-simple-03:
+          ansible_host: 192.168.1.234
+          k3s_node_labels:
+            - "role-cache-redis=true"
+        moh-hrms-simple-04:
+          ansible_host: 192.168.1.233
+          k3s_node_labels:
+            - "role-worker-redis=true"
+        moh-hrms-simple-06:
+          ansible_host: 192.168.1.219
+          k3s_node_labels:
+            - "role-server=true"
+        moh-hrms-simple-07:
+          ansible_host: 192.168.1.218
+          k3s_node_labels:
+            - "role-cache-redis=true"
+        moh-hrms-simple-08:
+          ansible_host: 192.168.1.217
+          k3s_node_labels:
+            - "role-metabase=true"
+        moh-hrms-simple-10:
+          ansible_host: 192.168.1.208
+          k3s_node_labels:
+            - "role-worker=true"
+            - "role-cron=true"
+        moh-hrms-simple-11:
+          ansible_host: 192.168.1.209
+          k3s_node_labels:
+            - "role-worker-redis=true"
+        moh-hrms-simple-12:
+          ansible_host: 192.168.1.210
+          k3s_node_labels:
+            - "role-server=true"
+    k3s_cluster:
+      children:
+        k3s_master_nodes:
+        k3s_worker_nodes:
+    sri_lanka_production:
+      children:
+        k3s_cluster:
