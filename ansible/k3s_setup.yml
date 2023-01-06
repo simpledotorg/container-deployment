@@ -1,7 +1,7 @@
 ---
 
 - name: Install Argocd
-  hosts: node-01 # Use one of k3s master node
+  hosts: k3s_master_node
   become: true
   roles:
     - role: argocd

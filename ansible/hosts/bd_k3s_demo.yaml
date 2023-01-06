@@ -2,10 +2,14 @@
 
 all:
   children:
-    k3s_master_nodes:
+    k3s_master_node:
       hosts:
         node-0:
           ansible_host: 159.89.174.186
+    k3s_master_nodes:
+      children:
+        k3s_master_node:
+      hosts:
         node-1:
           ansible_host: 143.244.131.159
         node-2:
