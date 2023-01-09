@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: add ssh keys for the remote user
+      become: true
+      authorized_key:
+        key: "ssh key string"
+        user: "ubuntu"
