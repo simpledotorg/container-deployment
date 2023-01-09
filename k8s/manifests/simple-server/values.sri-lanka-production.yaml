@@ -62,3 +62,6 @@ migration:
             operator: In
             values:
             - "true"
+existingDBSecret:
+  name: "simple-pguser-simple_db_master_user"
+  key: "password"
