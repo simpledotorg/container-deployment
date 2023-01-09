@@ -1,0 +1,63 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+  hosts:
+    - host: api-k8s.lk.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-k8s.lk.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-k8s.lk.simple.org
+    secretName: api-k8s.lk.simple.org-tls
+  - hosts:
+    - dashboard-k8s.lk.simple.org
+    secretName: dashboard-k8s.lk.simple.org-tls
+migration:
+  enabled: false
+cron:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-cron
+            operator: In
+            values:
+            - "true"
+server:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-server
+            operator: In
+            values:
+            - "true"
+worker:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-worker
+            operator: In
+            values:
+            - "true"
+migration:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-server
+            operator: In
+            values:
+            - "true"

@@ -1,0 +1,124 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: simple
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.5-1
+  postgresVersion: 14
+  users:
+    - name: admin
+      databases:
+        - postgres
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+    - name: simple
+      databases:
+        - simple
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+    - name: metabase
+      databases:
+        - metabase
+      password:
+        type: AlphaNumeric
+  instances:
+    - name: instance1
+      replicas: 2
+      dataVolumeClaimSpec:
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 800Gi # As local path storage is being used in K8s, the values specified here have no effect
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role-db
+                operator: In
+                values:
+                - "true"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: simple
+                  postgres-operator.crunchydata.com/instance-set: instance1
+      metadata:
+        labels:
+          tags.datadoghq.com/service: "postgrescluster-simple"
+          tags.datadoghq.com/version: "14"
+        annotations:
+          ad.datadoghq.com/database.check_names: '["openmetrics"]'
+          ad.datadoghq.com/database.init_configs: '[{}]'
+          ad.datadoghq.com/database.instances: '[{"prometheus_url":"http://%%host%%:9187/metrics","namespace": "crunchy_data","metrics": ["*"]}]'
+  backups:
+    pgbackrest:
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db
+                  operator: In
+                  values:
+                  - "true"
+      global:
+        repo1-retention-full: "14"
+        repo1-retention-full-type: time
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
+      repos:
+      - name: repo1
+        schedules:
+          full: "0 1 * * 0"
+          differential: "0 1 * * 1-6"
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 800Gi # As local path storage is being used in K8s, the values specified here have no effect
+      jobs:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db
+                  operator: In
+                  values:
+                  - "true"
+  patroni:
+    dynamicConfiguration:
+      synchronous_mode: true
+      postgresql:
+        parameters:
+          synchronous_commit: "on"
+          max_connections: "200"
+          shared_buffers: "4GB"
+          effective_cache_size: "12GB"
+          maintenance_work_mem: "1GB"
+          checkpoint_completion_target: "0.9"
+          wal_buffers: "16MB"
+          default_statistics_target: "100"
+          random_page_cost: "1.1"
+          effective_io_concurrency: "200"
+          work_mem: "5242kB"
+          min_wal_size: "1GB"
+          max_wal_size: "4GB"
+          max_worker_processes: "8"
+          max_parallel_workers_per_gather: "4"
+          max_parallel_workers: "8"
+          max_parallel_maintenance_workers: "4"
+  monitoring:
+    pgmonitor:
+      exporter:
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.2.0-0
