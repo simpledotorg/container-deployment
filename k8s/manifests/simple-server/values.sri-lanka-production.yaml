@@ -22,6 +22,7 @@ ingress:
 migration:
   enabled: false
 cron:
+  enabled: false
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
