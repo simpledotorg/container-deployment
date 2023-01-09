@@ -7,6 +7,7 @@ Automation and manifests for container deployment
 - [Recommended VM requirements](./doc/recommended_vm_requirements.md)
 - [New environment creation](./doc/NewEnvironmentSetup.md)
 - [Reference docs](./doc/REFERENCES.md)
+- [LVM volume setup](./doc/LVMVolumeSetup.md)
 
 ## Folder structure
 ```
