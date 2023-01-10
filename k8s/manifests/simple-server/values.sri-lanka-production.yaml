@@ -63,5 +63,5 @@ migration:
             values:
             - "true"
 existingDBSecret:
-  name: "simple-pguser-simple_db_master_user"
+  name: "simple-pguser-simple"
   key: "password"
