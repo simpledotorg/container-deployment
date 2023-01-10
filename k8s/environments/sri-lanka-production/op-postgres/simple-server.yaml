@@ -12,7 +12,7 @@ spec:
       options: "SUPERUSER"
       password:
         type: AlphaNumeric
-    - name: simple_db_master_user
+    - name: simple
       databases:
         - simple_db_sri_lanka_production_001
       options: "SUPERUSER"

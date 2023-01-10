@@ -38,7 +38,7 @@ data:
   SIDEKIQ_REDIS_HOST: "worker-redis-master"
   SIMPLE_SERVER_DATABASE_NAME: "simple_db_sri_lanka_production_001"
   SIMPLE_SERVER_DATABASE_HOST: "simple-primary"
-  SIMPLE_SERVER_DATABASE_USERNAME: "simple_db_master_user"
+  SIMPLE_SERVER_DATABASE_USERNAME: "simple"
   SIMPLE_SERVER_ENV: "production"
   SIMPLE_SERVER_HOST: "api.lk.simple.org"
   SIMPLE_SERVER_HOST_PROTOCOL: "https"
