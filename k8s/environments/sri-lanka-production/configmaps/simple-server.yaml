@@ -30,7 +30,7 @@ data:
   HELP_SCREEN_YOUTUBE_TRAINING_URL: "https://youtu.be/MC_45DoRw2g"
   HELP_SCREEN_YOUTUBE_VIDEO_URL: "https://youtu.be/YjfPCUtZHlI"
   PROGRAM_INCEPTION_DATE: "2021-08-01"
-  RAILS_CACHE_REDIS_URL: "redis://redis-master:6379/0"
+  RAILS_CACHE_REDIS_URL: "redis://cache-redis-master:6379/0"
   RAILS_MAX_THREADS: "20"
   SENTRY_CURRENT_ENV: "production"
   SIDEKIQ_CONCURRENCY: "10"
