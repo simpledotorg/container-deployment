@@ -5,9 +5,8 @@ redis:
     tag: "7.0.5-debian-11-r7"
   auth:
     enabled: false
-    sentinel: false
-  sentinel:
-    enabled: true
+  replica:
+    replicaCount: 1
   master:
     affinity:
       podAntiAffinity:
