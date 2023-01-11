@@ -52,7 +52,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: redis
+  name: cache-redis
 spec:
   destination:
     name: ''
