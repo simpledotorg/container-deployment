@@ -153,12 +153,31 @@ spec:
 apiVersion: datadoghq.com/v1alpha1
 kind: DatadogMonitor
 metadata:
-  name: sri-lanka-production-k8s-redis-running-pod-count
+  name: sri-lanka-production-k8s-cache-redis-running-pod-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:redis} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_instance:cache-redis} < 2"
   type: "query alert"
-  name: "sri-lanka-production-k8s-redis-running-pod-count"
+  name: "sri-lanka-production-k8s-cache-redis-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:sri-lanka-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: sri-lanka-production-k8s-worker-redis-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_instance:worker-redis} < 2"
+  type: "query alert"
+  name: "sri-lanka-production-k8s-worker-redis-running-pod-count"
   message: "@slack-alerts"
   options:
     notifyNoData: true
