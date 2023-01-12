@@ -4,7 +4,7 @@ metadata:
   name: sri-lanka-production-k8s-healthy-host-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:sri-lanka-production-k8s} < 13"
+  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:sri-lanka-production-k8s} < 14"
   type: "query alert"
   name: "sri-lanka-production-k8s-healthy-host-count"
   message: "@slack-alerts"
