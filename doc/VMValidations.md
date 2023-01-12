@@ -8,3 +8,4 @@
 * Check memory and CPU size `htop`
 * Check OS and Kernel version `uname -r` `cat /etc/issue`
 * Ensure hostname is unique on all the hosts `hostname`
+* Check outbound SMTP traffic `telnet smtp.sendgrid.net 587`
