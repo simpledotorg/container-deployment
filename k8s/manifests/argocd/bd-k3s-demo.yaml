@@ -1,2 +1,0 @@
-ingress:
-  hostname: "argocd.bd-k8s-demo.simple.org"
