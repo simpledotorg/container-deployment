@@ -26,7 +26,6 @@ argo-cd:
         - slack:argocd-alerts
         triggers:
         - on-sync-failed
-        - on-sync-status-unknown
         - on-health-degraded
     templates:
       template.app-deployed: |
