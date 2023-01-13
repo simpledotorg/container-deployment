@@ -1,0 +1,9 @@
+#! /bin/bash
+
+DIR="**/secrets"
+
+for f in ${DIR}/*.yaml.decrypted
+do
+  echo "Encrypting $f to $f.vault"
+  cat $f | ansible-vault encrypt --vault-id $1 --output $f.vault
+done

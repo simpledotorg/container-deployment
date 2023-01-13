@@ -2,6 +2,7 @@
 Automation and manifests for container deployment
 
 ## Index
+- [Secret Management](./doc/SecretManagement.md)
 - [Local setup using Minikube](./doc/LocalSetup.md)
 - [Runbook](./doc/RUNBOOK.md)
 - [Recommended VM requirements](./doc/recommended_vm_requirements.md)
