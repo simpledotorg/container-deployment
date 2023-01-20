@@ -33,3 +33,6 @@ all: ##@Setup Install simple-server on hosts. Runs the all.yml playbook
 
 debug: ##@Debug Fetch debug information from hosts
 	ansible-playbook debug.yml -i hosts/$(hosts)
+
+update-ssh-keys: ##@Utilities Update ssh keys on boxes. Add keys to `roles/ssh/` under the appropriate environment
+	ansible-playbook host_ssh_setup.yml -i hosts/$(hosts)

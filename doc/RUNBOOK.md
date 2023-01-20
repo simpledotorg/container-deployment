@@ -8,6 +8,12 @@
 ssh -A -J ubuntu@jump-host-ip  ubuntu@host-private-ip
 ```
 
+### Sri Lanka DC SSH
+- To connect to Sri Lanka VMs using ssh, use SSLVPN web portal (Credentials are in password management tool)
+- And connect jump box VM (Credentials are in password management tool)
+- Switch to Ubuntu user `sudo su - ubuntu -c zsh`
+- CD to container deployment folder `cd /opt/container-deployment`
+
 ## How to open Rails application console?
 
 - Step1: [SSH into k8s node](#ssh)
@@ -37,3 +43,17 @@ psql -U postgres -h postgres-postgresql-ha-pgpool
 ```
 
 ## [Decrypt/Encrypt k8s secrets](./SecretManagement.md)
+
+## Update SSH keys
+
+To manage the authorized SSH keys that can access your servers,
+
+First, add or remove the appropriate SSH keys from the `group_vars/<your deployment name>/vars.yml` file
+
+Then, run the following command.
+
+```bash
+make update-ssh-keys hosts=<your_deployment_name.yaml>
+```
+
+Note: Run this command from jump box in Sri Lanka DC, [steps](#sri-lanka-dc-ssh)
