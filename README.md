@@ -11,6 +11,7 @@ Automation and manifests for container deployment
 - [LVM volume setup](./doc/LVMVolumeSetup.md)
 - [Basic VM Validations](./doc/VMValidations.md)
 - [Datadog Monitoring](./doc/DatadogMonitoring.md)
+- [Deploy branch for testing k8s manifest changes](./doc/DeployBranch.md)
 
 ## Folder structure
 ```
