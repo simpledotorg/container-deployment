@@ -19,3 +19,17 @@ ingress:
   - hosts:
     - dashboard-qa.simple.org
     secretName: dashboard-qa.simple.org-tls
+ingressSecondary:
+  enabled: true
+  className: "nginx"
+  annotations:
+    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+  hosts:
+    - host: api-qa-secondary.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-qa-secondary.simple.org
+    secretName: api-qa-secondary.simple.org-tls
