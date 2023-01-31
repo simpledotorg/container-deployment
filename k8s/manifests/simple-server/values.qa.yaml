@@ -24,6 +24,9 @@ ingressSecondary:
   className: "nginx"
   annotations:
     "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+    "nginx.ingress.kubernetes.io/auth-type": "basic"
+    "nginx.ingress.kubernetes.io/auth-secret": "basic-auth"
+    "nginx.ingress.kubernetes.io/auth-realm": "Authentication Required"
   hosts:
     - host: api-qa-secondary.simple.org
       paths:
