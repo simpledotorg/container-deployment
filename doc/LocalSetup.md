@@ -14,7 +14,7 @@
 
 ## Create manifests
 - Create a new branch for local setup `git checkout -b local-<your-name>`. Replace `<your-name>`, ex: `local-john`
-- Replace the `targetRevision: loca` to `targetRevision: local-<your-name>` in `k8s/environments/local/argocd-apps` and ` k8s/environments/local/root-app.yaml`
+- Replace the `targetRevision: local` to `targetRevision: local-<your-name>` in `k8s/environments/local/argocd-apps` and ` k8s/environments/local/root-app.yaml`
 - Git push branch `git push origin local-<your-name>`
 
 ## Create root Argocd app
