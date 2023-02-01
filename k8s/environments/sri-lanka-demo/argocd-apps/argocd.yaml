@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+spec:
+  destination:
+    name: ''
+    namespace: argocd
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/argo-cd
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo
+    helm:
+      valueFiles:
+        - values.sri-lanka-demo.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

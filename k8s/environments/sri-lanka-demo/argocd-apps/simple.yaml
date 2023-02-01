@@ -1,0 +1,159 @@
+# Postgres operator
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgo
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/pgo
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - Replace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgo-postgres
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sri-lanka-demo/op-postgres
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Cache redis
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cache-redis
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/redis
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo
+    helm:
+      valueFiles:
+        - values.standalone.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Worker redis
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: worker-redis
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/redis
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo
+    helm:
+      valueFiles:
+        - values.standalone.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Simple server, worker and cron
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: simple-server
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/simple-server
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo
+    helm:
+      valueFiles:
+        - values.sri-lanka-demo.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Metabase
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metabase
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/metabase
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo
+    helm:
+      valueFiles:
+        - values.sri-lanka-demo.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

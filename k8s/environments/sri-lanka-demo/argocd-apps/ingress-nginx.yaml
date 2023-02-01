@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+spec:
+  destination:
+    name: ''
+    namespace: ingress-nginx
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/ingress
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

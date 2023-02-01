@@ -1,0 +1,21 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+  hosts:
+    - host: api-demo-k8s.lk.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-demo-k8s.lk.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-demo-k8s.lk.simple.org
+    secretName: api-demo-k8s.lk.simple.org-tls
+  - hosts:
+    - dashboard-demo-k8s.lk.simple.org
+    secretName: dashboard-demo-k8s.lk.simple.org-tls
