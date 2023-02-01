@@ -19,3 +19,5 @@ ingress:
   - hosts:
     - dashboard-demo-k8s.lk.simple.org
     secretName: dashboard-demo-k8s.lk.simple.org-tls
+cron:
+  enabled: false
