@@ -32,24 +32,6 @@ spec:
         resources:
           requests:
             storage: 10Gi # As local path storage is being used in K8s, the values specified here have no effect
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: role-db
-                operator: In
-                values:
-                - "true"
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchLabels:
-                  postgres-operator.crunchydata.com/cluster: simple
-                  postgres-operator.crunchydata.com/instance-set: instance1
       metadata:
         labels:
           tags.datadoghq.com/service: "postgrescluster-simple"
@@ -86,16 +68,6 @@ spec:
             resources:
               requests:
                 storage: 10Gi # As local path storage is being used in K8s, the values specified here have no effect
-      jobs:
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: role-db
-                  operator: In
-                  values:
-                  - "true"
   patroni:
     dynamicConfiguration:
       synchronous_mode: true
