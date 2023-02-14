@@ -39,7 +39,7 @@ kubectl exec -it simple-server-0 /bin/bash -n simple-v1
 
 - Step3: Run psql comand
 ```
-psql -U postgres -h postgres-postgresql-ha-pgpool
+PGPASSWORD=$SIMPLE_SERVER_DATABASE_PASSWORD psql -h $SIMPLE_SERVER_DATABASE_HOST -U $SIMPLE_SERVER_DATABASE_USERNAME -d $SIMPLE_SERVER_DATABASE_NAME
 ```
 
 ## [Decrypt/Encrypt k8s secrets](./SecretManagement.md)
