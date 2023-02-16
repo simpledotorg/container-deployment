@@ -67,7 +67,7 @@ spec:
           mountPath: /home/app/log
       - name: log-tailer
         image: ubuntu:22.04
-        command: ["/bin/bash", "-c", "echo 'test log...' >> /var/log/test.log && tail -f /var/log/test.log'"]
+        command: ["/bin/bash", "-c", "echo 'test log...' >> /var/log/test.log && tail -f /var/log/test.log"]
         tty: true
         stdin: true
         volumeMounts:
