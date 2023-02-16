@@ -67,8 +67,7 @@ spec:
           mountPath: /home/app/log
       - name: log-tailer
         image: ubuntu:22.04
-        command: ["tail", "-F", "/home/app/log/production.log"]
-        args: ["| tee -a /dev/stdout"]
+        command: ["/bin/bash", "-c", "tail -F /home/app/log/production.log | tee /dev/stdout"]
         tty: true
         stdin: true
         volumeMounts:
