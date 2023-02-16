@@ -66,7 +66,7 @@ spec:
         - name: logs
           mountPath: /home/app/log
       - name: log-tailer
-        image: alpine
+        image: ubuntu:22.04
         command: ["tail", "-F", "/home/app/log/production.log"]
         tty: true
         stdin: true
