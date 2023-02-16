@@ -67,7 +67,9 @@ spec:
           mountPath: /home/app/log
       - name: log-tailer
         image: alpine
-        command: ["tail", "-f", "/home/app/log/production.log"]
+        command: ["tail", "-F", "/home/app/log/production.log"]
+        tty: true
+        stdin: true
         volumeMounts:
         - name: logs
           mountPath: /home/app/log
