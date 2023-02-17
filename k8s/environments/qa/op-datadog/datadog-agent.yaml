@@ -24,6 +24,10 @@ spec:
       env:
         - name: DD_ENV
           value: "qa"
+    process:
+      env:
+        - name: DD_ENV
+          value: "qa"
   clusterAgent:
     config:
       externalMetrics:
