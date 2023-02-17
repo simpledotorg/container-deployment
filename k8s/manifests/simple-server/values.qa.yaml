@@ -19,13 +19,3 @@ ingress:
   - hosts:
     - dashboard-qa.simple.org
     secretName: dashboard-qa.simple.org-tls
-server:
-  podAnnotations: {
-    ad.datadoghq.com/simple-server.logs: '[{"type": "file", "path": "/home/app/log/production.log", "source": "simple-server", "service": "simple-server"}]'
-  }
-worker:
-    podAnnotations: {
-    ad.datadoghq.com/simple-worker.logs: '[{"type": "file", "path": "/home/app/log/production.log", "source": "simple-worker", "service": "simple-worker"}]'
-  }
-cron:
-  ad.datadoghq.com/simple-cron.logs: '[{"type": "file", "path": "/home/deploy/apps/simple-server/shared/log/cron.log", "source": "simple-cron", "service": "simple-cron"}]'
