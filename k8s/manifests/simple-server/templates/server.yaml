@@ -65,8 +65,9 @@ spec:
         volumeMounts:
         - name: logs
           mountPath: /home/app/log
+      {{ if .Values.logTailer.enabled }}
       - name: log-tailer
-        image: ubuntu:22.04
+        image: "{{ .Values.logTailer.image.repository }}:{{ .Values.logTailer.image.tag }}"
         command: ["/bin/bash", "-c", "tail -F -n 0 /home/app/log/production.log"]
         tty: true
         stdin: true
@@ -74,6 +75,7 @@ spec:
         - name: logs
           mountPath: /home/app/log
           readOnly: true
+      {{ end }}
       {{- with .Values.server.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

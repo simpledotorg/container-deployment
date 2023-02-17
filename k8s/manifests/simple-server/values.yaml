@@ -61,5 +61,11 @@ migration:
   podSecurityContext: {
     fsGroup: 9999
   }
+logTailer:
+  enabled: true
+  image:
+    repository: ubuntu
+    pullPolicy: IfNotPresent
+    tag: 22.04
 service:
   port: 80
