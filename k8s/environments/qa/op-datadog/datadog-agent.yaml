@@ -12,6 +12,8 @@ spec:
       secretName: datadog
       keyName: app-key
   agent:
+    image:
+      name: gcr.io/datadoghq/agent:7.42.2
     apm:
       enabled: true
     log:
@@ -29,6 +31,8 @@ spec:
         - name: DD_ENV
           value: "qa"
   clusterAgent:
+    image:
+      name: gcr.io/datadoghq/agent:7.42.2
     config:
       externalMetrics:
       clusterChecksEnabled: true
