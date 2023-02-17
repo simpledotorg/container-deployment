@@ -15,7 +15,8 @@ spec:
     apm:
       enabled: true
     log:
-      enabled: false
+      enabled: true
+      logsConfigContainerCollectAll: true
     env:
       - name: DD_ENV
         value: "qa"

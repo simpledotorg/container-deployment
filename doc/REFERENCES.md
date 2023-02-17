@@ -29,3 +29,6 @@
 # Argocd
 - [Sync options](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/)
 - [Current sync status vs Last sync status in UI](https://github.com/argoproj/argo-cd/issues/7629)
+
+# Datadog logs integration
+- [Datadog logs integration](https://docs.datadoghq.com/containers/kubernetes/log/?tab=operator)
