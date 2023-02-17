@@ -62,7 +62,7 @@ migration:
     fsGroup: 9999
   }
 logTailer:
-  enabled: false
+  enabled: true
   image:
     repository: ubuntu
     pullPolicy: IfNotPresent
