@@ -32,3 +32,7 @@
 
 # Datadog logs integration
 - [Datadog logs integration](https://docs.datadoghq.com/containers/kubernetes/log/?tab=operator)
+
+# Datadog k8s operator
+- [Agent Spec](https://github.com/DataDog/datadog-operator/blob/main/docs/configuration.v1alpha1.md)
+
