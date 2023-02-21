@@ -27,6 +27,8 @@ argo-cd:
         triggers:
         - on-sync-failed
         - on-health-degraded
+        - on-sync-succeeded
+        - on-sync-running
     templates:
       template.app-deployed: |
         email:
