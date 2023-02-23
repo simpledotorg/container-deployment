@@ -12,6 +12,8 @@ argo-cd:
   global:
     image:
       tag: "v2.5.2"
+    logging:
+      level: error
   notifications:
     secret:
       create: false
