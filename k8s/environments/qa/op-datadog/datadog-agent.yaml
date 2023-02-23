@@ -20,6 +20,8 @@ spec:
     env:
       - name: DD_ENV
         value: "qa"
+    config:
+      logLevel: error
   clusterAgent:
     config:
       externalMetrics:

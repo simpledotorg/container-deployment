@@ -3,3 +3,4 @@ datadog-operator:
   appKeyExistingSecret: datadog
   datadogMonitor:
     enabled: true
+  logLevel: error

@@ -20,6 +20,8 @@ spec:
     env:
       - name: DD_ENV
         value: "sri-lanka-production-k8s"
+    config:
+      logLevel: error
   clusterAgent:
     config:
       externalMetrics:
