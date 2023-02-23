@@ -32,6 +32,9 @@ cron:
             operator: In
             values:
             - "true"
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sri-lanka-production-k8s"]}]'
+  }
 server:
   affinity:
     nodeAffinity:
@@ -42,6 +45,9 @@ server:
             operator: In
             values:
             - "true"
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sri-lanka-production-k8s"]}]'
+  }
 worker:
   affinity:
     nodeAffinity:
@@ -52,6 +58,9 @@ worker:
             operator: In
             values:
             - "true"
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sri-lanka-production-k8s"]}]'
+  }
 migration:
   affinity:
     nodeAffinity:
