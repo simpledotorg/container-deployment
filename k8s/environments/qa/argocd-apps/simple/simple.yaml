@@ -148,7 +148,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.qa.yaml
+        - ./values.metabase.yaml
   project: default
   syncPolicy:
     syncOptions:
