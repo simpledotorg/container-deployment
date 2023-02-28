@@ -30,4 +30,4 @@ cd k8s/environments
 # Commit the changes
 ```
 
-`decrypt` , `encrypt` and `kubeseal_encrypt` supports multiple options to decrypt/encrypt secrets in a all the environments or a specific environment or a specific file. Please refer the usage section below for more details.
+`decrypt` , `encrypt` and `kubeseal_encrypt` supports multiple options to decrypt/encrypt secrets in a all the environments or a specific environment or a specific file. Please refer the usage section for more details.
