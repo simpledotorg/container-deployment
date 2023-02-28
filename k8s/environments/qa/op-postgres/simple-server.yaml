@@ -69,6 +69,8 @@ spec:
               requests:
                 storage: 10Gi
   patroni:
+    log:
+      level: ERROR
     dynamicConfiguration:
       synchronous_mode: true
       postgresql:
