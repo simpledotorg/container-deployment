@@ -69,14 +69,14 @@ spec:
               requests:
                 storage: 10Gi
   patroni:
-    log:
-      level: ERROR
     dynamicConfiguration:
       synchronous_mode: true
       postgresql:
         parameters:
           synchronous_commit: "on"
           shared_buffers: "2GB"
+      log:
+        level: ERROR
           
   monitoring:
     pgmonitor:
