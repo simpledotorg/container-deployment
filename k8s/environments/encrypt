@@ -1,9 +1,54 @@
 #! /bin/bash
 
-DIR="**/secrets"
+# Display usage information
+function usage() {
+  echo "Usage: encrypt <vault_id> [file_path]"
+  echo "  vault_id: the vault id to use for encryption"
+  echo "  file_path: the file or folder to encrypt"
+  echo "    if file_path is not provided, all files in **/secrets will be encrypted"
+  echo "    if file_path is a file, it will be encrypted"
+  echo "    if file_path is a folder, all files in secrets will be encrypted"
+}
 
-for f in ${DIR}/*.yaml.decrypted
-do
-  echo "Encrypting $f to $f.vault"
-  cat $f | ansible-vault encrypt --vault-id $1 --output $f.vault
-done
+# Encrypt a single file
+function encrypt_file() {
+  local file_path=$1
+  local output_path="${file_path}.vault" # add .vault to the end of the file name
+  echo "encrypting $file_path to $output_path"
+  cat "$file_path" | ansible-vault encrypt --vault-id "$vault_id" --output "$output_path"
+}
+
+# Encrypt all files in a folder
+function encrypt_folder() {
+  local folder_path=$1
+  for file_path in ${folder_path}/*.yaml.decrypted
+  do
+    encrypt_file "$file_path"
+  done
+}
+
+# Main script
+
+# Parse arguments
+vault_id=$1
+input_file_path=$2
+
+# Show help if no arguments are provided
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+# Set file path based on input
+if [ -z "$input_file_path" ]; then # if no file path is provided, encrypt all files in **/secrets
+  file_path="**/secrets"
+  encrypt_folder "$file_path"
+else
+  if [ -f "$input_file_path" ]; then # if file path is a file, encrypt it
+    file_path="$input_file_path"
+    encrypt_file "$file_path"
+  else # if file path is a folder, encrypt all files in secrets
+    file_path="$input_file_path/secrets"
+    encrypt_folder "$file_path"
+  fi
+fi

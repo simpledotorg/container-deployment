@@ -9,10 +9,25 @@ Kubeseal: Encrypts and decrypts secrets at k8s level. Kubeseal does not allow lo
 * Kubeseal `brew install kubeseal`
 
 ## Update/edit a secret key
-* `cd k8s/environments`
-* ` ./decrypt /path/to/vault/password/file`
-* Update the relevant secret files. Example: `sri-lanka-production/secrets/simple-server.sealedsecret.yaml.decrypted`
-* `./encrypt <path-to-vault-password-file>`
-* Fetch and save the latest Kubeseal pem file form K8s master node using `KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubeseal --fetch-cert --controller-namespace sealed-secrets --controller-name=sealed-secrets`. Note: PEM key is rotated every month, hence always fetch latest PEM key
-* `./kubeseal_encrypt <environment-folder> <path-to-vault-pem-file>`. Example: `./kubeseal_encrypt qa ../../scripts/qa-sealedsecret.pem`
-* Commit changes to git
+* Step1: Decrypt Vault secrets
+* Step2: Edit the secret key
+* Step3: Encrypt Vault secrets
+* Step4: Encrypt Kubeseal secrets
+* Step5: Commit changes
+
+Example: Updated the secret in qa/secrets/simple-server.sealedsecret.yaml
+```bash
+cd k8s/environments
+
+./decrypt ~/.vault_password_k8s qa/secrets/simple-server.sealedsecret.yaml
+
+# Edit the secret key in the file
+
+./encrypt ~/.vault_password_k8s qa/secrets/simple-server.sealedsecret.yaml
+
+./kubeseal_encrypt ~/.qa-sealedsecret.pem qa/secrets/simple-server.sealedsecret.yaml
+
+# Commit the changes
+```
+
+`decrypt` , `encrypt` and `kubeseal_encrypt` supports multiple options to decrypt/encrypt secrets in a all the environments or a specific environment or a specific file. Please refer the usage section below for more details.
