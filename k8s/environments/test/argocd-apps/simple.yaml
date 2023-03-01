@@ -15,8 +15,7 @@ spec:
     syncOptions:
       - PruneLast=true
       - CreateNamespace=true
-      - ServerSideApply=false
-      - Replace=false
+      - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
