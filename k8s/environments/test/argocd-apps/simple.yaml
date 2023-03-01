@@ -5,9 +5,7 @@ metadata:
   name: pgo
 spec:
   destination:
-    name: ''
     server: 'https://kubernetes.default.svc'
-    namespace: postgres-operator
   source:
     path: k8s/manifests/pgo
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
@@ -17,7 +15,8 @@ spec:
     syncOptions:
       - PruneLast=true
       - CreateNamespace=true
-      - ServerSideApply=true
+      - ServerSideApply=false
+      - Replace=false
     automated:
       prune: true
       selfHeal: true
