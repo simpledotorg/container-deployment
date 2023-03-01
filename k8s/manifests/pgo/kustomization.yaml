@@ -5,12 +5,14 @@ commonLabels:
   # The version below should match the version on the PostgresCluster CRD
   app.kubernetes.io/version: 5.2.1
 
+# Repo: https://github.com/CrunchyData/postgres-operator-examples/tree/main/kustomize
 bases:
 - github.com/CrunchyData/postgres-operator-examples/kustomize/install/namespace?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
 - github.com/CrunchyData/postgres-operator-examples/kustomize/install/crd?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
 - github.com/CrunchyData/postgres-operator-examples/kustomize/install/rbac/cluster?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
 - github.com/CrunchyData/postgres-operator-examples/kustomize/install/manager?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
 
+# Release notes: https://access.crunchydata.com/documentation/postgres-operator/latest/releases/ 
 images:
 - name: postgres-operator
   newName: registry.developers.crunchydata.com/crunchydata/postgres-operator
