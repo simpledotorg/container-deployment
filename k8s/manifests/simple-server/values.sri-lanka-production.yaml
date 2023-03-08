@@ -1,6 +1,9 @@
 ingress:
   enabled: true
   className: "nginx"
+  annotations:
+    "nginx.ingress.kubernetes.io/configuration-snippet": |
+      more_set_hearders "X-Forwarded-Proto: https";
   hosts:
     - host: simples5.health.gov.lk
       paths:
