@@ -4,21 +4,14 @@ ingress:
   annotations:
     "cert-manager.io/cluster-issuer": "letsencrypt-prod"
   hosts:
-    - host: api-k8s.lk.simple.org
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-    - host: dashboard-k8s.lk.simple.org
+    - host: simples5.health.gov.lk
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
   - hosts:
-    - api-k8s.lk.simple.org
-    secretName: api-k8s.lk.simple.org-tls
-  - hosts:
-    - dashboard-k8s.lk.simple.org
-    secretName: dashboard-k8s.lk.simple.org-tls
+    - simples5.health.gov.lk
+    secretName: simples5.health.gov.lk-tls
 migration:
   enabled: false
 cron:

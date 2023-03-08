@@ -5,14 +5,14 @@ metabase:
     annotations:
       "cert-manager.io/cluster-issuer": "letsencrypt-prod"
     hosts:
-      - host: metabase-k8s.lk.simple.org
+      - host: simples9.health.gov.lk
         paths:
           - path: /
             pathType: ImplementationSpecific
     tls:
     - hosts:
-      - metabase-k8s.lk.simple.org
-      secretName: metabase-k8s.lk.simple.org-tls
+      - simples9.health.gov.lk
+      secretName: simples9.health.gov.lk-tls
   secrets:
     existingSecret:
       name: simple-pguser-metabase
