@@ -6,6 +6,7 @@ ingress:
       proxy_set_header X-Forwarded-Proto https;
       proxy_set_header X-Forwarded-Scheme https;
       proxy_set_header X-Scheme https;
+      proxy_set_header X-Forwarded-Port 443;
   hosts:
     - host: simples5.health.gov.lk
       paths:

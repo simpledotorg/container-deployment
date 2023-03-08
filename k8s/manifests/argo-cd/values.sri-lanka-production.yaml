@@ -11,6 +11,7 @@ argo-cd:
           proxy_set_header X-Forwarded-Proto https;
           proxy_set_header X-Forwarded-Scheme https;
           proxy_set_header X-Scheme https;
+          proxy_set_header X-Forwarded-Port 443;
 
       ingressClassName: "nginx"
       hosts:
