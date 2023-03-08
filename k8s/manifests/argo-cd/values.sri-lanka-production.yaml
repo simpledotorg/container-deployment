@@ -7,6 +7,8 @@ argo-cd:
       annotations:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        "nginx.ingress.kubernetes.io/configuration-snippet": | 
+          add_header X-Forwarded-Proto https;
       ingressClassName: "nginx"
       hosts:
         - simples13.health.gov.lk
