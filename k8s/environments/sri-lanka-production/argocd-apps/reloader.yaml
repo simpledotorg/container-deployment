@@ -10,7 +10,7 @@ spec:
   source:
     path: k8s/manifests/reloader
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: lk-prod-dns-update
     helm:
       valueFiles:
         - values.yaml

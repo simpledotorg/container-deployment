@@ -11,7 +11,7 @@ spec:
   source:
     path: k8s/manifests/kube-state-metrics
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: lk-prod-dns-update
   project: default
   syncPolicy:
     syncOptions:
@@ -36,7 +36,7 @@ spec:
   source:
     path: k8s/manifests/datadog-operator
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: lk-prod-dns-update
     helm:
       valueFiles:
         - values.yaml
@@ -63,7 +63,7 @@ spec:
   source:
     path: k8s/environments/sri-lanka-production/op-datadog
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: lk-prod-dns-update
   project: default
   syncPolicy:
     syncOptions:
