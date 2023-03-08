@@ -1,17 +1,11 @@
 ingress:
   enabled: true
   className: "nginx"
-  annotations:
-    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
   hosts:
     - host: simples5.health.gov.lk
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-  - hosts:
-    - simples5.health.gov.lk
-    secretName: simples5.health.gov.lk-tls
 migration:
   enabled: false
 cron:
