@@ -1,8 +1,6 @@
 ingress:
   enabled: true
   className: "nginx"
-  annotations:
-    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
   hosts:
     - host: api-qa.simple.org
       paths:
@@ -12,13 +10,6 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-  - hosts:
-    - api-qa.simple.org
-    secretName: api-qa.simple.org-tls
-  - hosts:
-    - dashboard-qa.simple.org
-    secretName: dashboard-qa.simple.org-tls
 server:
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:qa"]}]'
