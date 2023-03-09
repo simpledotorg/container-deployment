@@ -2,11 +2,17 @@ metabase:
   ingress:
     enabled: true
     className: "nginx"
+    annotations:
+      "cert-manager.io/cluster-issuer": "letsencrypt-prod"
     hosts:
       - host: simples9.health.gov.lk
         paths:
           - path: /
             pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - simples9.health.gov.lk
+      secretName: simples9.health.gov.lk-tls
   secrets:
     existingSecret:
       name: simple-pguser-metabase
