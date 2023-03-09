@@ -3,10 +3,6 @@ ingress:
   className: "nginx"
   annotations:
     "nginx.ingress.kubernetes.io/configuration-snippet": | 
-      proxy_set_header X-Forwarded-Proto https;
-      proxy_set_header X-Forwarded-Scheme https;
-      proxy_set_header X-Scheme https;
-      proxy_set_header X-Forwarded-Port 443;
       proxy_set_header X-Forwarded-Ssl on;
 
   hosts:
