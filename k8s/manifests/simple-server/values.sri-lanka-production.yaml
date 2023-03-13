@@ -10,6 +10,14 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+    - host: api-simple.health.gov.lk
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-simple.health.gov.lk
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
 migration:
   enabled: false
 cron:

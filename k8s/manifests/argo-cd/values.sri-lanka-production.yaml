@@ -9,6 +9,7 @@ argo-cd:
       ingressClassName: "nginx"
       hosts:
         - simples13.health.gov.lk
+        - argocd-simple.health.gov.lk
       paths:
         - /
       pathType: Prefix
