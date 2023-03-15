@@ -57,3 +57,56 @@ make update-ssh-keys hosts=<your_deployment_name.yaml>
 ```
 
 Note: Run this command from jump box in Sri Lanka DC, [steps](#sri-lanka-dc-ssh)
+
+## DB backup and restore
+
+Reference docs: [DB backup](https://access.crunchydata.com/documentation/postgres-operator/5.2.0/tutorial/backup-management/) | [DB restore](https://access.crunchydata.com/documentation/postgres-operator/5.2.0/tutorial/disaster-recovery/)
+
+### One-Off Backup
+- Add the following to k8s/environments/<env>/op-postgres/simple-server.yaml file
+```yaml
+spec:
+  backups:
+    pgbackrest:
+      manual:
+        repoName: repo1
+        options:
+         - --type=full
+```
+
+- Add following annotations
+```bash
+kubectl annotate -n simple-v1 postgrescluster simple postgres-operator.crunchydata.com/pgbackrest-backup="$(date)"
+```
+Wait for the backup cron job to complete. You can check the status in Argocd UI
+
+### Perform an In-Place Point-in-time-Recovery
+- Add the following to k8s/environments/<env>/op-postgres/simple-server.yaml file
+```yaml
+spec:
+  backups:
+    pgbackrest:
+      restore:
+        enabled: true
+        repoName: repo1
+        options:
+        - --type=time
+        - --target="2021-06-09 14:15:11-04"
+```
+Note: Replace the target time with the time you want to restore to
+
+- Add following annotations
+```bash
+kubectl annotate -n simple-v1 postgrescluster simple --overwrite \
+  postgres-operator.crunchydata.com/pgbackrest-restore=id1
+```
+Wait for the restore cron job to complete. You can check the status in Argocd UI
+
+- And once the restore is complete, in-place restores can be disabled:
+```yaml
+spec:
+  backups:
+    pgbackrest:
+      restore:
+        enabled: false
+```
