@@ -60,6 +60,10 @@ spec:
         repo1-retention-full: "14"
         repo1-retention-full-type: time
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
+      manual:
+        repoName: repo1
+        options:
+         - --type=full
       repos:
       - name: repo1
         schedules:
