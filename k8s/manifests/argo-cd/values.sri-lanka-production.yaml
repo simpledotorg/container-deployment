@@ -1,6 +1,6 @@
 argo-cd:
   notifications:
-    argocdUrl: "https://simples13.health.gov.lk"
+    argocdUrl: "https://argocd-simple.health.gov.lk"
   server:
     ingress:
       enabled: true
