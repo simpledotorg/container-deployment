@@ -60,6 +60,9 @@ spec:
           ad.datadoghq.com/database.instances: '[{"prometheus_url":"http://%%host%%:9187/metrics","namespace": "crunchy_data","metrics": ["*"]}]'
   backups:
     pgbackrest:
+      configuration:
+      - secret:
+        name: pgo-s3-creds
       manual:
         repoName: repo2
         options:
