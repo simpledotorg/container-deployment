@@ -62,7 +62,7 @@ spec:
     pgbackrest:
       configuration:
       - secret:
-        name: pgo-s3-creds
+          name: pgo-s3-creds
       manual:
         repoName: repo2
         options:
