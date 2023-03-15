@@ -56,6 +56,12 @@ spec:
           ad.datadoghq.com/database.instances: '[{"prometheus_url":"http://%%host%%:9187/metrics","namespace": "crunchy_data","metrics": ["*"]}]'
   backups:
     pgbackrest:
+      restore:
+        enabled: true
+        repoName: repo1
+        options:
+        - --type=time
+        - --target="2023-03-15 06:15:00-00"
       global:
         repo1-retention-full: "14"
         repo1-retention-full-type: time
