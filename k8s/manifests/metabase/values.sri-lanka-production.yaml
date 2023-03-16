@@ -7,6 +7,10 @@ metabase:
         paths:
           - path: /
             pathType: ImplementationSpecific
+      - host: metabase-simple.health.gov.lk
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
   secrets:
     existingSecret:
       name: simple-pguser-metabase
