@@ -80,9 +80,6 @@ spec:
       global:
         repo1-retention-full: "14"
         repo1-retention-full-type: time
-        repo2-path: /pgbackrest/postgres-operator/simple/repo2
-        repo2-retention-full: "7"
-        repo1-retention-full-type: count
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
@@ -96,13 +93,6 @@ spec:
             resources:
               requests:
                 storage: 800Gi # As local path storage is being used in K8s, the values specified here have no effect
-      - name: repo2
-        schedules:
-          full: "0 1 * * *"
-        s3:
-          bucket: simple-server-sri-lanka-db-data
-          endpoint: s3.ap-south-1.amazonaws.com
-          region: ap-south-1
       jobs:
         affinity:
           nodeAffinity:
