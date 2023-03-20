@@ -48,7 +48,7 @@ server:
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sri-lanka-production-k8s"]}]'
   }
 worker:
-  replicaCount: 4
+  enabled: false
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
