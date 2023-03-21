@@ -19,13 +19,13 @@ Example: Updated the secret in qa/secrets/simple-server.sealedsecret.yaml
 ```bash
 cd k8s/environments
 
-./decrypt ~/.vault_password_k8s qa/secrets/simple-server.sealedsecret.yaml
+./decrypt ~/.vault_password_k8s qa/secrets/simple-server.sealedsecret.yaml.decrypted.vault
 
 # Edit the secret key in the file
-
+# Base64 encode secret value
 ./encrypt ~/.vault_password_k8s qa/secrets/simple-server.sealedsecret.yaml
 
-./kubeseal_encrypt ~/.qa-sealedsecret.pem qa/secrets/simple-server.sealedsecret.yaml
+./kubeseal_encrypt ~/.qa-sealedsecret.pem qa/secrets/simple-server.sealedsecret.yaml.decrypted
 
 # Commit the changes
 ```
