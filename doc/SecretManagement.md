@@ -7,6 +7,11 @@ Kubeseal: Encrypts and decrypts secrets at k8s level. Kubeseal does not allow lo
 ## Prerequisite
 * Ansible `brew install ansible`
 * Kubeseal `brew install kubeseal`
+* Fetch and save the latest Kubeseal pem file form K8s node using [ssh](./RUNBOOK.md#ssh) and below command
+```bash
+# Note: PEM key is rotated frequently, hence always fetch latest PEM key
+KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubeseal --fetch-cert --controller-namespace sealed-secrets --controller-name=sealed-secrets
+```
 
 ## Update/edit a secret key
 * Step1: Decrypt Vault secrets
