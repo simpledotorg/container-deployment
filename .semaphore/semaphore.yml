@@ -1,0 +1,22 @@
+version: v1.0
+name: Start
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2204
+blocks:
+  - name: Checkout
+    task:
+      jobs:
+        - name: Checkout
+          commands:
+            - checkout
+promotions:
+  - name: QA - Update SSH keys
+    pipeline_file: update_qa_ssh_keys.yml
+    auto_promote:
+      when: branch = 'auto-update-ssh-keys'
+  - name: Test - Update SSH keys
+    pipeline_file: update_test_env_ssh_keys.yml
+    auto_promote:
+      when: branch = 'auto-update-ssh-keys'
