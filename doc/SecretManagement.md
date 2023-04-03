@@ -50,4 +50,4 @@ cd k8s/environments
 
 ## Secrets deployment
 
-The secrets file is auto-synced on [ArgoCD](https://argocd-qa.simple.org/applications/argocd/secrets?view=tree&resource=&node=bitnami.com%2FSealedSecret%2Fsimple-v1%2Fsimple-server%2F0) (find the login credentials on the Simple password manager). To deploy manually, directly update the secrets (don't forget to base64 encode them!) in the simple-server live manifest on ArgoCD and hit `sync`.
+The secrets file is auto-synced on [ArgoCD](https://argocd-qa.simple.org/applications/argocd/secrets?view=tree&resource=&node=bitnami.com%2FSealedSecret%2Fsimple-v1%2Fsimple-server%2F0) (find login credentials on the Simple password manager).
