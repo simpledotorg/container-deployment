@@ -1,6 +1,6 @@
 argo-cd:
   notifications:
-    argocdUrl: "https://argocd-simple.health.gov.lk"
+    argocdUrl: "https://argocd.simple.org"
   server:
     ingress:
       enabled: true
@@ -13,3 +13,6 @@ argo-cd:
         - /
       pathType: Prefix
       https: false
+  global:
+    image:
+      tag: "v2.6.7"
