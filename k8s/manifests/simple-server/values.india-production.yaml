@@ -25,7 +25,7 @@ cron:
             values:
             - "true"
   podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sri-lanka-production-k8s"]}]'
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:india-production-k8s"]}]'
   }
   log:
     storage: 50Gi
@@ -41,7 +41,7 @@ server:
             values:
             - "true"
   podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sri-lanka-production-k8s"]}]'
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:india-production-k8s"]}]'
   }
   log:
     storage: 50Gi
@@ -57,7 +57,7 @@ worker:
             values:
             - "true"
   podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sri-lanka-production-k8s"]}]'
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:india-production-k8s"]}]'
   }
   log:
     storage: 50Gi
