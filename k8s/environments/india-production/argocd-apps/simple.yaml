@@ -22,6 +22,31 @@ spec:
 
 ---
 
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgo-postgres
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/india-production/op-postgres
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: env-india
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
 # Simple server, worker and cron
 apiVersion: argoproj.io/v1alpha1
 kind: Application
