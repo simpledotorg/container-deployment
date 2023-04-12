@@ -47,8 +47,6 @@ spec:
 
 ---
 
----
-
 # Cache redis
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -102,6 +100,8 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
 
 # Simple server, worker and cron
 apiVersion: argoproj.io/v1alpha1
