@@ -60,7 +60,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: env-india
     helm:
       valueFiles:
         - values.cache.yaml
@@ -88,7 +88,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: env-india
     helm:
       valueFiles:
         - values.worker.yaml
