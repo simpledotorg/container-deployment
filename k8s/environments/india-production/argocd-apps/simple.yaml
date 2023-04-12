@@ -47,6 +47,62 @@ spec:
 
 ---
 
+---
+
+# Cache redis
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cache-redis
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/redis
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.cache.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Worker redis
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: worker-redis
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/redis
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.worker.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
 # Simple server, worker and cron
 apiVersion: argoproj.io/v1alpha1
 kind: Application
