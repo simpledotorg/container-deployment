@@ -1,0 +1,77 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    "nginx.ingress.kubernetes.io/configuration-snippet": | 
+      proxy_set_header X-Forwarded-Ssl on;
+  hosts:
+    - host: api.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+cron:
+  enabled: false
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-cron
+            operator: In
+            values:
+            - "true"
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sri-lanka-production-k8s"]}]'
+  }
+  log:
+    storage: 50Gi
+server:
+  replicaCount: 5
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-server
+            operator: In
+            values:
+            - "true"
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sri-lanka-production-k8s"]}]'
+  }
+  log:
+    storage: 50Gi
+worker:
+  enabled: false
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-worker
+            operator: In
+            values:
+            - "true"
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sri-lanka-production-k8s"]}]'
+  }
+  log:
+    storage: 50Gi
+migration:
+  enabled: false
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-server
+            operator: In
+            values:
+            - "true"
+existingDBSecret:
+  name: "simple-pguser-simple"
+  key: "password"
