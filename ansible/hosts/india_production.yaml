@@ -1,0 +1,11 @@
+---
+
+all:
+  children:
+    jumpbox_node:
+      hosts:
+        jumpbox-01:
+          ansible_host: 43.204.33.127
+    india_production:
+      children:
+        jumpbox_node:
