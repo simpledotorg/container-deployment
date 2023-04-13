@@ -1,0 +1,33 @@
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogAgent
+metadata:
+  name: datadog-agent
+  namespace: datadog
+spec:
+  credentials:
+    apiSecret:
+      secretName: datadog
+      keyName: api-key
+    appSecret:
+      secretName: datadog
+      keyName: app-key
+  agent:
+    apm:
+      enabled: true
+    log:
+      enabled: true
+      logsConfigContainerCollectAll: true
+    env:
+      - name: DD_ENV
+        value: "india-production-k8s"
+    config:
+      logLevel: error
+  clusterAgent:
+    config:
+      externalMetrics:
+      clusterChecksEnabled: true
+  clusterName: "india-production-k8s"
+  features:
+    prometheusScrape:
+      enabled: true
+      serviceEndpoints: true

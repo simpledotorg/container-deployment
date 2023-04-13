@@ -1,0 +1,74 @@
+# Kube state metrics
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-state-metrics
+spec:
+  destination:
+    name: ''
+    namespace: kube-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/kube-state-metrics
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: env-india
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Datadog operator
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: datadog-operator
+spec:
+  destination:
+    name: ''
+    namespace: datadog
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/datadog-operator
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: env-india
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Datadog agent
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: datadog
+spec:
+  destination:
+    name: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/india-production/op-datadog
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: env-india
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
