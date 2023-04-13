@@ -18,8 +18,6 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-migration:
-  enabled: false
 cron:
   enabled: false
   affinity:
@@ -62,6 +60,7 @@ worker:
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sri-lanka-production-k8s"]}]'
   }
 migration:
+  enabled: true
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
