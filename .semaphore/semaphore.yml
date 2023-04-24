@@ -15,8 +15,8 @@ promotions:
   - name: QA - Update SSH keys
     pipeline_file: update_qa_ssh_keys.yml
     auto_promote:
-      when: branch = 'auto-update-ssh-keys'
+      when: branch = 'master'
   - name: Test - Update SSH keys
     pipeline_file: update_test_env_ssh_keys.yml
     auto_promote:
-      when: branch = 'auto-update-ssh-keys'
+      when: branch = 'master'
