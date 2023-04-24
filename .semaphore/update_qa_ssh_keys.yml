@@ -8,7 +8,8 @@ blocks:
           commands:
             - checkout
             - cd ansible
-            - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook host_ssh_setup.yml -i hosts/qa.yaml -v --private-key ~/.ssh/semaphore_id_rsa
+            - ssh ubuntu@3.109.6.46 -i ~/.ssh/semaphore_id_rsa -o StrictHostKeyChecking=no "date"
+            # - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook host_ssh_setup.yml -i hosts/qa.yaml -v --private-key ~/.ssh/semaphore_id_rsa
       secrets:
         - name: semaphore-deploy-key
       prologue:
