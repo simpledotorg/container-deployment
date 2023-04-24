@@ -50,7 +50,10 @@ To manage the authorized SSH keys that can access your servers,
 
 First, add or remove the appropriate SSH keys from the `group_vars/<your deployment name>/vars.yml` file
 
-Then, run the following command.
+Note: For `QA` and `Test` environments Semaphore CI/CD will `automatically` update the SSH keys.
+
+For other environments, you need to manually update the SSH keys.
+Run the following command.
 
 ```bash
 make update-ssh-keys hosts=<your_deployment_name.yaml>

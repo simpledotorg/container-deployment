@@ -1,0 +1,21 @@
+version: v1.0
+name: Ansible ssh keys update
+blocks:
+  - name: Ansible ssh keys update
+    task:
+      jobs:
+        - name: Ansible ssh keys update
+          commands:
+            - checkout
+            - cd ansible
+            - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook host_ssh_setup.yml -i hosts/qa.yaml -v --private-key ~/.ssh/semaphore_id_rsa
+      secrets:
+        - name: semaphore-deploy-key
+      prologue:
+        commands:
+          - chmod 600 ~/.ssh/semaphore_id_rsa
+          - ssh-add ~/.ssh/semaphore_id_rsa
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
