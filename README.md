@@ -12,7 +12,7 @@ Automation and manifests for container deployment
 - [Basic VM Validations](./doc/VMValidations.md)
 - [Datadog Monitoring](./doc/DatadogMonitoring.md)
 - [Deploy branch for testing k8s manifest changes](./doc/DeployBranch.md)
-
+- [Infra Requirement for the simple web application](./doc/InfraRequirement.md)
 ## Folder structure
 ```
 ├── ansible # Host level Ansible automation for firewall, ssh, etc
