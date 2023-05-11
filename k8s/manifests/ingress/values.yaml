@@ -26,3 +26,12 @@ ingress-nginx:
             "instances": [{"prometheus_url": "http://%%host%%:10254/metrics"}]
           }
         }
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: role-ingress
+              operator: In
+              values:
+              - "true"
