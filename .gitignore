@@ -8,3 +8,6 @@ tmp
 .vagrant
 *.pem
 .terraform
+*.tfstate
+*.tfstate.backup
+*.tfvars
