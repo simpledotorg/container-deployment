@@ -6,6 +6,8 @@ all:
       hosts:
         node-01:
           ansible_host: 10.122.0.20
+          k3s_node_labels:
+            - "role-ingress=true"
     k3s_master_nodes:
       children:
         k3s_master_node:
