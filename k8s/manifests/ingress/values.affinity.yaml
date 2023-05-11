@@ -1,0 +1,11 @@
+ingress-nginx:
+  controller:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: role-ingress
+              operator: In
+              values:
+              - "true"
