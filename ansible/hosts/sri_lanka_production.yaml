@@ -6,14 +6,20 @@ all:
       hosts:
         moh-hrms-simple-05:
           ansible_host: 192.168.1.221
+          k3s_node_labels:
+            - "role-ingress=true"
     k3s_master_nodes:
       children:
         k3s_master_node:
       hosts:
         moh-hrms-simple-09:
           ansible_host: 192.168.1.207
+          k3s_node_labels:
+            - "role-ingress=true"
         moh-hrms-simple-13:
           ansible_host: 192.168.1.204
+          k3s_node_labels:
+            - "role-ingress=true"
     k3s_worker_nodes:
       hosts:
         moh-hrms-simple-01:
