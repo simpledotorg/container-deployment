@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "eks_console_access" {
 }
 
 resource "aws_iam_policy" "eks_console_access" {
-  name   = "EKSConsoleAccess"
+  name   = "EKSConsoleAccess-${module.eks.cluster_name}"
   policy = data.aws_iam_policy_document.eks_console_access.json
 }
 

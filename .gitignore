@@ -11,3 +11,4 @@ tmp
 *.tfstate
 *.tfstate.backup
 *.tfvars
+terraform/eks-module-test/*
