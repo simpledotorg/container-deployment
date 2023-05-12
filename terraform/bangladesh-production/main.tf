@@ -97,7 +97,7 @@ resource "aws_iam_role" "eks_system_admin" {
 }
 
 resource "aws_iam_policy" "eks_console_access" {
-  name = "EKSConsoleAccess"
+  name = "EKSConsoleAccess-${module.eks.cluster_name}"
 
   policy = <<POLICY
 {
