@@ -139,19 +139,18 @@ module "eks" {
 
   cluster_endpoint_public_access = true
 
-  #TODO: Pin addons version 
   cluster_addons = {
     coredns = {
-      most_recent = true
+      version : "v1.8.7-eksbuild.3"
     }
     kube-proxy = {
-      most_recent = true
+      version : "v1.24.7-eksbuild.2"
     }
     vpc-cni = {
-      most_recent = true
+      version : "v1.11.4-eksbuild.1"
     }
     aws-ebs-csi-driver = {
-      most_recent              = true
+      version : "v1.18.0-eksbuild.1"
       service_account_role_arn = aws_iam_role.eks_ebs_csi_driver.arn
     }
   }
