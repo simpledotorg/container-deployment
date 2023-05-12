@@ -17,7 +17,7 @@ resource "aws_iam_role" "eks_system_admin" {
 
 data "aws_iam_policy_document" "eks_console_access" {
   statement {
-    actions   = ["eks:*"]
+    actions   = ["eks:DescribeCluster"]
     effect    = "Allow"
     resources = ["*"]
   }
@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "eks_console_access" {
 }
 
 resource "aws_iam_policy" "eks_console_access" {
-  name   = "EKSConsoleAccess-${module.eks.cluster_name}"
+  name   = "eks-console-access-${module.eks.cluster_name}"
   policy = data.aws_iam_policy_document.eks_console_access.json
 }
 
@@ -52,6 +52,6 @@ data "aws_iam_policy_document" "eks_cluster_role_assumer" {
 }
 
 resource "aws_iam_policy" "eks_cluster_role_assumer" {
-  name   = "EKS-ClusterRoleAssumer-${module.eks.cluster_name}"
+  name   = "eks-cluster-role-assumer-${module.eks.cluster_name}"
   policy = data.aws_iam_policy_document.eks_cluster_role_assumer.json
 }
