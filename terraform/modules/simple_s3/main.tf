@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "simple_s3" {
   bucket = var.bucket_name
-  acl    = "private"
   tags = merge(
     {
       Name      = var.bucket_name
