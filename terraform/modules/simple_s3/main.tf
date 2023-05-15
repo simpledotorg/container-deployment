@@ -29,5 +29,4 @@ resource "aws_iam_user_policy_attachment" "simple_s3_user_policy" {
 
 resource "aws_iam_access_key" "simple_s3_user_access_key" {
   user = aws_iam_user.simple_s3_user.name
-  tags = var.tags
 }

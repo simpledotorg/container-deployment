@@ -28,9 +28,10 @@ locals {
     Service     = local.service
     Deployment  = local.deployment
   }
-  vpc_name      = "${local.env}-${local.service}-vpc-01"
-  key_pair_name = "${local.env}-${local.service}-${local.deployment}"
-  cluster_name  = "${local.env}-${local.service}-${local.deployment}-01"
+  vpc_name                 = "${local.env}-${local.service}-vpc-01"
+  key_pair_name            = "${local.env}-${local.service}-${local.deployment}"
+  cluster_name             = "${local.env}-${local.service}-${local.deployment}-01"
+  db_backup_s3_bucket_name = "${local.env}-${local.service}-${local.deployment}-db-backup"
 }
 
 provider "aws" {
@@ -92,14 +93,45 @@ module "eks" {
   }
 }
 
-output "cluster_endpoint" {
+module "db_backup_s3_bucket" {
+  source      = "../modules/simple_s3"
+  bucket_name = local.db_backup_s3_bucket_name
+  tags        = local.tags
+}
+
+output "eks_cluster_name" {
+  value = module.eks.cluster_name
+}
+
+output "eks_cluster_endpoint" {
   value = module.eks.cluster_endpoint
 }
 
-output "cluster_arn" {
+output "eks_cluster_arn" {
   value = module.eks.cluster_arn
 }
 
 output "eks_assume_role_arn" {
   value = module.eks.assume_role_arn
+}
+
+output "db_backup_s3_bucket_id" {
+  value = module.db_backup_s3_bucket.bucket_id
+}
+
+output "db_backup_s3_bucket_arn" {
+  value = module.db_backup_s3_bucket.bucket_arn
+}
+
+output "db_backup_s3_user_arn" {
+  value = module.db_backup_s3_bucket.bucket_arn
+}
+
+output "db_backup_s3_access_key" {
+  value = module.db_backup_s3_bucket.access_key
+}
+
+output "db_backup_s3_access_secret" {
+  value     = module.db_backup_s3_bucket.access_secret
+  sensitive = true
 }
