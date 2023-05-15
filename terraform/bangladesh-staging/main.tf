@@ -1,0 +1,88 @@
+terraform {
+  required_version = "1.4.6"
+
+  backend "s3" {
+    bucket         = "simple-server-bangladesh-terraform-state"
+    key            = "k8s.staging.terraform.tfstate"
+    encrypt        = true
+    region         = "ap-south-1"
+    dynamodb_table = "k8s-staging-terraform-lock"
+    profile        = "bangladesh"
+  }
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.66.1"
+    }
+  }
+}
+
+locals {
+  env        = "staging"
+  deployment = "k8s"
+  service    = "simple"
+  tags = {
+    Environment = local.env
+    Terraform   = "true"
+    Service     = local.service
+    Deployment  = local.deployment
+  }
+  vpc_name      = "${local.env}-${local.service}-vpc-01"
+  key_pair_name = "${local.env}-${local.service}-${local.deployment}"
+  cluster_name  = "${local.env}-${local.service}-${local.deployment}-01"
+}
+
+provider "aws" {
+  region  = "ap-south-1"
+  profile = "bangladesh"
+}
+
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
+
+  name = local.vpc_name
+  cidr = "172.33.0.0/16"
+
+  azs             = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
+  private_subnets = ["172.33.1.0/24", "172.33.2.0/24", "172.33.3.0/24"]
+  public_subnets  = ["172.33.101.0/24", "172.33.102.0/24", "172.33.103.0/24"]
+
+  enable_nat_gateway     = true
+  enable_vpn_gateway     = true
+  one_nat_gateway_per_az = true
+
+  tags = local.tags
+}
+
+resource "aws_key_pair" "simple_aws_key" {
+  key_name   = local.key_pair_name
+  public_key = file("~/.ssh/simple_aws_key.pub") # Get it from password store
+}
+
+module "eks" {
+  source = "../modules/simple_eks"
+
+  subnets       = module.vpc.private_subnets
+  vpc_id        = module.vpc.vpc_id
+  cluster_name  = local.cluster_name
+  tags          = local.tags
+  key_pair_name = aws_key_pair.simple_aws_key.key_name
+
+  db_instance_type = "t3.medium"
+
+  server_instance_type  = "t3.xlarge"
+  server_instance_count = 1
+
+  worker_instance_type  = "t3.medium"
+  worker_instance_count = 1
+
+  metabase_instance_type  = "t3.small"
+  metabase_instance_count = 1
+
+  cache_redis_instance_type  = "t3.small"
+  worker_redis_instance_type = "t3.small"
+
+  default_nodepool_instance_type  = "t3.medium"
+  default_nodepool_instance_count = 3
+}
