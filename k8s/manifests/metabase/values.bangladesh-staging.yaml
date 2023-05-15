@@ -1,0 +1,20 @@
+metabase:
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+      - host: metabase-demo.bd.simple.org
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - metabase-demo.bd.simple.org
+      secretName: metabase-demo.bd.simple.org-tls
+  secrets:
+    existingSecret:
+      name: simple-pguser-metabase
+      connectionURIKey: jdbc-uri
