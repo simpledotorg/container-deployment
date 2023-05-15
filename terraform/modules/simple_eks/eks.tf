@@ -161,9 +161,12 @@ module "eks" {
       max_size     = var.default_nodepool_instance_count
       desired_size = var.default_nodepool_instance_count
 
-      labels = {
-        role-default = "true"
-      }
+      labels = merge(
+        {
+          role-default = "true"
+        },
+        var.default_nodepool_instance_extra_labels
+      )
 
       instance_types = [var.default_nodepool_instance_type]
       capacity_type  = "ON_DEMAND"
@@ -189,5 +192,12 @@ data "aws_eks_cluster_auth" "default" {
 provider "kubernetes" {
   host                   = module.eks.cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.default.token
+  # token                  = data.aws_eks_cluster_auth.default.token
+  # Issue: https://github.com/terraform-aws-modules/terraform-aws-eks/issues/2009
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    command     = "aws"
+    # This requires the awscli to be installed locally where Terraform is executed
+    args = ["eks", "get-token", "--cluster-name", module.eks.cluster_name, "--profile", var.aws_profile]
+  }
 }

@@ -1,3 +1,8 @@
+variable "aws_profile" {
+  description = "AWS provile used to connect to EKS cluster. As this module is using assume role, please create a new asume role profile from the existing aws profile for the environment with name env-name-k8s and add the following to your ~/.aws/credentials file: \n\n[`env-name`-k8s] \n\n role_arn = arn:aws:iam::`aws-account-id`:role/eks-system-admin-`cluster-name` \n\n source_profile = `env-name` \n\n"
+  type        = string
+}
+
 variable "subnets" {
   type = list(string)
 }
@@ -60,4 +65,8 @@ variable "default_nodepool_instance_type" {
 
 variable "default_nodepool_instance_count" {
   type = number
+}
+
+variable "default_nodepool_instance_extra_labels" {
+  type = map(string)
 }

@@ -63,6 +63,8 @@ resource "aws_key_pair" "simple_aws_key" {
 module "eks" {
   source = "../modules/simple_eks"
 
+  aws_profile = "bangladesh-k8s"
+
   subnets       = module.vpc.private_subnets
   vpc_id        = module.vpc.vpc_id
   cluster_name  = local.cluster_name
@@ -85,4 +87,19 @@ module "eks" {
 
   default_nodepool_instance_type  = "t3.medium"
   default_nodepool_instance_count = 3
+  default_nodepool_instance_extra_labels = {
+    "role-ingress" = "true"
+  }
+}
+
+output "cluster_endpoint" {
+  value = module.eks.cluster_endpoint
+}
+
+output "cluster_arn" {
+  value = module.eks.cluster_arn
+}
+
+output "eks_assume_role_arn" {
+  value = module.eks.assume_role_arn
 }
