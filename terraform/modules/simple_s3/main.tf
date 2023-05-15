@@ -1,12 +1,6 @@
 resource "aws_s3_bucket" "simple_s3" {
   bucket = var.bucket_name
-  tags = merge(
-    {
-      Name      = var.bucket_name
-      Terrafrom = "true"
-    },
-    var.tags
-  )
+  tags   = var.tags
 }
 
 resource "aws_iam_user" "simple_s3_user" {
@@ -25,6 +19,7 @@ resource "aws_iam_policy" "simple_s3_policy" {
   name        = var.bucket_name
   description = "Allow access to simple-s3-bucket"
   policy      = data.aws_iam_policy_document.simple_s3_policy.json
+  tags        = var.tags
 }
 
 resource "aws_iam_user_policy_attachment" "simple_s3_user_policy" {
@@ -34,4 +29,5 @@ resource "aws_iam_user_policy_attachment" "simple_s3_user_policy" {
 
 resource "aws_iam_access_key" "simple_s3_user_access_key" {
   user = aws_iam_user.simple_s3_user.name
+  tags = var.tags
 }

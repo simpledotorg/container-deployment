@@ -13,6 +13,7 @@ data "aws_iam_policy_document" "eks_system_admin" {
 resource "aws_iam_role" "eks_system_admin" {
   assume_role_policy = data.aws_iam_policy_document.eks_system_admin.json
   name               = "eks-system-admin-${module.eks.cluster_name}"
+  tags               = var.tags
 }
 
 data "aws_iam_policy_document" "eks_console_access" {
@@ -36,6 +37,7 @@ data "aws_iam_policy_document" "eks_console_access" {
 resource "aws_iam_policy" "eks_console_access" {
   name   = "eks-console-access-${module.eks.cluster_name}"
   policy = data.aws_iam_policy_document.eks_console_access.json
+  tags   = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "developer_eks_console_access" {
@@ -54,4 +56,5 @@ data "aws_iam_policy_document" "eks_cluster_role_assumer" {
 resource "aws_iam_policy" "eks_cluster_role_assumer" {
   name   = "eks-cluster-role-assumer-${module.eks.cluster_name}"
   policy = data.aws_iam_policy_document.eks_cluster_role_assumer.json
+  tags   = var.tags
 }

@@ -176,12 +176,7 @@ module "eks" {
     }
   }
 
-  tags = merge(
-    var.tags,
-    {
-      Terraform = "true"
-    }
-  )
+  tags = var.tags
 }
 
 data "aws_eks_cluster_auth" "default" {

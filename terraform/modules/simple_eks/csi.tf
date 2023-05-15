@@ -25,6 +25,7 @@ data "aws_iam_policy_document" "csi" {
 resource "aws_iam_role" "eks_ebs_csi_driver" {
   assume_role_policy = data.aws_iam_policy_document.csi.json
   name               = "eks-ebs-csi-driver-${module.eks.cluster_name}"
+  tags               = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "amazon_ebs_csi_driver" {
