@@ -74,6 +74,8 @@ module "eks" {
 
   db_instance_type = "t3.medium"
 
+  db_backup_instance_type = "t3.small"
+
   server_instance_type  = "t3.xlarge"
   server_instance_count = 1
 

@@ -61,6 +61,25 @@ module "eks" {
       }
     }
 
+    db_backup = {
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+
+      labels = {
+        role-db-backup = "true"
+      }
+
+      instance_types = [var.db_backup_instance_type]
+      capacity_type  = "ON_DEMAND"
+
+      use_custom_launch_template = false
+
+      remote_access = {
+        ec2_ssh_key = var.key_pair_name
+      }
+    }
+
     server = {
       min_size     = var.server_instance_count
       max_size     = var.server_instance_count

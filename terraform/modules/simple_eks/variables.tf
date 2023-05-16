@@ -27,6 +27,10 @@ variable "db_instance_type" {
   type = string
 }
 
+variable "db_backup_instance_type" {
+  type = string
+}
+
 variable "server_instance_type" {
   type = string
 }
@@ -68,5 +72,6 @@ variable "default_nodepool_instance_count" {
 }
 
 variable "default_nodepool_instance_extra_labels" {
-  type = map(string)
+  type    = map(string)
+  default = {}
 }
