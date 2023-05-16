@@ -14,7 +14,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.test.yaml
+        - ../../environments/test/values/argocd.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -304,7 +304,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.test.yaml
+        - ../../environments/test/values/simple.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -331,17 +331,8 @@ spec:
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: test-helm-parms
     helm:
-      parameters:
-      - name: metabase.ingress.hosts[0].host
-        value: "metabase.k8s-test.simple.org"
-      - name: metabase.ingress.hosts[0].paths[0].path
-        value: "/"
-      - name: metabase.ingress.hosts[0].paths[0].pathType
-        value: "ImplementationSpecific"
-      - name: metabase.ingress.tls[0].hosts[0]
-        value: "metabase.k8s-test.simple.org"
-      - name: metabase.ingress.tls[0].secretName
-        value: "metabase.k8s-test.simple.org-tls"
+      valueFiles:
+        - ../../environments/test/values/metabase.yaml
 
   project: default
   syncPolicy:
