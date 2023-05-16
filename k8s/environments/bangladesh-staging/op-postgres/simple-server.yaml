@@ -87,6 +87,13 @@ spec:
           bucket: staging-simple-k8s-db-backup
           endpoint: s3.ap-south-1.amazonaws.com
           region: ap-south-1
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 100Gi
       jobs:
         affinity:
           nodeAffinity:
