@@ -331,8 +331,18 @@ spec:
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
     helm:
-      valueFiles:
-        - values.test.yaml
+      parameters:
+      - name: metabase.ingress.hosts[0].host
+        value: "metabase.k8s-test.simple.org"
+      - name: metabase.ingress.hosts[0].paths[0].path
+        value: "/"
+      - name: metabase.ingress.hosts[0].paths[0].pathType
+        value: "ImplementationSpecific"
+      - name: metabase.ingress.tls[0].hosts[0]
+        value: "metabase.k8s-test.simple.org"
+      - name: metabase.ingress.tls[0].secretName
+        value: "metabase.k8s-test.simple.org-tls"
+
   project: default
   syncPolicy:
     syncOptions:
