@@ -149,6 +149,7 @@ spec:
     helm:
       valueFiles:
         - values.bangladesh-staging.yaml
+        - values.affinity.yaml
   project: default
   syncPolicy:
     syncOptions:

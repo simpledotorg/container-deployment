@@ -11,6 +11,7 @@ metabase:
         paths:
           - path: /
             pathType: ImplementationSpecific
+  # TODO: Replace below affinity with values.affinity.yaml file in argocd app          
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

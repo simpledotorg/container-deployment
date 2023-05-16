@@ -14,12 +14,3 @@ metabase:
     - hosts:
       - metabase-demo.bd.simple.org
       secretName: metabase-demo.bd.simple.org-tls
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-metabase
-            operator: In
-            values:
-            - "true"

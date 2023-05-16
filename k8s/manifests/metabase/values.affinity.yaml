@@ -1,0 +1,10 @@
+metabase:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-metabase
+            operator: In
+            values:
+            - "true"
