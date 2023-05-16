@@ -20,7 +20,3 @@ metabase:
     - hosts:
       - metabase2-qa.simple.org
       secretName: metabase2-qa.simple.org-tls
-  secrets:
-    existingSecret:
-      name: simple-pguser-metabase
-      connectionURIKey: jdbc-uri

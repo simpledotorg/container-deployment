@@ -14,10 +14,6 @@ metabase:
     - hosts:
       - metabase-demo.bd.simple.org
       secretName: metabase-demo.bd.simple.org-tls
-  secrets:
-    existingSecret:
-      name: simple-pguser-metabase
-      connectionURIKey: jdbc-uri
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
