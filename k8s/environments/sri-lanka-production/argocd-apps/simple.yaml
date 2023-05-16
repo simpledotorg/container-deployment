@@ -63,7 +63,8 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.cache.yaml
+        - values.affinity-cache.yaml
+        - values.master-replica.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -91,7 +92,8 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.worker.yaml
+        - values.affinity-worker.yaml
+        - values.master-replica.yaml
   project: default
   syncPolicy:
     syncOptions:

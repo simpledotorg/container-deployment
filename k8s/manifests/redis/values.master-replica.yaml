@@ -1,0 +1,3 @@
+redis:
+  replica:
+    replicaCount: 1
