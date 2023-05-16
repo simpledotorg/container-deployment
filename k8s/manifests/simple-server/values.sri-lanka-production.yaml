@@ -18,59 +18,19 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-# TODO: Remove affinity and use values.affinity.yaml file in argocd app config
 cron:
   enabled: false
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-cron
-            operator: In
-            values:
-            - "true"
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sri-lanka-production-k8s"]}]'
   }
 server:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-server
-            operator: In
-            values:
-            - "true"
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sri-lanka-production-k8s"]}]'
   }
 worker:
   enabled: false
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-worker
-            operator: In
-            values:
-            - "true"
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sri-lanka-production-k8s"]}]'
   }
 migration:
   enabled: true
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-server
-            operator: In
-            values:
-            - "true"
-existingDBSecret:
-  name: "simple-pguser-simple"
-  key: "password"

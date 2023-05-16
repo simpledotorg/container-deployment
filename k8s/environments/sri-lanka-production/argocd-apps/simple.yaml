@@ -121,6 +121,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
+        - values.affinity.yaml
         - values.sri-lanka-production.yaml
   project: default
   syncPolicy:
@@ -149,6 +150,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
+        - values.affinity.yaml
         - values.sri-lanka-production.yaml
   project: default
   syncPolicy:
