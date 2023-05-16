@@ -331,8 +331,6 @@ spec:
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: test-helm-parms
     helm:
-      valueFiles:
-        - values.yaml
       parameters:
       - name: metabase.ingress.hosts[0].host
         value: "metabase.k8s-test.simple.org"
