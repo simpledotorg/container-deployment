@@ -11,10 +11,7 @@ metabase:
         paths:
           - path: /
             pathType: ImplementationSpecific
-  secrets:
-    existingSecret:
-      name: simple-pguser-metabase
-      connectionURIKey: jdbc-uri
+  # TODO: Replace below affinity with values.affinity.yaml file in argocd app          
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

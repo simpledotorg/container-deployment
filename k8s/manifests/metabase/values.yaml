@@ -6,5 +6,5 @@ metabase:
       type: postgres
   secrets:
     existingSecret:
-      name: metabase-pguser-metabase
+      name: simple-pguser-metabase
       connectionURIKey: jdbc-uri

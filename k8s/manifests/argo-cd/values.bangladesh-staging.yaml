@@ -1,0 +1,21 @@
+argo-cd:
+  notifications:
+    argocdUrl: "https://argocd-demo.bd.simple.org"
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      ingressClassName: "nginx"
+      hosts:
+        - argocd-demo.bd.simple.org
+      paths:
+        - /
+      pathType: Prefix
+      tls:
+        - secretName: argocd-demo.bd.simple.org-tls
+          hosts:
+            - argocd-demo.bd.simple.org
+      https: false

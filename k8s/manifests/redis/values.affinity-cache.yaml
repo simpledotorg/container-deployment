@@ -1,7 +1,5 @@
 redis:
-  # TODO: Use values.affinity.yaml file and remove the duplicate affinity from this file and update envs using this file
-  replica:
-    replicaCount: 1
+  master:
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -20,7 +18,7 @@ redis:
               operator: In
               values:
               - "true"
-  master:
+  replica:
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:

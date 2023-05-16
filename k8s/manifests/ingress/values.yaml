@@ -12,7 +12,7 @@ ingress-nginx:
     metrics:
       enabled: true
     config:
-      nginx-status-ipv4-whitelist: "10.0.0.0/8,172.16.0.0/12"
+      nginx-status-ipv4-whitelist: "10.0.0.0/8,172.16.0.0/12,172.33.0.0/16"
       proxy-body-size: "4g"
       keep-alive: 10
       disable-access-log: true

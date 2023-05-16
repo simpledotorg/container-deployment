@@ -1,9 +1,8 @@
-#TODO: this is same as values.yaml remove the dependency from qa and test env and delete this file
 redis:
   image:
     registry: "docker.io"
     repository: "bitnami/redis"
-    tag: "7.0.4-debian-11-r7"
+    tag: "7.0.5-debian-11-r7"
   auth:
     enabled: false
   replica:
@@ -13,11 +12,13 @@ redis:
       ad.datadoghq.com/redis.checks: |
         {
           "redisdb": {
+            "init_config": {},
             "instances": [
               {
                 "host": "%%host%%",
-                "port":"6379"
+                "port":"6379",
+                "password":"%%env_REDIS_PASSWORD%%"
               }
             ]
           }
-        } 
+        }

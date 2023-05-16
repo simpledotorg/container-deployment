@@ -13,7 +13,3 @@ metabase:
     - hosts:
       - metabase.k8s-test.simple.org
       secretName: metabase.k8s-test.simple.org-tls
-  secrets:
-    existingSecret:
-      name: simple-pguser-metabase
-      connectionURIKey: jdbc-uri
