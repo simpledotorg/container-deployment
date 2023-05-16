@@ -74,9 +74,9 @@ spec:
                   values:
                   - "true"
       global:
-        repo1-retention-full: "14"
+        repo1-retention-full: "14" # Number of days to retain full backups
         repo1-retention-full-type: time
-        repo2-retention-full: "14"
+        repo2-retention-full: "30" # Number of days to retain full backups
         repo2-retention-full-type: time
         repo2-path: /pgbackrest/postgres-operator/simple/repo2
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
