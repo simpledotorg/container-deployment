@@ -44,17 +44,3 @@ redis:
               operator: In
               values:
               - "true"
-    podAnnotations:
-      ad.datadoghq.com/redis.checks: |
-        {
-          "redisdb": {
-            "init_config": {},
-            "instances": [
-              {
-                "host": "%%host%%",
-                "port":"6379",
-                "password":"%%env_REDIS_PASSWORD%%"
-              }
-            ]
-          }
-        }
