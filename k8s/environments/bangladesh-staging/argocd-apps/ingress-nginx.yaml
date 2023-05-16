@@ -13,7 +13,7 @@ spec:
     targetRevision: bd-deployment
     helm:
       valueFiles:
-        - values.bangladesh-staging.yaml
+        - values.aws-nlb.yaml
         - values.affinity.yaml
   project: default
   syncPolicy:
