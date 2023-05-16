@@ -1,6 +1,6 @@
 argo-cd:
   notifications:
-    argocdUrl: "https://argocd.bd.simple.org"
+    argocdUrl: "https://argocd-demo.bd.simple.org"
   server:
     ingress:
       enabled: true
