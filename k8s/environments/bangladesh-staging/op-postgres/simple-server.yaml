@@ -63,6 +63,16 @@ spec:
       configuration:
       - secret:
           name: pgo-s3-creds
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db-backup
+                  operator: In
+                  values:
+                  - "true"
       global:
         repo1-retention-full: "14"
         repo1-retention-full-type: time
