@@ -63,7 +63,7 @@ spec:
     targetRevision: bd-deployment
     helm:
       valueFiles:
-        - values.standalone-cache.yaml
+        - values.affinity-cache.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -91,7 +91,7 @@ spec:
     targetRevision: bd-deployment
     helm:
       valueFiles:
-        - values.standalone-worker.yaml
+        - values.affinity-worker.yaml
   project: default
   syncPolicy:
     syncOptions:

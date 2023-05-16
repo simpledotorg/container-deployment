@@ -1,10 +1,5 @@
 redis:
-  image:
-    registry: "docker.io"
-    repository: "bitnami/redis"
-    tag: "7.0.5-debian-11-r7"
-  auth:
-    enabled: false
+  # TODO: Use values.affinity.yaml file and remove the duplicate affinity from this file and update envs using this file
   replica:
     replicaCount: 1
     affinity:
