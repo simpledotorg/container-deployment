@@ -4,3 +4,12 @@ ingress-nginx:
       type: 'LoadBalancer'
       annotations:
         service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: role-ingress
+              operator: In
+              values:
+              - "true"
