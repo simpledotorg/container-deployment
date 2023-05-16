@@ -1,4 +1,5 @@
 ingress-nginx:
+  controller:
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
