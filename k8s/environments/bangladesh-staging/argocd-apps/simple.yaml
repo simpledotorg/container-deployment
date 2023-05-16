@@ -9,7 +9,7 @@ spec:
   source:
     path: k8s/manifests/pgo
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: bd-deployment
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
@@ -35,7 +35,7 @@ spec:
   source:
     path: k8s/environments/bangladesh-staging/op-postgres
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: bd-deployment
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
@@ -60,7 +60,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: bd-deployment
+    targetRevision: master
     helm:
       valueFiles:
         - values.affinity-cache.yaml
@@ -88,7 +88,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: bd-deployment
+    targetRevision: master
     helm:
       valueFiles:
         - values.affinity-worker.yaml
@@ -116,7 +116,7 @@ spec:
   source:
     path: k8s/manifests/simple-server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: bd-deployment
+    targetRevision: master
     helm:
       valueFiles:
         - values.bangladesh-staging.yaml
@@ -145,7 +145,7 @@ spec:
   source:
     path: k8s/manifests/metabase
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: bd-deployment
+    targetRevision: master
     helm:
       valueFiles:
         - values.bangladesh-staging.yaml
