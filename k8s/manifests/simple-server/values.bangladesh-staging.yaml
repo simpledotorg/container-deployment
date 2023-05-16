@@ -15,53 +15,17 @@ ingress:
     secretName: api-demo-k8s.bd.simple.org-tls
 cron:
   enabled: false
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-cron
-            operator: In
-            values:
-            - "true"
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:bangladesh-staging-k8s"]}]'
   }
 server:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-server
-            operator: In
-            values:
-            - "true"
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:bangladesh-staging-k8s"]}]'
   }
 worker:
   enabled: false
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-worker
-            operator: In
-            values:
-            - "true"
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:bangladesh-staging-k8s"]}]'
   }
 migration:
   enabled: false
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: role-server
-            operator: In
-            values:
-            - "true"

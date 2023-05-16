@@ -18,6 +18,7 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+# TODO: Remove affinity and use values.affinity.yaml file in argocd app config
 cron:
   enabled: false
   affinity:
