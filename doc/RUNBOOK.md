@@ -27,7 +27,7 @@ aws_secret_access_key = <secret-key>
 # Create another profile in the ~/.aws/credentials file
 ...
 [bangladesh-k8s]
-role_arn = arn:aws:iam::<account-id>:role/<role-name> # Get this from Terraform output
+role_arn = arn:aws:iam::<account-id>:role/<role-name> # Get this from Terraform output variable `eks_assume_role_arn`
 source_profile = bangladesh
 ...
 ```

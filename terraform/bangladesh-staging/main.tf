@@ -82,8 +82,6 @@ module "eks" {
   worker_instance_type  = "t3.medium"
   worker_instance_count = 1
 
-  cron_instance_type = "t3.small"
-
   metabase_instance_type  = "t3.small"
   metabase_instance_count = 1
 

@@ -47,10 +47,6 @@ variable "worker_instance_count" {
   type = number
 }
 
-variable "cron_instance_type" {
-  type = string
-}
-
 variable "metabase_instance_type" {
   type = string
 }
