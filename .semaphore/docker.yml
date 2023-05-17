@@ -1,0 +1,23 @@
+version: v1.0
+name: Docker build and push simple server base image
+blocks:
+  - name: Docker build and push simple server base image
+    task:
+      jobs:
+      - name: Docker Hub
+        commands:
+          - checkout
+          - image_name="$DOCKER_USERNAME/server-base"
+          - tag_latest="$image_name:latest"
+          - tag_git_sha="$image_name:$SEMAPHORE_GIT_SHA"
+          - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
+          - docker build -t $tag_latest -t $tag_git_sha -f docker/simple-server-base.Dockerfile  .
+          - docker images
+          - docker push $tag_latest
+          - docker push $tag_git_sha
+      secrets:
+      - name: docker-hub
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
