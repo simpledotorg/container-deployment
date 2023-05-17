@@ -19,7 +19,6 @@ server:
             values:
             - "true"
 worker:
-  enabled: false
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
