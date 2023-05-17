@@ -382,8 +382,8 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - ../../environments/bangladesh-staging/values/simple.yaml
         - values.affinity.yaml
+        - ../../environments/bangladesh-staging/values/simple.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -411,8 +411,8 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - ../../environments/bangladesh-staging/values/metabase.yaml
         - values.affinity.yaml
+        - ../../environments/bangladesh-staging/values/metabase.yaml
   project: default
   syncPolicy:
     syncOptions:
