@@ -9,10 +9,24 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+    - host: api-demo.bd.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-demo.bd.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
   tls:
   - hosts:
     - api-demo-k8s.bd.simple.org
     secretName: api-demo-k8s.bd.simple.org-tls
+  - hosts:
+    - api-demo.bd.simple.org
+    secretName: api-demo.bd.simple.org-tls
+  - hosts:
+    - dashboard-demo.bd.simple.org
+    secretName: dashboard-demo.bd.simple.org-tls
 cron:
   enabled: false
   podAnnotations: {
