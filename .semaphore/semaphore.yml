@@ -20,3 +20,7 @@ promotions:
     pipeline_file: update_test_env_ssh_keys.yml
     auto_promote:
       when: branch = 'master'
+  - name: Build push simple server base image
+    pipeline_file: docker.yml
+    auto_promote:
+      when: branch = 'master'
