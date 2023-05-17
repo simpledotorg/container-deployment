@@ -14,7 +14,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.test.yaml
+        - ../../environments/test/values/argocd.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -304,7 +304,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.test.yaml
+        - ../../environments/test/values/simple.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -332,7 +332,7 @@ spec:
     targetRevision: master
     helm:
       valueFiles:
-        - values.test.yaml
+        - ../../environments/test/values/metabase.yaml
   project: default
   syncPolicy:
     syncOptions:
