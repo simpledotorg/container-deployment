@@ -118,6 +118,25 @@ module "eks" {
       }
     }
 
+    cron = {
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+
+      labels = {
+        role-cron = "true"
+      }
+
+      instance_types = [var.cron_instance_type]
+      capacity_type  = "ON_DEMAND"
+
+      use_custom_launch_template = false
+
+      remote_access = {
+        ec2_ssh_key = var.key_pair_name
+      }
+    }
+
     metabase = {
       min_size     = var.metabase_instance_count
       max_size     = var.metabase_instance_count
