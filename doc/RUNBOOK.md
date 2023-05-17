@@ -1,6 +1,49 @@
 # Runbook
 
-## SSH
+## Connecting to k8s cluster
+We have two type of k8s clusters. One is VM based cluster using k3s and the other is EKS cluster. Connecting to these two clusters are different.
+EKS uses IAM roles to authenticate and VM based cluster uses kubeconfig file on the VM to authenticate.
+Why we have two different clusters? Because we have two different environments. One is in AWS/Could and the other is data center.
+
+### EKS cluster
+- Get access to respective AWS account
+
+- Install [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+
+- Configure aws cli with your credentials
+```
+# Example for bangladesh
+# Create a profile in the ~/.aws/credentials file
+...
+[bangladesh]
+aws_access_key_id = <access-key>
+aws_secret_access_key = <secret-key>
+...
+```
+
+- Create a profile for assume role
+```
+# Example for bangladesh
+# Create another profile in the ~/.aws/credentials file
+...
+[bangladesh-k8s]
+role_arn = arn:aws:iam::<account-id>:role/<role-name> # Get this from Terraform output
+source_profile = bangladesh
+...
+```
+
+- Get the kubeconfig file from AWS
+```
+# Example for bangladesh
+aws eks --region ap-south-1 update-kubeconfig --name staging-simple-k8s-01 --profile bangladesh-k8s
+```
+
+- Check if you can connect to the cluster
+```
+kubectl get nodes
+```
+
+### VM based cluster
 - List of host for each environment can be found [here](../ansible/hosts/)
 - Ansible host file is configured with privates IPs. Use Jump host mentioned in the environment specific [group_vars](../ansible/group_vars/) (variable name: `ansible_ssh_common_args: ... ubuntu@jump-host-ip`)
 - SSH into k8s node
@@ -16,7 +59,7 @@ ssh -A -J ubuntu@jump-host-ip  ubuntu@host-private-ip
 
 ## How to open Rails application console?
 
-- Step1: [SSH into k8s node](#ssh)
+- Step1: [SSH into k8s node](#connect-to-k8s-cluster)
 
 - Step2: Login to container
 ```
