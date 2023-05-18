@@ -205,19 +205,20 @@ module "eks" {
 data "aws_eks_cluster_auth" "default" {
   name = module.eks.cluster_name
   depends_on = [
-    module.eks.eks_managed_node_groups,
+    module.eks.eks_managed_node_groups, #TODO: Chek if this is causing auth failure issues sometimes
   ]
 }
 
 provider "kubernetes" {
   host                   = module.eks.cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-  # token                  = data.aws_eks_cluster_auth.default.token
+  token                  = data.aws_eks_cluster_auth.default.token
+
   # Issue: https://github.com/terraform-aws-modules/terraform-aws-eks/issues/2009
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "aws"
-    # This requires the awscli to be installed locally where Terraform is executed
-    args = ["eks", "get-token", "--cluster-name", module.eks.cluster_name, "--profile", var.aws_profile]
-  }
+  # exec {
+  #   api_version = "client.authentication.k8s.io/v1beta1"
+  #   command     = "aws"
+  #   # This requires the awscli to be installed locally where Terraform is executed
+  #   args = ["eks", "get-token", "--cluster-name", module.eks.cluster_name, "--profile", var.aws_profile]
+  # }
 }

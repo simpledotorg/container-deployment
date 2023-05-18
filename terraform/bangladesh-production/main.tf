@@ -3,10 +3,10 @@ terraform {
 
   backend "s3" {
     bucket         = "simple-server-bangladesh-terraform-state"
-    key            = "k8s.staging.terraform.tfstate"
+    key            = "k8s.production.terraform.tfstate"
     encrypt        = true
     region         = "ap-south-1"
-    dynamodb_table = "k8s-staging-terraform-lock"
+    dynamodb_table = "k8s-production-terraform-lock"
     profile        = "bangladesh"
   }
 
@@ -19,7 +19,7 @@ terraform {
 }
 
 locals {
-  env        = "staging"
+  env        = "production"
   deployment = "k8s"
   service    = "simple"
   tags = {
@@ -43,11 +43,11 @@ module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
   name = local.vpc_name
-  cidr = "172.33.0.0/16"
+  cidr = "172.30.0.0/16"
 
   azs             = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
-  private_subnets = ["172.33.1.0/24", "172.33.2.0/24", "172.33.3.0/24"]
-  public_subnets  = ["172.33.101.0/24", "172.33.102.0/24", "172.33.103.0/24"]
+  private_subnets = ["172.30.1.0/24", "172.30.2.0/24", "172.30.3.0/24"]
+  public_subnets  = ["172.30.101.0/24", "172.30.102.0/24", "172.30.103.0/24"]
 
   enable_nat_gateway     = true
   enable_vpn_gateway     = true
@@ -75,9 +75,9 @@ module "eks" {
   db_backup_instance_type = "t3.small"
 
   server_instance_type  = "t3.xlarge"
-  server_instance_count = 1
+  server_instance_count = 2
 
-  worker_instance_type  = "t3.medium"
+  worker_instance_type  = "t3.xlarge"
   worker_instance_count = 1
 
   metabase_instance_type  = "t3.small"
