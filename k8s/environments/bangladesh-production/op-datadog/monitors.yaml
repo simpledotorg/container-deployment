@@ -4,7 +4,7 @@ metadata:
   name: bangladesh-production-k8s-healthy-host-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:bangladesh-production-k8s} < 13"
+  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:bangladesh-production-k8s} < 12"
   type: "query alert"
   name: "bangladesh-production-k8s-healthy-host-count"
   message: "@slack-alerts"
@@ -156,7 +156,7 @@ metadata:
   name: bangladesh-production-k8s-cache-redis-running-pod-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bangladesh-production-k8s,kube_app_instance:cache-redis} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bangladesh-production-k8s,kube_app_instance:cache-redis} < 1"
   type: "query alert"
   name: "bangladesh-production-k8s-cache-redis-running-pod-count"
   message: "@slack-alerts"
