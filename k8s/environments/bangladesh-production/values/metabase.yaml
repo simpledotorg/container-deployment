@@ -4,6 +4,7 @@ metabase:
     className: "nginx"
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     hosts:
       - host: metabase-k8s.bd.simple.org
         paths:
