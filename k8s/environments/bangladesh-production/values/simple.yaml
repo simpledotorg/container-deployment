@@ -9,10 +9,17 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+    - host: api-k8s-test.bd.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
   tls:
   - hosts:
     - api-k8s.bd.simple.org
     secretName: api-k8s.bd.simple.org-tls
+  - hosts:
+    - api-k8s-test.bd.simple.org
+    secretName: api-k8s-test.bd.simple.org-tls
 cron:
   enabled: false
   log:
