@@ -28,7 +28,7 @@ module "eks" {
   control_plane_subnet_ids = var.subnets
 
   eks_managed_node_group_defaults = {
-    instancdisk_size = 100
+    disk_size = var.nodepool_disk_size
   }
 
   manage_aws_auth_configmap = true

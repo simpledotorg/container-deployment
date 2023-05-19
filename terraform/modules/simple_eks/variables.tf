@@ -76,3 +76,8 @@ variable "default_nodepool_instance_extra_labels" {
   type    = map(string)
   default = {}
 }
+
+variable "nodepool_disk_size" {
+  type    = number
+  default = 20 # GB
+}
