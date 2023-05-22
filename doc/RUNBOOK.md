@@ -12,7 +12,7 @@ Why we have two different clusters? Because we have two different environments. 
 
 - Configure aws cli with your credentials
 ```
-# Example for bangladesh
+# Example for bangladesh staging cluster
 # Create a profile in the ~/.aws/credentials file
 ...
 [bangladesh]
@@ -23,10 +23,10 @@ aws_secret_access_key = <secret-key>
 
 - Create a profile for assume role
 ```
-# Example for bangladesh
+# Example for bangladesh staging cluster
 # Create another profile in the ~/.aws/credentials file
 ...
-[bangladesh-k8s]
+[bangladesh-staging-k8s]
 role_arn = arn:aws:iam::<account-id>:role/<role-name> # Get this from Terraform output variable `eks_assume_role_arn`
 source_profile = bangladesh
 ...
@@ -34,8 +34,8 @@ source_profile = bangladesh
 
 - Get the kubeconfig file from AWS
 ```
-# Example for bangladesh
-aws eks --region ap-south-1 update-kubeconfig --name staging-simple-k8s-01 --profile bangladesh-k8s
+# Example for bangladesh staging cluster
+aws eks --region ap-south-1 update-kubeconfig --name staging-simple-k8s-01 --profile bangladesh-staging-k8s
 ```
 
 - Check if you can connect to the cluster
