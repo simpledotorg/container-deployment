@@ -70,6 +70,11 @@ module "eks" {
   tags          = local.tags
   key_pair_name = aws_key_pair.simple_aws_key.key_name
 
+  aws_profile = "bangladesh-k8s-production"
+
+  nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use single zone avoid volume mount issues during node replacement
+  nodepool_disk_size  = 50
+
   db_instance_type = "t3.medium"
 
   db_backup_instance_type = "t3.small"

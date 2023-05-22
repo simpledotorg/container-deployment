@@ -64,11 +64,14 @@ resource "aws_key_pair" "simple_aws_key" {
 module "eks" {
   source = "../modules/simple_eks"
 
+  aws_profile   = "bangladesh-staging-k8s"
   subnets       = module.vpc.private_subnets
   vpc_id        = module.vpc.vpc_id
   cluster_name  = local.cluster_name
   tags          = local.tags
   key_pair_name = aws_key_pair.simple_aws_key.key_name
+
+  nodepool_subnet_ids = module.vpc.private_subnets
 
   db_instance_type = "t3.medium"
 
