@@ -1,0 +1,32 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: api-sandbox-k8s.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-sandbox-k8s.simple.org
+    secretName: api-sandbox-k8s.simple.org-tls
+cron:
+  enabled: false
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:bangladesh-production-k8s"]}]'
+  }
+server:
+  replicaCount: 1
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:bangladesh-production-k8s"]}]'
+  }
+worker:
+  enabled: false
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:bangladesh-production-k8s"]}]'
+  }
+migration:
+  enabled: false
