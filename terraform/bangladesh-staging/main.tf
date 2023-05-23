@@ -73,7 +73,8 @@ module "eks" {
 
   nodepool_subnet_ids = [module.vpc.private_subnets[1]] # Use single zone avoid volume mount issues during node replacement
 
-  db_instance_type = "t3.medium"
+  db_instance_type  = "t3.medium"
+  db_instance_count = 2
 
   db_backup_instance_type = "t3.small"
 

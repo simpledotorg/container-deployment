@@ -2,12 +2,12 @@ terraform {
   required_version = "1.4.6"
 
   backend "s3" {
-    bucket         = "simple-server-bangladesh-terraform-state"
-    key            = "k8s.production.terraform.tfstate"
+    bucket         = "simple-server-development-terraform-state"
+    key            = "k8s.sandbox.terraform.tfstate"
     encrypt        = true
     region         = "ap-south-1"
-    dynamodb_table = "k8s-production-terraform-lock"
-    profile        = "bangladesh"
+    dynamodb_table = "k8s-sandbox-terraform-lock"
+    profile        = "development"
   }
 
   required_providers {
@@ -19,7 +19,7 @@ terraform {
 }
 
 locals {
-  env        = "production"
+  env        = "sandbox"
   deployment = "k8s"
   service    = "simple"
   tags = {
@@ -36,7 +36,7 @@ locals {
 
 provider "aws" {
   region  = "ap-south-1"
-  profile = "bangladesh"
+  profile = "development"
 }
 
 module "vpc" {
@@ -64,26 +64,24 @@ resource "aws_key_pair" "simple_aws_key" {
 module "eks" {
   source = "../modules/simple_eks"
 
+  aws_profile   = "sandbox-k8s"
   subnets       = module.vpc.private_subnets
   vpc_id        = module.vpc.vpc_id
   cluster_name  = local.cluster_name
   tags          = local.tags
   key_pair_name = aws_key_pair.simple_aws_key.key_name
 
-  aws_profile = "bangladesh-k8s-production"
+  nodepool_subnet_ids = [module.vpc.private_subnets[1]] # Use single zone avoid volume mount issues during node replacement
 
-  nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use single zone avoid volume mount issues during node replacement
-  nodepool_disk_size  = 50
-
-  db_instance_type  = "t3.medium"
-  db_instance_count = 2
+  db_instance_type  = "r5.xlarge"
+  db_instance_count = 1
 
   db_backup_instance_type = "t3.small"
 
-  server_instance_type  = "t3.xlarge"
-  server_instance_count = 2
+  server_instance_type  = "t3.2xlarge"
+  server_instance_count = 1
 
-  worker_instance_type  = "t3.xlarge"
+  worker_instance_type  = "t3.2xlarge"
   worker_instance_count = 1
 
   metabase_instance_type  = "t3.small"

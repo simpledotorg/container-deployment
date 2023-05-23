@@ -44,9 +44,9 @@ module "eks" {
 
   eks_managed_node_groups = {
     db = {
-      min_size     = 2
-      max_size     = 2
-      desired_size = 2
+      min_size     = var.db_instance_count
+      max_size     = var.db_instance_count
+      desired_size = var.db_instance_count
 
       labels = {
         role-db = "true"
