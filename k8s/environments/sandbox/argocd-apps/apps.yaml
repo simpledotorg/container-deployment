@@ -55,28 +55,28 @@ spec:
 ---
 
 # Configmaps
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: configmaps
-# spec:
-#   destination:
-#     name: ''
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/environments/sandbox/configmaps
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: env-sandbox
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: configmaps
+spec:
+  destination:
+    name: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/configmaps
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: env-sandbox
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
-# ---
+---
 
 # Nginx ingress
 apiVersion: argoproj.io/v1alpha1
@@ -237,29 +237,29 @@ spec:
 
 ---
 
-# # Secrets
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: secrets
-# spec:
-#   destination:
-#     name: ''
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/environments/sandbox/secrets
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: env-sandbox
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
+# Secrets
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: secrets
+spec:
+  destination:
+    name: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/secrets
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: env-sandbox
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
-# ---
+---
 
 # Postgres operator
 apiVersion: argoproj.io/v1alpha1
@@ -367,33 +367,33 @@ spec:
 ---
 
 # Simple server, worker and cron
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: simple-server
-# spec:
-#   destination:
-#     name: ''
-#     namespace: simple-v1
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/manifests/simple-server
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: env-sandbox
-#     helm:
-#       valueFiles:
-#         - values.affinity.yaml
-#         - ../../environments/sandbox/values/simple.yaml
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: simple-server
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/simple-server
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: env-sandbox
+    helm:
+      valueFiles:
+        - values.affinity.yaml
+        - ../../environments/sandbox/values/simple.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
-# ---
+---
 
 # Metabase
 apiVersion: argoproj.io/v1alpha1
