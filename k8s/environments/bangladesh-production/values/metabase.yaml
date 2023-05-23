@@ -6,11 +6,11 @@ metabase:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     hosts:
-      - host: metabase-k8s.bd.simple.org
+      - host: metabase.bd.simple.org
         paths:
           - path: /
             pathType: ImplementationSpecific
     tls:
     - hosts:
-      - metabase-k8s.bd.simple.org
-      secretName: metabase-k8s.bd.simple.org-tls
+      - metabase.bd.simple.org
+      secretName: metabase.bd.simple.org-tls

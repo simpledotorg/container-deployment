@@ -5,23 +5,23 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
-    - host: api-k8s.bd.simple.org
+    - host: api.bd.simple.org
       paths:
         - path: /
           pathType: ImplementationSpecific
-    - host: api-k8s-test.bd.simple.org
+    - host: dashboard.bd.simple.org
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
   - hosts:
-    - api-k8s.bd.simple.org
-    secretName: api-k8s.bd.simple.org-tls
+    - api.bd.simple.org
+    secretName: api.bd.simple.org-tls
   - hosts:
-    - api-k8s-test.bd.simple.org
-    secretName: api-k8s-test.bd.simple.org-tls
+    - dashboard.bd.simple.org
+    secretName: dashboard.bd.simple.org-tls
 cron:
-  enabled: false
+  enabled: true
   log:
     storage: 10Gi
   podAnnotations: {
@@ -34,11 +34,11 @@ server:
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:bangladesh-production-k8s"]}]'
   }
 worker:
-  enabled: false
+  enabled: true
   log:
     storage: 10Gi
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:bangladesh-production-k8s"]}]'
   }
 migration:
-  enabled: false
+  enabled: true
