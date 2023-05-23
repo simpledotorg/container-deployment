@@ -71,7 +71,7 @@ module "eks" {
   tags          = local.tags
   key_pair_name = aws_key_pair.simple_aws_key.key_name
 
-  nodepool_subnet_ids = module.vpc.private_subnets
+  nodepool_subnet_ids = [module.vpc.private_subnets[1]] # Use single zone avoid volume mount issues during node replacement
 
   db_instance_type = "t3.medium"
 
@@ -100,6 +100,18 @@ module "db_backup_s3_bucket" {
   source      = "../modules/simple_s3"
   bucket_name = local.db_backup_s3_bucket_name
   tags        = local.tags
+}
+
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
+
+output "private_subnet_ids" {
+  value = module.vpc.private_subnets
+}
+
+output "public_subnet_ids" {
+  value = module.vpc.public_subnets
 }
 
 output "eks_cluster_name" {
