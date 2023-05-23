@@ -117,9 +117,9 @@ spec:
         parameters:
           synchronous_commit: "on"
           max_connections: "200"
-          shared_buffers: "1GB"
-          effective_cache_size: "3GB"
-          maintenance_work_mem: "256MB"
+          shared_buffers: "8GB"
+          effective_cache_size: "24GB"
+          maintenance_work_mem: "2GB"
           checkpoint_completion_target: "0.9"
           wal_buffers: "16MB"
           default_statistics_target: "100"
@@ -128,6 +128,10 @@ spec:
           work_mem: "20971kB"
           min_wal_size: "1GB"
           max_wal_size: "4GB"
+          max_worker_processes: "4"
+          max_parallel_workers_per_gather: "2"
+          max_parallel_workers: "4"
+          max_parallel_maintenance_workers: "2"
   monitoring:
     pgmonitor:
       exporter:
