@@ -8,6 +8,8 @@ redis:
   replica:
     replicaCount: 0
   master:
+    persistence:
+      size: 8Gi # This value should be >= to redis instance memory size
     podAnnotations:
       ad.datadoghq.com/redis.checks: |
         {

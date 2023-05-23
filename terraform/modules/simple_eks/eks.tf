@@ -28,7 +28,8 @@ module "eks" {
   control_plane_subnet_ids = var.subnets
 
   eks_managed_node_group_defaults = {
-    instancdisk_size = 100
+    disk_size  = var.nodepool_disk_size
+    subnet_ids = var.nodepool_subnet_ids
   }
 
   manage_aws_auth_configmap = true
@@ -205,7 +206,7 @@ module "eks" {
 data "aws_eks_cluster_auth" "default" {
   name = module.eks.cluster_name
   depends_on = [
-    module.eks.eks_managed_node_groups,
+    module.eks.eks_managed_node_groups, #TODO: Chek if this is causing auth failure issues sometimes
   ]
 }
 
@@ -213,6 +214,7 @@ provider "kubernetes" {
   host                   = module.eks.cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
   # token                  = data.aws_eks_cluster_auth.default.token
+
   # Issue: https://github.com/terraform-aws-modules/terraform-aws-eks/issues/2009
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"

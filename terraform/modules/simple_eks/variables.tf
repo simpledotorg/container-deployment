@@ -75,3 +75,13 @@ variable "default_nodepool_instance_extra_labels" {
   type    = map(string)
   default = {}
 }
+
+variable "nodepool_disk_size" {
+  type    = number
+  default = 20 # GB
+}
+
+variable "nodepool_subnet_ids" {
+  description = "Subnet IDs for the nodepool. Use single zone avoid volume mount issues during node replacement"
+  type        = list(string)
+}
