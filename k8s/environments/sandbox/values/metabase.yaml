@@ -8,11 +8,11 @@ metabase:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     hosts:
-      - host: metabase-sandbox-k8s.simple.org
+      - host: metabase-sandbox.simple.org
         paths:
           - path: /
             pathType: ImplementationSpecific
     tls:
     - hosts:
-      - metabase-sandbox-k8s.simple.org
-      secretName: metabase-sandbox-k8s.simple.org-tls
+      - metabase-sandbox.simple.org
+      secretName: metabase-sandbox.simple.org-tls
