@@ -21,7 +21,7 @@ ingress:
     - dashboard-sandbox.simple.org
     secretName: dashboard-sandbox.simple.org-tls
 cron:
-  enabled: false
+  enabled: true
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sandbox-k8s"]}]'
   }
