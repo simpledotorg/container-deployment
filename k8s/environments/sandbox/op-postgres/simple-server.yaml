@@ -133,7 +133,6 @@ spec:
           max_parallel_workers_per_gather: "2"
           max_parallel_workers: "4"
           max_parallel_maintenance_workers: "2"
-          archive_timeout: "600s"
   monitoring:
     pgmonitor:
       exporter:
