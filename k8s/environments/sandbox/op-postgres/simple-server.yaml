@@ -75,17 +75,15 @@ spec:
                   values:
                   - "true"
       global:
-        repo1-retention-full: "14" # Number of days to retain full backups
-        repo1-retention-full-type: time
-        repo2-retention-full: "14" # Number of days to retain full backups
-        repo2-retention-full-type: time
+        repo1-retention-full: "2" # Number full backups to retain
+        repo2-retention-full: "2" # Number full backups to retain
         repo2-path: /pgbackrest/postgres-operator/simple/repo2
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
         schedules:
-          full: "0 1 * * 0"
-          differential: "0 1 * * 1-6"
+          full: "0 20 * * 0" # IST 1:30 AM
+          differential: "0 20 * * 1-6" # IST 1:30 AM
         volume:
           volumeClaimSpec:
             accessModes:
@@ -95,8 +93,8 @@ spec:
                 storage: 200Gi
       - name: repo2
         schedules:
-          full: "0 3 * * 0"
-          differential: "0 3 * * 1-6"
+          full: "0 22 * * 0" # IST 3:30 AM
+          differential: "0 22 * * 1-6" # IST 3:30 AM
         s3:
           bucket: sandbox-simple-k8s-db-backup
           endpoint: s3.ap-south-1.amazonaws.com
