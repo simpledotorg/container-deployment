@@ -304,7 +304,7 @@ spec:
       - PruneLast=true
       - CreateNamespace=true
     automated:
-      prune: true
+      prune: false
       selfHeal: true
 
 ---
