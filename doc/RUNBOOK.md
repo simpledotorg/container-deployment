@@ -22,7 +22,9 @@ aws_secret_access_key = <secret-key>
 ```
 
 - Create a profile for assume role
-  - Get `role_arn` from `terraform output` variable `eks_assume_role_arn` or from AWS console IAM role page (search for `eks-system-admin`)
+  - Get `role_arn` using below options
+    - Option 1: Using aws cli `aws iam list-roles --profile <profile-name> | grep eks-system-admin`
+    - Option 2: From `terraform output` variable `eks_system_admin_role_arn`
 ```
 # Example for bangladesh staging cluster
 # Create another profile in the ~/.aws/credentials file
@@ -34,7 +36,9 @@ source_profile = bangladesh
 ```
 
 - Get the kubeconfig file from AWS
-  - Get eks cluster name from `terraform output` variable `eks_cluster_name` or from AWS console EKS cluster page
+  - Get `cluster name` using below options
+    - Option 1: Using aws cli `aws eks list-clusters --region ap-south-1 --profile <profile-name>`
+    - Option 2: From `terraform output` variable `eks_cluster_name`
 ```
 # Example for bangladesh staging cluster
 aws eks --region ap-south-1 update-kubeconfig --name staging-simple-k8s-01 --profile bangladesh-staging-k8s
