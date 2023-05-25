@@ -375,3 +375,22 @@ spec:
   tags:
     - "env:bangladesh-production-k8s"
     - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: bangladesh-production-k8s-db-low-data-disk-space
+  namespace: datadog
+spec:
+  query: "avg(last_5m):max:crunchy_data.ccp_nodemx_data_disk_available_bytes{env:bangladesh-production-k8s} by {host} < 25"
+  type: "query alert"
+  name: "bangladesh-production-k8s-db-low-data-disk-space"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:bangladesh-production-k8s"
+    - "generated:kubernetes"
