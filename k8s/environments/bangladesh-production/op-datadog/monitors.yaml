@@ -394,3 +394,5 @@ spec:
   tags:
     - "env:bangladesh-production-k8s"
     - "generated:kubernetes"
+
+# TODO: Add alert for pg repo host disk space

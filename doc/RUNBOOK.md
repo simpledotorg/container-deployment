@@ -156,3 +156,9 @@ spec:
       restore:
         enabled: false
 ```
+
+## Enable aws eks gp2 volume expansion
+Note: Required for increasing the size of the database volumes
+```
+kubectl patch sc gp2 -p '{"allowVolumeExpansion": true}'
+```
