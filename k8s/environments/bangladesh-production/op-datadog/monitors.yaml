@@ -346,7 +346,7 @@ metadata:
   name: bangladesh-production-k8s-db-full-backup-failed
   namespace: datadog
 spec:
-  query: "avg(last_5m):max:crunchy_data.ccp_backrest_last_full_backup_time_since_completion_seconds{env:sri-lanka-production-k8s} / (60 * 60 * 24) > 8"
+  query: "avg(last_5m):max:crunchy_data.ccp_backrest_last_full_backup_time_since_completion_seconds{env:bangladesh-production-k8s} / (60 * 60 * 24) > 8"
   type: "query alert"
   name: "bangladesh-production-k8s-db-full-backup-failed"
   message: "@slack-alerts"
@@ -365,7 +365,7 @@ metadata:
   name: bangladesh-production-k8s-db-diff-backup-failed
   namespace: datadog
 spec:
-  query: "avg(last_5m):max:crunchy_data.ccp_backrest_last_diff_backup_time_since_completion_seconds{env:sri-lanka-production-k8s} / (60 * 60) > 25"
+  query: "avg(last_5m):max:crunchy_data.ccp_backrest_last_diff_backup_time_since_completion_seconds{env:bangladesh-production-k8s} / (60 * 60) > 25"
   type: "query alert"
   name: "bangladesh-production-k8s-db-diff-backup-failed"
   message: "@slack-alerts"
