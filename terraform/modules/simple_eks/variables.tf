@@ -27,6 +27,10 @@ variable "db_instance_type" {
   type = string
 }
 
+variable "db_instance_count" {
+  type = number
+}
+
 variable "db_backup_instance_type" {
   type = string
 }

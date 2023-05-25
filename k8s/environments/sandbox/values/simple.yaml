@@ -1,0 +1,39 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: api-sandbox.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-sandbox.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-sandbox.simple.org
+    secretName: api-sandbox.simple.org-tls
+  - hosts:
+    - dashboard-sandbox.simple.org
+    secretName: dashboard-sandbox.simple.org-tls
+cron:
+  enabled: true
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sandbox-k8s"]}]'
+  }
+server:
+  replicaCount: 1
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sandbox-k8s"]}]'
+  }
+worker:
+  enabled: true
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sandbox-k8s"]}]'
+  }
+migration:
+  enabled: true
