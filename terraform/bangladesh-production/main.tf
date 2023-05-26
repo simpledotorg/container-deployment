@@ -28,6 +28,7 @@ locals {
     Service     = local.service
     Deployment  = local.deployment
   }
+  # Note: Add contry name prefix to the future environments to avoid conflict with existing resources. We missed this here.
   vpc_name                 = "${local.env}-${local.service}-vpc-01"
   key_pair_name            = "${local.env}-${local.service}-${local.deployment}"
   cluster_name             = "${local.env}-${local.service}-${local.deployment}-01"
