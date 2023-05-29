@@ -21,7 +21,7 @@ spec:
       - name: {{ .Values.migration.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        args: ["bundle", "exec", "rake", "db:migrate"]
+        args: ["bundle", "exec", "rake", "db:migrate:with_data"]
         envFrom:
           - secretRef:
               name: {{ .Values.existingSecret }}
