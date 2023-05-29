@@ -19,3 +19,6 @@ argo-cd:
           hosts:
             - argocd.k8s-test.simple.org
       https: false
+  configs:
+    cm:
+      exec.enabled: true
