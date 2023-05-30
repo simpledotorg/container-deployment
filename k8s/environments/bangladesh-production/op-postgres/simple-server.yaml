@@ -101,6 +101,9 @@ spec:
           endpoint: s3.ap-south-1.amazonaws.com
           region: ap-south-1
       jobs:
+        resources:
+          limits:
+            cpu: 1
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
