@@ -170,3 +170,10 @@ Note: Required for increasing the size of the database volumes
 ```
 kubectl patch sc gp2 -p '{"allowVolumeExpansion": true}'
 ```
+
+## Generate/update Argocd user password
+Install argocd cli: `brew install argocd`
+```
+argocd login <endpoint-without-https://-prefix>
+argocd account update-password --account <user-name>
+```
