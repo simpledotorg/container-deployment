@@ -23,13 +23,13 @@ metadata:
   name: bangladesh-production-k8s-host-cpu-usage
   namespace: datadog
 spec:
-  query: "max(last_5m):100 - avg:system.cpu.idle{kube_cluster_name:bangladesh-production-k8s} by {host} > 90"
+  query: "max(last_1h):100 - avg:system.cpu.idle{kube_cluster_name:bangladesh-production-k8s} by {host} > 90"
   type: "query alert"
   name: "bangladesh-production-k8s-host-cpu-usage"
   message: "@slack-alerts"
   options:
     notifyNoData: true
-    noDataTimeframe: 30
+    noDataTimeframe: 120
   tags:
     - "env:bangladesh-production-k8s"
     - "generated:kubernetes"
