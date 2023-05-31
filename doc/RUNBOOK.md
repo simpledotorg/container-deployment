@@ -171,7 +171,29 @@ Note: Required for increasing the size of the database volumes
 kubectl patch sc gp2 -p '{"allowVolumeExpansion": true}'
 ```
 
-## Generate/update Argocd user password
+## Argocd user management
+
+### Add new user to Argocd
+- Select argocd.yaml file from `k8s/environments/<env>/values/` folder
+- Add new user and assign role
+```
+argo-cd:
+  ...
+  configs:
+    cm:
+      ...
+      accounts.<user-name>: login
+...
+    rbac:
+      ...
+      policy.csv: |
+        ...
+        g, <user-name>, role:<role-name>
+```
+- Create a PR and merge to master post review
+- ArgoCD will automatically sync the changes
+- Existing users can set the password using [below steps](#generateupdate-argocd-user-password)
+### Generate/update Argocd user password
 Install argocd cli: `brew install argocd`
 ```
 argocd login <endpoint-without-https://-prefix>
