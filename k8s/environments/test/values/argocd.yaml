@@ -19,3 +19,8 @@ argo-cd:
           hosts:
             - argocd.k8s-test.simple.org
       https: false
+  configs:
+    cm:
+      accounts.rpeter@rtsl.org: login
+    rbac:
+      policy.default: role:readonly
