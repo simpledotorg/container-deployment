@@ -21,6 +21,7 @@ argo-cd:
       https: false
   configs:
     cm:
+      accounts.cicd: login
       accounts.govind: login 
       accounts.priyanga: login 
       accounts.olttwa: login 
@@ -28,13 +29,13 @@ argo-cd:
       accounts.dan: login 
       accounts.atharva: login 
       accounts.roypeter: login 
-      accounts.cicd: login 
-    
+       
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
       policy.default: role:readonly
       policy.csv: |
         p, role:cicd, applications, sync, *, allow
+        g, cicd, role:cicd
         g, govind, role:admin
         g, priyanga, role:admin
         g, olttwa, role:admin
@@ -42,4 +43,3 @@ argo-cd:
         g, dan, role:admin
         g, atharva, role:admin
         g, roypeter, role:admin
-        g, cicd, role:cicd
