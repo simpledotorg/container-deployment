@@ -21,6 +21,6 @@ argo-cd:
       https: false
   configs:
     cm:
-      accounts.rpeter@rtsl.org: login
+      accounts.roypeter: login
     rbac:
       policy.default: role:readonly
