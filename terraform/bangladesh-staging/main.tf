@@ -105,6 +105,9 @@ module "db_backup_s3_bucket" {
   tags        = local.tags
 }
 
+# Log archival bucket and user is reused from old environment
+# https://github.com/simpledotorg/deployment/blob/master/terraform/bangladesh/main.tf#L142
+
 output "vpc_id" {
   value = module.vpc.vpc_id
 }

@@ -43,7 +43,7 @@ data "aws_ami" "ubuntu" {
 }
 
 module "k8s_server_sg_qa" {
-  source = "terraform-aws-modules/security-group/aws"
+  source  = "terraform-aws-modules/security-group/aws"
   version = "4.16.2"
 
   name        = "${local.qa_server_name_sufix}-sg"
@@ -90,6 +90,9 @@ module "k8s_server_qa" {
   vpc_security_group_ids = [
     module.k8s_server_sg_qa.security_group_id
   ]
+
+  # Reusing the same subent from development environment
+  # https://github.com/simpledotorg/deployment/blob/master/terraform/development/main.tf
   subnet_id = "subnet-dea591b6"
 
   tags = {
