@@ -395,4 +395,21 @@ spec:
     - "env:bangladesh-production-k8s"
     - "generated:kubernetes"
 
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: bangladesh-production-k8s-high-5xx-rate
+  namespace: datadog
+spec:
+  query: "sum(last_5m):sum:nginx_ingress.controller.requests{env:bangladesh-production-k8s,status:5*}.as_count() > 100"
+  type: "query alert"
+  name: "bangladesh-production-k8s-high-5xx-rate"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:bangladesh-production-k8s"
+    - "generated:kubernetes
+
 # TODO: Add alert for pg repo host disk space
