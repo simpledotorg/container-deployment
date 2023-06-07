@@ -35,6 +35,7 @@ argo-cd:
       policy.default: role:readonly
       policy.csv: |
         p, role:cicd, applications, sync, *, allow
+        p, role:cicd, applications, update, *, allow
         g, cicd, role:cicd
         g, govind, role:admin
         g, priyanga, role:admin
