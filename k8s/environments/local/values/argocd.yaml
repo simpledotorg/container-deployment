@@ -1,4 +1,7 @@
 argo-cd:
+  configs:
+    cm:
+      admin.enabled: true
   redis-ha:
     enabled: false
   controller:
