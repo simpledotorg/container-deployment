@@ -412,6 +412,6 @@ spec:
     noDataTimeframe: 10
   tags:
     - "env:bangladesh-production-k8s"
-    - "generated:kubernetes
+    - "generated:kubernetes"
 
 # TODO: Add alert for pg repo host disk space
