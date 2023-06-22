@@ -395,6 +395,8 @@ spec:
     - "env:bangladesh-production-k8s"
     - "generated:kubernetes"
 
+---
+
 apiVersion: datadoghq.com/v1alpha1
 kind: DatadogMonitor
 metadata:
