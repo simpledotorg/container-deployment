@@ -20,6 +20,10 @@ promotions:
     pipeline_file: update_test_env_ssh_keys.yml
     auto_promote:
       when: branch = 'master'
+  - name: DHIS2 Sandbox2 - Update SSH keys
+    pipeline_file: update_dhis2_sandbox2_ssh_keys.yml
+    auto_promote:
+      when: branch = 'master'
   - name: Build push simple server base image
     pipeline_file: docker.yml
     auto_promote:
