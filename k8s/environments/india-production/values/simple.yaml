@@ -1,0 +1,44 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: api-k8s-simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-k8s-simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-k8s-simple.org
+    secretName: api-k8s-simple.org-tls
+  - hosts:
+    - dashboard-k8s-simple.org
+    secretName: dashboard-k8s-simple.org-tls
+cron:
+  enabled: false
+  log:
+    storage: 10Gi
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:india-production-k8s"]}]'
+  }
+server:
+  log:
+    storage: 10Gi
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:india-production-k8s"]}]'
+  }
+worker:
+  enabled: false
+  log:
+    storage: 10Gi
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:india-production-k8s"]}]'
+  }
+migration:
+  enabled: false
