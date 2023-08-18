@@ -1,0 +1,20 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: hippo
+spec:
+  instances:
+  - name: master
+    replicas: 1
+    labels:
+      role: master
+    postgresql:
+      parameters:
+        max_connections: 100
+  - name: replica
+    replicas: 1
+    labels:
+      role: replica
+    postgresql:
+      parameters:
+        max_connections: 50
