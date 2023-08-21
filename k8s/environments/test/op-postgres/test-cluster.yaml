@@ -3,6 +3,14 @@ kind: PostgresCluster
 metadata:
   name: hippo
 spec:
+  postgresVersion: 14
+  users:
+    - name: admin
+      databases:
+        - postgres
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
   instances:
   - name: master
     replicas: 1
