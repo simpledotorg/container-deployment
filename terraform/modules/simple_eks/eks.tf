@@ -48,9 +48,12 @@ module "eks" {
       max_size     = var.db_instance_count
       desired_size = var.db_instance_count
 
-      labels = {
-        role-db = "true"
-      }
+      labels = merge(
+        {
+          role-db = "true"
+        },
+        var.db_instance_extra_labels
+      )
 
       instance_types = [var.db_instance_type]
       capacity_type  = "ON_DEMAND"
@@ -63,13 +66,16 @@ module "eks" {
     }
 
     db_backup = {
-      min_size     = 1
-      max_size     = 1
-      desired_size = 1
+      min_size     = var.db_backup_instance_count
+      max_size     = var.db_backup_instance_count
+      desired_size = var.db_backup_instance_count
 
-      labels = {
-        role-db-backup = "true"
-      }
+      labels = merge(
+        {
+          role-db-backup = "true"
+        },
+        var.db_backup_instance_extra_labels
+      )
 
       instance_types = [var.db_backup_instance_type]
       capacity_type  = "ON_DEMAND"
@@ -86,9 +92,12 @@ module "eks" {
       max_size     = var.server_instance_count
       desired_size = var.server_instance_count
 
-      labels = {
-        role-server = "true"
-      }
+      labels = merge(
+        {
+          role-server = "true"
+        },
+        var.server_instance_extra_labels
+      )
 
       instance_types = [var.server_instance_type]
       capacity_type  = "ON_DEMAND"
@@ -105,10 +114,13 @@ module "eks" {
       max_size     = var.worker_instance_count
       desired_size = var.worker_instance_count
 
-      labels = {
-        role-worker = "true"
-        role-cron   = "true"
-      }
+      labels = merge(
+        {
+          role-worker = "true"
+          role-cron   = "true"
+        },
+        var.worker_instance_extra_labels
+      )
 
       instance_types = [var.worker_instance_type]
       capacity_type  = "ON_DEMAND"
@@ -125,9 +137,12 @@ module "eks" {
       max_size     = var.metabase_instance_count
       desired_size = var.metabase_instance_count
 
-      labels = {
-        role-metabase = "true"
-      }
+      labels = merge(
+        {
+          role-metabase = "true"
+        },
+        var.metabase_instance_extra_labels
+      )
 
       instance_types = [var.metabase_instance_type]
       capacity_type  = "ON_DEMAND"
@@ -144,9 +159,12 @@ module "eks" {
       max_size     = 1
       desired_size = 1
 
-      labels = {
-        role-cache-redis = "true"
-      }
+      labels = merge(
+        {
+          role-cache-redis = "true"
+        },
+        var.cache_redis_instance_extra_labels
+      )
 
       instance_types = [var.cache_redis_instance_type]
       capacity_type  = "ON_DEMAND"
@@ -163,9 +181,12 @@ module "eks" {
       max_size     = 1
       desired_size = 1
 
-      labels = {
-        role-worker-redis = "true"
-      }
+      labels = merge(
+        {
+          role-worker-redis = "true"
+        },
+        var.worker_redis_instance_extra_labels
+      )
 
       instance_types = [var.worker_redis_instance_type]
       capacity_type  = "ON_DEMAND"
