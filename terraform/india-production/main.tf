@@ -30,10 +30,11 @@ locals {
     Deployment  = local.deployment
     Region      = local.region
   }
-  vpc_name                 = "${local.region}-${local.env}-${local.service}-vpc-01"
-  key_pair_name            = "${local.region}-${local.env}-${local.service}-${local.deployment}"
-  cluster_name             = "${local.region}-${local.env}-${local.service}-${local.deployment}-01"
-  db_backup_s3_bucket_name = "${local.region}-${local.env}-${local.service}-${local.deployment}-db-backup"
+  vpc_name                   = "${local.region}-${local.env}-${local.service}-vpc-01"
+  key_pair_name              = "${local.region}-${local.env}-${local.service}-${local.deployment}"
+  cluster_name               = "${local.region}-${local.env}-${local.service}-${local.deployment}-01"
+  db_backup_s3_bucket_name   = "${local.region}-${local.env}-${local.service}-${local.deployment}-db-backup"
+  log_archive_s3_bucket_name = "${local.region}-${local.env}-${local.service}-${local.deployment}-archived-logs"
 }
 
 provider "aws" {
@@ -45,13 +46,13 @@ module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
   name = local.vpc_name
-  cidr = "172.30.0.0/16"
+  cidr = "172.29.0.0/16"
 
-  azs = ["ap-south-1a", "ap-south-1b"]
-  # private_subnets = ["172.30.1.0/24", "172.30.2.0/24"]
-  public_subnets = ["172.30.101.0/24", "172.30.102.0/24"]
+  azs             = ["ap-south-1a", "ap-south-1b"]
+  private_subnets = ["172.29.1.0/24", "172.29.2.0/24"]
+  public_subnets  = ["172.29.101.0/24", "172.29.102.0/24"]
 
-  enable_nat_gateway     = false
+  enable_nat_gateway     = true
   enable_vpn_gateway     = false
   one_nat_gateway_per_az = true
 
@@ -66,7 +67,7 @@ resource "aws_key_pair" "simple_aws_key" {
 module "eks" {
   source = "../modules/simple_eks"
 
-  subnets       = module.vpc.public_subnets
+  subnets       = module.vpc.private_subnets
   vpc_id        = module.vpc.vpc_id
   cluster_name  = local.cluster_name
   tags          = local.tags
@@ -74,7 +75,7 @@ module "eks" {
 
   aws_profile = "india-k8s-production"
 
-  nodepool_subnet_ids = [module.vpc.public_subnets[0]] # Use only one subnet for nodepool
+  nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
   db_instance_type  = "t3.xlarge"
@@ -109,6 +110,12 @@ module "db_backup_s3_bucket" {
   tags        = local.tags
 }
 
+module "log_archive_s3_bucket" {
+  source      = "../modules/simple_s3"
+  bucket_name = local.log_archive_s3_bucket_name
+  tags        = local.tags
+}
+
 # Log archival bucket and user is reused from old environment
 # https://github.com/simpledotorg/deployment/blob/master/terraform/india/main.tf
 
@@ -140,6 +147,7 @@ output "eks_assume_role_arn" {
   value = module.eks.assume_role_arn
 }
 
+
 output "db_backup_s3_bucket_id" {
   value = module.db_backup_s3_bucket.bucket_id
 }
@@ -158,5 +166,27 @@ output "db_backup_s3_access_key" {
 
 output "db_backup_s3_access_secret" {
   value     = module.db_backup_s3_bucket.access_secret
+  sensitive = true
+}
+
+
+output "log_archive_s3_bucket_id" {
+  value = module.log_archive_s3_bucket.bucket_id
+}
+
+output "log_archive_s3_bucket_arn" {
+  value = module.log_archive_s3_bucket.bucket_arn
+}
+
+output "log_archive_s3_user_arn" {
+  value = module.log_archive_s3_bucket.bucket_arn
+}
+
+output "log_archive_s3_access_key" {
+  value = module.log_archive_s3_bucket.access_key
+}
+
+output "log_archive_s3_access_secret" {
+  value     = module.log_archive_s3_bucket.access_secret
   sensitive = true
 }
