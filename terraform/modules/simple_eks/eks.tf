@@ -66,6 +66,8 @@ module "eks" {
     }
 
     db_backup = {
+      create = var.db_backup_instance_enable
+
       min_size     = var.db_backup_instance_count
       max_size     = var.db_backup_instance_count
       desired_size = var.db_backup_instance_count
@@ -177,6 +179,8 @@ module "eks" {
     }
 
     worker_redis = {
+      create = var.worker_redis_instance_enable
+
       min_size     = 1
       max_size     = 1
       desired_size = 1
@@ -199,6 +203,8 @@ module "eks" {
     }
 
     default = {
+      create = var.default_nodepool_instance_enable
+
       min_size     = var.default_nodepool_instance_count
       max_size     = var.default_nodepool_instance_count
       desired_size = var.default_nodepool_instance_count
