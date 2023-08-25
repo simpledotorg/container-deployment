@@ -365,32 +365,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-
----
-
-# Metabase
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: metabase
-spec:
-  destination:
-    name: ''
-    namespace: simple-v1
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/manifests/metabase
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: india-migration
-    helm:
-      valueFiles:
-        - values.affinity.yaml
-        - ../../environments/india-production/values/metabase.yaml
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
