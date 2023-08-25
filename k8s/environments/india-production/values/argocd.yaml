@@ -1,7 +1,4 @@
 argo-cd:
-  configs:
-    cm:
-      admin.enabled: true
   notifications:
     argocdUrl: "https://argocd.simple.org"
   server:
@@ -31,7 +28,8 @@ argo-cd:
       accounts.akshatha: login 
       accounts.dan: login 
       accounts.atharva: login 
-      accounts.roypeter: login 
+      accounts.roypeter: login
+      admin.enabled: true
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
