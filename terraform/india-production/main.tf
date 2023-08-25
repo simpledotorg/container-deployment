@@ -1,14 +1,14 @@
 terraform {
   required_version = "1.4.6"
 
-  # backend "s3" {
-  #   bucket         = "simple-server-india-terraform-state"
-  #   key            = "k8s.production.terraform.tfstate"
-  #   encrypt        = true
-  #   region         = "ap-south-1"
-  #   dynamodb_table = "k8s-production-terraform-lock"
-  #   profile        = "india"
-  # }
+  backend "s3" {
+    bucket         = "simple-server-india-terraform-state-02"
+    key            = "k8s.production.terraform.tfstate"
+    encrypt        = true
+    region         = "ap-south-1"
+    dynamodb_table = "simple-india-production-terraform-lock"
+    profile        = "india"
+  }
 
   required_providers {
     aws = {
@@ -61,7 +61,7 @@ module "vpc" {
 
 resource "aws_key_pair" "simple_aws_key" {
   key_name   = local.key_pair_name
-  public_key = file("~/.ssh/india_simple_aws_key.pub") # Get it from password store
+  public_key = file("~/.ssh/simple_aws_key.pub") # Get it from password store
 }
 
 module "eks" {
