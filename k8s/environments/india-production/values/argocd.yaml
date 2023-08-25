@@ -1,4 +1,7 @@
 argo-cd:
+  configs:
+    cm:
+      admin.enabled: true
   notifications:
     argocdUrl: "https://argocd.simple.org"
   server:
