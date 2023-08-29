@@ -199,3 +199,12 @@ Install argocd cli: `brew install argocd`
 argocd login <endpoint-without-https://-prefix>
 argocd account update-password --account <user-name>
 ```
+
+Use scripts/argocd_password_setup.py for bulk password update
+```
+cp scripts/argocd_password_setup_credentials.txt.sample scripts/argocd_password_setup_credentials.txt
+cp scripts/argocd_password_setup_users.txt.sample scripts/argocd_password_setup_users.txt
+# Update the credentials file with argocd credentials
+# Update the users file with user names
+python scripts/argocd_password_setup.py
+```
