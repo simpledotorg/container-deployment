@@ -73,13 +73,13 @@ spec:
                   - "true"
       global:
         # Number of full backups to retain
-        repo1-retention-full: "1" # original value: "2"
+        repo1-retention-full: "2"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
         schedules:
-          full: "30 * * * *" # original value: "0 20 * * 0" 
-          differential: "0 * * * *" # Original value: "0 20 * * 1-6"
+          full: "0 20 * * 0" 
+          differential: "0 20 * * 1-6"
         volume:
           volumeClaimSpec:
             accessModes:
