@@ -5,21 +5,21 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
-    - host: api-k8s-simple.org
+    - host: api-k8s.simple.org
       paths:
         - path: /
           pathType: ImplementationSpecific
-    - host: dashboard-k8s-simple.org
+    - host: dashboard-k8s.simple.org
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
   - hosts:
-    - api-k8s-simple.org
-    secretName: api-k8s-simple.org-tls
+    - api-k8s.simple.org
+    secretName: api-k8s.simple.org-tls
   - hosts:
-    - dashboard-k8s-simple.org
-    secretName: dashboard-k8s-simple.org-tls
+    - dashboard-k8s.simple.org
+    secretName: dashboard-k8s.simple.org-tls
 cron:
   enabled: false
   log:
