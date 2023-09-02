@@ -21,7 +21,7 @@ ingress:
     - dashboard-k8s.simple.org
     secretName: dashboard-k8s.simple.org-tls
 cron:
-  enabled: false
+  enabled: true
   log:
     storage: 10Gi
   podAnnotations: {
@@ -34,7 +34,7 @@ server:
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:india-production-k8s"]}]'
   }
 worker:
-  enabled: false
+  enabled: true
   log:
     storage: 10Gi
   podAnnotations: {
