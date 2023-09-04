@@ -28,6 +28,7 @@ cron:
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:india-production-k8s"]}]'
   }
 server:
+  replicaCount: 6
   log:
     storage: 10Gi
   podAnnotations: {
