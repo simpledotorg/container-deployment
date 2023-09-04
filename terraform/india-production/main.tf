@@ -94,11 +94,21 @@ module "eks" {
 
   worker_instance_type  = "t3.large"
   worker_instance_count = 1
+  worker_instance_extra_labels = {
+    "role-server" = "true"
+  }
 
   metabase_instance_type  = "t3.small"
   metabase_instance_count = 1
+  metabase_instance_extra_labels = {
+    "role-server" = "true"
+  }
 
-  cache_redis_instance_type    = "r5.large"
+  cache_redis_instance_type = "r5.large"
+  cache_redis_instance_extra_labels = {
+    "role-server" = "true"
+  }
+
   worker_redis_instance_enable = false
 
   default_nodepool_instance_enable = false
