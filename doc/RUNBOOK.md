@@ -41,10 +41,11 @@ source_profile = bangladesh
     - Option 1: Using aws cli `aws eks list-clusters --region ap-south-1 --profile <profile-name>`
     - Option 2: Using aws console EKS cluster page
     - Option 3: From `terraform output` variable `eks_cluster_name`
-```
-# Example for bangladesh staging cluster
-aws eks --region ap-south-1 update-kubeconfig --name staging-simple-k8s-01 --profile bangladesh-staging-k8s
-```
+
+  - Add context to your kubeconfig
+    ```
+    aws eks --region ap-south-1 update-kubeconfig --name <cluster-name> --profile <profile-name>
+    ```
 
 - Check if you can connect to the cluster
 ```
