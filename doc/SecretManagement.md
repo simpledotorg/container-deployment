@@ -5,16 +5,23 @@ Ansible Vault: Encrypts raw decrypted secrets for Kubeseal.
 Kubeseal: Encrypts and decrypts secrets at k8s level. Kubeseal does not allow local decryption hence Ansible vault is used.
 
 ## Prerequisite
+
 * Ansible `brew install ansible`
 * Kubeseal `brew install kubeseal`
 * Fetch and save the latest Kubeseal pem file from a K8s node (Note: The pem key is rotated frequently, so be sure to always fetch the latest):
-  * [SSH into your environment-specific node](./RUNBOOK.md#ssh)
-  * Run the following command to get the Kubeseal certificate:
-    ```bash
-    KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubeseal --fetch-cert --controller-namespace sealed-secrets --controller-name=sealed-secrets
-    ```
+  * For AWS EKS-based clusters
+    * Run this locally to get the Kubeseal certificate:
+      ```bash
+      kubeseal --fetch-cert --controller-namespace sealed-secrets --controller-name=sealed-secrets
+      ```
+  * For VM-based clusters
+    * [SSH into your environment-specific node](./RUNBOOK.md#ssh)
+    * Run this on the node to get the Kubeseal certificate:
+      ```bash
+      KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubeseal --fetch-cert --controller-namespace sealed-secrets --controller-name=sealed-secrets
+      ```
   * Save this to your local machine with a .pem extension (saved as `qa-sealedsecret.pem` in the below example)
-* Save the Vault password for k8s from the Simple password manager to your local machine (saved as `~/.vault_password_k8s` in the example below). This will be used to encrypt and decrypt secrets on your local machine.
+* Save the Ansible password for K8s from the Simple password manager to your local machine (saved as `~/.vault_password_k8s` in the example below). This will be used to encrypt and decrypt secrets on your local machine.
 
 ## Update/edit a secret key
 * Step1: Decrypt Vault secrets
