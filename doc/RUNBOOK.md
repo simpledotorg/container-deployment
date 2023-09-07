@@ -1,61 +1,70 @@
 # Runbook
 
-## Connecting to k8s cluster
-We have two type of k8s clusters. One is VM based cluster using k3s and the other is EKS cluster. Connecting to these two clusters are different.
+## Connecting to a K8s cluster
+We have two type of K8s clusters. One is VM based cluster using k3s and the other is EKS cluster. Connecting to these two clusters are different.
 EKS uses IAM roles to authenticate and VM based cluster uses kubeconfig file on the VM to authenticate.
 Why we have two different clusters? Because we have two different environments. One is in AWS/Could and the other is data center.
 
-### EKS cluster
-- Get access to respective AWS account
+### Prerequisite
 
 - Install [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
-- Configure aws cli with your credentials
-```
-# Example for bangladesh staging cluster
-# Create a profile in the ~/.aws/credentials file
-...
-[bangladesh]
-aws_access_key_id = <access-key>
-aws_secret_access_key = <secret-key>
-...
-```
+### Connecting to AWS EKS cluster
 
-- Create a profile for assume role
-  - Get `role_arn` using below options
-    - Option 1: Using aws cli `aws iam list-roles --profile <profile-name> | grep eks-system-admin`
-    - Option 2: Using aws console IAM role page. Search for `eks-system-admin` role
+- Get access to the respective AWS account
+
+- Configure aws cli with your credentials by creating a source profile in the `~/.aws/credentials` file
+  ```
+  # Example for bangladesh staging cluster
+
+  ...
+  [bangladesh]
+  aws_access_key_id = <access-key>
+  aws_secret_access_key = <secret-key>
+  ...
+  ```
+
+- Create a profile for the assumed role
+  - Get the role arn using the below options
+    - Option 1: Using aws cli
+      ```
+      aws iam list-roles --profile <profile-name> | grep eks-system-admin`
+      ```
+    - Option 2: Using aws console. Search for `eks-system-admin` role in the IAM role page.
     - Option 3: From `terraform output` variable `eks_system_admin_role_arn`
-```
-# Example for bangladesh staging cluster
-# Create another profile in the ~/.aws/credentials file
-...
-[bangladesh-staging-k8s]
-role_arn = arn:aws:iam::<account-id>:role/eks-system-admin-<cluster-name>
-source_profile = bangladesh
-...
-```
+  - Add the arn under a new role profile in `~/.aws/credentials` file
+    ```
+    # Example for bangladesh staging cluster
+
+    ...
+    [bangladesh-staging-k8s]
+    role_arn = arn:aws:iam::<account-id>:role/eks-system-admin-<cluster-name>
+    source_profile = bangladesh
+    ...
+    ```
 
 - Get the kubeconfig file from AWS
-  - Get `cluster name` using below options
-    - Option 1: Using aws cli `aws eks list-clusters --region ap-south-1 --profile <profile-name>`
-    - Option 2: Using aws console EKS cluster page
+  - Get the cluster name using the below options
+    - Option 1: Using aws cli
+      ```
+      aws eks list-clusters --region ap-south-1 --profile <source-profile-name>
+      ```
+    - Option 2: Using the AWS console EKS cluster page
     - Option 3: From `terraform output` variable `eks_cluster_name`
-
-  - Add context to your kubeconfig
+  - Add the context to your local kubeconfig
     ```
-    aws eks --region ap-south-1 update-kubeconfig --name <cluster-name> --profile <profile-name>
+    aws eks --region ap-south-1 update-kubeconfig --name <cluster-name> --profile <role-profile-name>
     ```
 
 - Check if you can connect to the cluster
-```
-kubectl get nodes
-```
+  ```
+  kubectl get nodes
+  ```
 
 ### VM based cluster
 - List of host for each environment can be found [here](../ansible/hosts/)
 - Ansible host file is configured with privates IPs. Use Jump host mentioned in the environment specific [group_vars](../ansible/group_vars/) (variable name: `ansible_ssh_common_args: ... ubuntu@jump-host-ip`)
-- SSH into k8s node
+- SSH into K8s node
 ```
 ssh -A -J ubuntu@jump-host-ip  ubuntu@host-private-ip
 ```
@@ -68,7 +77,7 @@ ssh -A -J ubuntu@jump-host-ip  ubuntu@host-private-ip
 
 ## How to open Rails application console?
 
-- Step1: [SSH into k8s node](#connect-to-k8s-cluster)
+- Step1: [SSH into K8s node](#connect-to-k8s-cluster)
 
 - Step2: Login to container
 ```
@@ -82,7 +91,7 @@ bundle exec rails c
 
 ## How to open DB console?
 
-- Step1: [SSH into k8s node](#ssh)
+- Step1: [SSH into K8s node](#ssh)
 
 - Step2: Login to container
 ```
@@ -94,7 +103,7 @@ kubectl exec -it simple-server-0 /bin/bash -n simple-v1
 PGPASSWORD=$SIMPLE_SERVER_DATABASE_PASSWORD psql -h $SIMPLE_SERVER_DATABASE_HOST -U $SIMPLE_SERVER_DATABASE_USERNAME -d $SIMPLE_SERVER_DATABASE_NAME
 ```
 
-## [Decrypt/Encrypt k8s secrets](./SecretManagement.md)
+## [Decrypt/Encrypt K8s secrets](./SecretManagement.md)
 
 ## Update SSH keys
 
