@@ -83,7 +83,7 @@ spec:
       - name: repo2
         schedules:
           full: "0 13 * * 4"
-          differential: "0 13 * * 0,1,2,5,6"
+          differential: "0 13 * * 0,1,2,3,5,6"
         s3:
           bucket: in-prod-simple-k8s-db-backup
           endpoint: s3.ap-south-1.amazonaws.com
