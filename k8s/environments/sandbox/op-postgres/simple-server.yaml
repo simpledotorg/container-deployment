@@ -81,25 +81,26 @@ spec:
         repo2-path: /pgbackrest/postgres-operator/simple/repo2
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
-      - name: repo1
-        schedules:
-          full: "0 20 * * 0"
-          differential: "0 20 * * 1-6"
-        volume:
-          volumeClaimSpec:
-            accessModes:
-            - "ReadWriteOnce"
-            resources:
-              requests:
-                storage: 200Gi
-      - name: repo2
-        schedules:
-          full: "0 22 * * 0"
-          differential: "0 22 * * 1-6"
-        s3:
-          bucket: sandbox-simple-k8s-db-backup
-          endpoint: s3.ap-south-1.amazonaws.com
-          region: ap-south-1
+      # Remove backup for DHIS2 perf test
+      # - name: repo1
+      #   schedules:
+      #     full: "0 20 * * 0"
+      #     differential: "0 20 * * 1-6"
+      #   volume:
+      #     volumeClaimSpec:
+      #       accessModes:
+      #       - "ReadWriteOnce"
+      #       resources:
+      #         requests:
+      #           storage: 200Gi
+      # - name: repo2
+      #   schedules:
+      #     full: "0 22 * * 0"
+      #     differential: "0 22 * * 1-6"
+      #   s3:
+      #     bucket: sandbox-simple-k8s-db-backup
+      #     endpoint: s3.ap-south-1.amazonaws.com
+      #     region: ap-south-1
       jobs:
         affinity:
           nodeAffinity:
