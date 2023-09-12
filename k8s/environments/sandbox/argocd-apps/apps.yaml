@@ -355,6 +355,7 @@ spec:
     helm:
       valueFiles:
         - values.affinity-worker.yaml
+        - ../../environments/sandbox/values/worker-redis.yaml
   project: default
   syncPolicy:
     syncOptions:
