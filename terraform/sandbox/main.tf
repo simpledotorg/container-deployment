@@ -88,7 +88,7 @@ module "eks" {
   metabase_instance_count = 1
 
   cache_redis_instance_type  = "t3.small"
-  worker_redis_instance_type = "t3.small"
+  worker_redis_instance_type = "t3.large"
 
   default_nodepool_instance_type  = "t3.medium"
   default_nodepool_instance_count = 3
