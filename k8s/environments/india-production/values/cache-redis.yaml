@@ -1,4 +1,4 @@
 redis:
   master:
     persistence:
-      size: 17Gi
+      size: 32Gi
