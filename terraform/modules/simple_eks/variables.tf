@@ -31,8 +31,29 @@ variable "db_instance_count" {
   type = number
 }
 
+variable "db_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
 variable "db_backup_instance_type" {
-  type = string
+  type    = string
+  default = "t3.small"
+}
+
+variable "db_backup_instance_enable" {
+  type    = bool
+  default = true
+}
+
+variable "db_backup_instance_count" {
+  type    = number
+  default = 1
+}
+
+variable "db_backup_instance_extra_labels" {
+  type    = map(string)
+  default = {}
 }
 
 variable "server_instance_type" {
@@ -43,12 +64,22 @@ variable "server_instance_count" {
   type = number
 }
 
+variable "server_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
 variable "worker_instance_type" {
   type = string
 }
 
 variable "worker_instance_count" {
   type = number
+}
+
+variable "worker_instance_extra_labels" {
+  type    = map(string)
+  default = {}
 }
 
 variable "metabase_instance_type" {
@@ -59,25 +90,53 @@ variable "metabase_instance_count" {
   type = number
 }
 
+variable "metabase_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
 variable "cache_redis_instance_type" {
   type = string
 }
 
+variable "cache_redis_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
 variable "worker_redis_instance_type" {
-  type = string
+  type    = string
+  default = "t3.small"
+}
+
+variable "worker_redis_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
+variable "worker_redis_instance_enable" {
+  type    = bool
+  default = true
 }
 
 variable "default_nodepool_instance_type" {
-  type = string
+  type    = string
+  default = "t3.medium"
 }
 
 variable "default_nodepool_instance_count" {
-  type = number
+  type    = number
+  default = 1
 }
 
 variable "default_nodepool_instance_extra_labels" {
   type    = map(string)
   default = {}
+}
+
+variable "default_nodepool_instance_enable" {
+  type    = bool
+  default = true
 }
 
 variable "nodepool_disk_size" {

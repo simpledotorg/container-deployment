@@ -38,18 +38,20 @@ spec:
           exec:
             command:
             - "bin/docker-health-check"
-            - "10"
+            - "120"
+          failureThreshold: 10
           initialDelaySeconds: 60
           periodSeconds: 30
-          timeoutSeconds: 10
+          timeoutSeconds: 120
         readinessProbe:
           exec:
             command:
             - "bin/docker-health-check"
-            - "10"
+            - "120"
+          failureThreshold: 10
           initialDelaySeconds: 60
           periodSeconds: 30
-          timeoutSeconds: 10
+          timeoutSeconds: 120
         envFrom:
           - secretRef:
               name: {{ .Values.existingSecret }}

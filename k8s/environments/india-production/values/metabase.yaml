@@ -1,0 +1,18 @@
+metabase:
+  image:
+    tag: v0.41.3.1
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+      - host: metabase.simple.org
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - metabase.simple.org
+      secretName: metabase.simple.org-tls
