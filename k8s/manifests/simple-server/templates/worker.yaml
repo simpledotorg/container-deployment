@@ -27,7 +27,7 @@ spec:
       - name: {{ .Values.worker.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        args: ["bundle", "exec", "sidekiq",  "-C", "config/sidekiq.yml", "-e", "production"]
+        args: ["bin/docker-worker"]
         resources:
           {{- toYaml .Values.worker.resources | nindent 12 }}
         envFrom:
