@@ -432,7 +432,7 @@ spec:
   source:
     path: k8s/manifests/pgpool
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: pgpool
+    targetRevision: master
     helm:
       valueFiles:
         - values.yaml
