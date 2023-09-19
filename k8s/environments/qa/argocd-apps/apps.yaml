@@ -419,6 +419,8 @@ spec:
       prune: true
       selfHeal: true
 
+---
+
 # Pgpool
 apiVersion: argoproj.io/v1alpha1
 kind: Application

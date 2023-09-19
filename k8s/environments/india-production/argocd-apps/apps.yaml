@@ -394,3 +394,32 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
+
+# Pgpool
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgpool
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/pgpool
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.affinity.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
