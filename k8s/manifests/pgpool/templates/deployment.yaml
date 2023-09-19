@@ -39,6 +39,8 @@ spec:
           value: "false"
         - name: PGPOOL_PARAMS_STATEMENT_LEVEL_LOAD_BALANCE
           value: "on"
+        - name: PGPOOL_PARAMS_NUM_INIT_CHILDREN
+          value: "100"
         - name: POSTGRES_USERNAME
           valueFrom:
             secretKeyRef:
