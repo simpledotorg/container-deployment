@@ -1,0 +1,9 @@
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: role-server
+          operator: In
+          values:
+          - "true"
