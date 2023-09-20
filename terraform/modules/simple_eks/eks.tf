@@ -65,6 +65,30 @@ module "eks" {
       }
     }
 
+    db2 = {
+      create = var.db2_instance_enable
+
+      min_size     = var.db2_instance_count
+      max_size     = var.db2_instance_count
+      desired_size = var.db2_instance_count
+
+      labels = merge(
+        {
+          role-db = "true"
+        },
+        var.db2_instance_extra_labels
+      )
+
+      instance_types = [var.db2_instance_type]
+      capacity_type  = "ON_DEMAND"
+
+      use_custom_launch_template = false
+
+      remote_access = {
+        ec2_ssh_key = var.key_pair_name
+      }
+    }
+
     db_backup = {
       create = var.db_backup_instance_enable
 
@@ -102,6 +126,30 @@ module "eks" {
       )
 
       instance_types = [var.server_instance_type]
+      capacity_type  = "ON_DEMAND"
+
+      use_custom_launch_template = false
+
+      remote_access = {
+        ec2_ssh_key = var.key_pair_name
+      }
+    }
+
+    server2 = {
+      create = var.server2_instance_enable
+
+      min_size     = var.server2_instance_count
+      max_size     = var.server2_instance_count
+      desired_size = var.server2_instance_count
+
+      labels = merge(
+        {
+          role-server = "true"
+        },
+        var.server2_instance_extra_labels
+      )
+
+      instance_types = [var.server2_instance_type]
       capacity_type  = "ON_DEMAND"
 
       use_custom_launch_template = false

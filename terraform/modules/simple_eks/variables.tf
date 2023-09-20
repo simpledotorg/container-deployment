@@ -36,6 +36,26 @@ variable "db_instance_extra_labels" {
   default = {}
 }
 
+variable "db2_instance_enable" {
+  type    = bool
+  default = false
+}
+
+variable "db2_instance_type" {
+  type    = string
+  default = ""
+}
+
+variable "db2_instance_count" {
+  type    = number
+  default = 0
+}
+
+variable "db2_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
 variable "db_backup_instance_type" {
   type    = string
   default = "t3.small"
@@ -65,6 +85,26 @@ variable "server_instance_count" {
 }
 
 variable "server_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
+variable "server2_instance_enable" {
+  type    = bool
+  default = false
+}
+
+variable "server2_instance_type" {
+  type    = string
+  default = ""
+}
+
+variable "server2_instance_count" {
+  type    = number
+  default = 0
+}
+
+variable "server2_instance_extra_labels" {
   type    = map(string)
   default = {}
 }
