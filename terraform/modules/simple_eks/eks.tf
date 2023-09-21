@@ -226,6 +226,30 @@ module "eks" {
       }
     }
 
+    cache_redis2 = {
+      create = var.cache_redis2_instance_enable
+
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+
+      labels = merge(
+        {
+          role-cache-redis = "true"
+        },
+        var.cache_redis_instance_extra_labels
+      )
+
+      instance_types = [var.cache_redis2_instance_type]
+      capacity_type  = "ON_DEMAND"
+
+      use_custom_launch_template = false
+
+      remote_access = {
+        ec2_ssh_key = var.key_pair_name
+      }
+    }
+
     worker_redis = {
       create = var.worker_redis_instance_enable
 

@@ -144,6 +144,21 @@ variable "cache_redis_instance_extra_labels" {
   default = {}
 }
 
+variable "cache_redis2_instance_enable" {
+  type    = bool
+  default = false
+}
+
+variable "cache_redis2_instance_type" {
+  type    = string
+  default = ""
+}
+
+variable "cache_redis2_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
 variable "worker_redis_instance_type" {
   type    = string
   default = "t3.small"
