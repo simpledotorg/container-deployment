@@ -99,6 +99,7 @@ module "eks" {
     "role-ingress"  = "true"
     "role-metabase" = "true"
     "role-worker"   = "true"
+    "role-cron"     = "true"
   }
 
   worker_instance_type  = "t3.large"
