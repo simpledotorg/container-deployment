@@ -76,12 +76,19 @@ variable "db_backup_instance_extra_labels" {
   default = {}
 }
 
+variable "server_instance_enable" {
+  type    = bool
+  default = true
+}
+
 variable "server_instance_type" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "server_instance_count" {
-  type = number
+  type    = number
+  default = 0
 }
 
 variable "server_instance_extra_labels" {
@@ -110,15 +117,18 @@ variable "server2_instance_extra_labels" {
 }
 
 variable "worker_instance_enable" {
-  type = bool
+  type    = bool
+  default = true
 }
 
 variable "worker_instance_type" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "worker_instance_count" {
-  type = number
+  type    = number
+  default = 0
 }
 
 variable "worker_instance_extra_labels" {
@@ -127,15 +137,18 @@ variable "worker_instance_extra_labels" {
 }
 
 variable "metabase_instance_enable" {
-  type = bool
+  type    = bool
+  default = true
 }
 
 variable "metabase_instance_type" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "metabase_instance_count" {
-  type = number
+  type    = number
+  default = 0
 }
 
 variable "metabase_instance_extra_labels" {

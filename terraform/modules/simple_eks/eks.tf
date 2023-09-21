@@ -114,6 +114,8 @@ module "eks" {
     }
 
     server = {
+      create = var.server_instance_enable
+
       min_size     = var.server_instance_count
       max_size     = var.server_instance_count
       desired_size = var.server_instance_count
