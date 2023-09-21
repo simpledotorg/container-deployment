@@ -109,6 +109,10 @@ variable "server2_instance_extra_labels" {
   default = {}
 }
 
+variable "worker_instance_enable" {
+  type = bool
+}
+
 variable "worker_instance_type" {
   type = string
 }
@@ -120,6 +124,10 @@ variable "worker_instance_count" {
 variable "worker_instance_extra_labels" {
   type    = map(string)
   default = {}
+}
+
+variable "metabase_instance_enable" {
+  type = bool
 }
 
 variable "metabase_instance_type" {

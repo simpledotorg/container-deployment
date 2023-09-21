@@ -160,6 +160,8 @@ module "eks" {
     }
 
     worker = {
+      create = var.worker_instance_enable
+
       min_size     = var.worker_instance_count
       max_size     = var.worker_instance_count
       desired_size = var.worker_instance_count
@@ -183,6 +185,8 @@ module "eks" {
     }
 
     metabase = {
+      create = var.metabase_instance_enable
+
       min_size     = var.metabase_instance_count
       max_size     = var.metabase_instance_count
       desired_size = var.metabase_instance_count
