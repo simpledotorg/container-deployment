@@ -86,8 +86,9 @@ module "eks" {
 
   db_backup_instance_enable = false
 
-  server_instance_type  = "t3.xlarge"
-  server_instance_count = 2
+  server_instance_enable = false
+  server_instance_type   = "t3.xlarge"
+  server_instance_count  = 2
   server_instance_extra_labels = {
     "role-ingress" = "true"
   }
@@ -102,11 +103,13 @@ module "eks" {
     "role-cron"     = "true"
   }
 
-  worker_instance_type  = "t3.large"
-  worker_instance_count = 1
+  worker_instance_enable = false
+  worker_instance_type   = "t3.large"
+  worker_instance_count  = 1
 
-  metabase_instance_type  = "t3.small"
-  metabase_instance_count = 1
+  metabase_instance_enable = false
+  metabase_instance_type   = "t3.small"
+  metabase_instance_count  = 1
 
   cache_redis_instance_type = "r5.large"
 
