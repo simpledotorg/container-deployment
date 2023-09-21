@@ -27,6 +27,17 @@ spec:
           initialDelaySeconds: 60
           periodSeconds: 60
           timeoutSeconds: 30
+        livenessProbe:
+          exec:
+            command:
+              - bash
+              - -ec
+              - PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USERNAME} -d postgres -h localhost -p 9999 -tA -c "SELECT 1" >/dev/null
+          failureThreshold: 3
+          successThreshold: 1
+          initialDelaySeconds: 60
+          periodSeconds: 60
+          timeoutSeconds: 30
         env:
         - name: PGPOOL_PARAMS_BACKEND_HOSTNAME0
           value: "simple-primary"
