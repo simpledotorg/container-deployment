@@ -23,6 +23,11 @@ variable "key_pair_name" {
   type = string
 }
 
+variable "db_instance_enable" {
+  type    = bool
+  default = true
+}
+
 variable "db_instance_type" {
   type = string
 }
@@ -154,6 +159,11 @@ variable "metabase_instance_count" {
 variable "metabase_instance_extra_labels" {
   type    = map(string)
   default = {}
+}
+
+variable "cache_redis_instance_enable" {
+  type    = bool
+  default = true
 }
 
 variable "cache_redis_instance_type" {

@@ -44,6 +44,8 @@ module "eks" {
 
   eks_managed_node_groups = {
     db = {
+      create = var.db_instance_enable
+
       min_size     = var.db_instance_count
       max_size     = var.db_instance_count
       desired_size = var.db_instance_count
@@ -211,6 +213,8 @@ module "eks" {
     }
 
     cache_redis = {
+      create = var.cache_redis_instance_enable
+
       min_size     = 1
       max_size     = 1
       desired_size = 1
