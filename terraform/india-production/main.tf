@@ -78,27 +78,52 @@ module "eks" {
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
-  db_instance_type  = "t3.xlarge"
-  db_instance_count = 2
+  db_instance_enable = false
+  db_instance_type   = "t3.xlarge"
+  db_instance_count  = 2
   db_instance_extra_labels = {
+    role-db-backup = "true"
+  }
+
+  db2_instance_enable = true
+  db2_instance_type   = "t3a.2xlarge"
+  db2_instance_count  = 2
+  db2_instance_extra_labels = {
     role-db-backup = "true"
   }
 
   db_backup_instance_enable = false
 
-  server_instance_type  = "t3.xlarge"
-  server_instance_count = 2
+  server_instance_enable = false
+  server_instance_type   = "t3.xlarge"
+  server_instance_count  = 2
   server_instance_extra_labels = {
     "role-ingress" = "true"
   }
 
-  worker_instance_type  = "t3.large"
-  worker_instance_count = 1
+  server2_instance_enable = true
+  server2_instance_type   = "c6a.2xlarge"
+  server2_instance_count  = 2
+  server2_instance_extra_labels = {
+    "role-ingress"  = "true"
+    "role-metabase" = "true"
+    "role-worker"   = "true"
+    "role-cron"     = "true"
+  }
 
-  metabase_instance_type  = "t3.small"
-  metabase_instance_count = 1
+  worker_instance_enable = false
+  worker_instance_type   = "t3.large"
+  worker_instance_count  = 1
 
-  cache_redis_instance_type = "r5.large"
+  metabase_instance_enable = false
+  metabase_instance_type   = "t3.small"
+  metabase_instance_count  = 1
+
+  cache_redis_instance_enable = false
+  cache_redis_instance_type   = "r5.large"
+
+  cache_redis2_instance_enable = true
+  cache_redis2_instance_type   = "r5a.large"
 
   worker_redis_instance_enable = false
 

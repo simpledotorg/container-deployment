@@ -23,6 +23,11 @@ variable "key_pair_name" {
   type = string
 }
 
+variable "db_instance_enable" {
+  type    = bool
+  default = true
+}
+
 variable "db_instance_type" {
   type = string
 }
@@ -32,6 +37,26 @@ variable "db_instance_count" {
 }
 
 variable "db_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
+variable "db2_instance_enable" {
+  type    = bool
+  default = false
+}
+
+variable "db2_instance_type" {
+  type    = string
+  default = ""
+}
+
+variable "db2_instance_count" {
+  type    = number
+  default = 0
+}
+
+variable "db2_instance_extra_labels" {
   type    = map(string)
   default = {}
 }
@@ -56,12 +81,19 @@ variable "db_backup_instance_extra_labels" {
   default = {}
 }
 
+variable "server_instance_enable" {
+  type    = bool
+  default = true
+}
+
 variable "server_instance_type" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "server_instance_count" {
-  type = number
+  type    = number
+  default = 0
 }
 
 variable "server_instance_extra_labels" {
@@ -69,12 +101,39 @@ variable "server_instance_extra_labels" {
   default = {}
 }
 
+variable "server2_instance_enable" {
+  type    = bool
+  default = false
+}
+
+variable "server2_instance_type" {
+  type    = string
+  default = ""
+}
+
+variable "server2_instance_count" {
+  type    = number
+  default = 0
+}
+
+variable "server2_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
+variable "worker_instance_enable" {
+  type    = bool
+  default = true
+}
+
 variable "worker_instance_type" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "worker_instance_count" {
-  type = number
+  type    = number
+  default = 0
 }
 
 variable "worker_instance_extra_labels" {
@@ -82,12 +141,19 @@ variable "worker_instance_extra_labels" {
   default = {}
 }
 
+variable "metabase_instance_enable" {
+  type    = bool
+  default = true
+}
+
 variable "metabase_instance_type" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "metabase_instance_count" {
-  type = number
+  type    = number
+  default = 0
 }
 
 variable "metabase_instance_extra_labels" {
@@ -95,11 +161,31 @@ variable "metabase_instance_extra_labels" {
   default = {}
 }
 
+variable "cache_redis_instance_enable" {
+  type    = bool
+  default = true
+}
+
 variable "cache_redis_instance_type" {
   type = string
 }
 
 variable "cache_redis_instance_extra_labels" {
+  type    = map(string)
+  default = {}
+}
+
+variable "cache_redis2_instance_enable" {
+  type    = bool
+  default = false
+}
+
+variable "cache_redis2_instance_type" {
+  type    = string
+  default = ""
+}
+
+variable "cache_redis2_instance_extra_labels" {
   type    = map(string)
   default = {}
 }

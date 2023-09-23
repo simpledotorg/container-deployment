@@ -44,6 +44,8 @@ module "eks" {
 
   eks_managed_node_groups = {
     db = {
+      create = var.db_instance_enable
+
       min_size     = var.db_instance_count
       max_size     = var.db_instance_count
       desired_size = var.db_instance_count
@@ -56,6 +58,30 @@ module "eks" {
       )
 
       instance_types = [var.db_instance_type]
+      capacity_type  = "ON_DEMAND"
+
+      use_custom_launch_template = false
+
+      remote_access = {
+        ec2_ssh_key = var.key_pair_name
+      }
+    }
+
+    db2 = {
+      create = var.db2_instance_enable
+
+      min_size     = var.db2_instance_count
+      max_size     = var.db2_instance_count
+      desired_size = var.db2_instance_count
+
+      labels = merge(
+        {
+          role-db = "true"
+        },
+        var.db2_instance_extra_labels
+      )
+
+      instance_types = [var.db2_instance_type]
       capacity_type  = "ON_DEMAND"
 
       use_custom_launch_template = false
@@ -90,6 +116,8 @@ module "eks" {
     }
 
     server = {
+      create = var.server_instance_enable
+
       min_size     = var.server_instance_count
       max_size     = var.server_instance_count
       desired_size = var.server_instance_count
@@ -111,7 +139,33 @@ module "eks" {
       }
     }
 
+    server2 = {
+      create = var.server2_instance_enable
+
+      min_size     = var.server2_instance_count
+      max_size     = var.server2_instance_count
+      desired_size = var.server2_instance_count
+
+      labels = merge(
+        {
+          role-server = "true"
+        },
+        var.server2_instance_extra_labels
+      )
+
+      instance_types = [var.server2_instance_type]
+      capacity_type  = "ON_DEMAND"
+
+      use_custom_launch_template = false
+
+      remote_access = {
+        ec2_ssh_key = var.key_pair_name
+      }
+    }
+
     worker = {
+      create = var.worker_instance_enable
+
       min_size     = var.worker_instance_count
       max_size     = var.worker_instance_count
       desired_size = var.worker_instance_count
@@ -135,6 +189,8 @@ module "eks" {
     }
 
     metabase = {
+      create = var.metabase_instance_enable
+
       min_size     = var.metabase_instance_count
       max_size     = var.metabase_instance_count
       desired_size = var.metabase_instance_count
@@ -157,6 +213,8 @@ module "eks" {
     }
 
     cache_redis = {
+      create = var.cache_redis_instance_enable
+
       min_size     = 1
       max_size     = 1
       desired_size = 1
@@ -169,6 +227,30 @@ module "eks" {
       )
 
       instance_types = [var.cache_redis_instance_type]
+      capacity_type  = "ON_DEMAND"
+
+      use_custom_launch_template = false
+
+      remote_access = {
+        ec2_ssh_key = var.key_pair_name
+      }
+    }
+
+    cache_redis2 = {
+      create = var.cache_redis2_instance_enable
+
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+
+      labels = merge(
+        {
+          role-cache-redis = "true"
+        },
+        var.cache_redis_instance_extra_labels
+      )
+
+      instance_types = [var.cache_redis2_instance_type]
       capacity_type  = "ON_DEMAND"
 
       use_custom_launch_template = false
