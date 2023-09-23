@@ -84,6 +84,13 @@ module "eks" {
     role-db-backup = "true"
   }
 
+  db2_instance_enable = true
+  db2_instance_type   = "t3a.2xlarge"
+  db2_instance_count  = 2
+  db2_instance_extra_labels = {
+    role-db-backup = "true"
+  }
+
   db_backup_instance_enable = false
 
   server_instance_enable = false
@@ -112,6 +119,9 @@ module "eks" {
   metabase_instance_count  = 1
 
   cache_redis_instance_type = "r5.large"
+
+  cache_redis2_instance_enable = true
+  cache_redis2_instance_type   = "r5a.large"
 
   worker_redis_instance_enable = false
 
