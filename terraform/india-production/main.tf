@@ -78,8 +78,9 @@ module "eks" {
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
-  db_instance_type  = "t3.xlarge"
-  db_instance_count = 2
+  db_instance_enable = false
+  db_instance_type   = "t3.xlarge"
+  db_instance_count  = 2
   db_instance_extra_labels = {
     role-db-backup = "true"
   }
@@ -118,7 +119,8 @@ module "eks" {
   metabase_instance_type   = "t3.small"
   metabase_instance_count  = 1
 
-  cache_redis_instance_type = "r5.large"
+  cache_redis_instance_enable = false
+  cache_redis_instance_type   = "r5.large"
 
   cache_redis2_instance_enable = true
   cache_redis2_instance_type   = "r5a.large"
