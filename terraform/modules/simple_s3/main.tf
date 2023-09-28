@@ -12,6 +12,11 @@ data "aws_iam_policy_document" "simple_s3_policy" {
     actions   = var.allowed_actions
     effect    = "Allow"
     resources = [aws_s3_bucket.simple_s3.arn, "${aws_s3_bucket.simple_s3.arn}/*"]
+    condition {
+      test     = "IpAddress"
+      variable = "aws:SourceIp"
+      values   = var.allowed_ips
+    }
   }
 }
 
