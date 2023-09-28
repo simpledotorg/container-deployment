@@ -13,9 +13,9 @@ data "aws_iam_policy_document" "simple_s3_policy" {
     effect    = "Allow"
     resources = [aws_s3_bucket.simple_s3.arn, "${aws_s3_bucket.simple_s3.arn}/*"]
     condition {
-      test     = "StringEquals"
-      variable = "aws:SourceVpc"
-      values   = var.allowed_vpcs
+      test     = "IpAddress"
+      variable = "aws:SourceIp"
+      values   = var.allowed_ips
     }
   }
 }
