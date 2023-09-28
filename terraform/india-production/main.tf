@@ -131,19 +131,18 @@ module "eks" {
 }
 
 module "db_backup_s3_bucket" {
-  source      = "../modules/simple_s3"
-  bucket_name = local.db_backup_s3_bucket_name
-  tags        = local.tags
+  source       = "../modules/simple_s3"
+  bucket_name  = local.db_backup_s3_bucket_name
+  tags         = local.tags
+  allowed_vpcs = [module.vpc.vpc_id]
 }
 
 module "log_archive_s3_bucket" {
-  source      = "../modules/simple_s3"
-  bucket_name = local.log_archive_s3_bucket_name
-  tags        = local.tags
+  source       = "../modules/simple_s3"
+  bucket_name  = local.log_archive_s3_bucket_name
+  tags         = local.tags
+  allowed_vpcs = [module.vpc.vpc_id]
 }
-
-# Log archival bucket and user is reused from old environment
-# https://github.com/simpledotorg/deployment/blob/master/terraform/india/main.tf
 
 output "vpc_id" {
   value = module.vpc.vpc_id
