@@ -131,17 +131,17 @@ module "eks" {
 }
 
 module "db_backup_s3_bucket" {
-  source       = "../modules/simple_s3"
-  bucket_name  = local.db_backup_s3_bucket_name
-  tags         = local.tags
-  allowed_vpcs = [module.vpc.vpc_id]
+  source      = "../modules/simple_s3"
+  bucket_name = local.db_backup_s3_bucket_name
+  tags        = local.tags
+  allowed_ips = module.vpc.nat_public_ips
 }
 
 module "log_archive_s3_bucket" {
-  source       = "../modules/simple_s3"
-  bucket_name  = local.log_archive_s3_bucket_name
-  tags         = local.tags
-  allowed_vpcs = [module.vpc.vpc_id]
+  source      = "../modules/simple_s3"
+  bucket_name = local.log_archive_s3_bucket_name
+  tags        = local.tags
+  allowed_ips = module.vpc.nat_public_ips
 }
 
 output "vpc_id" {
