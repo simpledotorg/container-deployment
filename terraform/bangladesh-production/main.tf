@@ -104,6 +104,7 @@ module "db_backup_s3_bucket" {
   source      = "../modules/simple_s3"
   bucket_name = local.db_backup_s3_bucket_name
   tags        = local.tags
+  allowed_ips = module.vpc.nat_public_ips
 }
 
 # Log archival bucket and user is reused from old environment
