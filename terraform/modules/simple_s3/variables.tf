@@ -14,3 +14,7 @@ variable "allowed_actions" {
 variable "tags" {
   type = map(string)
 }
+
+variable "allowed_vpcs" {
+  type = list(string)
+}
