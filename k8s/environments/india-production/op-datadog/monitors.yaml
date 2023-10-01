@@ -375,3 +375,79 @@ spec:
   tags:
     - "env:india-production-k8s"
     - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-worker-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:simple-worker-*} by {pod_name} > 91268055040" # 85/100 GiB
+  type: "query alert"
+  name: "india-production-k8s-worker-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-server-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:simple-server*} by {pod_name} > 7516192768" # 7/10 GiB
+  type: "query alert"
+  name: "india-production-k8s-server-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-cron-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:simple-cron*} by {pod_name} > 7516192768" # 7/10 GiB
+  type: "query alert"
+  name: "india-production-k8s-cron-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-cache-redis-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:cache-redis*} by {pod_name} > 30064771072" # 28/32 GiB
+  type: "query alert"
+  name: "india-production-k8s-cache-redis-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
