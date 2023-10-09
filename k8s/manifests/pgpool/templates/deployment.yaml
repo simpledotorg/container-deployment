@@ -22,7 +22,7 @@ spec:
               - bash
               - -ec
               - PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USERNAME} -d postgres -h localhost -p 9999 -tA -c "SELECT 1" >/dev/null
-          initialDelaySeconds: 60
+          initialDelaySeconds: 15
           failureThreshold: 3
           successThreshold: 1
           periodSeconds: 10
@@ -33,7 +33,7 @@ spec:
               - bash
               - -ec
               - PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USERNAME} -d postgres -h localhost -p 9999 -tA -c "SELECT 1" >/dev/null
-          initialDelaySeconds: 60
+          initialDelaySeconds: 15
           failureThreshold: 3
           successThreshold: 1
           periodSeconds: 10
