@@ -8,14 +8,32 @@ resource "aws_iam_user" "simple_s3_user" {
 }
 
 data "aws_iam_policy_document" "simple_s3_policy" {
+  dynamic "statement" {
+    for_each = length(var.allowed_vpcs) > 0 ? [1] : []
+    content {
+      effect    = "Deny"
+      actions   = ["s3:*"]
+      resources = ["arn:aws:s3:::*"]
+      condition {
+        test     = "StringNotEquals"
+        variable = "aws:sourceVpc"
+        values   = var.allowed_vpcs
+      }
+    }
+  }
+
   statement {
     actions   = var.allowed_actions
     effect    = "Allow"
     resources = [aws_s3_bucket.simple_s3.arn, "${aws_s3_bucket.simple_s3.arn}/*"]
-    condition {
-      test     = "IpAddress"
-      variable = "aws:SourceIp"
-      values   = var.allowed_ips
+
+    dynamic "condition" {
+      for_each = length(var.allowed_ips) > 0 ? [1] : []
+      content {
+        test     = "IpAddress"
+        variable = "aws:SourceIp"
+        values   = var.allowed_ips
+      }
     }
   }
 }
