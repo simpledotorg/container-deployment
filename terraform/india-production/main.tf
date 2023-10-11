@@ -144,6 +144,9 @@ module "log_archive_s3_bucket" {
   allowed_vpcs = [module.vpc.vpc_id]
 }
 
+# in-prod-s3-gateway-endpoint-02 was manually created from the AWS console
+# This allows direct access from pods/EC2 to S3, thus reducing data transfer costs via NAT
+
 output "vpc_id" {
   value = module.vpc.vpc_id
 }
