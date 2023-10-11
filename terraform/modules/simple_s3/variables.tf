@@ -16,5 +16,11 @@ variable "tags" {
 }
 
 variable "allowed_ips" {
-  type = list(string)
+  type    = list(string)
+  default = []
+}
+
+variable "allowed_vpcs" {
+  type    = list(string)
+  default = []
 }
