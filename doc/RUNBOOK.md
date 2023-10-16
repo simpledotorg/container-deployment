@@ -61,7 +61,7 @@ Why we have two different clusters? Because we have two different environments. 
   kubectl get nodes
   ```
 
-### VM based cluster
+### Connecting to VM based cluster
 - List of host for each environment can be found [here](../ansible/hosts/)
 - Ansible host file is configured with privates IPs. Use Jump host mentioned in the environment specific [group_vars](../ansible/group_vars/) (variable name: `ansible_ssh_common_args: ... ubuntu@jump-host-ip`)
 - SSH into K8s node
@@ -218,3 +218,11 @@ cp scripts/argocd_password_setup_users.txt.sample scripts/argocd_password_setup_
 # Update the users file with user names
 python scripts/argocd_password_setup.py
 ```
+
+## Deploy your branch to a K8s cluster
+
+- Create a pull request for your branch
+- On SemaphoreCI, navigate to the workflow tab for your pull request. Under `Promotions`, hit `Docker build and push`.
+- Once the promotion job finishes, get the image tag SHA from the [container registry](https://hub.docker.com/r/simpledotorg/server/tags)
+- Update the image tag on the respective ArgoCD page: Application (eg: simple-server) > App Details > Parameters > image.tag
+- Wait for the application to finish auto-syncing
