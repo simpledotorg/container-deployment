@@ -224,5 +224,5 @@ python scripts/argocd_password_setup.py
 - Create a pull request for your branch
 - On SemaphoreCI, navigate to the workflow tab for your pull request. Under `Promotions`, hit `Docker build and push`.
 - Once the promotion job finishes, get the image tag SHA from the [container registry](https://hub.docker.com/r/simpledotorg/server/tags)
-- Update the image tag on the respective ArgoCD page: Application (eg: simple-server) > App Details > Parameters > image.tag
+- Update the image tag on the [respective ArgoCD](https://docs.google.com/spreadsheets/d/1JCfFYetk9Jrtc5iUHp-7Fx5V3QqpuCWojjcEibRJN7I/edit#gid=0): Application (eg: simple-server) > App Details > Parameters > image.tag
 - Wait for the application to finish auto-syncing
