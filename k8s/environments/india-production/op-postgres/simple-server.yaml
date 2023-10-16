@@ -128,8 +128,8 @@ spec:
           max_parallel_workers_per_gather: "4"
           max_parallel_workers: "8"
           max_parallel_maintenance_workers: "4"
-          max_standby_streaming_delay: "900s"
-          max_standby_archive_delay: "900s"
+          max_standby_streaming_delay: "300s"
+          max_standby_archive_delay: "300s"
   monitoring:
     pgmonitor:
       exporter:
