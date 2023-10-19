@@ -31,5 +31,5 @@ spec:
   clusterName: "bangladesh-production-k8s"
   features:
     prometheusScrape:
-      enabled: true
-      serviceEndpoints: true
+      enabled: false
+      serviceEndpoints: false
