@@ -182,7 +182,7 @@ spec:
 #       prune: true
 #       selfHeal: true
 
----
+# ---
 
 # Reloader
 apiVersion: argoproj.io/v1alpha1
