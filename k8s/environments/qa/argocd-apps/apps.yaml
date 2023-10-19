@@ -160,26 +160,26 @@ spec:
 ---
 
 # Datadog agent
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: datadog
-spec:
-  destination:
-    name: ''
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/environments/qa/op-datadog
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: datadog
+# spec:
+#   destination:
+#     name: ''
+#     server: 'https://kubernetes.default.svc'
+#   source:
+#     path: k8s/environments/qa/op-datadog
+#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+#     targetRevision: master
+#   project: default
+#   syncPolicy:
+#     syncOptions:
+#       - PruneLast=true
+#       - CreateNamespace=true
+#     automated:
+#       prune: true
+#       selfHeal: true
 
 ---
 
