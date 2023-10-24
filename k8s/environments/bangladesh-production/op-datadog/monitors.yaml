@@ -479,7 +479,7 @@ metadata:
   name: bangladesh-production-k8s-cache-redis-log-volume-usage
   namespace: datadog
 spec:
-  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:cache-redis*} by {pod_name} > 7516192768" # 7/8 GiB
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:cache-redis*} by {pod_name} > 6442450944" # 6/8 GiB
   type: "query alert"
   name: "bangladesh-production-k8s-cache-redis-log-volume-usage"
   message: "@slack-alerts"
@@ -498,7 +498,7 @@ metadata:
   name: bangladesh-production-k8s-worker-redis-log-volume-usage
   namespace: datadog
 spec:
-  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:worker-redis*} by {pod_name} > 7516192768" # 7/8 GiB
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:worker-redis*} by {pod_name} > 6442450944" # 6/8 GiB
   type: "query alert"
   name: "bangladesh-production-k8s-worker-redis-log-volume-usage"
   message: "@slack-alerts"
