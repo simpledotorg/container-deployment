@@ -7,9 +7,6 @@ prometheus:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       hosts:
         - host: prometheus-sandbox.simple.org
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
       tls:
         - secretName: prometheus-sandbox.simple.org-tls
           hosts:
@@ -23,9 +20,6 @@ prometheus:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       hosts:
         - host: alertmanager-sandbox.simple.org
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
       tls:
         - secretName: alertmanager-sandbox.simple.org-tls
           hosts:
