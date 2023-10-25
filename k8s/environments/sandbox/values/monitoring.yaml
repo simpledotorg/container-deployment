@@ -1,0 +1,31 @@
+prometheus:
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      hosts:
+        - host: prometheus-sandbox.simple.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+      - hosts:
+        - prometheus-sandbox.simple.org
+        secretName: prometheus-sandbox.simple.org-tls
+  alertmanager:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      hosts:
+        - host: alertmanager-sandbox.simple.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+      - hosts:
+        - alertmanager-sandbox.simple.org
+        secretName: alertmanager-sandbox.simple.org-tls
