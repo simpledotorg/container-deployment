@@ -6,7 +6,7 @@ prometheus:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       hosts:
-        - host: prometheus-sandbox.simple.org
+        - prometheus-sandbox.simple.org
       tls:
         - secretName: prometheus-sandbox.simple.org-tls
           hosts:
@@ -24,3 +24,6 @@ prometheus:
         - secretName: alertmanager-sandbox.simple.org-tls
           hosts:
             - alertmanager-sandbox.simple.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
