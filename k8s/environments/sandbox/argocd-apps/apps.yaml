@@ -433,7 +433,7 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: simple-v1
+    namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/monitoring
