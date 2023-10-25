@@ -11,9 +11,10 @@ prometheus:
             - path: /
               pathType: ImplementationSpecific
       tls:
-      - hosts:
-        - prometheus-sandbox.simple.org
-        secretName: prometheus-sandbox.simple.org-tls
+        - secretName: prometheus-sandbox.simple.org-tls
+          hosts:
+            - prometheus-sandbox.simple.org
+
   alertmanager:
     ingress:
       enabled: true
@@ -26,6 +27,6 @@ prometheus:
             - path: /
               pathType: ImplementationSpecific
       tls:
-      - hosts:
-        - alertmanager-sandbox.simple.org
-        secretName: alertmanager-sandbox.simple.org-tls
+        - secretName: alertmanager-sandbox.simple.org-tls
+          hosts:
+            - alertmanager-sandbox.simple.org
