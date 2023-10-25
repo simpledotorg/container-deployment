@@ -11,9 +11,9 @@ prometheus:
         - secretName: prometheus-sandbox.simple.org-tls
           hosts:
             - prometheus-sandbox.simple.org
-
   alertmanager:
     ingress:
+      className: nginx
       enabled: true
       annotations:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
