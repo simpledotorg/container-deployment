@@ -20,7 +20,6 @@ prometheus:
       receivers:
         - name: slack
           slack_configs:
-           - channel: '#test-01'
-             send_resolved: true
-             api_url_file: /etc/secrets/slack-api-url
-
+            - channel: '#test-01'
+              send_resolved: true
+              api_url_file: /etc/secrets/slack-api-url
