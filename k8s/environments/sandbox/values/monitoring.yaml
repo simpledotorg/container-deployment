@@ -45,3 +45,5 @@ grafana:
       - secretName: grafana-sandbox.simple.org-tls
         hosts:
           - grafana-sandbox.simple.org
+  persistence:
+    enabled: true
