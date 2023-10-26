@@ -16,3 +16,9 @@ prometheus:
         subPath: ""
         secretName: alertmanager-secrets
         readOnly: true
+    config:
+      receivers:
+        - name: slack
+          slack_configs:
+           - channel: '#test-01'
+             send_resolved: true
