@@ -50,6 +50,8 @@ prometheus:
     web.external-url: "https://alertmanager-sandbox.simple.org"
     web.route-prefix: "/"
 grafana:
+  admin:
+    existingSecret: "grafana-secrets"
   ingress:
     enabled: true
     annotations:
