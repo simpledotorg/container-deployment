@@ -33,3 +33,15 @@ prometheus:
         - secretName: alertmanager-sandbox.simple.org-tls
           hosts:
             - alertmanager-sandbox.simple.org
+  grafana:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      hosts:
+        - grafana-sandbox.simple.org
+      tls:
+        - secretName: grafana-sandbox.simple.org-tls
+          hosts:
+            - grafana-sandbox.simple.org
