@@ -8,3 +8,11 @@ grafana:
        url: http://monitoring-prometheus-server
        access: proxy
        isDefault: true
+prometheus:
+  alertmanager:
+    extraSecretMounts:
+      - name: secret-files
+        mountPath: /etc/secrets
+        subPath: ""
+        secretName: alertmanager-secrets
+        readOnly: true
