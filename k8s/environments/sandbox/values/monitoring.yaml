@@ -46,6 +46,9 @@ prometheus:
         - secretName: alertmanager-sandbox.simple.org-tls
           hosts:
             - alertmanager-sandbox.simple.org
+  extraArgs:
+    web.external-url: "https://alertmanager-sandbox.simple.org"
+    web.route-prefix: "/"
 grafana:
   ingress:
     enabled: true
