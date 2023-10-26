@@ -18,7 +18,7 @@ prometheus:
         readOnly: true
     config:
       receivers:
-        - name: slack
+        - name: default-receiver
           slack_configs:
             - channel: '#test-01'
               send_resolved: true
