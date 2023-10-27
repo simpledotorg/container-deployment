@@ -19,14 +19,14 @@ prometheus:
       groups:
         - name: Instances
           rules:
-            - alert: InstanceDown
-              expr: up == 0
+            - alert: Simple server pod count is low
+              expr: count(kube_pod_info{pod=~"simple-server-.*"}) < 10
               for: 5m
               labels:
-                severity: error
+                severity: critical
               annotations:
-                description: 'Instance down VALUE = {{ $value }} LABELS: {{ $labels }}'
-                summary: 'Instance down'
+                description: 'imple server instance count is less than 10'
+                summary: 'There are less than 2 Simple servers currently running on the cluster. Current count is - {{ $value }}.'
   alertmanager:
     ingress:
       className: nginx
