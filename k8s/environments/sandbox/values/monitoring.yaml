@@ -17,24 +17,15 @@ prometheus:
   serverFiles:
     alerting_rules.yml:
       groups:
-        - name: Instances
+        - name: Default
           rules:
-            - alert: Simple server pod count is low
-              expr: count(kube_pod_info{pod=~"simple-server-.*"}) < 10
+            - alert: sandbox-simple-server-pod-count
+              expr: count(kube_pod_status_phase{pod=~"simple-server-.*", phase="Running", app_kubernetes_io_instance="monitoring"}) < 2
               for: 5m
               labels:
                 severity: critical
               annotations:
-                description: 'imple server instance count is less than 10'
-                summary: 'There are less than 2 Simple servers currently running on the cluster. Current count is - {{ $value }}.'
-            - alert: Simple server pod count is low test 2
-              expr: count(kube_pod_info{pod=~"simple-server-.*"}) < 10
-              for: 5m
-              labels:
-                severity: critical
-              annotations:
-                description: 'Simple server instance count is less than 10'
-                summary: 'There are less than 2 Simple servers currently running on the cluster. Current count is - {{ $value }}.'
+                description: 'Simple server pod count is low. Current count is - {{ $value }}.'
   alertmanager:
     ingress:
       className: nginx
