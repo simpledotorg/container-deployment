@@ -20,13 +20,13 @@ prometheus:
         - name: Instances
           rules:
             - alert: InstanceDown
-              expr: up > 0
+              expr: up == 0
               for: 5m
               labels:
-                severity: page
+                severity: error
               annotations:
-                description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.'
-                summary: 'Instance {{ $labels.instance }} down'
+                description: 'Instance down VALUE = {{ $value }} LABELS: {{ $labels }}'
+                summary: 'Instance down'
   alertmanager:
     ingress:
       className: nginx
