@@ -20,7 +20,7 @@ prometheus:
         - name: Instances
           rules:
             - alert: Simple server pod count is low
-              expr: count(kube_pod_info{pod=~"simple-server-.*"}) < 10
+              expr: count(kube_pod_info{pod=~"simple-server-.*"}) < 1
               for: 5m
               labels:
                 severity: critical
