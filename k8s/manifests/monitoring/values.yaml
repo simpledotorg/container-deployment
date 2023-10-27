@@ -23,3 +23,4 @@ prometheus:
             - channel: '#test-01'
               send_resolved: true
               api_url_file: /etc/secrets/slack-api-url
+              text: '{{ template "slack-message-description" . }}'
