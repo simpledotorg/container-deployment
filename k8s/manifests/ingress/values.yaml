@@ -11,11 +11,6 @@ ingress-nginx:
       enabled: false #TODO: check issues with enabling the same.
     metrics:
       enabled: true
-      service:
-        annotations:
-          prometheus.io/scrape: "true"
-          prometheus.io/port: "10254"
-          prometheus.io/scheme: http
     config:
       nginx-status-ipv4-whitelist: "10.0.0.0/8,172.16.0.0/12,172.33.0.0/16"
       proxy-body-size: "4g"
@@ -31,3 +26,6 @@ ingress-nginx:
             "instances": [{"prometheus_url": "http://%%host%%:10254/metrics"}]
           }
         }
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "10254"
+      prometheus.io/scheme: http
