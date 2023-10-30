@@ -8,6 +8,12 @@ grafana:
        url: http://monitoring-prometheus-server
        access: proxy
        isDefault: true
+  dashboards:
+    default:
+      node-exporter-full:
+        gnetId: 1860
+        revision: 33
+        datasource: Prometheus
 prometheus:
   alertmanager:
     extraSecretMounts:
