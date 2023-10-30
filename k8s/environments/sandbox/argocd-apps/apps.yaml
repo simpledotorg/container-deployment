@@ -442,6 +442,7 @@ spec:
     targetRevision: monitoring
     helm:
       valueFiles:
+        - ../../environments/sandbox/values/alerting-rules.yaml
         - ../../environments/sandbox/values/monitoring.yaml
   project: default
   syncPolicy:

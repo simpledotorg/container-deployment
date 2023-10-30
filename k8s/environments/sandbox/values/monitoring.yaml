@@ -14,18 +14,6 @@ prometheus:
         - secretName: prometheus-sandbox.simple.org-tls
           hosts:
             - prometheus-sandbox.simple.org
-  serverFiles:
-    alerting_rules.yml:
-      groups:
-        - name: Default
-          rules:
-            - alert: sandbox-simple-server-pod-count
-              expr: count(kube_pod_status_phase{pod=~"simple-server-.*", phase="Running", app_kubernetes_io_instance="monitoring"}) < 2
-              for: 5m
-              labels:
-                severity: critical
-              annotations:
-                description: 'Simple server pod count is low. Current count is - {{ $value }}.'
   alertmanager:
     ingress:
       className: nginx
