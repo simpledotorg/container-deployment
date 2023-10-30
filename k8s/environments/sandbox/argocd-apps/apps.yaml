@@ -439,7 +439,7 @@ spec:
   source:
     path: k8s/manifests/monitoring
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: monitoring
+    targetRevision: master
     helm:
       valueFiles:
         - ../../environments/sandbox/values/alerting-rules.yaml
