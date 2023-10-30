@@ -5,7 +5,7 @@ prometheus:
         - name: Default
           rules:
             - alert: sandbox-simple-server-pod-count
-              expr: count(kube_pod_status_phase{pod=~"simple-server-.*", phase="Running", app_kubernetes_io_instance="monitoring"}) < 2
+              expr: count(kube_pod_status_phase{pod=~"simple-server-.*", phase="Running", app_kubernetes_io_instance="monitoring"}) < 1
               for: 5m
               labels:
                 severity: critical
@@ -14,7 +14,7 @@ prometheus:
                   Simple server pod count is low
                   VALUE = {{ $value }}
             - alert: sandbox-simple-worker-pod-count
-              expr: count(kube_pod_status_phase{pod=~"simple-worker-.*", phase="Running", app_kubernetes_io_instance="monitoring"}) < 2
+              expr: count(kube_pod_status_phase{pod=~"simple-worker-.*", phase="Running", app_kubernetes_io_instance="monitoring"}) < 1
               for: 5m
               labels:
                 severity: critical
