@@ -8,7 +8,7 @@ grafana:
        url: http://monitoring-prometheus-server
        access: proxy
        isDefault: true
-  dashboardProviders: {}
+  dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
