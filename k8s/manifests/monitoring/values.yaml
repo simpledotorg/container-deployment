@@ -1,4 +1,6 @@
 grafana:
+  deploymentStrategy:
+    type: Recreate
   datasources:
    datasources.yaml:
      apiVersion: 1
