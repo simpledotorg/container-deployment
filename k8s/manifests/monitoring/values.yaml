@@ -34,6 +34,9 @@ grafana:
         gnetId: 9614
         revision: 1
         datasource: Prometheus
+      simple-server-dashboard-k8s:
+        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/simple-server.json
+        token: ''
 prometheus:
   alertmanager:
     extraSecretMounts:
