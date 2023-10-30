@@ -26,6 +26,14 @@ grafana:
         gnetId: 1860
         revision: 33
         datasource: Prometheus
+      prometheus-2-0-overview:
+        gnetId: 3662
+        revision: 2
+        datasource: Prometheus
+      nginx-ingress-controller:
+        gnetId: 9614
+        revision: 1
+        datasource: Prometheus
 prometheus:
   alertmanager:
     extraSecretMounts:
