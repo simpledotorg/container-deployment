@@ -1,8 +1,6 @@
 # https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#values
 ingress-nginx:
   controller:
-    image:
-      tag: "v1.9.4"
     kind: 'DaemonSet' 
     hostNetwork: true
     ingressClassResource:
