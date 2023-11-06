@@ -2,8 +2,6 @@ argo-cd:
   configs:
     cm:
       admin.enabled: false
-      help.chatUr: ""
-      help.chatText: ""
   redis-ha:
     enabled: false
   controller:
