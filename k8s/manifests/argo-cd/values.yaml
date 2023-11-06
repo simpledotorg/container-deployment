@@ -14,7 +14,7 @@ argo-cd:
     replicaCount: 2
   global:
     image:
-      tag: "v2.5.12"
+      tag: "v2.5.21"
     logging:
       level: error
   notifications:
