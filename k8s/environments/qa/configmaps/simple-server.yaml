@@ -31,6 +31,7 @@ data:
   RAILS_CACHE_REDIS_URL: "redis://redis-master:6379/0"
   RAILS_LOG_LEVEL: "error"
   SENTRY_CURRENT_ENV: "qa"
+  SENTRY_SAMPLE_RATE: "0.1"
   SIDEKIQ_CONCURRENCY: "10"
   SIDEKIQ_REDIS_POOL_SIZE: "20"
   SIDEKIQ_REDIS_HOST: "worker-redis-master"
