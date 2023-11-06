@@ -96,6 +96,7 @@ spec:
       valueFiles:
         - values.yaml
         - values.affinity.yaml
+        - ../../environments/sri-lanka-production/values/ingress.yaml
   project: default
   syncPolicy:
     syncOptions:
