@@ -95,6 +95,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - values.affinity.yaml
   project: default
   syncPolicy:
     syncOptions:
