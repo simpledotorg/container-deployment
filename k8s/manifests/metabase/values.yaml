@@ -8,3 +8,5 @@ metabase:
     existingSecret:
       name: simple-pguser-metabase
       connectionURIKey: jdbc-uri
+  extraEnv:
+    MAX_SESSION_AGE: "1440"
