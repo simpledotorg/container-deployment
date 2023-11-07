@@ -1,6 +1,9 @@
 metabase:
   ingress:
     enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "Referrer-Policy: no-referrer";
     className: "nginx"
     hosts:
       - host: simples9.health.gov.lk
