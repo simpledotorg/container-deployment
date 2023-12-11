@@ -20,3 +20,8 @@ RUN apt policy postgresql && \
   curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
   echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
   apt update && apt install -y postgresql-client-14 && apt autoremove -y
+# Install CPHC VPN Client
+RUN apt-get install libnss3-tools firefox kmod wget -y
+RUN wget https://in-simple-assets-public.s3.ap-south-1.amazonaws.com/linux_phat_client.tgz
+RUN tar -xvf linux_phat_client.tgz && rm -rf linux_phat_client.tgz
+ADD docker/cphc-worker-with-vpn.sh bin/cphc-worker-with-vpn.sh
