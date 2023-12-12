@@ -25,4 +25,3 @@ RUN apt-get install libnss3-tools firefox kmod wget -y
 WORKDIR /home/app
 RUN wget https://in-simple-assets-public.s3.ap-south-1.amazonaws.com/linux_phat_client.tgz
 RUN tar -xvf linux_phat_client.tgz && rm -rf linux_phat_client.tgz
-ADD docker/bin-base bin-base
