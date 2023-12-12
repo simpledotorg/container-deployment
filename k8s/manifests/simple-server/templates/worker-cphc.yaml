@@ -28,6 +28,8 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: ["bin/docker-worker-cphc"]
+        securityContext:
+          {{- toYaml .Values.workerCphc.containerSecurityContext | nindent 12 }}
         resources:
           {{- toYaml .Values.workerCphc.resources | nindent 12 }}
         envFrom:
