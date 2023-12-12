@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: "{{ .Values.workerCphc.name }}-cphc"
+  name: "{{ .Values.workerCphc.name }}"
   annotations:
     configmap.reloader.stakater.com/reload: {{ .Values.existingConfigmap }}
     secret.reloader.stakater.com/reload: {{ .Values.existingSecret }}
