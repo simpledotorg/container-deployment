@@ -62,9 +62,10 @@ workerCphc:
   log:
     storage: 1Gi # When storage class is local-path, size will have no effect
   podSecurityContext: {
-    fsGroup: 9999
-    capabilities:
+    fsGroup: 9999,
+    capabilities: {
       add: ["NET_ADMIN"]
+    }
   }
 migration:
   name: "migration-job"
