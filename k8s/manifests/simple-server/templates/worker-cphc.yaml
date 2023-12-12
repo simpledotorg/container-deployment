@@ -27,7 +27,7 @@ spec:
       - name: {{ .Values.workerCphc.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        args: ["bin/cphc-worker-with-vpn.sh"]
+        args: ["bin/docker-worker-cphc"]
         resources:
           {{- toYaml .Values.workerCphc.resources | nindent 12 }}
         envFrom:
