@@ -40,4 +40,4 @@ worker:
 migration:
   enabled: true
 workerCphc:
-  enabled: false
+  enabled: true
