@@ -50,6 +50,25 @@ worker:
   podSecurityContext: {
     fsGroup: 9999
   }
+workerCphc:
+  name: "simple-worker-cphc"
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  enabled: false
+  replicaCount: 1
+  resources: {}
+  podAnnotations: {}
+  log:
+    storage: 1Gi # When storage class is local-path, size will have no effect
+  podSecurityContext: {
+    fsGroup: 9999
+  }
+  containerSecurityContext: {
+    capabilities: {
+      add: ["NET_ADMIN"]
+    }
+  }
 migration:
   name: "migration-job"
   nodeSelector: {}

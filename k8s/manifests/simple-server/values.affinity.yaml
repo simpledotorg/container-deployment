@@ -28,6 +28,16 @@ worker:
             operator: In
             values:
             - "true"
+workerCphc:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-worker
+            operator: In
+            values:
+            - "true"
 migration:
   affinity:
     nodeAffinity:
