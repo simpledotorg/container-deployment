@@ -1,5 +1,5 @@
 prometheus:
-  extraScrapeConfigs: ""
+  extraScrapeConfigs:
     - job_name: "my-federated-endpoint"
       scrape_targets:
       - targets: ["https://example.com"]
