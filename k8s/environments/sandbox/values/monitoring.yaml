@@ -1,4 +1,17 @@
 prometheus:
+  extraScrapeConfigs: ""
+    - job_name: "my-federated-endpoint"
+      scrape_targets:
+      - targets: ["https://example.com"]
+      basic_auth:
+        username:
+          secretKeyRef:
+            name: monitoring-basic-auth
+            key: auth
+        password:
+          secretKeyRef:
+            name: monitoring-basic-auth
+            key: auth
   server:
     ingress:
       enabled: true
