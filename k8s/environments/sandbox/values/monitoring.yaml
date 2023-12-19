@@ -3,16 +3,16 @@ prometheus:
     - job_name: "my-federated-endpoint"
       scrape_targets:
       - targets: ["https://example.com"]
-      basic_auth:
-        username:
-          secretKeyRef:
-            name: monitoring-basic-auth
-            key: auth
-        password:
-          secretKeyRef:
-            name: monitoring-basic-auth
-            key: auth
+      authorization:
+        type: Basic
+        credentials_file: /etc/secrets/monitoring-basic-auth/auth
   server:
+    extraSecretMounts:
+      - name: secret-files
+        mountPath: /etc/secrets
+        subPath: monitoring-basic-auth
+        secretName: monitoring-basic-auth
+        readOnly: true
     ingress:
       enabled: true
       annotations:
