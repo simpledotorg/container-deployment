@@ -3,9 +3,6 @@ prometheus:
     - job_name: "my-federated-endpoint"
       scrape_targets:
       - targets: ["https://example.com"]
-      authorization:
-        type: Basic
-        credentials_file: /etc/secrets/monitoring-basic-auth/auth
   server:
     extraSecretMounts:
       - name: secret-files
