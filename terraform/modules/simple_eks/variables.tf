@@ -15,6 +15,11 @@ variable "cluster_name" {
   type = string
 }
 
+variable "cluster_version" {
+  type    = string
+  default = "1.24"
+}
+
 variable "tags" {
   type = map(string)
 }
