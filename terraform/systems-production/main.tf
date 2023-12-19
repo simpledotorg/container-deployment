@@ -42,13 +42,13 @@ module "vpc" {
   name = local.vpc_name
   cidr = "172.28.0.0/16"
 
-  azs = ["ap-south-1a", "ap-south-1b"]
-  # private_subnets = ["172.28.1.0/24", "172.28.2.0/24"]
-  public_subnets = ["172.28.101.0/24", "172.28.102.0/24"]
+  azs             = ["ap-south-1a", "ap-south-1b"]
+  private_subnets = ["172.28.1.0/24", "172.28.2.0/24"]
+  public_subnets  = ["172.28.101.0/24", "172.28.102.0/24"]
 
-  enable_nat_gateway     = false
-  enable_vpn_gateway     = false
-  one_nat_gateway_per_az = true
+  enable_nat_gateway = true
+  enable_vpn_gateway = false
+  single_nat_gateway = true
 
   tags = local.tags
 }
@@ -61,15 +61,16 @@ resource "aws_key_pair" "simple_aws_key" {
 module "eks" {
   source = "../modules/simple_eks"
 
-  subnets       = module.vpc.public_subnets
-  vpc_id        = module.vpc.vpc_id
-  cluster_name  = local.cluster_name
-  tags          = local.tags
-  key_pair_name = aws_key_pair.simple_aws_key.key_name
+  subnets         = module.vpc.private_subnets
+  vpc_id          = module.vpc.vpc_id
+  cluster_name    = local.cluster_name
+  cluster_version = "1.28"
+  tags            = local.tags
+  key_pair_name   = aws_key_pair.simple_aws_key.key_name
 
   aws_profile = "${local.service}-${local.env}"
 
-  nodepool_subnet_ids = [module.vpc.public_subnets[0]] # Use only one subnet for nodepool
+  nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
   default_nodepool_instance_enable = true
