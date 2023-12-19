@@ -3,7 +3,7 @@ prometheus:
     extraSecretMounts:
       - name: secret-files
         mountPath: /etc/secrets
-        subPath: monitoring-basic-auth
+        subPath: ""
         secretName: monitoring-basic-auth
         readOnly: true
     ingress:
