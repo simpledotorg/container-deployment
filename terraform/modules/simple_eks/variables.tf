@@ -25,15 +25,17 @@ variable "key_pair_name" {
 
 variable "db_instance_enable" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "db_instance_type" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "db_instance_count" {
-  type = number
+  type    = number
+  default = 0
 }
 
 variable "db_instance_extra_labels" {
@@ -63,17 +65,17 @@ variable "db2_instance_extra_labels" {
 
 variable "db_backup_instance_type" {
   type    = string
-  default = "t3.small"
+  default = ""
 }
 
 variable "db_backup_instance_enable" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "db_backup_instance_count" {
   type    = number
-  default = 1
+  default = 0
 }
 
 variable "db_backup_instance_extra_labels" {
@@ -83,7 +85,7 @@ variable "db_backup_instance_extra_labels" {
 
 variable "server_instance_enable" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "server_instance_type" {
@@ -123,7 +125,7 @@ variable "server2_instance_extra_labels" {
 
 variable "worker_instance_enable" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "worker_instance_type" {
@@ -143,7 +145,7 @@ variable "worker_instance_extra_labels" {
 
 variable "metabase_instance_enable" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "metabase_instance_type" {
@@ -163,11 +165,12 @@ variable "metabase_instance_extra_labels" {
 
 variable "cache_redis_instance_enable" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "cache_redis_instance_type" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "cache_redis_instance_extra_labels" {
@@ -192,7 +195,7 @@ variable "cache_redis2_instance_extra_labels" {
 
 variable "worker_redis_instance_type" {
   type    = string
-  default = "t3.small"
+  default = ""
 }
 
 variable "worker_redis_instance_extra_labels" {
@@ -202,17 +205,17 @@ variable "worker_redis_instance_extra_labels" {
 
 variable "worker_redis_instance_enable" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "default_nodepool_instance_type" {
   type    = string
-  default = "t3.medium"
+  default = ""
 }
 
 variable "default_nodepool_instance_count" {
   type    = number
-  default = 1
+  default = 0
 }
 
 variable "default_nodepool_instance_extra_labels" {
@@ -222,7 +225,7 @@ variable "default_nodepool_instance_extra_labels" {
 
 variable "default_nodepool_instance_enable" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "nodepool_disk_size" {

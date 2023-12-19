@@ -73,25 +73,35 @@ module "eks" {
 
   nodepool_subnet_ids = [module.vpc.private_subnets[1]] # Use single zone avoid volume mount issues during node replacement
 
-  db_instance_type  = "r5.xlarge"
-  db_instance_count = 1
+  db_instance_enable = true
+  db_instance_type   = "r5.xlarge"
+  db_instance_count  = 1
 
-  db_backup_instance_type = "t3.small"
+  db_backup_instance_enable = true
+  db_backup_instance_type   = "t3.small"
+  db_backup_instance_count  = 1
 
-  server_instance_type  = "t3.2xlarge"
-  server_instance_count = 1
+  server_instance_enable = true
+  server_instance_type   = "t3.2xlarge"
+  server_instance_count  = 1
 
-  worker_instance_type  = "t3.2xlarge"
-  worker_instance_count = 1
+  worker_instance_enable = true
+  worker_instance_type   = "t3.2xlarge"
+  worker_instance_count  = 1
 
-  metabase_instance_type  = "t3.small"
-  metabase_instance_count = 1
+  metabase_instance_enable = true
+  metabase_instance_type   = "t3.small"
+  metabase_instance_count  = 1
 
-  cache_redis_instance_type  = "t3.small"
-  worker_redis_instance_type = "t3.large"
+  cache_redis_instance_enable = true
+  cache_redis_instance_type   = "t3.small"
 
-  default_nodepool_instance_type  = "t3.medium"
-  default_nodepool_instance_count = 3
+  worker_redis_instance_enable = true
+  worker_redis_instance_type   = "t3.large"
+
+  default_nodepool_instance_enable = true
+  default_nodepool_instance_type   = "t3.medium"
+  default_nodepool_instance_count  = 3
   default_nodepool_instance_extra_labels = {
     "role-ingress" = "true"
   }
