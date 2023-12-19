@@ -1,8 +1,4 @@
 prometheus:
-  extraScrapeConfigs: |
-    - job_name: "my-federated-endpoint"
-      scrape_targets:
-      - targets: ["https://example.com"]
   server:
     extraSecretMounts:
       - name: secret-files
