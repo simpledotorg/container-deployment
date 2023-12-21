@@ -12,9 +12,6 @@ prometheus:
       static_configs:
         - targets:
           - 'prometheus-sandbox.simple.org'
-      authorization:
-        type: 'Basic'
-        credentials_file: '/etc/secrets/default'
   server:
     persistentVolume:
       size: 100Gi
