@@ -1,10 +1,7 @@
 prometheus:
   server:
     global:
-      external_labels:
-        - product: simple
-        - environment: sandbox
-        - project: india
+      scrape_timeout: 20s
     ingress:
       enabled: true
       annotations:
