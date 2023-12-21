@@ -1,11 +1,10 @@
 prometheus:
   server:
-    extraSecretMounts:
-      - name: secret-files
-        mountPath: /etc/secrets
-        subPath: ""
-        secretName: monitoring-basic-auth
-        readOnly: true
+    global:
+      external_labels:
+        - product: simple
+        - environment: sandbox
+        - project: india
     ingress:
       enabled: true
       annotations:
