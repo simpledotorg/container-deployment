@@ -1,4 +1,20 @@
 prometheus:
+  extraScrapeConfigs: |
+    - job_name: 'federate'
+      scheme: https
+      scrape_interval: 15s
+      honor_labels: true
+      metrics_path: '/federate'
+      params:
+        'match[]':
+          - '{job="prometheus"}'
+          - '{__name__=~"^job:.*"}'
+      static_configs:
+        - targets:
+          - 'prometheus-sandbox.simple.org'
+      authorization:
+        type: 'Basic'
+        credentials_file: '/etc/secrets/default'
   server:
     persistentVolume:
       size: 100Gi
@@ -6,7 +22,7 @@ prometheus:
       - name: secret-files
         mountPath: /etc/secrets
         subPath: ""
-        secretName: monitoring-basic-auth
+        secretName: prometheus-auth
         readOnly: true
     ingress:
       enabled: true
