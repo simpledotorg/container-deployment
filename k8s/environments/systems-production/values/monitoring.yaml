@@ -1,4 +1,17 @@
 prometheus:
+  extraScrapeConfigs: |
+    - job_name: 'federate'
+      scheme: https
+      scrape_interval: 15s
+      honor_labels: true
+      metrics_path: '/federate'
+      params:
+        'match[]':
+          - '{job="prometheus"}'
+          - '{__name__=~"^job:.*"}'
+      static_configs:
+        - targets:
+          - 'prometheus-sandbox.simple.org'
   server:
     persistentVolume:
       size: 100Gi
