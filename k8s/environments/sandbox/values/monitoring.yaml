@@ -1,7 +1,6 @@
 prometheus:
   server:
     global:
-      scrape_timeout: 20s
       external_labels:
         product: "simple"
         environment: "sandbox"
