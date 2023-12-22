@@ -5,4 +5,4 @@ redis:
     maxmemory-samples 5
   master:
     persistence:
-      size: 32Gi
+      size: 48Gi
