@@ -9,20 +9,20 @@
 - Install ngrok `brew install ngrok`
 
 ## Install Argocd
-- Add hem repo `helm repo add argo https://argoproj.github.io/argo-helm`
-- Install `helm install argocd argo/argo-cd --create-namespace -n argocd --set notifications.secret.create=false`
+- Add hem repo ```helm repo add argo https://argoproj.github.io/argo-helm```
+- Install ```helm install argocd argo/argo-cd --create-namespace -n argocd --set notifications.secret.create=false```
 
 ## Create manifests
-- Create a new branch for local setup `git checkout -b local-<your-name>`. Replace `<your-name>`, ex: `local-john`
+- Create a new branch for local setup ```git checkout -b local-<your-name>```. Replace `<your-name>`, ex: `local-john`
 - Replace the `targetRevision: local` to `targetRevision: local-<your-name>` in `k8s/environments/local/argocd-apps` and ` k8s/environments/local/root-app.yaml`
-- Git push branch `git push origin local-<your-name>`
+- Git push branch ```git push origin local-<your-name>```
 
 ## Create root Argocd app
-- `kubectl create -f  k8s/environments/local/root-app.yaml -n argocd`
+- ```kubectl create -f  k8s/environments/local/root-app.yaml -n argocd```
 
 ## View Argocd UI
-- Fetch `admin` user passworld `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
-- Expose UI on local host 8080 port `kubectl port-forward svc/argocd-server -n argocd 8080:443`
+- Fetch `admin` user passworld ```kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d```
+- Expose UI on local host 8080 port ```kubectl port-forward svc/argocd-server -n argocd 8080:443```
 - Open UI in browser https://localhost:8080/
 
 ## Encrypt secrets
