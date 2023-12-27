@@ -1,0 +1,59 @@
+prometheus:
+  server:
+    global:
+      external_labels:
+        product: "simple"
+        environment: "local"
+        project: "india"
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/auth-type: basic
+        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+        nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+      hosts:
+        - prometheus-local.simple.org
+      tls:
+        - secretName: prometheus-local.simple.org-tls
+          hosts:
+            - prometheus-local.simple.org
+alertmanager:
+  ingress:
+    className: nginx
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+      nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+    hosts:
+      - host: alertmanager-local.simple.org
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: alertmanager-local.simple.org-tls
+        hosts:
+          - alertmanager-local.simple.org
+  extraArgs:
+    web.external-url: "https://alertmanager-local.simple.org"
+    web.route-prefix: "/"
+grafana:
+  admin:
+    existingSecret: "grafana-secrets"
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+      - grafana-local.simple.org
+    tls:
+      - secretName: grafana-local.simple.org-tls
+        hosts:
+          - grafana-local.simple.org
+  persistence:
+    enabled: true
