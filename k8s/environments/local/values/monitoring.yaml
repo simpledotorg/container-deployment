@@ -8,38 +8,30 @@ prometheus:
     ingress:
       enabled: true
       annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        nginx.ingress.kubernetes.io/auth-type: basic
-        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
-        nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+        cert-manager.io/cluster-issuer: "letsencrypt-staging"
       hosts:
-        - prometheus-sandbox.simple.org
+        - prometheus.local.simple.org
       tls:
-        - secretName: prometheus-sandbox.simple.org-tls
+        - secretName: prometheus.local.simple.org-tls
           hosts:
-            - prometheus-sandbox.simple.org
+            - prometheus.local.simple.org
   alertmanager:
     ingress:
       className: nginx
       enabled: true
       annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        nginx.ingress.kubernetes.io/auth-type: basic
-        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
-        nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+        cert-manager.io/cluster-issuer: "letsencrypt-staging"
       hosts:
-        - host: alertmanager-sandbox.simple.org
+        - host: alertmanager.local.simple.org
           paths:
             - path: /
               pathType: ImplementationSpecific
       tls:
-        - secretName: alertmanager-sandbox.simple.org-tls
+        - secretName: alertmanager.local.simple.org-tls
           hosts:
-            - alertmanager-sandbox.simple.org
+            - alertmanager.local.simple.org
     extraArgs:
-      web.external-url: "https://alertmanager-sandbox.simple.org"
+      web.external-url: "https://alertmanager.local.simple.org"
       web.route-prefix: "/"
 grafana:
   admin:
@@ -47,13 +39,12 @@ grafana:
   ingress:
     enabled: true
     annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt-prod"
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      cert-manager.io/cluster-issuer: "letsencrypt-staging"
     hosts:
-      - grafana-sandbox.simple.org
+      - grafana.local.simple.org
     tls:
-      - secretName: grafana-sandbox.simple.org-tls
+      - secretName: grafana.local.simple.org-tls
         hosts:
-          - grafana-sandbox.simple.org
+          - grafana.local.simple.org
   persistence:
     enabled: true
