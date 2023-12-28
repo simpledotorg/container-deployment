@@ -47,7 +47,7 @@ worker:
 migration:
   enabled: true
 workerCphc:
-  enabled: true
+  enabled: false
   log:
     storage: 10Gi
   podAnnotations: {
