@@ -40,3 +40,5 @@ k3s_server:
   disable:
   - traefik # Disable traefik ingress controller.
   node-label: "{{ k3s_node_labels }}"
+
+k3s_release_version: v1.24.17+k3s1
