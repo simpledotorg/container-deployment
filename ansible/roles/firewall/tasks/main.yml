@@ -12,6 +12,15 @@
     name: OpenSSH
   become: true
 
+# For Sri Lanka prod ssh access
+- name: allow all tcp access to port 40
+  ufw:
+    rule: allow
+    port: 40
+    proto: tcp
+  become: true
+  when: ssh_entry_host is defined and ssh_entry_host
+
 - name: restrict network access within hosts private ip
   ufw:
     rule: allow
