@@ -7,10 +7,10 @@ commonLabels:
 
 # Repo: https://github.com/CrunchyData/postgres-operator-examples/tree/main/kustomize
 bases:
-- github.com/CrunchyData/postgres-operator-examples/kustomize/install/namespace?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
-- github.com/CrunchyData/postgres-operator-examples/kustomize/install/crd?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
-- github.com/CrunchyData/postgres-operator-examples/kustomize/install/rbac/cluster?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
-- github.com/CrunchyData/postgres-operator-examples/kustomize/install/manager?ref=206cc6aa0aa148133d3147d286f9b3c68b820ffb
+- github.com/CrunchyData/postgres-operator-examples/kustomize/install/namespace?ref=090630a79424568f04920821e5d047e8ff8071fc
+- github.com/CrunchyData/postgres-operator-examples/kustomize/install/crd?ref=090630a79424568f04920821e5d047e8ff8071fc
+- github.com/CrunchyData/postgres-operator-examples/kustomize/install/rbac/cluster?ref=090630a79424568f04920821e5d047e8ff8071fc
+- github.com/CrunchyData/postgres-operator-examples/kustomize/install/manager?ref=090630a79424568f04920821e5d047e8ff8071fc
 
 # Release notes: https://access.crunchydata.com/documentation/postgres-operator/latest/releases/ 
 images:
