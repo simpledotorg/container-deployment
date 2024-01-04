@@ -4,7 +4,7 @@ prometheus:
       groups:
         - name: Default
           rules:
-            - alert: local-ingress-request-count
+            - alert: LocalIngressRequestCount
               expr: count(nginx_ingress_controller_nginx_process_requests_total{controller_namespace="ingress-nginx"}) > 5
               for: 10s
               labels:
@@ -12,4 +12,4 @@ prometheus:
               annotations:
                 description: |-
                   Request count is too high
-                  VALUE = {{ $value }}
+                  COUNT = {{ $value }}

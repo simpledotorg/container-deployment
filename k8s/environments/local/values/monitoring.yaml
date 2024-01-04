@@ -5,6 +5,12 @@ prometheus:
         product: "simple"
         environment: "local"
         project: "development"
+    rule_files:
+      - alerting-rules.yaml
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets: ['10.108.233.58:9093'] # uses dns in other envs
     scrape_configs:
       - job_name: "nginx-ingress-controller"
         scrape_interval: 10s
