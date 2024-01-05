@@ -14,6 +14,8 @@ all:
           ansible_host: 192.168.1.207
         moh-hrms-simple-13:
           ansible_host: 192.168.1.204
+          ssh_entry_host: true
+          ansible_port: 40
     k3s_worker_nodes:
       hosts:
         moh-hrms-simple-01:
