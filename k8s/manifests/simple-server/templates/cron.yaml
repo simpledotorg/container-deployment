@@ -50,7 +50,7 @@ spec:
       {{ if .Values.logTailer.enabled }}
       - name: log-tailer
         image: "{{ .Values.logTailer.image.repository }}:{{ .Values.logTailer.image.tag }}"
-        command: ["/bin/bash", "-c", "tail -F -n 0 /home/deploy/apps/simple-server/shared/log/cron.log"]
+        command: ["/bin/bash", "-c", "tail -F -n 0 /home/deploy/apps/simple-server/shared/log/cron.log /home/app/log/production.log"]
         tty: true
         stdin: true
         volumeMounts:
