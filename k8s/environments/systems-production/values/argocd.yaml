@@ -1,0 +1,47 @@
+argo-cd:
+  notifications:
+    argocdUrl: "https://argocd-systems.simple.org"
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      ingressClassName: "nginx"
+      hosts:
+        - argocd-systems.simple.org
+      paths:
+        - /
+      pathType: Prefix
+      tls:
+        - secretName: argocd-systems.simple.org-tls
+          hosts:
+            - argocd-systems.simple.org
+      https: false
+  configs:
+    cm:
+      accounts.cicd: login
+      accounts.govind: login 
+      accounts.priyanga: login 
+      accounts.olttwa: login 
+      accounts.akshatha: login 
+      accounts.dan: login 
+      accounts.atharva: login 
+      accounts.roypeter: login
+      admin.enabled: true
+       
+    # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
+    rbac:
+      policy.default: role:readonly
+      policy.csv: |
+        p, role:cicd, applications, sync, *, allow
+        p, role:cicd, applications, update, *, allow
+        g, cicd, role:cicd
+        g, govind, role:admin
+        g, priyanga, role:admin
+        g, olttwa, role:admin
+        g, akshatha, role:admin
+        g, dan, role:admin
+        g, atharva, role:admin
+        g, roypeter, role:admin

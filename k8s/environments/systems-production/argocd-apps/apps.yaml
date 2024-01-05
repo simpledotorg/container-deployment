@@ -1,0 +1,212 @@
+# Argocd
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+spec:
+  destination:
+    name: ''
+    namespace: argocd
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/argo-cd
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: central-monitoring-setup
+    helm:
+      valueFiles:
+        - ../../environments/systems-production/values/argocd.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Cert manager
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+spec:
+  destination:
+    name: ''
+    namespace: cert-manager
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/cert-manager
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: central-monitoring-setup
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Nginx ingress
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+spec:
+  destination:
+    name: ''
+    namespace: ingress-nginx
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/ingress
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: central-monitoring-setup
+    helm:
+      valueFiles:
+        - values.aws-nlb.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Kube state metrics
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-state-metrics
+spec:
+  destination:
+    name: ''
+    namespace: kube-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/kube-state-metrics
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: central-monitoring-setup
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Reloader
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: reloader
+spec:
+  destination:
+    name: ''
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/reloader
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: central-monitoring-setup
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Sealed secrets
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sealed-secrets
+spec:
+  destination:
+    name: ''
+    namespace: sealed-secrets
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/sealed-secrets
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: central-monitoring-setup
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Secrets
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: secrets
+spec:
+  destination:
+    name: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/systems-production/secrets
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: central-monitoring-setup
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Monitoring
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+spec:
+  destination:
+    name: ''
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/monitoring
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: central-monitoring-setup
+    helm:
+      valueFiles:
+        - ../../environments/systems-production/values/alerting-rules.yaml
+        - ../../environments/systems-production/values/monitoring.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
