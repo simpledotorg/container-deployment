@@ -2,11 +2,9 @@
 
 all:
   children:
-    dhis2_sandbox2:
+    dhis2-dev:
       hosts:
-        node-01:
-          ansible_host: dhis2-sandbox2.simple.org
-    dhis2_staging1:
-      hosts:
-        node-01:
-          ansible_host: dhis2-staging1.simple.org
+        dhis2_sandbox2:
+          ansible_host: 139.59.26.54
+        dhis2_staging1:
+          ansible_host: 13.233.113.152
