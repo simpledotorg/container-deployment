@@ -76,6 +76,11 @@ module "eks" {
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use single zone avoid volume mount issues during node replacement
   nodepool_disk_size  = 50
 
+  cluster_addon_coredns_version         = "v1.8.7-eksbuild.3"
+  cluster_addon_kubeproxy_version       = "v1.24.7-eksbuild.2"
+  cluster_addon_vpccni_version          = "v1.11.4-eksbuild.1"
+  cluster_addon_awsebscsidriver_version = "v1.18.0-eksbuild.1"
+
   db_instance_enable = true
   db_instance_type   = "t3.medium"
   db_instance_count  = 2
