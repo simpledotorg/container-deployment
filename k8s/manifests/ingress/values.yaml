@@ -11,8 +11,10 @@ ingress-nginx:
       enabled: false #TODO: check issues with enabling the same.
     metrics:
       enabled: true
-      perHost: false
     enableLatencyMetrics: true
+    args:
+      - --metrics-per-host=false
+      - --v=5
     config:
       nginx-status-ipv4-whitelist: "10.0.0.0/8,172.16.0.0/12,172.33.0.0/16,127.0.0.1"
       proxy-body-size: "4g"
