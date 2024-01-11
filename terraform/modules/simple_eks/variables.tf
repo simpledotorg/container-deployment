@@ -20,6 +20,22 @@ variable "cluster_version" {
   default = "1.24"
 }
 
+variable "cluster_addon_coredns_version" {
+  type = string
+}
+
+variable "cluster_addon_kubeproxy_version" {
+  type = string
+}
+
+variable "cluster_addon_vpccni_version" {
+  type = string
+}
+
+variable "cluster_addon_awsebscsidriver_version" {
+  type = string
+}
+
 variable "tags" {
   type = map(string)
 }

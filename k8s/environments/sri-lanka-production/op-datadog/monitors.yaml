@@ -308,7 +308,7 @@ metadata:
   name: sri-lanka-production-k8s-postgres-operator-running-pod-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_namespace:postgres-operator} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_namespace:postgres-operator} < 1"
   type: "query alert"
   name: "sri-lanka-production-k8s-postgres-operator-running-pod-count"
   message: "@slack-alerts"

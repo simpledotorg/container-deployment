@@ -21,7 +21,9 @@ cron:
   resources: {}
   podAnnotations: {}
   log:
-    storage: 1Gi # When storage class is local-path, size will have no effect
+    storage: 1Gi
+  appLog:
+    storage: 1Gi
 server:
   name: "simple-server"
   nodeSelector: {}
@@ -32,7 +34,7 @@ server:
   resources: {}
   podAnnotations: {}
   log:
-    storage: 1Gi # When storage class is local-path, size will have no effect
+    storage: 1Gi
   podSecurityContext: {
     fsGroup: 9999
   }
@@ -46,7 +48,7 @@ worker:
   resources: {}
   podAnnotations: {}
   log:
-    storage: 1Gi # When storage class is local-path, size will have no effect
+    storage: 1Gi
   podSecurityContext: {
     fsGroup: 9999
   }
@@ -60,7 +62,7 @@ workerCphc:
   resources: {}
   podAnnotations: {}
   log:
-    storage: 1Gi # When storage class is local-path, size will have no effect
+    storage: 1Gi
   podSecurityContext: {
     fsGroup: 9999
   }
