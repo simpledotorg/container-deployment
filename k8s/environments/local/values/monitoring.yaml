@@ -5,25 +5,6 @@ prometheus:
         product: "simple"
         environment: "local"
         project: "development"
-    alerting:
-      alertmanagers:
-        - static_configs:
-            - targets: ['10.108.233.58:9093'] # uses dns in other envs
-    prometheus.yml:
-      rule_files:
-        - alerting-rules.yaml
-      scrape_configs:
-        - job_name: "nginx-ingress-controller"
-          scrape_interval: 10s
-          kubernetes_sd_configs:
-            - role: service
-          relabel_configs:
-            - source_labels: [__meta_kubernetes_namespace]
-              action: keep
-              regex: ingress-nginx
-            - source_labels: [__meta_kubernetes_service_name]
-              action: keep
-              regex: ingress-nginx-controller-metrics
     ingress:
       enabled: true
       annotations:
