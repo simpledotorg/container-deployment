@@ -1,8 +1,0 @@
----
-
-all:
-  children:
-    dhis2_sandbox2:
-      hosts:
-        node-01:
-          ansible_host: 139.59.26.54
