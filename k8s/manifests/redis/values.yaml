@@ -24,14 +24,14 @@ redis:
             ]
           }
         }
-prometheus-redis-exporter:
-  redisAddress: redis://redis-master:6379
-  serviceAccount:
-    name: redis-exporter
-  service:
-    labels:
-      prometheus.io/path: /metrics
-      prometheus.io/port: "9121"
-      prometheus.io/scrape: "true"
-  serviceMonitor:
-    enabled: true
+#prometheus-redis-exporter:
+#  redisAddress: redis://redis-master:6379
+#  serviceAccount:
+#    name: redis-exporter
+#  service:
+#    labels:
+#      prometheus.io/path: /metrics
+#      prometheus.io/port: "9121"
+#      prometheus.io/scrape: "true"
+#  serviceMonitor:
+#    enabled: true
