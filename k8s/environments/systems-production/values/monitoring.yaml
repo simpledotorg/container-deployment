@@ -12,7 +12,7 @@ prometheus:
         - targets:
           - 'prometheus-sandbox.simple.org'
       basic_auth:
-        username: '<string>'
+        username: 'db25a3474d90'
         password_file: '/etc/secrets/default'
   server:
     persistentVolume:
