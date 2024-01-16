@@ -17,16 +17,16 @@ Prometheus: https://localhost:8082/
 
 ```zsh
 # Start cluster
-minikube start --kubernetes-version=v1.24.7 start --memory 6144 --cpus 4
+minikube start --kubernetes-version=v1.24.7 --memory 6144 --cpus 4
 
 # Port forward ArgoCD to port 8080
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 
-# Expose grafana on 8081
-kubectl port-forward svc/monitoring-grafana -n monitoring 8081:80
+# Port forward prometheus to port 8081
+kubectl port-forward svc/monitoring-prometheus-server -n monitoring 8081:80
 
-# Expose prometheus on 8082
-kubectl port-forward svc/monitoring-prometheus-server -n monitoring 8082:80
+# Port forward grafana to port 8082
+kubectl port-forward svc/monitoring-grafana -n monitoring 8082:80
 ```
 
 ## Prerequisite
