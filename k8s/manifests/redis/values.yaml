@@ -24,7 +24,7 @@ redis:
             ]
           }
         }
-prometheus-redis-exporter:
+prometheusRedisExporter:
 #  redisAddress: redis://redis-master:6379
 #  serviceAccount:
 #    name: redis-exporter
