@@ -25,11 +25,10 @@ redis:
           }
         }
 prometheusRedisExporter:
-  redisAddress: redis://redis-master:6379
+#  redis master cluster ip
+  redisAddress: redis://10.100.232.99:6379
   service:
     annotations:
       prometheus.io/path: /metrics
       prometheus.io/port: "9121"
       prometheus.io/scrape: "true"
-  serviceMonitor:
-    enabled: true
