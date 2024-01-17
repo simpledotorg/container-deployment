@@ -24,7 +24,8 @@ redis:
             ]
           }
         }
-prometheusRedisExporter:
+
+prometheus-redis-exporter:
   redisAddress: redis://redis-master:6379
   service:
     annotations:
