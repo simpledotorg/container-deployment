@@ -109,3 +109,11 @@ kubeseal <k8s/environments/local/secrets/simple-server.sealedsecret.yaml.decrypt
 ## Access simple app UI
 - `kubectl port-forward svc/simple-server -n simple-v1 8081:80`
 - `ngrok http 8081`
+
+## Setting up monitoring
+- Create a decrypted file file grafana
+- Create a decrypted file file alert manager
+- Encrypt the secrets using Kubeseal
+```
+kubeseal <k8s/environments/local/secrets/simple-server.sealedsecret.yaml.decrypted >k8s/environments/local/secrets/simple-server.sealedsecret.yaml -o yaml --controller-namespace sealed-secrets --controller-name=sealed-secrets
+```
