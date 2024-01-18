@@ -65,21 +65,22 @@ resource "aws_key_pair" "simple_aws_key" {
 module "eks" {
   source = "../modules/simple_eks"
 
-  subnets       = module.vpc.private_subnets
-  vpc_id        = module.vpc.vpc_id
-  cluster_name  = local.cluster_name
-  tags          = local.tags
-  key_pair_name = aws_key_pair.simple_aws_key.key_name
+  subnets         = module.vpc.private_subnets
+  vpc_id          = module.vpc.vpc_id
+  cluster_name    = local.cluster_name
+  cluster_version = "1.26"
+  tags            = local.tags
+  key_pair_name   = aws_key_pair.simple_aws_key.key_name
 
   aws_profile = "bangladesh-k8s-production"
 
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use single zone avoid volume mount issues during node replacement
   nodepool_disk_size  = 50
 
-  cluster_addon_coredns_version         = "v1.8.7-eksbuild.3"
-  cluster_addon_kubeproxy_version       = "v1.24.7-eksbuild.2"
-  cluster_addon_vpccni_version          = "v1.11.4-eksbuild.1"
-  cluster_addon_awsebscsidriver_version = "v1.18.0-eksbuild.1"
+  cluster_addon_coredns_version         = "v1.8.7-eksbuild.7"
+  cluster_addon_kubeproxy_version       = "v1.24.17-eksbuild.2"
+  cluster_addon_vpccni_version          = "v1.15.1-eksbuild.1"
+  cluster_addon_awsebscsidriver_version = "v1.26.1-eksbuild.1"
 
   db_instance_enable = true
   db_instance_type   = "t3.medium"
@@ -89,9 +90,11 @@ module "eks" {
   db_backup_instance_type   = "t3.small"
   db_backup_instance_count  = 1
 
-  server_instance_enable = true
-  server_instance_type   = "t3.xlarge"
-  server_instance_count  = 2
+  server_instance_enable = false
+
+  server2_instance_enable = true
+  server2_instance_type   = "t3.xlarge"
+  server2_instance_count  = 2
 
   worker_instance_enable = true
   worker_instance_type   = "t3.xlarge"
