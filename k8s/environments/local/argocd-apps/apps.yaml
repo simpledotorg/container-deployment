@@ -360,7 +360,7 @@ spec:
     targetRevision: local-govind
     helm:
       valueFiles:
-        # - ../../environments/systems-production/values/alerting-rules.yaml
+        - ../../environments/local/values/alerting-rules.yaml
         - ../../environments/local/values/monitoring.yaml
   project: default
   syncPolicy:

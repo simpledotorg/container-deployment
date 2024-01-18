@@ -1,0 +1,15 @@
+prometheus:
+  serverFiles:
+    alerting_rules.yml:
+      groups:
+        - name: Default
+          rules:
+            - alert: LocalIngressRequestCount
+              expr: nginx_ingress_controller_nginx_process_requests_total{controller_namespace="ingress-nginx"} > 5
+              for: 10s
+              labels:
+                severity: warning
+              annotations:
+                description: |-
+                  Request count is too high
+                  COUNT = {{ $value }}

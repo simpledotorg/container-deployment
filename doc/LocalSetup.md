@@ -1,5 +1,34 @@
 # New local environment setup using Minikube
 
+## Quick start
+
+If you've already set everything up, follow this to quickly have a working set up
+
+### Quick links
+ArgoCD: https://localhost:8080/
+user: admin
+pass: PYHyRAH6zgN5wfw5
+
+Grafana: https://localhost:8081/
+user: admin
+pass: admin
+
+Prometheus: https://localhost:8082/
+
+```zsh
+# Start cluster
+minikube start --kubernetes-version=v1.24.7 --memory 6144 --cpus 4
+
+# Port forward ArgoCD to port 8080
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+# Port forward prometheus to port 8081
+kubectl port-forward svc/monitoring-prometheus-server -n monitoring 8081:80
+
+# Port forward grafana to port 8082
+kubectl port-forward svc/monitoring-grafana -n monitoring 8082:80
+```
+
 ## Prerequisite
 - Install docker `brew install docker` or [follow docker installation guide](https://docs.docker.com/desktop/install/mac-install/)
 - Install minikube `brew install minikube`

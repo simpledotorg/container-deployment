@@ -5,5 +5,8 @@ dependencies:
 - name: prometheus-redis-exporter
   repository: https://prometheus-community.github.io/helm-charts
   version: 6.1.0
-digest: sha256:a6f25d84a61007c1ef66536717a25e5a43a6d8022782b4c54932fa031a248557
-generated: "2024-01-15T15:35:01.531102+05:30"
+- name: prometheus-operator-crds
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 9.0.0
+digest: sha256:e7eb2e6594f782a5780509b7146b40e15960782367425b25aee3be444f8acf6a
+generated: "2024-01-18T13:31:49.794903+05:30"

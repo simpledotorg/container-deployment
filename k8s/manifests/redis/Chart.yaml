@@ -11,5 +11,6 @@ dependencies:
 - name: prometheus-redis-exporter
   version: 6.1.0
   repository: https://prometheus-community.github.io/helm-charts
-
-
+- name: prometheus-operator-crds
+  version: 9.0.0
+  repository: https://prometheus-community.github.io/helm-charts

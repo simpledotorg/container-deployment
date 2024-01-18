@@ -24,25 +24,12 @@ redis:
             ]
           }
         }
+
 prometheus-redis-exporter:
-  serviceMonitor:
-    # When set true then use a ServiceMonitor to configure scraping
-    enabled: true
-    multipleTarget: true
-    targets: 
-    # for every targets, url and name must be set,
-    # an individual additionalRelabeling can be set for every target
-    - url: "redis://redis-master"
-      name: "redis-master"
-    # - url: "redis://my-redis-cluster:6379"
-    #   name: "bar"
-    #   additionalRelabeling:
-    #   - sourceLabels: [type]
-    #     targetLabel: type
-    #     replacement: cluster
-    #   additionalMetricsRelabels:
-    #     type: clusterkkk
-  labels:
+  redisAddress: redis://redis-master:6379
+  annotations:
     prometheus.io/path: /metrics
     prometheus.io/port: "9121"
     prometheus.io/scrape: "true"
+  serviceMonitor:
+    enabled: true
