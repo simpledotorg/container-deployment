@@ -249,6 +249,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - ../../environments/local/values/cache-redis.yaml
   project: default
   syncPolicy:
     syncOptions:
