@@ -43,6 +43,10 @@ grafana:
         gnetId: 11835
         revision: 1
         datasource: Prometheus
+      postgres-monitoring:
+        gnetId: 9628
+        revision: 1
+        datasource: Prometheus
 prometheus:
   alertmanager:
     extraSecretMounts:
