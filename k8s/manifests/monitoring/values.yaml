@@ -39,6 +39,27 @@ grafana:
       simple-server-dashboard-k8s:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/simple-server.json
         token: ''
+      pgMonitor_pgbackrest: 
+        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/pgMonitor/pgbackrest.json
+        token: ''
+      pgMonitor_pod_details: 
+        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/pgMonitor/pod_details.json
+        token: ''
+      pgMonitor_postgresql_details: 
+        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/pgMonitor/postgresql_details.json
+        token: ''
+      pgMonitor_postgresql_overview: 
+        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/pgMonitor/postgresql_overview.json
+        token: ''
+      pgMonitor_postgresql_service_health: 
+        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/pgMonitor/postgresql_service_health.json
+        token: ''
+      pgMonitor_prometheus_alerts: 
+        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/pgMonitor/prometheus_alerts.json
+        token: ''
+      pgMonitor_query_statistics: 
+        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/pgMonitor/query_statistics.json
+        token: ''
       redis-monitoring:
         gnetId: 11835
         revision: 1
