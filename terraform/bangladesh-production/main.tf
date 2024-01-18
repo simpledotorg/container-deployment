@@ -68,7 +68,7 @@ module "eks" {
   subnets         = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
   cluster_name    = local.cluster_name
-  cluster_version = "1.26"
+  cluster_version = "1.28"
   tags            = local.tags
   key_pair_name   = aws_key_pair.simple_aws_key.key_name
 
@@ -90,11 +90,11 @@ module "eks" {
   db_backup_instance_type   = "t3.small"
   db_backup_instance_count  = 1
 
-  server_instance_enable = false
+  server_instance_enable = true
+  server_instance_type   = "t3.xlarge"
+  server_instance_count  = 2
 
-  server2_instance_enable = true
-  server2_instance_type   = "t3.xlarge"
-  server2_instance_count  = 2
+  server2_instance_enable = false
 
   worker_instance_enable = true
   worker_instance_type   = "t3.xlarge"

@@ -70,7 +70,7 @@ module "eks" {
   subnets         = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
   cluster_name    = local.cluster_name
-  cluster_version = "1.26"
+  cluster_version = "1.28"
   tags            = local.tags
   key_pair_name   = aws_key_pair.simple_aws_key.key_name
 
@@ -84,14 +84,14 @@ module "eks" {
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
-  db_instance_enable = true
-  db_instance_type   = "t3a.2xlarge"
-  db_instance_count  = 2
-  db_instance_extra_labels = {
+  db_instance_enable = false
+
+  db2_instance_enable = true
+  db2_instance_type   = "t3a.2xlarge"
+  db2_instance_count  = 2
+  db2_instance_extra_labels = {
     role-db-backup = "true"
   }
-
-  db2_instance_enable = false
 
   server2_instance_enable = true
   server2_instance_type   = "c6a.2xlarge"
