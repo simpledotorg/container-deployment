@@ -1,0 +1,8 @@
+redis:
+  commonConfiguration: |-
+    maxmemory 3gb
+    maxmemory-policy allkeys-lru
+    maxmemory-samples 5
+  master:
+    persistence:
+      size: 16Gi
