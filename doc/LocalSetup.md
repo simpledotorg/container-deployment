@@ -7,7 +7,7 @@ If you've already set everything up, follow this to quickly have a working set u
 ### Quick links
 ArgoCD: https://localhost:8080/
 user: admin
-pass: PYHyRAH6zgN5wfw5
+pass: K8bIQR-U1WIEJ4xh
 
 Grafana: https://localhost:8081/
 user: admin
