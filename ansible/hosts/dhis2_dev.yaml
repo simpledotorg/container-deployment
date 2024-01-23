@@ -8,3 +8,5 @@ all:
           ansible_host: 139.59.26.54
         dhis2_staging1:
           ansible_host: 13.233.113.152
+        dhis2-nigeria-sandbox1:
+          ansible_host: dhis2-nigeria-sandbox1.simple.org
