@@ -82,6 +82,7 @@ module "eks" {
   cluster_addon_vpccni_version          = "v1.15.1-eksbuild.1"
   cluster_addon_awsebscsidriver_version = "v1.26.1-eksbuild.1"
 
+  db_instance_enable = true
   db_instance_type   = "t3.medium"
   db_instance_count  = 2
 
