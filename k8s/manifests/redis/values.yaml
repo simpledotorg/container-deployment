@@ -5,6 +5,13 @@ redis:
     tag: "7.0.5-debian-11-r7"
   auth:
     enabled: false
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "9121"
+        prometheus.io/scrape: "true"
   replica:
     replicaCount: 0
   master:

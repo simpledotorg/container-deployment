@@ -10,6 +10,7 @@ grafana:
        url: http://monitoring-prometheus-server
        access: proxy
        isDefault: true
+       uid: prometheus
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
@@ -39,6 +40,10 @@ grafana:
       simple-server-dashboard-k8s:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/monitoring/assets/grafana-dashboards/simple-server.json
         token: ''
+      redis-monitoring:
+        gnetId: 11835
+        revision: 1
+        datasource: Prometheus
 prometheus:
   alertmanager:
     extraSecretMounts:
