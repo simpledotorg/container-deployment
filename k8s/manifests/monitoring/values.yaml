@@ -68,6 +68,10 @@ grafana:
         gnetId: 9628
         revision: 1
         datasource: Prometheus
+      kube-state-metrics-v2:
+        gnetId: 13332
+        revision: 12
+        datasource: Prometheus
 prometheus:
   alertmanager:
     extraSecretMounts:
