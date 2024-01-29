@@ -39,25 +39,25 @@ grafana:
       simple-server-dashboard-k8s:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/simple-server.json
         token: ''
-      pgmonitor-pgbackrest: 
+      pgmonitor-pgbackrest:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/pgbackrest.json
         token: ''
-      pgmonitor-pod-details: 
+      pgmonitor-pod-details:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/pod_details.json
         token: ''
-      pgmonitor-postgresql-details: 
+      pgmonitor-postgresql-details:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/postgresql_details.json
         token: ''
-      pgmonitor-postgresql-overview: 
+      pgmonitor-postgresql-overview:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/postgresql_overview.json
         token: ''
-      pgmonitor-postgresql-service-health: 
+      pgmonitor-postgresql-service-health:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/postgresql_service_health.json
         token: ''
-      pgmonitor-prometheus-alerts: 
+      pgmonitor-prometheus-alerts:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/prometheus_alerts.json
         token: ''
-      pgmonitor-query-statistics: 
+      pgmonitor-query-statistics:
         url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/query_statistics.json
         token: ''
       redis-monitoring:
@@ -67,6 +67,10 @@ grafana:
       postgres-monitoring:
         gnetId: 9628
         revision: 1
+        datasource: Prometheus
+      kube-state-metrics-v2:
+        gnetId: 13332
+        revision: 12
         datasource: Prometheus
 prometheus:
   alertmanager:
