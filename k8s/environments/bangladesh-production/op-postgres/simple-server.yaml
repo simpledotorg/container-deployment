@@ -128,6 +128,7 @@ spec:
           work_mem: "20971kB"
           min_wal_size: "1GB"
           max_wal_size: "4GB"
+          hot_standby_feedback: "on"
   monitoring:
     pgmonitor:
       exporter:
