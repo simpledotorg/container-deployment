@@ -10,6 +10,15 @@ grafana:
        url: http://monitoring-prometheus-server
        access: proxy
        uid: prometheus
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      folder: /tmp/dashboards
+      folderAnnotation: grafana_folder
+      provider:
+        allowUiUpdates: true
+        foldersFromFilesStructure: true
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
@@ -22,57 +31,22 @@ grafana:
         editable: true
         options:
           path: /var/lib/grafana/dashboards/default
-  dashboards:
-    default:
-      node-exporter-full:
-        gnetId: 1860
-        revision: 33
-        datasource: Prometheus
-      prometheus-2-0-overview:
-        gnetId: 3662
-        revision: 2
-        datasource: Prometheus
-      nginx-ingress-controller:
-        gnetId: 9614
-        revision: 1
-        datasource: Prometheus
-      simple-server-dashboard-k8s:
-        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/simple-server.json
-        token: ''
-      pgmonitor-pgbackrest:
-        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/pgbackrest.json
-        token: ''
-      pgmonitor-pod-details:
-        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/pod_details.json
-        token: ''
-      pgmonitor-postgresql-details:
-        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/postgresql_details.json
-        token: ''
-      pgmonitor-postgresql-overview:
-        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/postgresql_overview.json
-        token: ''
-      pgmonitor-postgresql-service-health:
-        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/postgresql_service_health.json
-        token: ''
-      pgmonitor-prometheus-alerts:
-        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/prometheus_alerts.json
-        token: ''
-      pgmonitor-query-statistics:
-        url: https://raw.githubusercontent.com/simpledotorg/container-deployment/local-govind/assets/grafana-dashboards/pgMonitor/query_statistics.json
-        token: ''
-      redis-monitoring:
-        gnetId: 11835
-        revision: 1
-        datasource: Prometheus
-      postgres-monitoring:
-        gnetId: 9628
-        revision: 1
-        datasource: Prometheus
-      kube-state-metrics-v2:
-        gnetId: 13332
-        revision: 12
-        datasource: Prometheus
 prometheus:
+  server:
+    extraConfigmapMounts:
+      - name: monitoring-alerts
+        mountPath: /etc/config/alerts
+        configMap: monitoring-alerts
+        readOnly: true
+      - name: monitoring-rules
+        mountPath: /etc/config/rules
+        configMap: monitoring-rules
+        readOnly: true
+  serverFiles:
+    prometheus.yml:
+      rule_files:
+        - /etc/config/rules/*.yml
+        - /etc/config/alerts/*.yml
   alertmanager:
     extraSecretMounts:
       - name: secret-files
