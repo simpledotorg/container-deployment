@@ -89,3 +89,7 @@ prometheus:
           {{ end }}
         {{ end }}
         {{end}}
+  kube-state-metrics: 
+    prometheus:
+      monitor:
+        jobLabel: kube-state-metrics
