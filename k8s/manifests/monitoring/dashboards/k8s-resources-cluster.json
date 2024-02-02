@@ -283,7 +283,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "1 - sum(:node_memory_MemAvailable_bytes:sum{cluster=\"$cluster\"}) / sum(node_memory_MemTotal_bytes{job=\"node-exporter\",cluster=\"$cluster\"})",
+                     "expr": "1 - sum(:node_memory_MemAvailable_bytes:sum{cluster=\"$cluster\"}) / sum(node_memory_MemTotal_bytes{job=\"kubernetes-node-exporter\",cluster=\"$cluster\"})",
                      "format": "time_series",
                      "instant": true,
                      "refId": "A"
@@ -889,7 +889,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(container_memory_rss{job=\"cadvisor\", cluster=\"$cluster\", container!=\"\"}) by (namespace)",
+                     "expr": "sum(container_memory_rss{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", container!=\"\"}) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -1131,7 +1131,7 @@
                      "refId": "B"
                   },
                   {
-                     "expr": "sum(container_memory_rss{job=\"cadvisor\", cluster=\"$cluster\", container!=\"\"}) by (namespace)",
+                     "expr": "sum(container_memory_rss{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", container!=\"\"}) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
@@ -1145,7 +1145,7 @@
                      "refId": "D"
                   },
                   {
-                     "expr": "sum(container_memory_rss{job=\"cadvisor\", cluster=\"$cluster\", container!=\"\"}) by (namespace) / sum(namespace_memory:kube_pod_container_resource_requests:sum{cluster=\"$cluster\"}) by (namespace)",
+                     "expr": "sum(container_memory_rss{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", container!=\"\"}) by (namespace) / sum(namespace_memory:kube_pod_container_resource_requests:sum{cluster=\"$cluster\"}) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
@@ -1159,7 +1159,7 @@
                      "refId": "F"
                   },
                   {
-                     "expr": "sum(container_memory_rss{job=\"cadvisor\", cluster=\"$cluster\", container!=\"\"}) by (namespace) / sum(namespace_memory:kube_pod_container_resource_limits:sum{cluster=\"$cluster\"}) by (namespace)",
+                     "expr": "sum(container_memory_rss{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", container!=\"\"}) by (namespace) / sum(namespace_memory:kube_pod_container_resource_limits:sum{cluster=\"$cluster\"}) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
@@ -1374,42 +1374,42 @@
                ],
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_receive_bytes_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "A"
                   },
                   {
-                     "expr": "sum(irate(container_network_transmit_bytes_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "B"
                   },
                   {
-                     "expr": "sum(irate(container_network_receive_packets_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_receive_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "C"
                   },
                   {
-                     "expr": "sum(irate(container_network_transmit_packets_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_transmit_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "D"
                   },
                   {
-                     "expr": "sum(irate(container_network_receive_packets_dropped_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_receive_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "E"
                   },
                   {
-                     "expr": "sum(irate(container_network_transmit_packets_dropped_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_transmit_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
@@ -1500,7 +1500,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_receive_bytes_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -1577,7 +1577,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_transmit_bytes_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -1666,7 +1666,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(irate(container_network_receive_bytes_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "avg(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -1743,7 +1743,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(irate(container_network_transmit_bytes_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "avg(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -1832,7 +1832,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_receive_packets_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_receive_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -1909,7 +1909,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_transmit_packets_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_transmit_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -1998,7 +1998,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_receive_packets_dropped_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_receive_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -2075,7 +2075,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_transmit_packets_dropped_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
+                     "expr": "sum(irate(container_network_transmit_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -2165,7 +2165,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "ceil(sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval])))",
+                     "expr": "ceil(sum by(namespace) (rate(container_fs_reads_total{job=\"kubernetes-cadvisor\", container!=\"\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"kubernetes-cadvisor\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval])))",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -2242,7 +2242,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"kubernetes-cadvisor\", container!=\"\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"kubernetes-cadvisor\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
                      "format": "time_series",
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
@@ -2459,42 +2459,42 @@
                ],
                "targets": [
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_total{job=\"kubernetes-cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "A"
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_writes_total{job=\"cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
+                     "expr": "sum by(namespace) (rate(container_fs_writes_total{job=\"kubernetes-cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "B"
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_total{job=\"kubernetes-cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"kubernetes-cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "C"
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"kubernetes-cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "D"
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_writes_bytes_total{job=\"cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
+                     "expr": "sum by(namespace) (rate(container_fs_writes_bytes_total{job=\"kubernetes-cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
                      "refId": "E"
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"kubernetes-cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"kubernetes-cadvisor\", device=~\"(/dev.+)|mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace!=\"\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "legendFormat": "",
@@ -2550,7 +2550,8 @@
    "schemaVersion": 14,
    "style": "dark",
    "tags": [
-      "kubernetes-mixin"
+      "kubernetes",
+      "infrastucture"
    ],
    "templating": {
       "list": [
@@ -2581,7 +2582,7 @@
             "multi": false,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(up{job=\"cadvisor\"}, cluster)",
+            "query": "label_values(up{job=\"kubernetes-cadvisor\"}, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 1,
@@ -2623,7 +2624,7 @@
       ]
    },
    "timezone": "UTC",
-   "title": "Kubernetes / Compute Resources / Cluster",
+   "title": "Mixin / Compute Resources / Cluster",
    "uid": "efa86fd1d0c121a26444b636a3f509a8",
    "version": 0
 }

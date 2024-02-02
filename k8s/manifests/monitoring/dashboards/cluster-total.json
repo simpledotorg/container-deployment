@@ -1533,7 +1533,8 @@
    "schemaVersion": 18,
    "style": "dark",
    "tags": [
-      "kubernetes-mixin"
+      "kubernetes",
+      "infrastucture"
    ],
    "templating": {
       "list": [
@@ -1638,7 +1639,7 @@
             "multi": false,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(up{job=\"cadvisor\"}, cluster)",
+            "query": "label_values(up{job=\"kubernetes-cadvisor\"}, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -1680,7 +1681,7 @@
       ]
    },
    "timezone": "UTC",
-   "title": "Kubernetes / Networking / Cluster",
+   "title": "Mixin / Networking / Cluster",
    "uid": "ff635a025bcfea7bc3dd4f508990a3e9",
    "version": 0
 }

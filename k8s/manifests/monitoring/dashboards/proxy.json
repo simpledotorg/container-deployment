@@ -1006,7 +1006,8 @@
    "schemaVersion": 14,
    "style": "dark",
    "tags": [
-      "kubernetes-mixin"
+      "kubernetes",
+      "infrastucture"
    ],
    "templating": {
       "list": [
@@ -1097,7 +1098,7 @@
       ]
    },
    "timezone": "UTC",
-   "title": "Kubernetes / Proxy",
+   "title": "Mixin / Proxy",
    "uid": "632e265de029684c40b21cb76bca4f94",
    "version": 0
 }

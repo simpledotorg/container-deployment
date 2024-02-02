@@ -871,7 +871,8 @@
    "schemaVersion": 14,
    "style": "dark",
    "tags": [
-      "kubernetes-mixin"
+      "kubernetes",
+      "infrastucture"
    ],
    "templating": {
       "list": [
@@ -962,7 +963,7 @@
       ]
    },
    "timezone": "UTC",
-   "title": "Kubernetes / Scheduler",
+   "title": "Mixin / Scheduler",
    "uid": "2e6b6a3b4bddf1427b3a55aa1311c656",
    "version": 0
 }

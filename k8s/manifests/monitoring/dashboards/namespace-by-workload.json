@@ -1339,7 +1339,8 @@
    "schemaVersion": 18,
    "style": "dark",
    "tags": [
-      "kubernetes-mixin"
+      "kubernetes",
+      "infrastucture"
    ],
    "templating": {
       "list": [
@@ -1368,7 +1369,7 @@
             "multi": false,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(up{job=\"cadvisor\"}, cluster)",
+            "query": "label_values(up{job=\"kubernetes-cadvisor\"}, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -1542,7 +1543,7 @@
       ]
    },
    "timezone": "UTC",
-   "title": "Kubernetes / Networking / Namespace (Workload)",
+   "title": "Mixin / Networking / Namespace (Workload)",
    "uid": "bbb2a765a623ae38130206c7d94a160f",
    "version": 0
 }
