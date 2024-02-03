@@ -1,339 +1,339 @@
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-healthy-host-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:sri-lanka-production-k8s} < 13"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-healthy-host-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-healthy-host-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:sri-lanka-production-k8s} < 13"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-healthy-host-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-host-cpu-usage
-  namespace: datadog
-spec:
-  query: "max(last_5m):100 - avg:system.cpu.idle{kube_cluster_name:sri-lanka-production-k8s} by {host} > 90"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-host-cpu-usage"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-host-cpu-usage
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):100 - avg:system.cpu.idle{kube_cluster_name:sri-lanka-production-k8s} by {host} > 90"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-host-cpu-usage"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-host-memory-usage
-  namespace: datadog
-spec:
-  query: "max(last_5m):avg:kubernetes.memory.usage_pct{kube_cluster_name:sri-lanka-production-k8s} by {host} > 0.9"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-host-memory-usage"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-host-memory-usage
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):avg:kubernetes.memory.usage_pct{kube_cluster_name:sri-lanka-production-k8s} by {host} > 0.9"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-host-memory-usage"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-host-disk-usage
-  namespace: datadog
-spec:
-  query: "max(last_5m):(avg:system.disk.used{kube_cluster_name:sri-lanka-production-k8s} by {host} * 100) / avg:system.disk.total{kube_cluster_name:sri-lanka-production-k8s} by {host} > 90"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-host-disk-usage"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-host-disk-usage
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):(avg:system.disk.used{kube_cluster_name:sri-lanka-production-k8s} by {host} * 100) / avg:system.disk.total{kube_cluster_name:sri-lanka-production-k8s} by {host} > 90"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-host-disk-usage"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-simple-server-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_stateful_set:simple-server} < 2"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-simple-server-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-simple-server-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_stateful_set:simple-server} < 2"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-simple-server-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-simple-cron-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:simple-cron} < 1"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-simple-cron-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-simple-cron-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:simple-cron} < 1"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-simple-cron-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-simple-worker-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:simple-worker} < 1"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-simple-worker-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-simple-worker-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:simple-worker} < 1"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-simple-worker-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-metabase-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:metabase} < 1"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-metabase-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-metabase-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:metabase} < 1"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-metabase-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-cache-redis-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_instance:cache-redis} < 2"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-cache-redis-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-cache-redis-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_instance:cache-redis} < 2"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-cache-redis-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-worker-redis-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_instance:worker-redis} < 2"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-worker-redis-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-worker-redis-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_instance:worker-redis} < 2"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-worker-redis-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-simple-postgres-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,service:postgrescluster-simple} < 2"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-simple-postgres-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-simple-postgres-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,service:postgrescluster-simple} < 2"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-simple-postgres-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-simple-postgres-repo-host-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_stateful_set:simple-repo-host} < 1"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-simple-postgres-repo-host-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-simple-postgres-repo-host-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_stateful_set:simple-repo-host} < 1"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-simple-postgres-repo-host-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-cert-manager-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:cert-manager} < 1"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-cert-manager-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-cert-manager-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:cert-manager} < 1"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-cert-manager-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-ingress-nginx-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:ingress-nginx} < 13"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-ingress-nginx-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-ingress-nginx-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:ingress-nginx} < 13"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-ingress-nginx-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-sealed-secrets-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:sealed-secrets} < 1"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-sealed-secrets-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-sealed-secrets-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:sealed-secrets} < 1"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-sealed-secrets-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-argocd-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_namespace:argocd} < 7"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-argocd-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-argocd-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_namespace:argocd} < 7"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-argocd-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-postgres-operator-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_namespace:postgres-operator} < 1"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-postgres-operator-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-postgres-operator-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_namespace:postgres-operator} < 1"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-postgres-operator-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
 
----
+# ---
 
-apiVersion: datadoghq.com/v1alpha1
-kind: DatadogMonitor
-metadata:
-  name: sri-lanka-production-k8s-datadog-operator-running-pod-count
-  namespace: datadog
-spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:datadog-operator} < 1"
-  type: "query alert"
-  name: "sri-lanka-production-k8s-datadog-operator-running-pod-count"
-  message: "@slack-alerts"
-  options:
-    notifyNoData: true
-    noDataTimeframe: 720
-  tags:
-    - "env:sri-lanka-production-k8s"
-    - "generated:kubernetes"
+# apiVersion: datadoghq.com/v1alpha1
+# kind: DatadogMonitor
+# metadata:
+#   name: sri-lanka-production-k8s-datadog-operator-running-pod-count
+#   namespace: datadog
+# spec:
+#   query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:datadog-operator} < 1"
+#   type: "query alert"
+#   name: "sri-lanka-production-k8s-datadog-operator-running-pod-count"
+#   message: "@slack-alerts"
+#   options:
+#     notifyNoData: true
+#     noDataTimeframe: 720
+#   tags:
+#     - "env:sri-lanka-production-k8s"
+#     - "generated:kubernetes"
