@@ -15,8 +15,8 @@ spec:
     apm:
       enabled: true
     log:
-      enabled: true
-      logsConfigContainerCollectAll: true
+      enabled: false
+      logsConfigContainerCollectAll: false
     env:
       - name: DD_ENV
         value: "sandbox-k8s"
@@ -31,5 +31,5 @@ spec:
   clusterName: "sandbox-k8s"
   features:
     prometheusScrape:
-      enabled: true
-      serviceEndpoints: true
+      enabled: false
+      serviceEndpoints: false

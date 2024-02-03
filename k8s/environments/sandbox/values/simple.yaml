@@ -32,8 +32,12 @@ server:
   }
 worker:
   enabled: true
+  log:
+    storage: 20Gi
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sandbox-k8s"]}]'
   }
 migration:
   enabled: true
+workerCphc:
+  enabled: false

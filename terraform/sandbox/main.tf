@@ -64,34 +64,50 @@ resource "aws_key_pair" "simple_aws_key" {
 module "eks" {
   source = "../modules/simple_eks"
 
-  aws_profile   = "sandbox-k8s"
-  subnets       = module.vpc.private_subnets
-  vpc_id        = module.vpc.vpc_id
-  cluster_name  = local.cluster_name
-  tags          = local.tags
-  key_pair_name = aws_key_pair.simple_aws_key.key_name
+  aws_profile     = "sandbox-k8s"
+  subnets         = module.vpc.private_subnets
+  vpc_id          = module.vpc.vpc_id
+  cluster_name    = local.cluster_name
+  cluster_version = "1.28"
+  tags            = local.tags
+  key_pair_name   = aws_key_pair.simple_aws_key.key_name
 
   nodepool_subnet_ids = [module.vpc.private_subnets[1]] # Use single zone avoid volume mount issues during node replacement
 
-  db_instance_type  = "r5.xlarge"
-  db_instance_count = 1
+  cluster_addon_coredns_version         = "v1.10.1-eksbuild.2"
+  cluster_addon_kubeproxy_version       = "v1.28.1-eksbuild.1"
+  cluster_addon_vpccni_version          = "v1.11.4-eksbuild.1"
+  cluster_addon_awsebscsidriver_version = "v1.26.0-eksbuild.1"
 
-  db_backup_instance_type = "t3.small"
+  db_instance_enable = true
+  db_instance_type   = "r5.xlarge"
+  db_instance_count  = 1
 
-  server_instance_type  = "t3.2xlarge"
-  server_instance_count = 1
+  db_backup_instance_enable = true
+  db_backup_instance_type   = "t3.small"
+  db_backup_instance_count  = 1
 
-  worker_instance_type  = "t3.2xlarge"
-  worker_instance_count = 1
+  server_instance_enable = true
+  server_instance_type   = "t3.2xlarge"
+  server_instance_count  = 1
 
-  metabase_instance_type  = "t3.small"
-  metabase_instance_count = 1
+  worker_instance_enable = true
+  worker_instance_type   = "t3.2xlarge"
+  worker_instance_count  = 1
 
-  cache_redis_instance_type  = "t3.small"
-  worker_redis_instance_type = "t3.small"
+  metabase_instance_enable = true
+  metabase_instance_type   = "t3.small"
+  metabase_instance_count  = 1
 
-  default_nodepool_instance_type  = "t3.medium"
-  default_nodepool_instance_count = 3
+  cache_redis_instance_enable = true
+  cache_redis_instance_type   = "t3.small"
+
+  worker_redis_instance_enable = true
+  worker_redis_instance_type   = "t3.large"
+
+  default_nodepool_instance_enable = true
+  default_nodepool_instance_type   = "t3.medium"
+  default_nodepool_instance_count  = 3
   default_nodepool_instance_extra_labels = {
     "role-ingress" = "true"
   }
@@ -101,6 +117,7 @@ module "db_backup_s3_bucket" {
   source      = "../modules/simple_s3"
   bucket_name = local.db_backup_s3_bucket_name
   tags        = local.tags
+  allowed_ips = module.vpc.nat_public_ips
 }
 
 # Log archival bucket and user is reused from old environment

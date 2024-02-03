@@ -12,3 +12,9 @@ tmp
 *.tfstate.backup
 *.tfvars
 terraform/eks-module-test/*
+argocd_password_setup_credentials.txt
+argocd_password_setup_users.txt
+.idea
+k8s/manifests/*/charts/*.tgz
+k8s/manifests/monitoring/vendor/
+

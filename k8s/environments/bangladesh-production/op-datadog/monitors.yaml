@@ -308,7 +308,7 @@ metadata:
   name: bangladesh-production-k8s-postgres-operator-running-pod-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bangladesh-production-k8s,kube_namespace:postgres-operator} < 2"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:bangladesh-production-k8s,kube_namespace:postgres-operator} < 1"
   type: "query alert"
   name: "bangladesh-production-k8s-postgres-operator-running-pod-count"
   message: "@slack-alerts"
@@ -414,4 +414,97 @@ spec:
     - "env:bangladesh-production-k8s"
     - "generated:kubernetes"
 
-# TODO: Add alert for pg repo host disk space
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: bangladesh-production-k8s-worker-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:simple-worker-*} by {pod_name} > 7516192768" # 7/10 GiB
+  type: "query alert"
+  name: "bangladesh-production-k8s-worker-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:bangladesh-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: bangladesh-production-k8s-server-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:simple-server*} by {pod_name} > 7516192768" # 7/10 GiB
+  type: "query alert"
+  name: "bangladesh-production-k8s-server-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:bangladesh-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: bangladesh-production-k8s-cron-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:simple-cron*} by {pod_name} > 7516192768" # 7/10 GiB
+  type: "query alert"
+  name: "bangladesh-production-k8s-cron-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:bangladesh-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: bangladesh-production-k8s-cache-redis-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:cache-redis*} by {pod_name} > 6442450944" # 6/8 GiB
+  type: "query alert"
+  name: "bangladesh-production-k8s-cache-redis-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:bangladesh-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: bangladesh-production-k8s-worker-redis-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:worker-redis*} by {pod_name} > 6442450944" # 6/8 GiB
+  type: "query alert"
+  name: "bangladesh-production-k8s-worker-redis-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:bangladesh-production-k8s"
+    - "generated:kubernetes"

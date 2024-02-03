@@ -20,6 +20,8 @@ all:
           ansible_host: 192.168.1.204
           k3s_node_labels:
             - "role-ingress=true"
+          ssh_entry_host: true
+          ansible_port: 40
     k3s_worker_nodes:
       hosts:
         moh-hrms-simple-01:

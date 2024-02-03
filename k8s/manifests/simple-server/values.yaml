@@ -21,7 +21,9 @@ cron:
   resources: {}
   podAnnotations: {}
   log:
-    storage: 1Gi # When storage class is local-path, size will have no effect
+    storage: 1Gi
+  appLog:
+    storage: 1Gi
 server:
   name: "simple-server"
   nodeSelector: {}
@@ -32,7 +34,7 @@ server:
   resources: {}
   podAnnotations: {}
   log:
-    storage: 1Gi # When storage class is local-path, size will have no effect
+    storage: 1Gi
   podSecurityContext: {
     fsGroup: 9999
   }
@@ -46,9 +48,28 @@ worker:
   resources: {}
   podAnnotations: {}
   log:
-    storage: 1Gi # When storage class is local-path, size will have no effect
+    storage: 1Gi
   podSecurityContext: {
     fsGroup: 9999
+  }
+workerCphc:
+  name: "simple-worker-cphc"
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  enabled: false
+  replicaCount: 1
+  resources: {}
+  podAnnotations: {}
+  log:
+    storage: 1Gi
+  podSecurityContext: {
+    fsGroup: 9999
+  }
+  containerSecurityContext: {
+    capabilities: {
+      add: ["NET_ADMIN"]
+    }
   }
 migration:
   name: "migration-job"

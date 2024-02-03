@@ -1,6 +1,7 @@
 metabase:
   image:
     tag: v0.47.6
+    tag: v0.47.10
   ingress:
     enabled: true
     annotations:

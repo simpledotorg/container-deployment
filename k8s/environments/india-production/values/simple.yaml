@@ -1,0 +1,55 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+  hosts:
+    - host: api.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api.simple.org
+    secretName: api.simple.org-tls
+  - hosts:
+    - dashboard.simple.org
+    secretName: dashboard.simple.org-tls
+cron:
+  enabled: true
+  log:
+    storage: 10Gi
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:india-production-k8s"]}]'
+  }
+server:
+  replicaCount: 6
+  log:
+    storage: 10Gi
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:india-production-k8s"]}]'
+  }
+worker:
+  enabled: true
+  log:
+    storage: 100Gi
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:india-production-k8s"]}]'
+  }
+migration:
+  enabled: true
+workerCphc:
+  enabled: false
+  log:
+    storage: 10Gi
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker-cphc","tags": ["env:india-production-k8s"]}]'
+  }

@@ -1,0 +1,453 @@
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-healthy-host-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:india-production-k8s} < 7"
+  type: "query alert"
+  name: "india-production-k8s-healthy-host-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30 
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-host-cpu-usage
+  namespace: datadog
+spec:
+  query: "avg(last_30m):100 - avg:system.cpu.idle{kube_cluster_name:india-production-k8s} by {host} > 90"
+  type: "query alert"
+  name: "india-production-k8s-host-cpu-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 60
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-host-memory-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):avg:kubernetes.memory.usage_pct{kube_cluster_name:india-production-k8s} by {host} > 0.9"
+  type: "query alert"
+  name: "india-production-k8s-host-memory-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-host-disk-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):(avg:system.disk.used{kube_cluster_name:india-production-k8s} by {host} * 100) / avg:system.disk.total{kube_cluster_name:india-production-k8s} by {host} > 90"
+  type: "query alert"
+  name: "india-production-k8s-host-disk-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-simple-server-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_stateful_set:simple-server} < 2"
+  type: "query alert"
+  name: "india-production-k8s-simple-server-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-simple-cron-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_app_name:simple-cron} < 1"
+  type: "query alert"
+  name: "india-production-k8s-simple-cron-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-simple-worker-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_app_name:simple-worker} < 1"
+  type: "query alert"
+  name: "india-production-k8s-simple-worker-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-metabase-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_app_name:metabase} < 1"
+  type: "query alert"
+  name: "india-production-k8s-metabase-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-cache-redis-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_app_instance:cache-redis} < 1"
+  type: "query alert"
+  name: "india-production-k8s-cache-redis-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-simple-postgres-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,service:postgrescluster-simple} < 1"
+  type: "query alert"
+  name: "india-production-k8s-simple-postgres-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-cert-manager-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_app_name:cert-manager} < 1"
+  type: "query alert"
+  name: "india-production-k8s-cert-manager-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-ingress-nginx-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_app_name:ingress-nginx} < 2"
+  type: "query alert"
+  name: "india-production-k8s-ingress-nginx-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-sealed-secrets-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_app_name:sealed-secrets} < 1"
+  type: "query alert"
+  name: "india-production-k8s-sealed-secrets-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-argocd-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_namespace:argocd} < 7"
+  type: "query alert"
+  name: "india-production-k8s-argocd-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-postgres-operator-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_namespace:postgres-operator} < 1"
+  type: "query alert"
+  name: "india-production-k8s-postgres-operator-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-datadog-operator-running-pod-count
+  namespace: datadog
+spec:
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:india-production-k8s,kube_app_name:datadog-operator} < 1"
+  type: "query alert"
+  name: "india-production-k8s-datadog-operator-running-pod-count"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-db-full-backup-failed
+  namespace: datadog
+spec:
+  query: "avg(last_5m):max:crunchy_data.ccp_backrest_last_full_backup_time_since_completion_seconds{env:india-production-k8s} / (60 * 60 * 24) > 8"
+  type: "query alert"
+  name: "india-production-k8s-db-full-backup-failed"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-db-diff-backup-failed
+  namespace: datadog
+spec:
+  query: "avg(last_5m):max:crunchy_data.ccp_backrest_last_diff_backup_time_since_completion_seconds{env:india-production-k8s} / (60 * 60) > 25"
+  type: "query alert"
+  name: "india-production-k8s-db-diff-backup-failed"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-db-low-data-disk-space
+  namespace: datadog
+spec:
+  query: "avg(last_5m):max:crunchy_data.ccp_nodemx_data_disk_available_bytes{env:india-production-k8s} by {host} < 25"
+  type: "query alert"
+  name: "india-production-k8s-db-low-data-disk-space"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 30
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-high-5xx-rate
+  namespace: datadog
+spec:
+  query: "sum(last_5m):sum:nginx_ingress.controller.requests{env:india-production-k8s,status:5*}.as_count() > 100"
+  type: "query alert"
+  name: "india-production-k8s-high-5xx-rate"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-worker-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:simple-worker-*} by {pod_name} > 91268055040" # 85/100 GiB
+  type: "query alert"
+  name: "india-production-k8s-worker-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-server-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:simple-server*} by {pod_name} > 7516192768" # 7/10 GiB
+  type: "query alert"
+  name: "india-production-k8s-server-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-cron-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:simple-cron*} by {pod_name} > 7516192768" # 7/10 GiB
+  type: "query alert"
+  name: "india-production-k8s-cron-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"
+
+---
+
+apiVersion: datadoghq.com/v1alpha1
+kind: DatadogMonitor
+metadata:
+  name: india-production-k8s-cache-redis-log-volume-usage
+  namespace: datadog
+spec:
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:cache-redis*} by {pod_name} > 30064771072" # 28/32 GiB
+  type: "query alert"
+  name: "india-production-k8s-cache-redis-log-volume-usage"
+  message: "@slack-alerts"
+  options:
+    notifyNoData: true
+    noDataTimeframe: 10
+  tags:
+    - "env:india-production-k8s"
+    - "generated:kubernetes"

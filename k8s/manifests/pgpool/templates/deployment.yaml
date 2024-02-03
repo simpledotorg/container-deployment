@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgpool
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: pgpool
+  template:
+    metadata:
+      labels:
+        app: pgpool
+    spec:
+      containers:
+      - name: pgpool
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        readinessProbe:
+          exec:
+            command:
+              - bash
+              - -ec
+              - PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USERNAME} -d postgres -h localhost -p 9999 -tA -c "SELECT 1" >/dev/null
+          initialDelaySeconds: 15
+          failureThreshold: 3
+          successThreshold: 1
+          periodSeconds: 10
+          timeoutSeconds: 5
+        livenessProbe:
+          exec:
+            command:
+              - bash
+              - -ec
+              - PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USERNAME} -d postgres -h localhost -p 9999 -tA -c "SELECT 1" >/dev/null
+          initialDelaySeconds: 15
+          failureThreshold: 3
+          successThreshold: 1
+          periodSeconds: 10
+          timeoutSeconds: 5
+        env:
+        - name: PGPOOL_PARAMS_BACKEND_HOSTNAME0
+          value: "simple-primary"
+        - name: PGPOOL_PARAMS_BACKEND_PORT0
+          value: "5432"
+        - name: PGPOOL_PARAMS_BACKEND_WEIGHT0
+          value: "1"
+        - name: PGPOOL_PARAMS_BACKEND_FLAG0
+          value: "ALWAYS_PRIMARY|DISALLOW_TO_FAILOVER"
+        - name: PGPOOL_PARAMS_BACKEND_HOSTNAME1
+          value: "simple-replicas"
+        - name: PGPOOL_PARAMS_BACKEND_PORT1
+          value: "5432"
+        - name: PGPOOL_PARAMS_BACKEND_WEIGHT1
+          value: "1"
+        - name: PGPOOL_PARAMS_BACKEND_FLAG1
+          value: "DISALLOW_TO_FAILOVER"
+        - name: PGPOOL_PARAMS_FAILOVER_ON_BACKEND_ERROR
+          value: "off"
+        - name: PGPOOL_ENABLE_POOL_PASSWD
+          value: "false"
+        - name: PGPOOL_PARAMS_STATEMENT_LEVEL_LOAD_BALANCE
+          value: "on"
+        - name: PGPOOL_PARAMS_NUM_INIT_CHILDREN
+          value: "100"
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: simple-pguser-simple
+              key: user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: simple-pguser-simple
+              key: password
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

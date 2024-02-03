@@ -14,3 +14,13 @@ variable "allowed_actions" {
 variable "tags" {
   type = map(string)
 }
+
+variable "allowed_ips" {
+  type    = list(string)
+  default = []
+}
+
+variable "allowed_vpcs" {
+  type    = list(string)
+  default = []
+}

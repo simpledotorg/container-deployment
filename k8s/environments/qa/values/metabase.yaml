@@ -1,4 +1,6 @@
 metabase:
+  image:
+    tag: v0.47.10
   ingress:
     enabled: true
     className: "nginx"

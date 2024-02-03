@@ -128,7 +128,8 @@ spec:
           work_mem: "20971kB"
           min_wal_size: "1GB"
           max_wal_size: "4GB"
+          hot_standby_feedback: "on"
   monitoring:
     pgmonitor:
       exporter:
-        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.2.0-0
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.5.0-0
