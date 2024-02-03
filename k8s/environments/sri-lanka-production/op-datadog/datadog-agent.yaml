@@ -6,6 +6,8 @@ metadata:
 spec:
   global:
     clusterName: "sri-lanka-production-k8s"
+    tags: 
+     - env:sri-lanka-production-k8s
     credentials:
       apiSecret:
         secretName: datadog
