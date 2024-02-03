@@ -4,7 +4,7 @@ metadata:
   name: sri-lanka-production-k8s-healthy-host-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:sri-lanka-production-k8s} < 3"
+  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:sri-lanka-production-k8s} < 13"
   type: "query alert"
   name: "sri-lanka-production-k8s-healthy-host-count"
   message: "@slack-alerts"
@@ -251,7 +251,7 @@ metadata:
   name: sri-lanka-production-k8s-ingress-nginx-running-pod-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:ingress-nginx} < 13"
+  query: "max(last_5m):sum:kubernetes.pods.running{cluster_name:sri-lanka-production-k8s,kube_app_name:ingress-nginx} < 3"
   type: "query alert"
   name: "sri-lanka-production-k8s-ingress-nginx-running-pod-count"
   message: "@slack-alerts"
