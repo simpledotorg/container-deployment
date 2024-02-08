@@ -4,6 +4,8 @@ metabase:
   config:
     database:
       type: postgres
+    security:
+     sessionAge: 1440
   secrets:
     existingSecret:
       name: simple-pguser-metabase

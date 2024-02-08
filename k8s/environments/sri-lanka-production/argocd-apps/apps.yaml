@@ -95,6 +95,8 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - values.affinity.yaml
+        - ../../environments/sri-lanka-production/values/ingress.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -144,7 +146,7 @@ spec:
   source:
     path: k8s/manifests/datadog-operator
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: update-dd-op
     helm:
       valueFiles:
         - values.yaml
@@ -160,28 +162,28 @@ spec:
 ---
 
 # Datadog agent
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: datadog
-# spec:
-#   destination:
-#     name: ''
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/environments/sri-lanka-production/op-datadog
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: master
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: datadog
+spec:
+  destination:
+    name: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sri-lanka-production/op-datadog
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
-# ---
+---
 
 # Reloader
 apiVersion: argoproj.io/v1alpha1
