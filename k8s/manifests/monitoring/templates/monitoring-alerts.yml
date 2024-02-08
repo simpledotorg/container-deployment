@@ -4,4 +4,4 @@ metadata:
   name: monitoring-alerts
 data:
   alerting-rules.yml: |
-{{ .Files.Get "alerting-rules.yml" | indent 4 }}
+{{ .Files.Get "alerts.yaml" | indent 4 }}

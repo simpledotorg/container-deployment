@@ -1,5 +1,5 @@
 {{ $root := . }}
-{{- range $path, $_ := .Files.Glob "dashboards/**.json" }}
+{{- range $path, $_ := .Files.Glob "dashboards_out/**.json" }}
 ---
 apiVersion: v1
 kind: ConfigMap
