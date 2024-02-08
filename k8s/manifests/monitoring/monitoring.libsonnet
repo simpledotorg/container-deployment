@@ -1,6 +1,7 @@
+local postgres = import "postgres_mixin/mixin.libsonnet";
 local kubernetes = import "kubernetes-mixin/mixin.libsonnet";
 
-kubernetes {
+(kubernetes {
   _config+:: {
     kubeStateMetricsSelector: 'job="kube-state-metrics"',
     cadvisorSelector: 'job="kubernetes-cadvisor"',
@@ -12,5 +13,4 @@ kubernetes {
       dashboardTags: ['kubernetes', 'infrastucture'],
     },
   },
-}
-
+}) + postgres

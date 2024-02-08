@@ -30,6 +30,16 @@
       },
       "version": "bf3acbdd48da8d246f35d198bfe79dd7ec59824d",
       "sum": "bT3Zz4l1K/MrN6K0C/iZSjCIsbmK5Qcc0JexalwSU9g="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/prometheus-community/postgres_exporter.git",
+          "subdir": "postgres_mixin"
+        }
+      },
+      "version": "9cfa1321158af0eb9f6b11d06eebd064e57c697b",
+      "sum": "zZwB0tKv706MyYchrDRgdIrZNb6V41ZdKiWCDjWJU5s="
     }
   ],
   "legacyImports": false
