@@ -6,7 +6,7 @@ kubernetes {
     cadvisorSelector: 'job="kubernetes-cadvisor"',
     nodeExporterSelector: 'job="kubernetes-node-exporter"',
     kubeletSelector: 'job="kubernetes-kubelet"',
-    kubeApiserverSelector: 'job="kubernetes-apiservers"'
+    kubeApiserverSelector: 'job="kubernetes-apiservers"',
     grafanaK8s+:: {
       dashboardNamePrefix: 'Mixin / ',
       dashboardTags: ['kubernetes', 'infrastucture'],
