@@ -452,3 +452,27 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
+
+# Alphasms prometheus exporter
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alphasms-exporter
+spec:
+  destination:
+    namespace: alphasms-exporter
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: charts/alphasms-exporter
+    repoURL: 'https://github.com/simpledotorg/alphasms_exporter.git'
+    targetRevision: dev
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
