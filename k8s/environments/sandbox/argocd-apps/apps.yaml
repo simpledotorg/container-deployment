@@ -467,7 +467,7 @@ spec:
   source:
     path: charts/alphasms-exporter
     repoURL: 'https://github.com/simpledotorg/alphasms_exporter.git'
-    targetRevision: dev
+    targetRevision: main
   project: default
   syncPolicy:
     syncOptions:
