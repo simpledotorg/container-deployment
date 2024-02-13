@@ -210,3 +210,30 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
+
+# Keycloak
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak
+spec:
+  destination:
+    namespace: sso
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/monitoring
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: keycloak
+    helm:
+      valueFiles:
+        - ../../environments/systems-production/values/keycloak.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

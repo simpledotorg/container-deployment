@@ -1,0 +1,7 @@
+keycloak:
+  production: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    tls: true
+    hostname: sso.simple.org
