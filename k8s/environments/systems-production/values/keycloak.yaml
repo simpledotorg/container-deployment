@@ -5,4 +5,7 @@ keycloak:
     ingressClassName: nginx
     tls: true
     hostname: sso.simple.org
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   proxy: edge
