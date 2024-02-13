@@ -220,10 +220,10 @@ metadata:
   name: keycloak
 spec:
   destination:
-    namespace: sso
+    namespace: sso-v2
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/manifests/monitoring
+    path: k8s/manifests/keycloak
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: keycloak
     helm:
