@@ -220,7 +220,7 @@ metadata:
   name: keycloak
 spec:
   destination:
-    namespace: sso-v2
+    namespace: sso
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/keycloak
