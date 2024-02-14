@@ -1,0 +1,8 @@
+---
+
+all:
+  children:
+    sri_lanka_production_jumpbox:
+      hosts:
+        jumpbox-01:
+          ansible_host: 3.7.92.234

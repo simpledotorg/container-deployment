@@ -24,6 +24,10 @@ promotions:
     pipeline_file: update_dhis2_dev_ssh_keys.yml
     auto_promote:
       when: branch = 'master'
+  - name: Sri Lanka production jumpbox - Update SSH keys
+    pipeline_file: update_sri_lanka_production_jumpbox_keys.yml
+    auto_promote:
+      when: branch = 'master'
   - name: Build push simple server base image
     pipeline_file: docker.yml
     auto_promote:
