@@ -1,0 +1,13 @@
+kube-prometheus-stack:
+  grafana:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      hosts:
+        - grafana-kps-sandbox.simple.org
+      tls:
+        - secretName: grafana-kps-sandbox.simple.org-tls
+          hosts:
+            - grafana-kps-sandbox.simple.org
