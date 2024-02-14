@@ -11,3 +11,5 @@ kube-prometheus-stack:
         - secretName: grafana-kps-sandbox.simple.org-tls
           hosts:
             - grafana-kps-sandbox.simple.org
+    admin:
+      existingSecret: "grafana-secrets"
