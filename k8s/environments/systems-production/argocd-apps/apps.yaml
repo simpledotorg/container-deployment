@@ -225,7 +225,7 @@ spec:
   source:
     path: k8s/manifests/keycloak
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: keycloak
+    targetRevision: master
     helm:
       valueFiles:
         - ../../environments/systems-production/values/keycloak.yaml
