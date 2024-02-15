@@ -13,6 +13,8 @@ kube-prometheus-stack:
             - grafana-kps-sandbox.simple.org
     admin:
       existingSecret: "grafana-secrets"
+    persistence:
+      enabled: true
   alertmanager:
     ingress:
       className: nginx
