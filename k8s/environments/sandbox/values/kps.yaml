@@ -46,3 +46,14 @@ kube-prometheus-stack:
         - secretName: prometheus-kps-sandbox.simple.org-tls
           hosts:
             - prometheus-kps-sandbox.simple.org
+    prometheusSpec:
+      retention: 10d
+      retentionSize: "90GB"
+      logLevel: debug
+      storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 100Gi
