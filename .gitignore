@@ -17,4 +17,5 @@ argocd_password_setup_users.txt
 .idea
 k8s/manifests/*/charts/*.tgz
 k8s/manifests/monitoring/vendor/
+k8s/manifests/kube-prometheus-stack/vendor/
 
