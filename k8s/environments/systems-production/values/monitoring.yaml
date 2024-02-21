@@ -77,6 +77,8 @@ grafana:
     enabled: true
     size: 50Gi
   grafana.ini:
+    server:
+      root_url: "https://grafana.simple.org/"
     auth.saml:
       enabled: true
       auto_login: false
