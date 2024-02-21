@@ -8,7 +8,7 @@ metadata:
     prometheus: k8s
     role: alert-rules
   name: kube-prometheus-rules
-  namespace: monitoring
+  namespace: kps
 spec:
   groups:
   - name: general.rules

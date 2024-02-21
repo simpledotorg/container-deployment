@@ -24,4 +24,4 @@ metadata:
     app.kubernetes.io/part-of: kube-prometheus
     app.kubernetes.io/version: 10.3.3
   name: grafana-dashboards
-  namespace: monitoring
+  namespace: kps

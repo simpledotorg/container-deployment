@@ -11,7 +11,7 @@ local kp =
   {
     values+:: {
       common+: {
-        namespace: 'monitoring',
+        namespace: 'kps',
       },
     },
   };
