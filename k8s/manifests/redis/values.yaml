@@ -9,9 +9,7 @@ redis:
     enabled: true
     service:
       annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: "9121"
-        prometheus.io/scrape: "true"
+        prometheus.io/app: "redis"
   replica:
     replicaCount: 0
   master:
