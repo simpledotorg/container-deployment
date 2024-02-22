@@ -1,0 +1,6 @@
+prometheus:
+  prometheusSpec:
+    podMonitorSelector:
+      matchLabels:
+        prometheus.io/scrape: true
+
