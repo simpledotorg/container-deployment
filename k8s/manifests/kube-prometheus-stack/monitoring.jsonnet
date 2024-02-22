@@ -1,3 +1,11 @@
+local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
+
+local postgres = addMixin({
+  name: 'postgres',
+  namespace: 'kps',
+  mixin: import 'postgres_mixin/mixin.libsonnet',
+});
+
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   // Uncomment the following imports to enable its patches
@@ -13,6 +21,9 @@ local kp =
       common+: {
         namespace: 'kps',
       },
+       grafana+:: {
+         dashboards+:: postgres.grafanaDashboards
+       },
     },
   };
 
@@ -34,4 +45,5 @@ local kp =
 { ['kubernetes-' + name]: kp.kubernetesControlPlane[name] for name in std.objectFields(kp.kubernetesControlPlane) }
 { ['node-exporter-' + name]: kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter) } +
 { ['prometheus-' + name]: kp.prometheus[name] for name in std.objectFields(kp.prometheus) } +
-{ ['prometheus-adapter-' + name]: kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter) }
+{ ['prometheus-adapter-' + name]: kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter) } +
+{ 'postgres-mixin-prometheus-rules': postgres.prometheusRules }

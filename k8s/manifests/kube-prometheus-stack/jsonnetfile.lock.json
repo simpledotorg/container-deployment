@@ -124,6 +124,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/prometheus-community/postgres_exporter.git",
+          "subdir": "postgres_mixin"
+        }
+      },
+      "version": "838f09c97f35aaabace3d04c170bd449bda0099e",
+      "sum": "zZwB0tKv706MyYchrDRgdIrZNb6V41ZdKiWCDjWJU5s="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/prometheus-operator/kube-prometheus.git",
           "subdir": "jsonnet/kube-prometheus"
         }
