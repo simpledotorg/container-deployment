@@ -26,6 +26,4 @@ ingress-nginx:
             "instances": [{"prometheus_url": "http://%%host%%:10254/metrics"}]
           }
         }
-      prometheus.io/scrape: "true"
-      prometheus.io/port: "10254"
-      prometheus.io/scheme: http
+      prometheus.io/app: ingress

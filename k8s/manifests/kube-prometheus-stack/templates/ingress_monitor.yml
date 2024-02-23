@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: ingress-monitor
+  labels:
+    prometheus.io/scrape: true
+spec:
+  selector:
+    matchLabels:
+      prometheus.io/app: ingress
+  podMetricsEndpoints:
+  - port: "10254"
