@@ -67,6 +67,9 @@ spec:
         - mountPath: /tmp
           name: tmp-plugins
           readOnly: false
+        - mountPath: /grafana-dashboard-definitions/0/Postgres
+          name: grafana-dashboard-Postgres
+          readOnly: false
         - mountPath: /grafana-dashboard-definitions/0/alertmanager-overview
           name: grafana-dashboard-alertmanager-overview
           readOnly: false
@@ -130,9 +133,6 @@ spec:
         - mountPath: /grafana-dashboard-definitions/0/pod-total
           name: grafana-dashboard-pod-total
           readOnly: false
-        - mountPath: /grafana-dashboard-definitions/0/postgres-overview
-          name: grafana-dashboard-postgres-overview
-          readOnly: false
         - mountPath: /grafana-dashboard-definitions/0/prometheus-remote-write
           name: grafana-dashboard-prometheus-remote-write
           readOnly: false
@@ -170,6 +170,9 @@ spec:
       - emptyDir:
           medium: Memory
         name: tmp-plugins
+      - configMap:
+          name: grafana-dashboard-Postgres
+        name: grafana-dashboard-Postgres
       - configMap:
           name: grafana-dashboard-alertmanager-overview
         name: grafana-dashboard-alertmanager-overview
@@ -233,9 +236,6 @@ spec:
       - configMap:
           name: grafana-dashboard-pod-total
         name: grafana-dashboard-pod-total
-      - configMap:
-          name: grafana-dashboard-postgres-overview
-        name: grafana-dashboard-postgres-overview
       - configMap:
           name: grafana-dashboard-prometheus-remote-write
         name: grafana-dashboard-prometheus-remote-write

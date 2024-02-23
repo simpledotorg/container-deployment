@@ -3,6 +3,7 @@ local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 local postgres = addMixin({
   name: 'postgres',
   namespace: 'kps',
+  dashboardFolder: 'Postgres',
   mixin: import 'postgres_mixin/mixin.libsonnet',
 });
 
@@ -46,4 +47,4 @@ local kp =
 { ['node-exporter-' + name]: kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter) } +
 { ['prometheus-' + name]: kp.prometheus[name] for name in std.objectFields(kp.prometheus) } +
 { ['prometheus-adapter-' + name]: kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter) } +
-{ 'postgres-mixin-prometheus-rules': postgres.prometheusRules }
+{ 'external-mixins/postgres-mixin-prometheus-rules': postgres.prometheusRules }
