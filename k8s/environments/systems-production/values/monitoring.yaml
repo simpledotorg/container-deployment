@@ -79,16 +79,6 @@ grafana:
   grafana.ini:
     server:
       root_url: "https://grafana.simple.org/"
-    auth.saml:
-      enabled: true
-      auto_login: false
-      private_key_path: "/etc/secrets/private_key.pem"
-      certificate_path: "/etc/secrets/certificate.cert"
-      idp_metadata_url: "https://sso.simple.org"
-      assertion_attribute_name: DisplayName
-      assertion_attribute_login: Login
-      assertion_attribute_email: Email
-      assertion_attribute_groups: Group
     auth.generic_oauth:
       enabled: true
       name: Keycloak-OAuth
@@ -104,7 +94,7 @@ grafana:
       api_url: https://sso.simple.org/realms/master/protocol/openid-connect/userinfo
       role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
   extraSecretMounts:
-    - name: grafana-sso-saml
+    - name: grafana-sso
       mountPath: /etc/secrets
-      secretName: grafana-sso-saml
+      secretName: grafana-sso
       readOnly: true
