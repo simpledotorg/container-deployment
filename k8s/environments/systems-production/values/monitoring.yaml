@@ -93,8 +93,8 @@ grafana:
       enabled: true
       name: Keycloak-OAuth
       allow_sign_up: true
-      client_id: rtsl-grafana-oauth
-      client_secret: g3GVmS16YLSmc4UcjtBb1l8JRemzulu5
+      client_id: $__file{/etc/secrets/oauth_client_id}
+      client_secret: $__file{/etc/secrets/oauth_client_secret}
       scopes: openid email profile offline_access roles
       email_attribute_path: email
       login_attribute_path: username
@@ -104,7 +104,7 @@ grafana:
       api_url: https://sso.simple.org/realms/master/protocol/openid-connect/userinfo
       role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
   extraSecretMounts:
-    - name: grafana-auth-saml
+    - name: grafana-sso-saml
       mountPath: /etc/secrets
-      secretName: grafana-auth-saml
+      secretName: grafana-sso-saml
       readOnly: true
