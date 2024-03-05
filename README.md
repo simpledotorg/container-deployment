@@ -18,7 +18,7 @@ Automation and manifests for container deployment
 
 ### Components
 
-- **(Kubernetes)[https://kubernetes.io/]**: Acts as the container orchestration platform, deploying all application components as containers within a Kubernetes cluster. This setup enables high availability, effective scaling, and seamless management of containerized applications.
+- **[Kubernetes](https://kubernetes.io/)**: Acts as the container orchestration platform, deploying all application components as containers within a Kubernetes cluster. This setup enables high availability, effective scaling, and seamless management of containerized applications.
 
 - **[ArgoCD](https://argoproj.github.io/cd/)**: Facilitates Continuous Delivery (CD) by automating the deployment and synchronization of Kubernetes configurations. Supports various templating engines like Helm, Kustomize, and Jsonnet, making the management of complex deployments straightforward.
 
