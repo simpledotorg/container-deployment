@@ -1,4 +1,6 @@
 prometheus:
+  prometheus-node-exporter:
+    enabled: false
   server:
     global:
       external_labels:
