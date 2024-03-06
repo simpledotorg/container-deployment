@@ -70,10 +70,27 @@ ssh -A -J ubuntu@jump-host-ip  ubuntu@host-private-ip
 ```
 
 ### Sri Lanka DC SSH
-- To connect to Sri Lanka VMs using ssh, use SSLVPN web portal (Credentials are in password management tool)
-- And connect jump box VM (Credentials are in password management tool)
-- Switch to Ubuntu user `sudo su - ubuntu -c zsh`
-- CD to container deployment folder `cd /opt/container-deployment`
+
+To establish an SSH connection to the virtual machines (VMs) located in the Sri Lanka data center, you must utilize a jump host due to the data center's restriction of allowing only a single public IP to initiate connections. Follow these steps to set up your environment:
+
+- **Add Your SSH Keys to the Jump Host**: Initially, you need to register your SSH keys with the jump host. You can do this by editing the SSH configuration file located [here](../ansible/group_vars/sri_lanka_production_jumpbox/vars.yml).
+
+- **Register Your SSH Keys with the VMs**: Similarly, to gain access to the VMs, your SSH keys must also be added to the VMs' configuration. This is done by updating another configuration file found [here](../ansible/group_vars/sri_lanka_production/vars.yml).
+
+- **Update SSH Keys on the VMs**: Request an individual who already has access to execute the SSH keys update process. This involves running an Ansible command within a VM to update the keys across the system. Here's the sequence of commands to perform this update:
+
+  ```bash
+  ssh -J ubuntu@3.7.92.234 -p 6547 ubuntu@122.255.9.11
+  cd ~/simple/container-deployment/ansible
+  git pull
+  ansible-playbook -i hosts/sri_lanka_production.yaml host_ssh_setup.yml
+  ```
+
+After completing the above steps, you will be equipped to connect to the VM using the following SSH command:
+
+```bash
+ssh -J ubuntu@3.7.92.234 -p 6547 ubuntu@122.255.9.11
+```
 
 ## How to open Rails application console?
 
