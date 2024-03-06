@@ -71,7 +71,7 @@ ssh -A -J ubuntu@jump-host-ip  ubuntu@host-private-ip
 
 ### Sri Lanka DC SSH
 
-To establish an SSH connection to the virtual machines (VMs) located in the Sri Lanka data center, you must utilize a jump host due to the data center's restriction of allowing only a single public IP to initiate connections. Follow these steps to set up your environment:
+To establish an SSH connection to the virtual machines (VMs) located in the Sri Lanka data center, you must utilize a jump host due to the data center's restriction of allowing only a single public IP to initiate connections.
 
 - **Add Your SSH Keys to the Jump Host**: Initially, you need to register your SSH keys with the jump host. You can do this by editing the SSH configuration file located [here](../ansible/group_vars/sri_lanka_production_jumpbox/vars.yml).
 
