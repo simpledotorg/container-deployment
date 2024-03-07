@@ -4,7 +4,7 @@ metadata:
   name: india-production-k8s-healthy-host-count
   namespace: datadog
 spec:
-  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:india-production-k8s} < 7"
+  query: "max(last_5m):sum:kubernetes_state.node.count{kube_cluster_name:india-production-k8s} < 5"
   type: "query alert"
   name: "india-production-k8s-healthy-host-count"
   message: "@slack-alerts"
@@ -441,7 +441,7 @@ metadata:
   name: india-production-k8s-cache-redis-log-volume-usage
   namespace: datadog
 spec:
-  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:cache-redis*} by {pod_name} > 30064771072" # 28/32 GiB
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:cache-redis*} by {pod_name} > 49392123904" # 46/48 GiB
   type: "query alert"
   name: "india-production-k8s-cache-redis-log-volume-usage"
   message: "@slack-alerts"
