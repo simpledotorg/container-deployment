@@ -1,42 +1,23 @@
-apiVersion: datadoghq.com/v1alpha1
+apiVersion: datadoghq.com/v2alpha1
 kind: DatadogAgent
 metadata:
   name: datadog-agent
   namespace: datadog
 spec:
-  credentials:
-    apiSecret:
-      secretName: datadog
-      keyName: api-key
-    appSecret:
-      secretName: datadog
-      keyName: app-key
-  agent:
+  global:
+    logLevel: "error"
+    clusterName: "india-production-k8s"
+    tags: 
+     - env:india-production-k8s
+    credentials:
+      apiSecret:
+        secretName: datadog
+        keyName: api-key
+      appSecret:
+        secretName: datadog
+        keyName: app-key
+  features:
+    logCollection:
+      enabled: true
     apm:
       enabled: true
-    log:
-      enabled: true
-      logsConfigContainerCollectAll: true
-    env:
-      - name: DD_ENV
-        value: "india-production-k8s"
-      - name: DD_DOGSTATSD_NON_LOCAL_TRAFFIC
-        value: "true"
-    config:
-      logLevel: error
-      resources:
-        requests:
-          memory: 256Mi
-          cpu: 200m
-        limits:
-          memory: 512Mi
-          cpu: 500m
-  clusterAgent:
-    config:
-      externalMetrics:
-      clusterChecksEnabled: true
-  clusterName: "india-production-k8s"
-  features:
-    prometheusScrape:
-      enabled: false
-      serviceEndpoints: false
