@@ -5,6 +5,7 @@ metadata:
   namespace: datadog
 spec:
   global:
+    logLevel: "error"
     clusterName: "sri-lanka-production-k8s"
     tags: 
      - env:sri-lanka-production-k8s
