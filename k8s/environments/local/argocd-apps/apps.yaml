@@ -356,7 +356,7 @@ spec:
   project: default
   source:
     directory:
-      exclude: '{jsonnetfile.json,jsonnetfile.lock.json}'
+      # exclude: '{jsonnetfile.json,jsonnetfile.lock.json}'
       jsonnet:
         libs:
           - vendor
