@@ -359,12 +359,12 @@ spec:
       env:
       - name: TANKA_PATH
         value: environments/default
-    directory:
-      # exclude: '{jsonnetfile.json,jsonnetfile.lock.json}'
-      jsonnet:
-        libs:
-          - vendor
-      recurse: true
+    # directory:
+    #   # exclude: '{jsonnetfile.json,jsonnetfile.lock.json}'
+    #   jsonnet:
+    #     libs:
+    #       - vendor
+    #   recurse: true
     path: k8s/manifests/kube-prometheus
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: local-jsonet
