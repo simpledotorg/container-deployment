@@ -358,7 +358,7 @@ spec:
     directory:
       jsonnet:
         libs:
-          - k8s/manifests/kube-prometheus/vendor
+          - kube-prometheus/vendor
       recurse: true
       exclude: '*.json'
     path: k8s/manifests/kube-prometheus
