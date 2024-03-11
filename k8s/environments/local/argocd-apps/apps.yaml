@@ -357,8 +357,8 @@ spec:
   source:
     plugin:
       env:
-      - name: TANKA_PATH
-        value: environments/default
+        - name: TANKA_PATH
+          value: "environments/default"
     # directory:
     #   # exclude: '{jsonnetfile.json,jsonnetfile.lock.json}'
     #   jsonnet:
