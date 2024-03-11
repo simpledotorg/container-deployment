@@ -355,6 +355,10 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
+    plugin:
+      env:
+      - name: TANKA_PATH
+        value: environments/default
     directory:
       # exclude: '{jsonnetfile.json,jsonnetfile.lock.json}'
       jsonnet:
