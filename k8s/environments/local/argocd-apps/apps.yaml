@@ -360,6 +360,7 @@ spec:
         libs:
           - vendor
       recurse: true
+      include: '*.jsonnet'
     path: k8s/manifests/kube-prometheus
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: local-govind
