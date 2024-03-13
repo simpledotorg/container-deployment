@@ -365,7 +365,7 @@ metadata:
   name: india-production-k8s-high-5xx-rate
   namespace: datadog
 spec:
-  query: "sum(last_5m):sum:nginx_ingress.controller.requests{env:india-production-k8s,status:5*}.as_count() > 100"
+  query: "sum(last_5m):sum:nginx_ingress.controller.requests{env:india-production-k8s,status:5*}.as_count() > 500"
   type: "query alert"
   name: "india-production-k8s-high-5xx-rate"
   message: "@slack-alerts"
