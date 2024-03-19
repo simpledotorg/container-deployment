@@ -54,6 +54,7 @@ local kp =
     },
     prometheus+:: {
       prometheus+: {
+        namespaces: ["argocd", "cert-manager", "default", "ingress-nginx", "kube-node-lease", "kube-public", "kube-system", "monitoring", "postgres-operator", "sealed-secrets", "simple-v1", "kps"],
         spec+: {
           externalUrl: prometheus_url ,
         },
