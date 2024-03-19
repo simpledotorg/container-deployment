@@ -2,6 +2,21 @@
 //     otherwise it will cause problems with prometheus target discovery.
 //     See also https://argo-cd.readthedocs.io/en/stable/faq/#why-is-my-app-out-of-sync-even-after-syncing
 
+local ingress(name, namespace, rules) = {
+  apiVersion: 'networking.k8s.io/v1',
+  kind: 'Ingress',
+  metadata: {
+    name: name,
+    namespace: namespace,
+    annotations: {
+      'nginx.ingress.kubernetes.io/auth-type': 'basic',
+      'nginx.ingress.kubernetes.io/auth-secret': 'basic-auth',
+      'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
+    },
+  },
+  spec: { rules: rules },
+};
+
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   // Uncomment the following imports to enable its patches
@@ -18,6 +33,15 @@ local kp =
         namespace: 'monitoring',
       },
     },
+    grafana+:: {
+      config+: {
+        sections+: {
+          server+: { 
+            root_url: std.extVar("GRAFANA_ROOT_URL"),
+          },
+        },
+      },
+    }
   };
 
 // Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,

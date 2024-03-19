@@ -357,6 +357,9 @@ spec:
   source:
     directory:
       jsonnet:
+        extVars:
+        - name: GRAFANA_ROOT_URL
+          value: grafana.local.simple.org
         libs:
           - k8s/manifests/kube-prometheus/vendor
       exclude: '*.json'
