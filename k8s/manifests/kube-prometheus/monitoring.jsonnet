@@ -17,6 +17,9 @@ local ingress(name, namespace, rules) = {
   spec: { rules: rules },
 };
 
+local grafana_root_url = std.extVar("GRAFANA_ROOT_URL");
+local alertmanager_url = std.extVar("ALERTMANAGER_URL");
+local prometheus_url = std.extVar("PROMETHEUS_URL");
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   // Uncomment the following imports to enable its patches
@@ -32,16 +35,95 @@ local kp =
       common+: {
         namespace: 'monitoring',
       },
-    },
-    grafana+:: {
-      config+: {
-        sections+: {
-          server+: { 
-            root_url: std.extVar("GRAFANA_ROOT_URL"),
+      grafana+:: {
+        config+: {
+          sections+: {
+            server+: {
+              root_url: grafana_root_url,
+            },
           },
         },
       },
-    }
+    },
+    alertmanager+:: {
+      alertmanager+: {
+        spec+: {
+          externalUrl: alertmanager_url,
+        },
+      },
+    },
+    prometheus+:: {
+      prometheus+: {
+        spec+: {
+          externalUrl: prometheus_url ,
+        },
+      },
+    },
+    ingress+:: {
+      'alertmanager-main': ingress(
+        'alertmanager-main',
+        $.values.common.namespace,
+        [{
+          host: alertmanager_url,
+          http: {
+            paths: [{
+              path: '/',
+              pathType: 'Prefix',
+              backend: {
+                service: {
+                  name: 'alertmanager-main',
+                  port: {
+                    name: 'web',
+                  },
+                },
+              },
+            }],
+          },
+        }]
+      ),
+      grafana: ingress(
+        'grafana',
+        $.values.common.namespace,
+        [{
+          host: grafana_root_url,
+          http: {
+            paths: [{
+              path: '/',
+              pathType: 'Prefix',
+              backend: {
+                service: {
+                  name: 'grafana',
+                  port: {
+                    name: 'http',
+                  },
+                },
+              },
+            }],
+          },
+        }],
+      ),
+      'prometheus-k8s': ingress(
+        'prometheus-k8s',
+        $.values.common.namespace,
+        [{
+          host: prometheus_url,
+          http: {
+            paths: [{
+              path: '/',
+              pathType: 'Prefix',
+              backend: {
+                service: {
+                  name: 'prometheus-k8s',
+                  port: {
+                    name: 'web',
+                  },
+                },
+              },
+            }],
+          },
+        }],
+      ),
+    },
   };
 
 // Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,
