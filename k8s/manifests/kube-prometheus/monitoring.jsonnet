@@ -39,7 +39,7 @@ local kp =
         config+: {
           sections+: {
             server+: {
-              root_url: grafana_root_url,
+              root_url: "http://" + grafana_root_url,
             },
           },
         },
@@ -48,7 +48,7 @@ local kp =
     alertmanager+:: {
       alertmanager+: {
         spec+: {
-          externalUrl: alertmanager_url,
+          externalUrl: "http://" + alertmanager_url,
         },
       },
     },
@@ -56,7 +56,7 @@ local kp =
       prometheus+: {
         namespaces: ["argocd", "cert-manager", "default", "ingress-nginx", "kube-node-lease", "kube-public", "kube-system", "monitoring", "postgres-operator", "sealed-secrets", "simple-v1", "kps"],
         spec+: {
-          externalUrl: prometheus_url ,
+          externalUrl: "http://" + prometheus_url ,
         },
       },
     },
