@@ -502,3 +502,62 @@ spec:
     automated:
       prune: true
       selfHeal: true
+---
+
+# Kube prometheus stack
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kps
+spec:
+  destination:
+    namespace: kps
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/kube-prometheus-stack
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: setup-grafana-dashboards-for-kps
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/kps.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    directory:
+      jsonnet:
+        extVars:
+        - name: GRAFANA_ROOT_URL
+          value: grafana-sandbox.simple.org
+        - name: ALERTMANAGER_URL
+          value: alertmanager-sandbox.simple.org
+        - name: PROMETHEUS_URL
+          value: prometheus-sandbox.simple.org
+        libs:
+          - k8s/manifests/kube-prometheus/vendor
+      exclude: '*.json'
+    path: k8s/manifests/kube-prometheus
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: kube-prometheus
+  syncPolicy:
+    automated: {}
+
+---
