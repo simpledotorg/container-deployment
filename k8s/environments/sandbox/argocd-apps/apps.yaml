@@ -546,11 +546,11 @@ spec:
       jsonnet:
         extVars:
         - name: GRAFANA_ROOT_URL
-          value: grafana-sandbox.simple.org
+          value: grafana-kp-sandbox.simple.org
         - name: ALERTMANAGER_URL
-          value: alertmanager-sandbox.simple.org
+          value: alertmanager-kp-sandbox.simple.org
         - name: PROMETHEUS_URL
-          value: prometheus-sandbox.simple.org
+          value: prometheus-kp-sandbox.simple.org
         libs:
           - k8s/manifests/kube-prometheus/vendor
       exclude: '*.json'
