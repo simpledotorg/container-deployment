@@ -17,6 +17,22 @@ local ingress(name, namespace, rules) = {
   spec: { rules: rules },
 };
 
+local all_namespaces = [
+  "alphasms-exporter",
+  "argocd",
+  "cert-manager",
+  "datadog",
+  "default",
+  "ingress-nginx",
+  "kps",
+  "kube-node-lease",
+  "kube-public",
+  "kube-system",
+  "monitoring",
+  "postgres-operator",
+  "sealed-secrets",
+  "simple-v1"
+];
 local grafana_root_url = std.extVar("GRAFANA_ROOT_URL");
 local alertmanager_url = std.extVar("ALERTMANAGER_URL");
 local prometheus_url = std.extVar("PROMETHEUS_URL");
@@ -34,6 +50,10 @@ local kp =
     values+:: {
       common+: {
         namespace: 'monitoring',
+      },
+
+      prometheus+: {
+        namespaces+: all_namespaces,
       },
     },
   };
