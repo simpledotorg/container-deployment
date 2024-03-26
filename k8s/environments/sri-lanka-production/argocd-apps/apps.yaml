@@ -146,7 +146,7 @@ spec:
   source:
     path: k8s/manifests/datadog-operator
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: update-dd-op
+    targetRevision: master
     helm:
       valueFiles:
         - values.yaml
