@@ -49,6 +49,7 @@ spec:
           prometheus.io/path: /metrics
           prometheus.io/port: "9187"
           prometheus.io/scrape: "true"
+          prometheus.io/app: postgres
   backups:
     pgbackrest:
       global:
