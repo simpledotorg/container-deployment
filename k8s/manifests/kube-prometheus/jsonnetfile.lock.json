@@ -104,16 +104,6 @@
     {
       "source": {
         "git": {
-          "remote": "https://github.com/jsonnet-libs/testonnet.git",
-          "subdir": ""
-        }
-      },
-      "version": "9b30f882132b8d8754535fbcee822b804c90405f",
-      "sum": "MB1dww51rdYJTWAAFkrOXMeMNxzZ5yyFPjPxaERDb1k="
-    },
-    {
-      "source": {
-        "git": {
           "remote": "https://github.com/jsonnet-libs/xtd.git",
           "subdir": ""
         }
