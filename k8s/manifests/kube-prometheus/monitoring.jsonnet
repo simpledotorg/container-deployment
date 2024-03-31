@@ -2,6 +2,13 @@
 //     otherwise it will cause problems with prometheus target discovery.
 //     See also https://argo-cd.readthedocs.io/en/stable/faq/#why-is-my-app-out-of-sync-even-after-syncing
 
+local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
+
+local postgresMixin = addMixin({
+  name: 'postgres',
+  mixin: (import 'postgres_mixin/mixin.libsonnet')
+});
+
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   // Uncomment the following imports to enable its patches
@@ -17,6 +24,9 @@ local kp =
       common+: {
         namespace: 'monitoring',
       },
+      grafana+: {
+        dashboards+: postgresMixin.grafanaDashboards,
+      }
     },
   };
 
