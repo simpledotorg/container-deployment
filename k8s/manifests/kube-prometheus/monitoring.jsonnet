@@ -43,7 +43,8 @@ local manifests =
   [kp.kubernetesControlPlane[name] for name in std.objectFields(kp.kubernetesControlPlane)] +
   [kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter)] +
   [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
-  [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)];
+  [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
+  [postgresMixin.prometheusRules];
 
 local argoAnnotations(manifest) =
   manifest {
