@@ -49,6 +49,7 @@ spec:
           ad.datadoghq.com/database.check_names: '["openmetrics"]'
           ad.datadoghq.com/database.init_configs: '[{}]'
           ad.datadoghq.com/database.instances: '[{"prometheus_url":"http://%%host%%:9187/metrics", "namespace": "crunchy_data", "metrics": ["ccp_pg_stat_statements_total_mean_exec_time_ms","ccp_connection_stats_active", "ccp_nodemx_data_disk_available_bytes", "ccp_pg_stat_statements_total_calls_count", "ccp_database_size_bytes", "ccp_replication_lag_size_bytes", "ccp_postmaster_uptime_seconds", "ccp_backrest_last_full_backup_time_since_completion_seconds", "ccp_backrest_last_diff_backup_time_since_completion_seconds"]}]'
+          prometheus.io/app: postgres
   backups:
     pgbackrest:
       global:

@@ -26,9 +26,42 @@ local kp =
       },
       grafana+: {
         dashboards+: postgresMixin.grafanaDashboards,
-      }
+      },
+      prometheus+: {
+        namespaces+: ['simple-v1'],
+        podMonitorSelector+: {
+          matchLabels+: {
+            'prometheus.io/scrape': true,
+          },
+        },
+        podMonitorNamespaceSelector+: ['simple-v1']
+      },
     },
   };
+
+local postgresPodMonitor = {
+    apiVersion: 'monitoring.coreos.com/v1',
+    kind: 'PodMonitor',
+    metadata: {
+      name: 'postgres-monitor',
+      labels: {
+        'prometheus.io/scrape': true,
+      }
+    },
+    spec: {
+      selector: {
+        matchLabels: {
+          'prometheus.io/app': 'postgres'
+        }
+      },
+      podMetricsEndpoints: [
+        {
+          'port': '9187'
+        }
+      ]
+    }
+  };
+
 
 // Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,
 // for ArgoCD we need to return just a regular list with all the manifests.
@@ -44,7 +77,8 @@ local manifests =
   [kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter)] +
   [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
   [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
-  [postgresMixin.prometheusRules];
+  [postgresMixin.prometheusRules] +
+  [postgresPodMonitor];
 
 local argoAnnotations(manifest) =
   manifest {
