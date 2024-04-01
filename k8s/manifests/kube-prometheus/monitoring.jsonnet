@@ -29,17 +29,19 @@ local kp =
       },
       prometheus+: {
         namespaces+: ['simple-v1'],
-        spec+: {
-          podMonitorSelector+: {
-            matchLabels+: {
-              'prometheus.io/scrape': true,
+        prometheus+: {
+          spec+: {
+            podMonitorSelector+: {
+              matchLabels+: {
+                'prometheus.io/scrape': true,
+              },
             },
-          },
-          podMonitorNamespaceSelector+: {
-            matchLabels+: {
-              name: 'simple-v1'
-            }
-          },
+            podMonitorNamespaceSelector+: {
+              matchLabels+: {
+                name: 'simple-v1'
+              }
+            },
+          }
         }
       },
     },
