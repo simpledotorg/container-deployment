@@ -29,12 +29,18 @@ local kp =
       },
       prometheus+: {
         namespaces+: ['simple-v1'],
-        podMonitorSelector+: {
-          matchLabels+: {
-            'prometheus.io/scrape': true,
+        spec+: {
+          podMonitorSelector+: {
+            matchLabels+: {
+              'prometheus.io/scrape': true,
+            },
           },
-        },
-        podMonitorNamespaceSelector+: ['simple-v1']
+          podMonitorNamespaceSelector+: {
+            matchLabels+: {
+              name: 'simple-v1'
+            }
+          },
+        }
       },
     },
   };
@@ -44,6 +50,7 @@ local postgresPodMonitor = {
     kind: 'PodMonitor',
     metadata: {
       name: 'postgres-monitor',
+      namespace: 'simple-v1',
       labels: {
         'prometheus.io/scrape': true,
       }
