@@ -13,6 +13,7 @@ Automation and manifests for container deployment
 - [Datadog Monitoring](./doc/DatadogMonitoring.md)
 - [Deploy branch for testing k8s manifest changes](./doc/DeployBranch.md)
 - [Infra Requirement for the simple web application](./doc/InfraRequirement.md)
+- [Manual Changes](./doc/Manual_Changes.md)
 
 ## High-Level Architecture
 
