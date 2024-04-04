@@ -29,6 +29,9 @@ spec:
       dataVolumeClaimSpec:
         accessModes:
         - "ReadWriteOnce"
+        #storageClassName: "gp3" # manually changed to "gp3" from "gp2" in AWS console.
+        #Manifest is still using "gp2", fixing this involves creating a new volume and migrating data.
+        #As we plans to migrate to DC soon, we will skip this for now.
         resources:
           requests:
             storage: 100Gi
