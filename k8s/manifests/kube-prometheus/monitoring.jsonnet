@@ -53,6 +53,7 @@ local kp =
       },
 
       prometheus+: {
+        replicas: 1,
         namespaces+: all_namespaces,
       },
     },
