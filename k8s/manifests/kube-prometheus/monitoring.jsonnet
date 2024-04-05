@@ -17,27 +17,12 @@ local ingress(name, namespace, rules) = {
   spec: { rules: rules },
 };
 
-local all_namespaces = [
-  "alphasms-exporter",
-  "argocd",
-  "cert-manager",
-  "datadog",
-  "default",
-  "ingress-nginx",
-  "kps",
-  "kube-node-lease",
-  "kube-public",
-  "kube-system",
-  "monitoring",
-  "postgres-operator",
-  "sealed-secrets",
-  "simple-v1"
-];
 local grafana_root_url = std.extVar("GRAFANA_ROOT_URL");
 local alertmanager_url = std.extVar("ALERTMANAGER_URL");
 local prometheus_url = std.extVar("PROMETHEUS_URL");
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
+  (import 'kube-prometheus/addons/all-namespaces.libsonnet') + 
   // Uncomment the following imports to enable its patches
   // (import 'kube-prometheus/addons/anti-affinity.libsonnet') +
   // (import 'kube-prometheus/addons/managed-cluster.libsonnet') +
@@ -54,7 +39,7 @@ local kp =
 
       prometheus+: {
         replicas: 1,
-        namespaces+: all_namespaces,
+        namespaces: [],
       },
     },
   };
