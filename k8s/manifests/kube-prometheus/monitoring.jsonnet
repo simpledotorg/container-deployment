@@ -28,6 +28,7 @@ local kp =
         dashboards+: postgresMixin.grafanaDashboards,
       },
       prometheus+: {
+        replicas+: 1,
         namespaces+: ['simple-v1'],
         prometheus+: {
           spec+: {
