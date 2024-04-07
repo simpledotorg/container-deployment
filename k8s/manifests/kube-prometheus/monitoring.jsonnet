@@ -2,24 +2,6 @@
 //     otherwise it will cause problems with prometheus target discovery.
 //     See also https://argo-cd.readthedocs.io/en/stable/faq/#why-is-my-app-out-of-sync-even-after-syncing
 
-local ingress(name, namespace, rules) = {
-  apiVersion: 'networking.k8s.io/v1',
-  kind: 'Ingress',
-  metadata: {
-    name: name,
-    namespace: namespace,
-    annotations: {
-      'nginx.ingress.kubernetes.io/auth-type': 'basic',
-      'nginx.ingress.kubernetes.io/auth-secret': 'basic-auth',
-      'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
-    },
-  },
-  spec: { rules: rules },
-};
-
-local grafana_root_url = std.extVar("GRAFANA_ROOT_URL");
-local alertmanager_url = std.extVar("ALERTMANAGER_URL");
-local prometheus_url = std.extVar("PROMETHEUS_URL");
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'kube-prometheus/addons/all-namespaces.libsonnet') + 
@@ -38,7 +20,6 @@ local kp =
       },
 
       prometheus+: {
-        replicas: 1,
         namespaces: [],
       },
     },
@@ -49,6 +30,7 @@ local kp =
 local manifests =
   [kp.kubePrometheus[name] for name in std.objectFields(kp.kubePrometheus)] +
   [kp.prometheusOperator[name] for name in std.objectFields(kp.prometheusOperator)] +
+  // [kp.alertmanager[name] for name in std.objectFields(kp.alertmanager)] +
   [kp.blackboxExporter[name] for name in std.objectFields(kp.blackboxExporter)] +
   [kp.grafana[name] for name in std.objectFields(kp.grafana)] +
   // [ kp.pyrra[name] for name in std.objectFields(kp.pyrra)] +
