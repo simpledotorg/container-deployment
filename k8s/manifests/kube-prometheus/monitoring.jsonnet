@@ -2,26 +2,9 @@
 //     otherwise it will cause problems with prometheus target discovery.
 //     See also https://argo-cd.readthedocs.io/en/stable/faq/#why-is-my-app-out-of-sync-even-after-syncing
 
-local ingress(name, namespace, rules) = {
-  apiVersion: 'networking.k8s.io/v1',
-  kind: 'Ingress',
-  metadata: {
-    name: name,
-    namespace: namespace,
-    annotations: {
-      'nginx.ingress.kubernetes.io/auth-type': 'basic',
-      'nginx.ingress.kubernetes.io/auth-secret': 'basic-auth',
-      'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
-    },
-  },
-  spec: { rules: rules },
-};
-
-local grafana_root_url = std.extVar("GRAFANA_ROOT_URL");
-local alertmanager_url = std.extVar("ALERTMANAGER_URL");
-local prometheus_url = std.extVar("PROMETHEUS_URL");
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
+  (import 'kube-prometheus/addons/all-namespaces.libsonnet') + 
   // Uncomment the following imports to enable its patches
   // (import 'kube-prometheus/addons/anti-affinity.libsonnet') +
   // (import 'kube-prometheus/addons/managed-cluster.libsonnet') +
@@ -35,94 +18,10 @@ local kp =
       common+: {
         namespace: 'monitoring',
       },
-      grafana+:: {
-        config+: {
-          sections+: {
-            server+: {
-              root_url: grafana_root_url,
-            },
-          },
-        },
-      },
-    },
-    alertmanager+:: {
-      alertmanager+: {
-        spec+: {
-          externalUrl: alertmanager_url,
-        },
-      },
-    },
-    prometheus+:: {
+
       prometheus+: {
-        spec+: {
-          externalUrl: prometheus_url ,
-        },
+        namespaces: [],
       },
-    },
-    ingress+:: {
-      'alertmanager-main': ingress(
-        'alertmanager-main',
-        $.values.common.namespace,
-        [{
-          host: alertmanager_url,
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'alertmanager-main',
-                  port: {
-                    name: 'web',
-                  },
-                },
-              },
-            }],
-          },
-        }]
-      ),
-      grafana: ingress(
-        'grafana',
-        $.values.common.namespace,
-        [{
-          host: grafana_root_url,
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'grafana',
-                  port: {
-                    name: 'http',
-                  },
-                },
-              },
-            }],
-          },
-        }],
-      ),
-      'prometheus-k8s': ingress(
-        'prometheus-k8s',
-        $.values.common.namespace,
-        [{
-          host: prometheus_url,
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'prometheus-k8s',
-                  port: {
-                    name: 'web',
-                  },
-                },
-              },
-            }],
-          },
-        }],
-      ),
     },
   };
 
@@ -131,7 +30,7 @@ local kp =
 local manifests =
   [kp.kubePrometheus[name] for name in std.objectFields(kp.kubePrometheus)] +
   [kp.prometheusOperator[name] for name in std.objectFields(kp.prometheusOperator)] +
-  [kp.alertmanager[name] for name in std.objectFields(kp.alertmanager)] +
+  // [kp.alertmanager[name] for name in std.objectFields(kp.alertmanager)] +
   [kp.blackboxExporter[name] for name in std.objectFields(kp.blackboxExporter)] +
   [kp.grafana[name] for name in std.objectFields(kp.grafana)] +
   // [ kp.pyrra[name] for name in std.objectFields(kp.pyrra)] +
