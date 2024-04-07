@@ -2,7 +2,6 @@ argo-cd:
   configs:
     cm:
       admin.enabled: false
-      application.instanceLabelKey: argocd.argoproj.io/instance
   redis-ha:
     enabled: false
   controller:
