@@ -477,7 +477,7 @@ spec:
       prune: true
       selfHeal: true
 
-# Kube prometheus stack
+# # Kube prometheus stack
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
 # metadata:
