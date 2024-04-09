@@ -22,6 +22,11 @@ spec:
         - metabase
       password:
         type: AlphaNumeric
+  metadata:
+    labels:
+      tags.datadoghq.com/service: "postgrescluster-simple"
+      tags.datadoghq.com/version: "14"
+      prometheus.io/app: postgres
   instances:
     - name: instance1
       replicas: 2
@@ -45,6 +50,8 @@ spec:
         labels:
           tags.datadoghq.com/service: "postgrescluster-simple"
           tags.datadoghq.com/version: "14"
+          prometheus.io/app: postgres
+        annotations:
           prometheus.io/path: /metrics
           prometheus.io/port: "9187"
           prometheus.io/scrape: "true"
