@@ -2,6 +2,21 @@
 //     otherwise it will cause problems with prometheus target discovery.
 //     See also https://argo-cd.readthedocs.io/en/stable/faq/#why-is-my-app-out-of-sync-even-after-syncing
 
+local ingress(name, namespace, rules) = {
+  apiVersion: 'networking.k8s.io/v1',
+  kind: 'Ingress',
+  metadata: {
+    name: name,
+    namespace: namespace,
+    annotations: {
+      'nginx.ingress.kubernetes.io/auth-type': 'basic',
+      'nginx.ingress.kubernetes.io/auth-secret': 'basic-auth',
+      'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
+    },
+  },
+  spec: { rules: rules },
+};
+
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'kube-prometheus/addons/all-namespaces.libsonnet') + 
@@ -18,10 +33,42 @@ local kp =
       common+: {
         namespace: 'monitoring',
       },
-
+      grafana+:: {
+        config+: {
+          sections+: {
+            server+: {
+              root_url: 'http://grafana-sandbox.simple.org/',
+            },
+          },
+        },
+      },
       prometheus+: {
         namespaces: [],
       },
+    },
+
+    ingress+:: {
+      grafana: ingress(
+        'grafana',
+        $.values.common.namespace,
+        [{
+          host: 'grafana-sandbox.simple.org',
+          http: {
+            paths: [{
+              path: '/',
+              pathType: 'Prefix',
+              backend: {
+                service: {
+                  name: 'grafana',
+                  port: {
+                    name: 'http',
+                  },
+                },
+              },
+            }],
+          },
+        }],
+      ),
     },
   };
 
@@ -38,7 +85,8 @@ local manifests =
   [kp.kubernetesControlPlane[name] for name in std.objectFields(kp.kubernetesControlPlane)] +
   [kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter)] +
   [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
-  [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)];
+  [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
+  [kp.ingress[name] for name in std.objectFields(kp.ingress)];
 
 local argoAnnotations(manifest) =
   manifest {
