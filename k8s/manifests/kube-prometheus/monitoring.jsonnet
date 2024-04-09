@@ -27,24 +27,9 @@ local kp =
       grafana+: {
         dashboards+: postgresMixin.grafanaDashboards,
       },
-      prometheus+: {
-        replicas+: 1,
-        namespaces+: ['simple-v1'],
-        prometheus+: {
-          spec+: {
-            podMonitorSelector+: {
-              matchLabels+: {
-                'prometheus.io/scrape': true,
-              },
-            },
-            podMonitorNamespaceSelector+: {
-              matchLabels+: {
-                name: 'simple-v1'
-              }
-            },
-          }
-        }
-      },
+    },
+    prometheus+: {
+      namespaces+: ['simple-v1'],
     },
   };
 
