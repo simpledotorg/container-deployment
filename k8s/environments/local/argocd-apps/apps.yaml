@@ -11,7 +11,7 @@ spec:
   source:
     path: k8s/manifests/argo-cd
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
     helm:
       valueFiles:
         - ../../environments/local/values/argocd.yaml
@@ -39,7 +39,7 @@ spec:
   source:
     path: k8s/manifests/cert-manager
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
     helm:
       valueFiles:
         - values.yaml
@@ -66,7 +66,7 @@ spec:
   source:
     path: k8s/environments/local/configmaps
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
   project: default
   syncPolicy:
     syncOptions:
@@ -91,7 +91,7 @@ spec:
   source:
     path: k8s/manifests/ingress
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
     helm:
       valueFiles:
         - values.yaml
@@ -119,7 +119,7 @@ spec:
   source:
     path: k8s/manifests/reloader
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
     helm:
       valueFiles:
         - values.yaml
@@ -147,7 +147,7 @@ spec:
   source:
     path: k8s/manifests/sealed-secrets
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
   project: default
   syncPolicy:
     syncOptions:
@@ -171,7 +171,7 @@ spec:
   source:
     path: k8s/environments/local/secrets
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
   project: default
   syncPolicy:
     syncOptions:
@@ -194,7 +194,7 @@ spec:
   source:
     path: k8s/manifests/pgo
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
   project: default
   syncPolicy:
     syncOptions:
@@ -220,7 +220,7 @@ spec:
   source:
     path: k8s/environments/local/op-postgres
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
   project: default
   syncPolicy:
     syncOptions:
@@ -245,7 +245,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
     helm:
       valueFiles:
         - values.yaml
@@ -273,7 +273,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
     helm:
       valueFiles:
         - values.yaml
@@ -301,7 +301,7 @@ spec:
   source:
     path: k8s/manifests/simple-server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
     helm:
       valueFiles:
         - ../../environments/local/values/simple.yaml
@@ -329,7 +329,7 @@ spec:
   source:
     path: k8s/manifests/metabase
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: local-ademarcq
     helm:
       valueFiles:
         - ../../environments/local/values/metabase.yaml
