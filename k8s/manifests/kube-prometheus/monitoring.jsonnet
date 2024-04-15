@@ -55,30 +55,28 @@ local postgresServiceMonitor = {
     },
   },
 };
-local postgresPodMonitor = {
-    apiVersion: 'monitoring.coreos.com/v1',
-    kind: 'PodMonitor',
-    metadata: {
-      name: 'postgres-monitor',
-      namespace: 'simple-v1',
-      labels: {
-        release: 'kube-promethues',
-      }
-    },
-    spec: {
-      selector: {
-        matchLabels: {
-          'prometheus.io/app': 'postgres'
-        }
-      },
-      podMetricsEndpoints: [
-        {
-          'port': '9187'
-        }
-      ]
-    }
-  };
 
+local redisServiceMonitor = {
+  apiVersion: 'monitoring.coreos.com/v1',
+  kind: 'ServiceMonitor',
+  metadata: {
+    name: 'redis-service-monitor',
+    namespace: 'simple-v1',
+  },
+  spec: {
+    jobLabel: 'redis',
+    endpoints: [
+      {
+        port: '9121',
+      },
+    ],
+    selector: {
+      matchLabels: {
+        'prometheus.io/app': 'redis'
+      },
+    },
+  },
+};
 
 // Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,
 // for ArgoCD we need to return just a regular list with all the manifests.
@@ -95,7 +93,8 @@ local manifests =
   [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
   [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
   [postgresMixin.prometheusRules] +
-  [postgresServiceMonitor];
+  [postgresServiceMonitor] +
+  [redisServiceMonitor];
 
 local argoAnnotations(manifest) =
   manifest {
