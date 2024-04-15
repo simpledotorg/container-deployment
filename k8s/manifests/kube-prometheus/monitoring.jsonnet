@@ -62,7 +62,7 @@ local postgresPodMonitor = {
       name: 'postgres-monitor',
       namespace: 'simple-v1',
       labels: {
-        'prometheus.io/scrape': true,
+        release: 'kube-promethues',
       }
     },
     spec: {
