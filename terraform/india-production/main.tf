@@ -103,7 +103,10 @@ module "eks" {
     "role-cron"     = "true"
   }
 
-  cache_redis2_instance_enable = true
+  cache_redis_instance_enable = true
+  cache_redis_instance_type   = "r5a.xlarge"
+
+  cache_redis2_instance_enable = false
   cache_redis2_instance_type   = "r5a.large"
 }
 
