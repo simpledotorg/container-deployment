@@ -34,18 +34,44 @@ local kp =
     },
   };
 
+local postgresExporterService = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata: {
+    name: 'postgres-exporter',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'postgres',
+    },
+  },
+  spec: {
+    selector: {
+      'prometheus.io/app': 'postgres'
+    },
+    ports: [
+      {
+        name: 'metrics',
+        port: 9187
+      },
+    ]
+  }
+};
+
 local postgresServiceMonitor = {
   apiVersion: 'monitoring.coreos.com/v1',
   kind: 'ServiceMonitor',
   metadata: {
     name: 'postgres-service-monitor',
     namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'postgres',
+    },
   },
   spec: {
     jobLabel: 'postgres',
     endpoints: [
       {
-        port: '9187',
+        port: 'metrics',
       },
     ],
     selector: {
@@ -93,7 +119,7 @@ local manifests =
   [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
   [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
   [postgresMixin.prometheusRules] +
-  [postgresServiceMonitor] +
+  [postgresExporterService, postgresServiceMonitor] +
   [redisServiceMonitor];
 
 local argoAnnotations(manifest) =
