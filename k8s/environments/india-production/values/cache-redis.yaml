@@ -1,8 +1,12 @@
 redis:
   commonConfiguration: |-
-    maxmemory 14gb
+    maxmemory 13gb
     maxmemory-policy allkeys-lru
     maxmemory-samples 5
+    save ""
+    appendonly yes
+    auto-aof-rewrite-percentage 100
+    auto-aof-rewrite-min-size 67108864
   master:
     persistence:
-      size: 48Gi
+      size: 100Gi
