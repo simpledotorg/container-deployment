@@ -9,6 +9,22 @@ local postgresMixin = addMixin({
   mixin: (import 'postgres_mixin/mixin.libsonnet')
 });
 
+local ingress(name, namespace, rules) = {
+  apiVersion: 'networking.k8s.io/v1',
+  kind: 'Ingress',
+  metadata: {
+    name: name,
+    namespace: namespace,
+    annotations: {
+      'nginx.ingress.kubernetes.io/auth-type': 'basic',
+      'nginx.ingress.kubernetes.io/auth-secret': 'basic-auth',
+      'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
+    },
+  },
+  spec: { rules: rules },
+};
+
+
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
@@ -27,11 +43,97 @@ local kp =
       },
       grafana+: {
         dashboards+: postgresMixin.grafanaDashboards,
+        config+: {
+          sections+: {
+            server+: {
+              root_url: 'http://grafana-sandbox.simple.org/',
+            },
+          },
+        },
       },
       prometheus+: {
         namespaces: [],
       },
     },
+    alertmanager+:: {
+      alertmanager+: {
+        spec+: {
+          externalUrl: 'http://alertmanager-sandbox.simple.org',
+        },
+      },
+    },
+    prometheus+:: {
+      prometheus+: {
+        spec+: {
+          externalUrl: 'http://prometheus-sandbox.simple.org',
+        },
+      },
+    },
+    ingress+:: {
+      'alertmanager-main': ingress(
+        'alertmanager-main',
+        $.values.common.namespace,
+        [{
+          host: 'alertmanager-sandbox.simple.org',
+          http: {
+            paths: [{
+              path: '/',
+              pathType: 'Prefix',
+              backend: {
+                service: {
+                  name: 'alertmanager-main',
+                  port: {
+                    name: 'web',
+                  },
+                },
+              },
+            }],
+          },
+        }]
+      ),
+      grafana: ingress(
+        'grafana',
+        $.values.common.namespace,
+        [{
+          host: 'grafana-sandbox.simple.org',
+          http: {
+            paths: [{
+              path: '/',
+              pathType: 'Prefix',
+              backend: {
+                service: {
+                  name: 'grafana',
+                  port: {
+                    name: 'http',
+                  },
+                },
+              },
+            }],
+          },
+        }],
+      ),
+      'prometheus-k8s': ingress(
+        'prometheus-k8s',
+        $.values.common.namespace,
+        [{
+          host: 'prometheus-sandbox.simple.org',
+          http: {
+            paths: [{
+              path: '/',
+              pathType: 'Prefix',
+              backend: {
+                service: {
+                  name: 'prometheus-k8s',
+                  port: {
+                    name: 'web',
+                  },
+                },
+              },
+            }],
+          },
+        }],
+      ),
+    }
   };
 
 local postgresExporterService = {
