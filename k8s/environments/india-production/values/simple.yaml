@@ -39,6 +39,7 @@ server:
   }
 worker:
   enabled: true
+  replicaCount: 2
   log:
     storage: 100Gi
   podAnnotations: {
