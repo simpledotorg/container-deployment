@@ -235,6 +235,55 @@ local redisServiceMonitor = {
   },
 };
 
+local ingressExporterService = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata: {
+    name: 'ingress-exporter',
+    namespace: 'ingress-nginx',
+    labels: {
+      'prometheus.io/app': 'ingress',
+    },
+  },
+  spec: {
+    selector: {
+      'prometheus.io/app': 'ingress'
+    },
+    ports: [
+      {
+        name: 'metrics',
+        port: 10254
+      },
+    ]
+  }
+};
+
+local ingressServiceMonitor = {
+  apiVersion: 'monitoring.coreos.com/v1',
+  kind: 'ServiceMonitor',
+  metadata: {
+    name: 'ingress-service-monitor',
+    namespace: 'ingress-nginx',
+    labels: {
+      'prometheus.io/app': 'ingress',
+    },
+  },
+  spec: {
+    jobLabel: 'ingress',
+    endpoints: [
+      {
+        port: 'metrics',
+      },
+    ],
+    selector: {
+      matchLabels: {
+        'prometheus.io/app': 'ingress'
+      },
+    },
+  },
+};
+
+
 // Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,
 // for ArgoCD we need to return just a regular list with all the manifests.
 local manifests =
@@ -252,7 +301,8 @@ local manifests =
   [kp.ingress[name] for name in std.objectFields(kp.ingress) ] +
   [postgresMixin.prometheusRules] +
   [postgresExporterService, postgresServiceMonitor] +
-  [redisExporterService, redisServiceMonitor];
+  [redisExporterService, redisServiceMonitor] +
+  [ingressExporterService, ingressServiceMonitor];
 
 local argoAnnotations(manifest) =
   manifest {
