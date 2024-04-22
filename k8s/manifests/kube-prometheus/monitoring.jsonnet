@@ -93,7 +93,7 @@ local kp =
             }],
           },
         }],
-        [{ hosts: ['alertmanager-sandbox.simple.org'], secret: 'alertmanager-sandbox.simple.org-tls'}]
+        [{ hosts: ['alertmanager-sandbox.simple.org'], secretName: 'alertmanager-sandbox.simple.org-tls'}]
       ),
       grafana: ingress(
         'grafana',
@@ -115,7 +115,7 @@ local kp =
             }],
           },
         }],
-        [{ hosts: ['grafana-sandbox.simple.org'], secret: 'grafana-sandbox.simple.org-tls'}]
+        [{ hosts: ['grafana-sandbox.simple.org'], secretName: 'grafana-sandbox.simple.org-tls'}]
       ),
       'prometheus-k8s': ingress(
         'prometheus-k8s',
@@ -137,7 +137,7 @@ local kp =
             }],
           },
         }],
-        [{ hosts: ['prometheus-sandbox.simple.org'], secret: 'prometheus-sandbox.simple.org-tls'}]
+        [{ hosts: ['prometheus-sandbox.simple.org'], secretName: 'prometheus-sandbox.simple.org-tls'}]
       ),
     }
   };
