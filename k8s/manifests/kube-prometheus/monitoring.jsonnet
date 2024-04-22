@@ -19,6 +19,9 @@ local ingress(name, namespace, rules, tls) = {
       'nginx.ingress.kubernetes.io/auth-type': 'basic',
       'nginx.ingress.kubernetes.io/auth-secret': 'basic-auth',
       'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
+      'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
+      'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
+
     },
   },
   spec: { rules: rules, tls: tls },
@@ -223,6 +226,7 @@ local manifests =
   [kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter)] +
   [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
   [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
+  [kp.ingress[name] for name in std.objectFields(kp.ingress) ] +
   [postgresMixin.prometheusRules] +
   [postgresExporterService, postgresServiceMonitor] +
   [redisServiceMonitor];
