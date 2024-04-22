@@ -2,9 +2,16 @@
 //     otherwise it will cause problems with prometheus target discovery.
 //     See also https://argo-cd.readthedocs.io/en/stable/faq/#why-is-my-app-out-of-sync-even-after-syncing
 
+local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
+
+local postgresMixin = addMixin({
+  name: 'postgres',
+  mixin: (import 'postgres_mixin/mixin.libsonnet')
+});
+
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
-  (import 'kube-prometheus/addons/all-namespaces.libsonnet') + 
+  (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
   // Uncomment the following imports to enable its patches
   // (import 'kube-prometheus/addons/anti-affinity.libsonnet') +
   // (import 'kube-prometheus/addons/managed-cluster.libsonnet') +
@@ -18,12 +25,84 @@ local kp =
       common+: {
         namespace: 'monitoring',
       },
-
+      grafana+: {
+        dashboards+: postgresMixin.grafanaDashboards,
+      },
       prometheus+: {
         namespaces: [],
       },
     },
   };
+
+local postgresExporterService = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata: {
+    name: 'postgres-exporter',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'postgres',
+    },
+  },
+  spec: {
+    selector: {
+      'prometheus.io/app': 'postgres'
+    },
+    ports: [
+      {
+        name: 'metrics',
+        port: 9187
+      },
+    ]
+  }
+};
+
+local postgresServiceMonitor = {
+  apiVersion: 'monitoring.coreos.com/v1',
+  kind: 'ServiceMonitor',
+  metadata: {
+    name: 'postgres-service-monitor',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'postgres',
+    },
+  },
+  spec: {
+    jobLabel: 'postgres',
+    endpoints: [
+      {
+        port: 'metrics',
+      },
+    ],
+    selector: {
+      matchLabels: {
+        'prometheus.io/app': 'postgres'
+      },
+    },
+  },
+};
+
+local redisServiceMonitor = {
+  apiVersion: 'monitoring.coreos.com/v1',
+  kind: 'ServiceMonitor',
+  metadata: {
+    name: 'redis-service-monitor',
+    namespace: 'simple-v1',
+  },
+  spec: {
+    jobLabel: 'redis',
+    endpoints: [
+      {
+        port: '9121',
+      },
+    ],
+    selector: {
+      matchLabels: {
+        'prometheus.io/app': 'redis'
+      },
+    },
+  },
+};
 
 // Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,
 // for ArgoCD we need to return just a regular list with all the manifests.
@@ -38,7 +117,10 @@ local manifests =
   [kp.kubernetesControlPlane[name] for name in std.objectFields(kp.kubernetesControlPlane)] +
   [kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter)] +
   [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
-  [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)];
+  [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
+  [postgresMixin.prometheusRules] +
+  [postgresExporterService, postgresServiceMonitor] +
+  [redisServiceMonitor];
 
 local argoAnnotations(manifest) =
   manifest {

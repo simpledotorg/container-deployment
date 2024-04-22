@@ -45,6 +45,7 @@ spec:
         labels:
           tags.datadoghq.com/service: "postgrescluster-simple"
           tags.datadoghq.com/version: "14"
+          prometheus.io/app: postgres
         annotations:
           ad.datadoghq.com/database.check_names: '["openmetrics"]'
           ad.datadoghq.com/database.init_configs: '[{}]'
