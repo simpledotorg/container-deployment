@@ -187,18 +187,44 @@ local postgresServiceMonitor = {
   },
 };
 
+local redisExporterService = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata: {
+    name: 'redis-exporter',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'redis',
+    },
+  },
+  spec: {
+    selector: {
+      'prometheus.io/app': 'redis'
+    },
+    ports: [
+      {
+        name: 'metrics',
+        port: 9121
+      },
+    ]
+  }
+};
+
 local redisServiceMonitor = {
   apiVersion: 'monitoring.coreos.com/v1',
   kind: 'ServiceMonitor',
   metadata: {
     name: 'redis-service-monitor',
     namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'redis',
+    },
   },
   spec: {
     jobLabel: 'redis',
     endpoints: [
       {
-        port: '9121',
+        port: 'metrics',
       },
     ],
     selector: {
@@ -226,7 +252,7 @@ local manifests =
   [kp.ingress[name] for name in std.objectFields(kp.ingress) ] +
   [postgresMixin.prometheusRules] +
   [postgresExporterService, postgresServiceMonitor] +
-  [redisServiceMonitor];
+  [redisExporterService, redisServiceMonitor];
 
 local argoAnnotations(manifest) =
   manifest {
