@@ -9,7 +9,7 @@ local postgresMixin = addMixin({
   mixin: (import 'postgres_mixin/mixin.libsonnet')
 });
 
-local ingress(name, namespace, rules) = {
+local ingress(name, namespace, rules, tls) = {
   apiVersion: 'networking.k8s.io/v1',
   kind: 'Ingress',
   metadata: {
@@ -21,7 +21,7 @@ local ingress(name, namespace, rules) = {
       'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
     },
   },
-  spec: { rules: rules },
+  spec: { rules: rules, tls: tls },
 };
 
 
@@ -89,7 +89,8 @@ local kp =
               },
             }],
           },
-        }]
+        }],
+        { hosts: ['alertmanager-sandbox.simple.org'], secret: 'alertmanager-sandbox.simple.org-tls'}
       ),
       grafana: ingress(
         'grafana',
@@ -111,6 +112,7 @@ local kp =
             }],
           },
         }],
+        { hosts: ['grafana-sandbox.simple.org'], secret: 'grafana-sandbox.simple.org-tls'}
       ),
       'prometheus-k8s': ingress(
         'prometheus-k8s',
@@ -132,6 +134,7 @@ local kp =
             }],
           },
         }],
+        { hosts: ['prometheus-sandbox.simple.org'], secret: 'prometheus-sandbox.simple.org-tls'}
       ),
     }
   };
