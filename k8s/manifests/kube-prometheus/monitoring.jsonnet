@@ -16,9 +16,6 @@ local ingress(name, namespace, rules, tls) = {
     name: name,
     namespace: namespace,
     annotations: {
-      'nginx.ingress.kubernetes.io/auth-type': 'basic',
-      'nginx.ingress.kubernetes.io/auth-secret': 'basic-auth',
-      'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
       'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
       'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
 
