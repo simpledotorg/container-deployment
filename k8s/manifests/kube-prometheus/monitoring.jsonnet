@@ -283,6 +283,53 @@ local ingressServiceMonitor = {
   },
 };
 
+local simpleServerExporterService = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata: {
+    name: 'simple-server-exporter',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'simple-server',
+    },
+  },
+  spec: {
+    selector: {
+      'prometheus.io/app': 'simple-server'
+    },
+    ports: [
+      {
+        name: 'metrics',
+        port: 9394
+      },
+    ]
+  }
+};
+
+local simpleServerServiceMonitor = {
+  apiVersion: 'monitoring.coreos.com/v1',
+  kind: 'ServiceMonitor',
+  metadata: {
+    name: 'simple-server-service-monitor',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'simple-server',
+    },
+  },
+  spec: {
+    jobLabel: 'simple-server',
+    endpoints: [
+      {
+        port: 'metrics',
+      },
+    ],
+    selector: {
+      matchLabels: {
+        'prometheus.io/app': 'simple-server'
+      },
+    },
+  },
+};
 
 // Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,
 // for ArgoCD we need to return just a regular list with all the manifests.
@@ -302,7 +349,8 @@ local manifests =
   [postgresMixin.prometheusRules] +
   [postgresExporterService, postgresServiceMonitor] +
   [redisExporterService, redisServiceMonitor] +
-  [ingressExporterService, ingressServiceMonitor];
+  [ingressExporterService, ingressServiceMonitor] +
+  [simpleServerExporterService, simpleServerServiceMonitor];
 
 local argoAnnotations(manifest) =
   manifest {
