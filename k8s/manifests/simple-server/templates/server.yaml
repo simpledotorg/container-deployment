@@ -24,6 +24,13 @@ spec:
       securityContext:
         {{- toYaml .Values.server.podSecurityContext | nindent 8 }}
       containers:
+      - name: {{ .Values.server.name }}-exporter
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        args: ["bundle exec prometheus_exporter"]
+        ports:
+          - name: metrics
+            containerPort: 9394
+            protocol: TCP
       - name: {{ .Values.server.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
