@@ -16,6 +16,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: {{ .Values.workerCphc.name }}
+        prometheus.io/app: simple-server
       {{- with .Values.workerCphc.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}

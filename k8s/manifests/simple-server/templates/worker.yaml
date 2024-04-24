@@ -16,6 +16,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: {{ .Values.worker.name }}
+        prometheus.io/app: simple-server
       {{- with .Values.worker.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}

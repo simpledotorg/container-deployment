@@ -16,6 +16,7 @@ spec:
     metadata:
       labels:
         app: {{ .Values.server.name }}
+        prometheus.io/app: simple-server
       {{- with .Values.server.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
