@@ -9,6 +9,11 @@ local postgresMixin = addMixin({
   mixin: (import 'postgres_mixin/mixin.libsonnet')
 });
 
+local redisMixin = addMixin({
+  name: 'redis',
+  mixin: (import 'redis-mixin/mixin.libsonnet')
+});
+
 local ingress(name, namespace, rules, tls) = {
   apiVersion: 'networking.k8s.io/v1',
   kind: 'Ingress',
@@ -42,7 +47,7 @@ local kp =
         namespace: 'monitoring',
       },
       grafana+: {
-        dashboards+: postgresMixin.grafanaDashboards,
+        dashboards+: postgresMixin.grafanaDashboards + redisMixin.grafanaDashboards,
         config+: {
           sections+: {
             server+: {
@@ -347,6 +352,7 @@ local manifests =
   [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
   [kp.ingress[name] for name in std.objectFields(kp.ingress) ] +
   [postgresMixin.prometheusRules] +
+  [redisMixin.prometheusRules] +
   [postgresExporterService, postgresServiceMonitor] +
   [redisExporterService, redisServiceMonitor] +
   [ingressExporterService, ingressServiceMonitor] +

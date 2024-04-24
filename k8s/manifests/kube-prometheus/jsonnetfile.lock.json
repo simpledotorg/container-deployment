@@ -144,6 +144,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/oliver006/redis_exporter.git",
+          "subdir": "contrib/redis-mixin"
+        }
+      },
+      "version": "46861baae8aa1473d8cf2069d643058f072ec77a",
+      "sum": "yi+G2aAp1xtaoovHwh9SKNa92wT5VQ7WVD7WbbnH3SQ="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/prometheus-community/postgres_exporter.git",
           "subdir": "postgres_mixin"
         }
