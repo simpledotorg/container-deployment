@@ -16,6 +16,7 @@ spec:
     metadata:
       labels:
         app: {{ .Values.server.name }}
+        prometheus.io/app: simple-server
       {{- with .Values.server.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
@@ -67,6 +68,13 @@ spec:
         volumeMounts:
         - name: logs
           mountPath: /home/app/log
+      - name: {{ .Values.server.name }}-exporter
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command: ["bundle", "exec", "prometheus_exporter"]
+        ports:
+          - name: metrics
+            containerPort: 9394
+            protocol: TCP
       {{ if .Values.logTailer.enabled }}
       - name: log-tailer
         image: "{{ .Values.logTailer.image.repository }}:{{ .Values.logTailer.image.tag }}"

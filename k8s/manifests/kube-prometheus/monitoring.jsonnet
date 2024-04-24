@@ -9,6 +9,16 @@ local postgresMixin = addMixin({
   mixin: (import 'postgres_mixin/mixin.libsonnet')
 });
 
+local redisMixin = addMixin({
+  name: 'redis',
+  mixin: (import 'redis-mixin/mixin.libsonnet')
+});
+
+local ingressNginxMixin = addMixin({
+  name: 'ingress-nginx',
+  mixin: (import 'ingress-nginx-mixin/mixin.libsonnet')
+});
+
 local ingress(name, namespace, rules, tls) = {
   apiVersion: 'networking.k8s.io/v1',
   kind: 'Ingress',
@@ -42,7 +52,7 @@ local kp =
         namespace: 'monitoring',
       },
       grafana+: {
-        dashboards+: postgresMixin.grafanaDashboards,
+        dashboards+: postgresMixin.grafanaDashboards + redisMixin.grafanaDashboards + ingressNginxMixin.grafanaDashboards,
         config+: {
           sections+: {
             server+: {
@@ -187,23 +197,145 @@ local postgresServiceMonitor = {
   },
 };
 
+local redisExporterService = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata: {
+    name: 'redis-exporter',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'redis',
+    },
+  },
+  spec: {
+    selector: {
+      'prometheus.io/app': 'redis'
+    },
+    ports: [
+      {
+        name: 'metrics',
+        port: 9121
+      },
+    ]
+  }
+};
+
 local redisServiceMonitor = {
   apiVersion: 'monitoring.coreos.com/v1',
   kind: 'ServiceMonitor',
   metadata: {
     name: 'redis-service-monitor',
     namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'redis',
+    },
   },
   spec: {
     jobLabel: 'redis',
     endpoints: [
       {
-        port: '9121',
+        port: 'metrics',
       },
     ],
     selector: {
       matchLabels: {
         'prometheus.io/app': 'redis'
+      },
+    },
+  },
+};
+
+local ingressExporterService = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata: {
+    name: 'ingress-exporter',
+    namespace: 'ingress-nginx',
+    labels: {
+      'prometheus.io/app': 'ingress',
+    },
+  },
+  spec: {
+    selector: {
+      'prometheus.io/app': 'ingress'
+    },
+    ports: [
+      {
+        name: 'metrics',
+        port: 10254
+      },
+    ]
+  }
+};
+
+local ingressServiceMonitor = {
+  apiVersion: 'monitoring.coreos.com/v1',
+  kind: 'ServiceMonitor',
+  metadata: {
+    name: 'ingress-service-monitor',
+    namespace: 'ingress-nginx',
+    labels: {
+      'prometheus.io/app': 'ingress',
+    },
+  },
+  spec: {
+    jobLabel: 'ingress',
+    endpoints: [
+      {
+        port: 'metrics',
+      },
+    ],
+    selector: {
+      matchLabels: {
+        'prometheus.io/app': 'ingress'
+      },
+    },
+  },
+};
+
+local simpleServerExporterService = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata: {
+    name: 'simple-server-exporter',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'simple-server',
+    },
+  },
+  spec: {
+    selector: {
+      'prometheus.io/app': 'simple-server'
+    },
+    ports: [
+      {
+        name: 'metrics',
+        port: 9394
+      },
+    ]
+  }
+};
+
+local simpleServerServiceMonitor = {
+  apiVersion: 'monitoring.coreos.com/v1',
+  kind: 'ServiceMonitor',
+  metadata: {
+    name: 'simple-server-service-monitor',
+    namespace: 'simple-v1',
+    labels: {
+      'prometheus.io/app': 'simple-server',
+    },
+  },
+  spec: {
+    jobLabel: 'simple-server',
+    endpoints: [
+      {
+        port: 'metrics',
+      },
+    ],
+    selector: {
+      matchLabels: {
+        'prometheus.io/app': 'simple-server'
       },
     },
   },
@@ -225,8 +357,12 @@ local manifests =
   [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
   [kp.ingress[name] for name in std.objectFields(kp.ingress) ] +
   [postgresMixin.prometheusRules] +
+  [redisMixin.prometheusRules] +
+  [ingressNginxMixin.prometheusRules] +
   [postgresExporterService, postgresServiceMonitor] +
-  [redisServiceMonitor];
+  [redisExporterService, redisServiceMonitor] +
+  [ingressExporterService, ingressServiceMonitor] +
+  [simpleServerExporterService, simpleServerServiceMonitor];
 
 local argoAnnotations(manifest) =
   manifest {

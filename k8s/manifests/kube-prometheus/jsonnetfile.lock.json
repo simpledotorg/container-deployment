@@ -4,6 +4,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/adinhodovic/ingress-nginx-mixin.git",
+          "subdir": ""
+        }
+      },
+      "version": "82af6972484403c5ded75c8c93c77c793b1ab511",
+      "sum": "BiChE1e4sHwtHTRdmkN4yoJyoNZHmugtYZFdq4DVcc8="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/brancz/kubernetes-grafana.git",
           "subdir": "grafana"
         }
@@ -140,6 +150,16 @@
       },
       "version": "d7d561f999d75d0df941b5a64eb50c7e103e1508",
       "sum": "qclI7LwucTjBef3PkGBkKxF0mfZPbHnn4rlNWKGtR4c="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/oliver006/redis_exporter.git",
+          "subdir": "contrib/redis-mixin"
+        }
+      },
+      "version": "46861baae8aa1473d8cf2069d643058f072ec77a",
+      "sum": "yi+G2aAp1xtaoovHwh9SKNa92wT5VQ7WVD7WbbnH3SQ="
     },
     {
       "source": {

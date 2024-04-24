@@ -29,3 +29,6 @@ ingress-nginx:
       prometheus.io/scrape: "true"
       prometheus.io/port: "10254"
       prometheus.io/scheme: http
+    podLabels:
+      prometheus.io/app: "ingress"
+
