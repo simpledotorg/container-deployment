@@ -48,6 +48,7 @@ spec:
         volumeMounts:
         - name: logs
           mountPath: /home/app/log
+      {{ if .Values.metrics.enabled }}
       - name: {{ .Values.server.name }}-exporter
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         command: ["bundle", "exec", "prometheus_exporter", "--bind", "0.0.0.0"]
@@ -55,6 +56,7 @@ spec:
           - name: metrics
             containerPort: 9394
             protocol: TCP
+      {{ end }}
       {{ if .Values.logTailer.enabled }}
       - name: log-tailer
         image: "{{ .Values.logTailer.image.repository }}:{{ .Values.logTailer.image.tag }}"
