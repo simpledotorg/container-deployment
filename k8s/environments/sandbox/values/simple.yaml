@@ -41,3 +41,5 @@ migration:
   enabled: true
 workerCphc:
   enabled: false
+metrics:
+  enabled: true

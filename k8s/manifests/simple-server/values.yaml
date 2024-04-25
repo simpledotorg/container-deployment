@@ -82,6 +82,8 @@ migration:
   podSecurityContext: {
     fsGroup: 9999
   }
+metrics:
+  enabled: false
 logTailer:
   enabled: true
   image:
