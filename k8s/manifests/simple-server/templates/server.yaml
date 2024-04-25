@@ -70,7 +70,7 @@ spec:
           mountPath: /home/app/log
       - name: {{ .Values.server.name }}-exporter
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command: ["bundle", "exec", "prometheus_exporter" "-b 0.0.0.0"]
+        command: ["bundle", "exec", "prometheus_exporter", "-b 0.0.0.0"]
         ports:
           - name: metrics
             containerPort: 9394
