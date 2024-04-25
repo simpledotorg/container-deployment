@@ -6,16 +6,19 @@ local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
 local postgresMixin = addMixin({
   name: 'postgres',
+  dashboardFolder: 'Postgres',
   mixin: (import 'postgres_mixin/mixin.libsonnet')
 });
 
 local redisMixin = addMixin({
   name: 'redis',
+  dashboardFolder: 'Redis',
   mixin: (import 'redis-mixin/mixin.libsonnet')
 });
 
 local ingressNginxMixin = addMixin({
   name: 'ingress-nginx',
+  dashboardFolder: 'Ingress Nginx',
   mixin: (import 'ingress-nginx-mixin/mixin.libsonnet')
 });
 
@@ -52,7 +55,7 @@ local kp =
         namespace: 'monitoring',
       },
       grafana+: {
-        dashboards+: postgresMixin.grafanaDashboards + redisMixin.grafanaDashboards + ingressNginxMixin.grafanaDashboards,
+        folderDashboards+: postgresMixin.grafanaDashboards + redisMixin.grafanaDashboards + ingressNginxMixin.grafanaDashboards,
         config+: {
           sections+: {
             server+: {
