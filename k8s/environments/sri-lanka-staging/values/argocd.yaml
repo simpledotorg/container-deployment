@@ -21,6 +21,7 @@ argo-cd:
       https: false
   configs:
     cm:
+      admin.enabled: true
       accounts.cicd: login
       accounts.govind: login 
       accounts.priyanga: login 
