@@ -1,42 +1,37 @@
-// NB! Make sure that argocd-cm has `application.instanceLabelKey` set to something else than `app.kubernetes.io/instance`,
-//     otherwise it will cause problems with prometheus target discovery.
-//     See also https://argo-cd.readthedocs.io/en/stable/faq/#why-is-my-app-out-of-sync-even-after-syncing
+local postgres = (import 'lib/postgres.libsonnet');
+local redis = (import 'lib/redis.libsonnet');
+local ingressNginx = (import 'lib/ingress-nginx.libsonnet');
+local simpleServer = (import 'lib/simple-server.libsonnet');
+local kubePrometheus = (import 'lib/kube-prometheus.libsonnet');
+local argocd = (import 'lib/argocd.libsonnet');
+local ingress = (import 'lib/ingress.libsonnet');
 
-local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
+local grafanaDashboards =
+  postgres.grafanaDashboards +
+  redis.grafanaDashboards +
+  ingressNginx.grafanaDashboards;
 
-local postgresMixin = addMixin({
-  name: 'postgres',
-  dashboardFolder: 'Postgres',
-  mixin: (import 'postgres_mixin/mixin.libsonnet')
-});
 
-local redisMixin = addMixin({
-  name: 'redis',
-  dashboardFolder: 'Redis',
-  mixin: (import 'redis-mixin/mixin.libsonnet')
-});
+local prometheusRules = [
+  postgres.prometheusRules,
+  redis.prometheusRules,
+  ingressNginx.prometheusRules,
+];
 
-local ingressNginxMixin = addMixin({
-  name: 'ingress-nginx',
-  dashboardFolder: 'Ingress Nginx',
-  mixin: (import 'ingress-nginx-mixin/mixin.libsonnet')
-});
 
-local ingress(name, namespace, rules, tls) = {
-  apiVersion: 'networking.k8s.io/v1',
-  kind: 'Ingress',
-  metadata: {
-    name: name,
-    namespace: namespace,
-    annotations: {
-      'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
-      'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
+local exporterServices = [
+  postgres.exporterService,
+  redis.exporterService,
+  ingressNginx.exporterService,
+  simpleServer.exporterService,
+];
 
-    },
-  },
-  spec: { rules: rules, tls: tls },
-};
-
+local serviceMonitors = [
+  postgres.serviceMonitor,
+  redis.serviceMonitor,
+  ingressNginx.serviceMonitor,
+  simpleServer.serviceMonitor,
+];
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
@@ -55,7 +50,7 @@ local kp =
         namespace: 'monitoring',
       },
       grafana+: {
-        folderDashboards+: postgresMixin.grafanaDashboards + redisMixin.grafanaDashboards + ingressNginxMixin.grafanaDashboards,
+        folderDashboards+: grafanaDashboards,
         config+: {
           sections+: {
             server+: {
@@ -82,317 +77,32 @@ local kp =
         },
       },
     },
-    ingress+:: {
-      'alertmanager-main': ingress(
-        'alertmanager-main',
-        $.values.common.namespace,
-        [{
-          host: 'alertmanager-sandbox.simple.org',
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'alertmanager-main',
-                  port: {
-                    name: 'web',
-                  },
-                },
-              },
-            }],
-          },
-        }],
-        [{ hosts: ['alertmanager-sandbox.simple.org'], secretName: 'alertmanager-sandbox.simple.org-tls'}]
-      ),
-      grafana: ingress(
-        'grafana',
-        $.values.common.namespace,
-        [{
-          host: 'grafana-sandbox.simple.org',
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'grafana',
-                  port: {
-                    name: 'http',
-                  },
-                },
-              },
-            }],
-          },
-        }],
-        [{ hosts: ['grafana-sandbox.simple.org'], secretName: 'grafana-sandbox.simple.org-tls'}]
-      ),
-      'prometheus-k8s': ingress(
-        'prometheus-k8s',
-        $.values.common.namespace,
-        [{
-          host: 'prometheus-sandbox.simple.org',
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'prometheus-k8s',
-                  port: {
-                    name: 'web',
-                  },
-                },
-              },
-            }],
-          },
-        }],
-        [{ hosts: ['prometheus-sandbox.simple.org'], secretName: 'prometheus-sandbox.simple.org-tls'}]
-      ),
-    }
+    ingress+:: ingress.ingressConfig([
+      {
+        name: 'alertmanager-main',
+        namespace: $.values.common.namespace,
+        host: 'alertmanager-sandbox.simple.org',
+        port: 'web',
+      },
+      {
+        name: 'grafana',
+        namespace: $.values.common.namespace,
+        host: 'grafana-sandbox.simple.org',
+        port: 'http',
+      },
+      {
+        name: 'prometheus-k8s',
+        namespace: $.values.common.namespace,
+        host: 'prometheus-sandbox.simple.org',
+        port: 'web',
+      },
+    ]),
   };
 
-local postgresExporterService = {
-  apiVersion: 'v1',
-  kind: 'Service',
-  metadata: {
-    name: 'postgres-exporter',
-    namespace: 'simple-v1',
-    labels: {
-      'prometheus.io/app': 'postgres',
-    },
-  },
-  spec: {
-    selector: {
-      'prometheus.io/app': 'postgres'
-    },
-    ports: [
-      {
-        name: 'metrics',
-        port: 9187
-      },
-    ]
-  }
-};
-
-local postgresServiceMonitor = {
-  apiVersion: 'monitoring.coreos.com/v1',
-  kind: 'ServiceMonitor',
-  metadata: {
-    name: 'postgres-service-monitor',
-    namespace: 'simple-v1',
-    labels: {
-      'prometheus.io/app': 'postgres',
-    },
-  },
-  spec: {
-    jobLabel: 'postgres',
-    endpoints: [
-      {
-        port: 'metrics',
-      },
-    ],
-    selector: {
-      matchLabels: {
-        'prometheus.io/app': 'postgres'
-      },
-    },
-  },
-};
-
-local redisExporterService = {
-  apiVersion: 'v1',
-  kind: 'Service',
-  metadata: {
-    name: 'redis-exporter',
-    namespace: 'simple-v1',
-    labels: {
-      'prometheus.io/app': 'redis',
-    },
-  },
-  spec: {
-    selector: {
-      'prometheus.io/app': 'redis'
-    },
-    ports: [
-      {
-        name: 'metrics',
-        port: 9121
-      },
-    ]
-  }
-};
-
-local redisServiceMonitor = {
-  apiVersion: 'monitoring.coreos.com/v1',
-  kind: 'ServiceMonitor',
-  metadata: {
-    name: 'redis-service-monitor',
-    namespace: 'simple-v1',
-    labels: {
-      'prometheus.io/app': 'redis',
-    },
-  },
-  spec: {
-    jobLabel: 'redis',
-    endpoints: [
-      {
-        port: 'metrics',
-      },
-    ],
-    selector: {
-      matchLabels: {
-        'prometheus.io/app': 'redis'
-      },
-    },
-  },
-};
-
-local ingressExporterService = {
-  apiVersion: 'v1',
-  kind: 'Service',
-  metadata: {
-    name: 'ingress-exporter',
-    namespace: 'ingress-nginx',
-    labels: {
-      'prometheus.io/app': 'ingress',
-    },
-  },
-  spec: {
-    selector: {
-      'prometheus.io/app': 'ingress'
-    },
-    ports: [
-      {
-        name: 'metrics',
-        port: 10254
-      },
-    ]
-  }
-};
-
-local ingressServiceMonitor = {
-  apiVersion: 'monitoring.coreos.com/v1',
-  kind: 'ServiceMonitor',
-  metadata: {
-    name: 'ingress-service-monitor',
-    namespace: 'ingress-nginx',
-    labels: {
-      'prometheus.io/app': 'ingress',
-    },
-  },
-  spec: {
-    jobLabel: 'ingress',
-    endpoints: [
-      {
-        port: 'metrics',
-      },
-    ],
-    selector: {
-      matchLabels: {
-        'prometheus.io/app': 'ingress'
-      },
-    },
-  },
-};
-
-local simpleServerExporterService = {
-  apiVersion: 'v1',
-  kind: 'Service',
-  metadata: {
-    name: 'simple-server-exporter',
-    namespace: 'simple-v1',
-    labels: {
-      'prometheus.io/app': 'simple-server',
-    },
-  },
-  spec: {
-    selector: {
-      'prometheus.io/app': 'simple-server'
-    },
-    ports: [
-      {
-        name: 'metrics',
-        port: 9394
-      },
-    ]
-  }
-};
-
-local simpleServerServiceMonitor = {
-  apiVersion: 'monitoring.coreos.com/v1',
-  kind: 'ServiceMonitor',
-  metadata: {
-    name: 'simple-server-service-monitor',
-    namespace: 'simple-v1',
-    labels: {
-      'prometheus.io/app': 'simple-server',
-    },
-  },
-  spec: {
-    jobLabel: 'simple-server',
-    endpoints: [
-      {
-        port: 'metrics',
-      },
-    ],
-    selector: {
-      matchLabels: {
-        'prometheus.io/app': 'simple-server'
-      },
-    },
-  },
-};
-
-// Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,
-// for ArgoCD we need to return just a regular list with all the manifests.
 local manifests =
-  [kp.kubePrometheus[name] for name in std.objectFields(kp.kubePrometheus)] +
-  [kp.prometheusOperator[name] for name in std.objectFields(kp.prometheusOperator)] +
-  // [kp.alertmanager[name] for name in std.objectFields(kp.alertmanager)] +
-  [kp.blackboxExporter[name] for name in std.objectFields(kp.blackboxExporter)] +
-  [kp.grafana[name] for name in std.objectFields(kp.grafana)] +
-  // [ kp.pyrra[name] for name in std.objectFields(kp.pyrra)] +
-  [kp.kubeStateMetrics[name] for name in std.objectFields(kp.kubeStateMetrics)] +
-  [kp.kubernetesControlPlane[name] for name in std.objectFields(kp.kubernetesControlPlane)] +
-  [kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter)] +
-  [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
-  [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)] +
-  [kp.ingress[name] for name in std.objectFields(kp.ingress) ] +
-  [postgresMixin.prometheusRules] +
-  [redisMixin.prometheusRules] +
-  [ingressNginxMixin.prometheusRules] +
-  [postgresExporterService, postgresServiceMonitor] +
-  [redisExporterService, redisServiceMonitor] +
-  [ingressExporterService, ingressServiceMonitor] +
-  [simpleServerExporterService, simpleServerServiceMonitor];
+  kubePrometheus.manifests(kp) +
+  prometheusRules +
+  exporterServices +
+  serviceMonitors;
 
-local argoAnnotations(manifest) =
-  manifest {
-    metadata+: {
-      annotations+: {
-        'argocd.argoproj.io/sync-wave':
-          // Make sure to sync the Namespace & CRDs before anything else (to avoid sync failures)
-          if std.member(['CustomResourceDefinition', 'Namespace'], manifest.kind)
-          then '-5'
-          // And sync all the roles outside of the main & kube-system last (in case some of the namespaces don't exist yet)
-          else if std.objectHas(manifest, 'metadata')
-                  && std.objectHas(manifest.metadata, 'namespace')
-                  && !std.member([kp.values.common.namespace, 'kube-system'], manifest.metadata.namespace)
-          then '10'
-          else '5',
-        'argocd.argoproj.io/sync-options':
-          // Use replace strategy for CRDs, as they're too big fit into the last-applied-configuration annotation that kubectl apply wants to use
-          if manifest.kind == 'CustomResourceDefinition' then 'Replace=true'
-          else '',
-      },
-    },
-  };
-
-// Add argo-cd annotations to all the manifests
-[
-  if std.endsWith(manifest.kind, 'List') && std.objectHas(manifest, 'items')
-  then manifest { items: [argoAnnotations(item) for item in manifest.items] }
-  else argoAnnotations(manifest)
-  for manifest in manifests
-]
+argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
