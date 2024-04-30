@@ -9,7 +9,8 @@ local ingress = (import 'lib/ingress.libsonnet');
 local grafanaDashboards =
   postgres.grafanaDashboards +
   redis.grafanaDashboards +
-  ingressNginx.grafanaDashboards;
+  ingressNginx.grafanaDashboards +
+  simpleServer.grafanaDashboards;
 
 
 local prometheusRules = [
