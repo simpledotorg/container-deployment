@@ -54,7 +54,6 @@ spec:
   backups:
     pgbackrest:
       global:
-        # Number of full backups to retain
         repo1-retention-full: "2"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:

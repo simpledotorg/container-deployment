@@ -31,3 +31,5 @@ cron:
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sri-lanka-staging-k8s"]}]'
   }
+migration:
+  enabled: false
