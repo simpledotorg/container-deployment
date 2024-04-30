@@ -232,30 +232,30 @@ spec:
 
 ---
 
-# # Postgres cluster
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: pgo-postgres
-# spec:
-#   destination:
-#     name: ''
-#     namespace: simple-v1
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/environments/sri-lanka-staging/op-postgres
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: lk-demo-v2
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: false
-#       selfHeal: true
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgo-postgres
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sri-lanka-staging/op-postgres
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo-v2
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
 
-# ---
+---
 
 # Cache redis
 apiVersion: argoproj.io/v1alpha1
