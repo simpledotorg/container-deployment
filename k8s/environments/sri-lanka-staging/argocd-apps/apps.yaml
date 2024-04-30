@@ -311,58 +311,58 @@ spec:
       prune: true
       selfHeal: true
 
-# ---
+---
 
-# # Simple server, worker and cron
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: simple-server
-# spec:
-#   destination:
-#     name: ''
-#     namespace: simple-v1
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/manifests/simple-server
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: lk-demo-v2
-#     helm:
-#       valueFiles:
-#         - ../../environments/sri-lanka-staging/values/simple.yaml
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
+# Simple server, worker and cron
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: simple-server
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/simple-server
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo-v2
+    helm:
+      valueFiles:
+        - ../../environments/sri-lanka-staging/values/simple.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
-# ---
+---
 
-# # Metabase
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: metabase
-# spec:
-#   destination:
-#     name: ''
-#     namespace: simple-v1
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/manifests/metabase
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: lk-demo-v2
-#     helm:
-#       valueFiles:
-#         - ../../environments/sri-lanka-staging/values/metabase.yaml
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
+# Metabase
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metabase
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/metabase
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: lk-demo-v2
+    helm:
+      valueFiles:
+        - ../../environments/sri-lanka-staging/values/metabase.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
