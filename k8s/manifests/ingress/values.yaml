@@ -30,5 +30,5 @@ ingress-nginx:
       prometheus.io/port: "10254"
       prometheus.io/scheme: http
     podLabels:
-      prometheus.io/app: "ingress"
+      prometheus.io/app: "ingress-nginx"
 
