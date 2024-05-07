@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: dhis2/core
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "40.3.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 ingress:
   enabled: false
@@ -73,3 +73,13 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+dhis2:
+  workingDirectory: /opt/dhis2
+  existingConfSecretName: dhis-conf
+  existingConfSecretKey: dhis.conf
+  confFileName: dhis.conf
+  log4j2ConfigFile: config/log4j2.xml
+  log4j2ConfigFileName: log4j2.xml
+  catalinaOpts: "-Dcontext.path=''"
+  javaOpts: ""

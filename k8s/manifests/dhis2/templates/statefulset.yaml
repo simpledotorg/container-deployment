@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "dhis2.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "dhis2.selectorLabels" . | nindent 6 }}
@@ -27,26 +25,53 @@ spec:
       serviceAccountName: {{ include "dhis2.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: dhis-conf
+          secret:
+            secretName: {{ .Values.dhis2.existingConfSecretName }}
+            items:
+              - key: {{ .Values.dhis2.existingConfSecretKey }}
+                path: {{ .Values.dhis2.confFileName }}
+        - name: log4j2-xml
+          configMap:
+            name: {{ include "dhis2.fullname" . }}
+            items:
+              - key: {{ .Values.dhis2.log4j2ConfigFileName }}
+                path: {{ .Values.dhis2.log4j2ConfigFileName }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CATALINA_OPTS
+              value: {{ .Values.dhis2.catalinaOpts }}
+            - name: JAVA_OPTS
+              value: "-Dlog4j2.configurationFile={{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.confFileName }} {{ .Values.dhis2.javaOpts }}"
+            - name: DHIS2_HOME
+              value: {{ .Values.dhis2.workingDirectory }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: dhis-conf
+              mountPath: {{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.confFileName }}
+              subPath: {{ .Values.dhis2.confFileName }}
+            - name: log4j2-xml
+              mountPath: {{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.log4j2ConfigFileName }}
+              subPath: {{ .Values.dhis2.log4j2ConfigFileName }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
