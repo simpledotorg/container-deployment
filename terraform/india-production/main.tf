@@ -100,7 +100,6 @@ module "eks" {
     "role-ingress"  = "true"
     "role-metabase" = "true"
     "role-worker"   = "true"
-    "role-cron"     = "true"
   }
 
   cache_redis_instance_enable = true
@@ -108,6 +107,13 @@ module "eks" {
 
   cache_redis2_instance_enable = false
   cache_redis2_instance_type   = "r5a.large"
+
+  default_nodepool_instance_enable = true
+  default_nodepool_instance_count  = 1
+  default_nodepool_instance_type   = "t3a.small"
+  default_nodepool_instance_extra_labels = {
+    "role-cron" = "true"
+  }
 }
 
 module "db_backup_s3_bucket" {
