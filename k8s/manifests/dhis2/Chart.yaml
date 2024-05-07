@@ -1,6 +1,6 @@
 apiVersion: v2
 name: dhis2
-description: A Helm chart for Kubernetes
+description: A Helm chart for DHIS2
 
 # A chart can be either an 'application' or a 'library' chart.
 #
