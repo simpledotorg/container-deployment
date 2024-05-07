@@ -75,18 +75,6 @@ local kp =
       prometheus+: {
         spec+: {
           externalUrl: 'http://prometheus-sandbox.simple.org',
-          retention: '30d',
-          storage: {
-            volumeClaimTemplate: {
-              apiVersion: 'v1',
-              kind: 'PersistentVolumeClaim',
-              spec: {
-                accessModes: ['ReadWriteOnce'],
-                resources: { requests: { storage: '10Gi' } },
-                storageClassName: 'ssd',
-              },
-            },
-          },
         },
       },
     },
