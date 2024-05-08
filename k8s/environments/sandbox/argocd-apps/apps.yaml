@@ -297,9 +297,9 @@ spec:
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/sandbox/op-postgres
+    path: k8s/environments/sandbox/op-postgres/simple-server.yaml
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: dhis2-dev
   project: default
   syncPolicy:
     syncOptions:
@@ -475,3 +475,51 @@ spec:
     automated: {}
 
 ---
+
+# dhis2-sandbox-01 server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-01-server
+spec:
+  destination:
+    name: ''
+    namespace: dhis2-sandbox-01
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: dhis2-dev
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-01 postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-01-postgres
+spec:
+  destination:
+    namespace: dhis2-sandbox-01
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-sandbox-01.yaml
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: dhis2-dev
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
