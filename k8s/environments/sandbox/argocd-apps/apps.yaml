@@ -297,7 +297,7 @@ spec:
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/sandbox/op-postgres/simple-server.yaml
+    path: k8s/environments/sandbox/op-postgres/simple-server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: dhis2-dev
   project: default
@@ -512,7 +512,7 @@ spec:
     namespace: dhis2-sandbox-01
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/sandbox/op-postgres/dhis2-sandbox-01.yaml
+    path: k8s/environments/sandbox/op-postgres//dhis2-sandbox-01
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: dhis2-dev
   project: default
