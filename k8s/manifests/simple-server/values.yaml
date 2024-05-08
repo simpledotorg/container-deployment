@@ -24,6 +24,9 @@ cron:
     storage: 1Gi
   appLog:
     storage: 1Gi
+  image:
+    repository: simpledotorg/server
+    tag: ""
 server:
   name: "simple-server"
   nodeSelector: {}
