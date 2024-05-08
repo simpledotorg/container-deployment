@@ -84,9 +84,14 @@ module "eks" {
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
-  db_instance_enable = false
+  db_instance_enable = true
+  db_instance_type   = "r6a.4xlarge"
+  db_instance_count  = 2
+  db_instance_extra_labels = {
+    role-db-backup = "true"
+  }
 
-  db2_instance_enable = true
+  db2_instance_enable = false
   db2_instance_type   = "t3a.2xlarge"
   db2_instance_count  = 2
   db2_instance_extra_labels = {
