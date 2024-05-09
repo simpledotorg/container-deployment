@@ -2,7 +2,8 @@ local common = (import 'common.libsonnet');
 
 local grafanaDashboards = {
   'Simple Server': {
-    'rails-metrics.json': (import '../dashboards/rails-metrics.json'),
+    'rails-performance.json': (import 'dashboards/rails-performance.json'),
+    'simple-server.json': (import 'dashboards/simple-server.libsonnet'),
   },
 };
 

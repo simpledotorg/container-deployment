@@ -6,6 +6,11 @@ local kubePrometheus = (import 'lib/kube-prometheus.libsonnet');
 local argocd = (import 'lib/argocd.libsonnet');
 local ingress = (import 'lib/ingress.libsonnet');
 
+local environment = std.extVar('ENVIRONMENT');
+local values = {
+  sandbox: (import 'values/sandbox.libsonnet'),
+}[environment];
+
 local grafanaDashboards =
   postgres.grafanaDashboards +
   redis.grafanaDashboards +
@@ -55,7 +60,7 @@ local kp =
         config+: {
           sections+: {
             server+: {
-              root_url: 'http://grafana-sandbox.simple.org/',
+              root_url: values.grafana.rootUrl,
             },
           },
         },
