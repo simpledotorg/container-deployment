@@ -13,33 +13,8 @@ local config = {
   sandbox: (import 'config/sandbox.libsonnet'),
 }[environment];
 
-local grafanaDashboards =
-  postgres.grafanaDashboards +
-  redis.grafanaDashboards +
-  ingressNginx.grafanaDashboards +
-  simpleServer.grafanaDashboards;
-
-
-local prometheusRules = [
-  postgres.prometheusRules,
-  redis.prometheusRules,
-  ingressNginx.prometheusRules,
-];
-
-
-local exporterServices = [
-  postgres.exporterService,
-  redis.exporterService,
-  ingressNginx.exporterService,
-  simpleServer.exporterService,
-];
-
-local serviceMonitors = [
-  postgres.serviceMonitor,
-  redis.serviceMonitor,
-  ingressNginx.serviceMonitor,
-  simpleServer.serviceMonitor,
-];
+local monitoredServices =
+  [postgres, redis, ingress, simpleServer];
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
@@ -58,7 +33,7 @@ local kp =
         namespace: namespace,
       },
       grafana+: {
-        folderDashboards+: grafanaDashboards,
+        folderDashboards+: std.sum([service.grafanaDashboards for service in monitoredServices]),
         datasources+: [],
         config+: {
           sections+: {
@@ -70,6 +45,9 @@ local kp =
       },
       prometheus+: {
         namespaces: [],
+      },
+      alertmanager+: {
+        config: importstr 'alertmanager-config.yaml',
       },
     },
     alertmanager+:: {
@@ -101,8 +79,8 @@ local kp =
 
 local manifests =
   kubePrometheus.manifests(kp) +
-  prometheusRules +
-  exporterServices +
-  serviceMonitors;
+  [service.prometheusRules for service in monitoredServices] +
+  [service.exporterServices for service in monitoredServices] +
+  [service.serviceMonitors for service in monitoredServices];
 
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
