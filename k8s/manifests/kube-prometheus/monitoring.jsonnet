@@ -7,8 +7,10 @@ local argocd = (import 'lib/argocd.libsonnet');
 local ingress = (import 'lib/ingress.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
-local values = {
-  sandbox: (import 'values/sandbox.libsonnet'),
+local namespace = 'monitoring';
+
+local config = {
+  sandbox: (import 'config/sandbox.libsonnet'),
 }[environment];
 
 local grafanaDashboards =
@@ -53,14 +55,15 @@ local kp =
   {
     values+:: {
       common+: {
-        namespace: 'monitoring',
+        namespace: namespace,
       },
       grafana+: {
         folderDashboards+: grafanaDashboards,
+        datasources+: [],
         config+: {
           sections+: {
             server+: {
-              root_url: values.grafana.rootUrl,
+              root_url: config.grafana.externalUrl,
             },
           },
         },
@@ -72,35 +75,26 @@ local kp =
     alertmanager+:: {
       alertmanager+: {
         spec+: {
-          externalUrl: 'http://alertmanager-sandbox.simple.org',
+          externalUrl: config.alertmanager.externalUrl,
         },
       },
     },
     prometheus+:: {
       prometheus+: {
         spec+: {
-          externalUrl: 'http://prometheus-sandbox.simple.org',
+          externalUrl: config.prometheus.externalUrl,
         },
       },
     },
     ingress+:: ingress.ingressConfig([
-      {
-        name: 'alertmanager-main',
+      config.alertmanager.ingress {
         namespace: $.values.common.namespace,
-        host: 'alertmanager-sandbox.simple.org',
-        port: 'web',
       },
-      {
-        name: 'grafana',
+      config.grafana.ingress {
         namespace: $.values.common.namespace,
-        host: 'grafana-sandbox.simple.org',
-        port: 'http',
       },
-      {
-        name: 'prometheus-k8s',
+      config.prometheus.ingress {
         namespace: $.values.common.namespace,
-        host: 'prometheus-sandbox.simple.org',
-        port: 'web',
       },
     ]),
   };
