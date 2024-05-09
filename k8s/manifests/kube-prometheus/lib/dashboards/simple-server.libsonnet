@@ -224,6 +224,5 @@ g.dashboard.new('Simple Server Dasboard')
     sync_to_user,
     sync_from_user,
     database,
-
   ])
 )
