@@ -14,7 +14,13 @@ local config = {
 }[environment];
 
 local monitoredServices =
-  [postgres, redis, ingress, simpleServer];
+  [postgres, redis, ingressNginx, simpleServer];
+
+local grafanaDashboards =
+  postgres.grafanaDashboards +
+  redis.grafanaDashboards +
+  ingressNginx.grafanaDashboards +
+  simpleServer.grafanaDashboards;
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
@@ -33,7 +39,7 @@ local kp =
         namespace: namespace,
       },
       grafana+: {
-        folderDashboards+: std.sum([service.grafanaDashboards for service in monitoredServices]),
+        folderDashboards+: grafanaDashboards,
         datasources+: [],
         config+: {
           sections+: {
@@ -79,8 +85,8 @@ local kp =
 
 local manifests =
   kubePrometheus.manifests(kp) +
-  [service.prometheusRules for service in monitoredServices] +
-  [service.exporterServices for service in monitoredServices] +
-  [service.serviceMonitors for service in monitoredServices];
+  [service.prometheusRules for service in [postgres, redis, ingressNginx]] +
+  [service.exporterService for service in monitoredServices] +
+  [service.serviceMonitor for service in monitoredServices];
 
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
