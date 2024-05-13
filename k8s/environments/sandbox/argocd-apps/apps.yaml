@@ -490,6 +490,9 @@ spec:
     path: k8s/manifests/dhis2
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: dhis2-dev
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-sandbox-01.yaml
   project: default
   syncPolicy:
     syncOptions:

@@ -76,7 +76,7 @@ affinity: {}
 
 dhis2:
   workingDirectory: /opt/dhis2
-  existingConfSecretName: dhis-conf
+  existingConfSecretName: dhis2
   existingConfSecretKey: dhis.conf
   confFileName: dhis.conf
   log4j2ConfigFile: config/log4j2.xml
