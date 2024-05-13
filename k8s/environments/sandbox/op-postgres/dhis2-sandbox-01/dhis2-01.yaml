@@ -53,6 +53,31 @@ spec:
           prometheus.io/app: 'postgres'
         annotations:
           argocd.argoproj.io/sync-options: Delete=false
+  backups:
+    pgbackrest:
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-dhis2-sandbox-01
+                  operator: In
+                  values:
+                  - "true"
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
+      repos:
+      - name: repo1
+      jobs:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-dhis2-sandbox-01
+                  operator: In
+                  values:
+                  - "true"
   patroni:
     dynamicConfiguration:
       postgresql:
