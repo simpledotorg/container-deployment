@@ -67,12 +67,13 @@ spec:
           random_page_cost: "1.1"
           effective_io_concurrency: "200"
           work_mem: "20971kB"
+          huge_pages: "try"
           min_wal_size: "1GB"
           max_wal_size: "4GB"
-          max_worker_processes: "4"
-          max_parallel_workers_per_gather: "2"
-          max_parallel_workers: "4"
-          max_parallel_maintenance_workers: "2"
+          max_worker_processes: "8"
+          max_parallel_workers_per_gather: "4"
+          max_parallel_workers: "8"
+          max_parallel_maintenance_workers: "4"
   monitoring:
     pgmonitor:
       exporter:
