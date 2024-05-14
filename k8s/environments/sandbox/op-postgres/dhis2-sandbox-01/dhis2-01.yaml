@@ -55,6 +55,9 @@ spec:
           argocd.argoproj.io/sync-options: Delete=false
   backups:
     pgbackrest:
+      configuration:
+      - secret:
+          name: dhis2
       repoHost:
         affinity:
           nodeAffinity:
@@ -65,9 +68,18 @@ spec:
                   operator: In
                   values:
                   - "true"
+      global:
+        repo1-path: /pgbackrest/postgres-operator/dhis2-sandbox-01/repo1
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
+        schedules:
+          full: "0 22 * * 0" # Sunday
+          differential: "0 22 * * 1-6" # Monday to Saturday
+        s3:
+          bucket: sandbox-simple-k8s-db-backup
+          endpoint: s3.ap-south-1.amazonaws.com
+          region: ap-south-1
       jobs:
         affinity:
           nodeAffinity:
