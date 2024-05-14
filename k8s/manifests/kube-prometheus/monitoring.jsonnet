@@ -10,6 +10,7 @@ local ingress = (import 'lib/ingress.libsonnet');
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
 
+
 local config = {
   sandbox: (import 'config/sandbox.libsonnet'),
 }[environment];
@@ -47,14 +48,15 @@ local kp =
             server+: {
               root_url: config.grafana.externalUrl,
             },
+            'auth.generic_oauth': {
+              enabled: true,
+              name: 'Keycloak-OAuth',
+            },
           },
         },
       },
       prometheus+: {
         namespaces: [],
-      },
-      alertmanager+: {
-        config: importstr 'alertmanager-config.yaml',
       },
     },
     alertmanager+:: {

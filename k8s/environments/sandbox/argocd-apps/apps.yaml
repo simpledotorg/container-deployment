@@ -519,11 +519,6 @@ spec:
         extVars:
         - name: ENVIRONMENT
           value: sandbox
-        - name: SLACK_WEBHOOK_URL
-          valueFrom:
-            secretKeyRef:
-              name: alertmanager-secrets
-              key: slack-api-url
         libs:
           - k8s/manifests/kube-prometheus/vendor
       exclude: '*.json'

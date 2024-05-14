@@ -1,8 +1,10 @@
 {
   manifests(kp):
+    local alertmanager = std.mergePatch(kp.alertmanager, { secret: null });
+
     [kp.kubePrometheus[name] for name in std.objectFields(kp.kubePrometheus)] +
     [kp.prometheusOperator[name] for name in std.objectFields(kp.prometheusOperator)] +
-    [kp.alertmanager[name] for name in std.objectFields(kp.alertmanager)] +
+    [alertmanager[name] for name in std.objectFields(alertmanager)] +
     [kp.blackboxExporter[name] for name in std.objectFields(kp.blackboxExporter)] +
     [kp.grafana[name] for name in std.objectFields(kp.grafana)] +
     // [ kp.pyrra[name] for name in std.objectFields(kp.pyrra)] +
