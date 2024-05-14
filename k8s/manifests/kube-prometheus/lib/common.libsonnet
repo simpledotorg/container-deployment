@@ -35,4 +35,14 @@
       },
     },
   },
+
+  persistentVolumeClaim(accessModes, storageClass, size): {
+    apiVersion: 'v1',
+    kind: 'PersistentVolumeClaim',
+    spec: {
+      accessModes: accessModes,
+      resources: { requests: { storage: size } },
+      storageClassName: storageClass,
+    },
+  },
 }

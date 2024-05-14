@@ -1,3 +1,4 @@
+local common = (import 'lib/common.libsonnet');
 local postgres = (import 'lib/postgres.libsonnet');
 local redis = (import 'lib/redis.libsonnet');
 local ingressNginx = (import 'lib/ingress-nginx.libsonnet');
@@ -67,6 +68,21 @@ local kp =
       prometheus+: {
         spec+: {
           externalUrl: config.prometheus.externalUrl,
+          retention: config.prometheus.retention,
+          storage: {
+            volumeClaimTemplate: {
+              apiVersion: 'v1',
+              kind: 'PersistentVolumeClaim',
+              spec: {
+                accessModes: ['ReadWriteOnce'],
+                resources: {
+                  requests: {
+                    storage: config.prometheus.storage,
+                  },
+                },
+              },
+            },
+          },
         },
       },
     },
