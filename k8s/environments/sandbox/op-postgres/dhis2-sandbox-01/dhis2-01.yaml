@@ -4,7 +4,7 @@ metadata:
   name: dhis2-sandbox-01
   namespace: dhis2-sandbox-01
 spec:
-  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.5-1
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-gis:ubi8-14.5-3.2-1
   postgresVersion: 14
   users:
     - name: admin
