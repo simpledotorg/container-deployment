@@ -102,3 +102,8 @@ probes:
     failureThreshold: 30
     periodSeconds: 10
     initialDelaySeconds: 30
+
+storage:
+  persistence: true
+  volumeSize: 10Gi
+  className: gp3

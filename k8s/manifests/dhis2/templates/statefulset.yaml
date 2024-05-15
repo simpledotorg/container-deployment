@@ -61,6 +61,9 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            - name: {{ include "dhis2.fullname" . }}
+              mountPath: {{ .Values.dhis2.workingDirectory }}
+              readOnly: false
             - name: dhis-conf
               mountPath: {{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.confFileName }}
               subPath: {{ .Values.dhis2.confFileName }}
@@ -79,3 +82,17 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  {{- if .Values.storage.persistence }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "dhis2.fullname" . }}
+        labels:
+          {{- include "dhis2.labels" . | nindent 10 }}
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.storage.volumeSize }}
+        storageClassName: {{ .Values.storage.className }}
+  {{- end }}
