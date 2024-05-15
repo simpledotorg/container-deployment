@@ -38,13 +38,19 @@ spec:
             items:
               - key: {{ .Values.dhis2.log4j2ConfigFileName }}
                 path: {{ .Values.dhis2.log4j2ConfigFileName }}
+      initContainers:
+        - name: dhis2-home-permissions
+          image: busybox
+          command: [ 'sh', '-c', 'chown {{ .Values.securityContext.runAsUser }}:{{ .Values.securityContext.runAsGroup }} /dhis-home && chmod u+rw,go-rwx /dhis-home' ]
+          volumeMounts:
+            - name: {{ include "dhis2.fullname" . }}
+              mountPath: /dhis-home
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["tail", "-f", "/dev/null"]
           env:
             - name: CATALINA_OPTS
               value: {{ .Values.dhis2.catalinaOpts }}
