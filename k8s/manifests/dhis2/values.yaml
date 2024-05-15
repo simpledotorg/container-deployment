@@ -83,3 +83,22 @@ dhis2:
   log4j2ConfigFileName: log4j2.xml
   catalinaOpts: "-Dcontext.path=''"
   javaOpts: ""
+
+probes:
+  liveness:
+    httpGet:
+      path: /
+      port: http
+      initialDelaySeconds: 30
+  readiness:
+    httpGet:
+      path: /
+      port: http
+      initialDelaySeconds: 30
+  startup:
+    httpGet:
+      path: /
+      port: http
+    failureThreshold: 30
+    periodSeconds: 10
+    initialDelaySeconds: 30
