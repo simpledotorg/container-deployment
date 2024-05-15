@@ -38,6 +38,12 @@ spec:
             items:
               - key: {{ .Values.dhis2.log4j2ConfigFileName }}
                 path: {{ .Values.dhis2.log4j2ConfigFileName }}
+        - name: jmx_prometheus_javaagent_yaml
+          configMap:
+            name: {{ include "dhis2.fullname" . }}
+            items:
+              - key: {{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
+                path: {{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
       initContainers:
         - name: dhis2-home-permissions
           image: busybox
@@ -74,6 +80,9 @@ spec:
             - name: log4j2-xml
               mountPath: {{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.log4j2ConfigFileName }}
               subPath: {{ .Values.dhis2.log4j2ConfigFileName }}
+            - name: log4j2-xml
+              mountPath: {{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
+              subPath: {{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

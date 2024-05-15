@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: dhis2/core
+  repository: simpledotorg/dhis2
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "40.3.0"
+  tag: "2.40.3.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -81,8 +81,10 @@ dhis2:
   existingConfSecretKey: dhis.conf
   confFileName: dhis.conf
   log4j2ConfigFile: config/log4j2.xml
+  jmxPrometheusJavaagentConfigFile: config/jmx_prometheus_javaagent.yaml
+  jmxPrometheusJavaagentConfigFileName: jmx_prometheus_javaagent.yaml
   log4j2ConfigFileName: log4j2.xml
-  catalinaOpts: "-Dcontext.path=''"
+  catalinaOpts: "-Dcontext.path='' -javaagent:/opt/dhis2-ext/jmx_prometheus_javaagent.jar=12345:/home/dhis2/jmx_prometheus_javaagent.yaml"
   javaOpts: ""
 
 probes:
