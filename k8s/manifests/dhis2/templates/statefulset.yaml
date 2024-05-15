@@ -68,7 +68,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-            - name: jmx-prometheus-javaagent
+            - name: jmx
               containerPort: {{ .Values.service.jmxPrometheusJavaAgentPort }}
               protocol: TCP
           resources:

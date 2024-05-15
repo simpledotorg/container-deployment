@@ -12,8 +12,8 @@ spec:
       protocol: TCP
       name: http
     - port: {{ .Values.service.jmxPrometheusJavaagentPort }}
-      targetPort: jmx-prometheus-javaagent
+      targetPort: jmx
       protocol: TCP
-      name: jmx-prometheus-javaagent
+      name: jmx
   selector:
     {{- include "dhis2.selectorLabels" . | nindent 4 }}
