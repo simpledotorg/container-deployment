@@ -20,7 +20,7 @@ blocks:
           - checkout
           - image_name="$DOCKER_USERNAME/dhis2"
           - tag_git_sha="$image_name:$SEMAPHORE_GIT_SHA"
-          - tag_dhis2=$(grep '^FROM' docker/dhis2.Dockerfile | cut -d':' -f2)
+          - tag_dhis2="$image_name:$(grep '^FROM' docker/dhis2.Dockerfile | cut -d':' -f2)"
           - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
           - docker build -t $tag_dhis2 -t $tag_git_sha -f docker/dhis2.Dockerfile  .
           - docker images
