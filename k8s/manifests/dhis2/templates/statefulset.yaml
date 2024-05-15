@@ -38,7 +38,7 @@ spec:
             items:
               - key: {{ .Values.dhis2.log4j2ConfigFileName }}
                 path: {{ .Values.dhis2.log4j2ConfigFileName }}
-        - name: jmx_prometheus_javaagent_yaml
+        - name: jmx-prometheus-javaagent-yaml
           configMap:
             name: {{ include "dhis2.fullname" . }}
             items:
@@ -80,7 +80,7 @@ spec:
             - name: log4j2-xml
               mountPath: {{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.log4j2ConfigFileName }}
               subPath: {{ .Values.dhis2.log4j2ConfigFileName }}
-            - name: log4j2-xml
+            - name: jmx-prometheus-javaagent-yaml
               mountPath: {{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
               subPath: {{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
       {{- with .Values.nodeSelector }}
