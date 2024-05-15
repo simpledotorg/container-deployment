@@ -69,7 +69,7 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
             - name: jmx
-              containerPort: {{ .Values.service.jmxPrometheusJavaAgentPort }}
+              containerPort: {{ .Values.service.jmxPrometheusJavaagentPort }}
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
