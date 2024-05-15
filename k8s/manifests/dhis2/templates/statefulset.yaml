@@ -55,9 +55,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe: {{ .Values.probes.liveness }}
-          readinessProbe: {{ .Values.probes.readiness }}
-          startupProbe: {{ .Values.probes.startup }}
+          livenessProbe: {{- toYaml .Values.probes.liveness | nindent 12 }}
+          readinessProbe: {{- toYaml .Values.probes.readiness | nindent 12 }}
+          startupProbe: {{- toYaml .Values.probes.startup | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
