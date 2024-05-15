@@ -89,12 +89,12 @@ probes:
     httpGet:
       path: /
       port: http
-      initialDelaySeconds: 30
+    initialDelaySeconds: 30
   readiness:
     httpGet:
       path: /
       port: http
-      initialDelaySeconds: 30
+    initialDelaySeconds: 30
   startup:
     httpGet:
       path: /
