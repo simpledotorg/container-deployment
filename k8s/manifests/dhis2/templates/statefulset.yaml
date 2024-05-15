@@ -44,6 +44,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["tail", "-f", "/dev/null"]
           env:
             - name: CATALINA_OPTS
               value: {{ .Values.dhis2.catalinaOpts }}
@@ -55,9 +56,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe: {{- toYaml .Values.probes.liveness | nindent 12 }}
-          readinessProbe: {{- toYaml .Values.probes.readiness | nindent 12 }}
-          startupProbe: {{- toYaml .Values.probes.startup | nindent 12 }}
+          # livenessProbe: {{- toYaml .Values.probes.liveness | nindent 12 }}
+          # readinessProbe: {{- toYaml .Values.probes.readiness | nindent 12 }}
+          # startupProbe: {{- toYaml .Values.probes.startup | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
