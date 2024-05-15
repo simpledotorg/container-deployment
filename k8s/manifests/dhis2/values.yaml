@@ -84,7 +84,7 @@ dhis2:
   jmxPrometheusJavaagentConfigFile: config/jmx_prometheus_javaagent.yaml
   jmxPrometheusJavaagentConfigFileName: jmx_prometheus_javaagent.yaml
   log4j2ConfigFileName: log4j2.xml
-  catalinaOpts: "-Dcontext.path='' -javaagent:/opt/dhis2-ext/jmx_prometheus_javaagent.jar=12345:/home/dhis2/jmx_prometheus_javaagent.yaml"
+  catalinaOpts: "-Dcontext.path='' -javaagent:/opt/dhis2-ext/jmx_prometheus_javaagent.jar=12345:/opt/dhis2/jmx_prometheus_javaagent.yaml"
   javaOpts: ""
 
 probes:
