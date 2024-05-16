@@ -111,3 +111,6 @@ storage:
   persistence: true
   volumeSize: 10Gi
   className: gp3
+
+monitoring:
+  enabled: true

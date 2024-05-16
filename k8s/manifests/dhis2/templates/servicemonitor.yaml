@@ -1,0 +1,15 @@
+{{ if .Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "dhis2.fullname" . }}
+  labels:
+    {{- include "dhis2.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "dhis2.selectorLabels" . | nindent 4 }}
+  endpoints:
+    - port: http
+      path: /api/metrics
+      interval: 30s
+{{ end }}
