@@ -21,4 +21,6 @@ spec:
         password:
           name: {{ .Values.dhis2.existingConfSecretName }}
           key: {{ .Values.dhis2.passwordSecretKey }}
+    - port: jmx
+      interval: 30s
 {{ end }}
