@@ -16,9 +16,9 @@ spec:
       interval: 30s
       basicAuth:
         username:
-          name: {{ .Values.existingConfSecretName }}
-          key: {{ .Values.userSecretKey }}
+          name: {{ .Values.dhis2.existingConfSecretName }}
+          key: {{ .Values.dhis2.userSecretKey }}
         password:
-          name: {{ .Values.existingConfSecretName }}
-          key: {{ .Values.passwordSecretKey }}
+          name: {{ .Values.dhis2.existingConfSecretName }}
+          key: {{ .Values.dhis2.passwordSecretKey }}
 {{ end }}
