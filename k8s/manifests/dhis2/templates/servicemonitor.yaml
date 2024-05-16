@@ -1,4 +1,4 @@
-{{ if .Values.monitoring.enabled }}
+{{ if .Values.monitoring.enabledServiceMonitor }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -7,7 +7,7 @@ metadata:
     {{- include "dhis2.labels" . | nindent 4 }}
 spec:
   selector:
-    {{- include "dhis2.selectorLabels" . | nindent 4 }}
+    matchLabels: {{- include "dhis2.selectorLabels" . | nindent 4 }}
   endpoints:
     - port: http
       path: /api/metrics
