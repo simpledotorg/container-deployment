@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "dhis2.labels" . | nindent 4 }}
 spec:
+  jobLabel: {{ include "dhis2.fullname" . }}
   selector:
     matchLabels:
       {{- include "dhis2.selectorLabels" . | nindent 6 }}
@@ -13,4 +14,11 @@ spec:
     - port: http
       path: /api/metrics
       interval: 30s
+      basicAuth:
+        username:
+          name: {{ .Values.existingConfSecretName }}
+          key: {{ .Values.userSecretKey }}
+        password:
+          name: {{ .Values.existingConfSecretName }}
+          key: {{ .Values.passwordSecretKey }}
 {{ end }}

@@ -80,6 +80,8 @@ dhis2:
   workingDirectory: /opt/dhis2
   existingConfSecretName: dhis2
   existingConfSecretKey: dhis.conf
+  userSecretKey: dhis2-user
+  passwordSecretKey: dhis2-password
   confFileName: dhis.conf
   log4j2ConfigFile: config/log4j2.xml
   jmxPrometheusJavaagentConfigFile: config/jmx_prometheus_javaagent.yaml
