@@ -1,3 +1,4 @@
+local common = (import 'lib/common.libsonnet');
 local postgres = (import 'lib/postgres.libsonnet');
 local redis = (import 'lib/redis.libsonnet');
 local ingressNginx = (import 'lib/ingress-nginx.libsonnet');
@@ -7,37 +8,21 @@ local argocd = (import 'lib/argocd.libsonnet');
 local ingress = (import 'lib/ingress.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
-local values = {
-  sandbox: (import 'values/sandbox.libsonnet'),
+local namespace = 'monitoring';
+
+
+local config = {
+  sandbox: (import 'config/sandbox.libsonnet'),
 }[environment];
+
+local monitoredServices =
+  [postgres, redis, ingressNginx, simpleServer];
 
 local grafanaDashboards =
   postgres.grafanaDashboards +
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards;
-
-
-local prometheusRules = [
-  postgres.prometheusRules,
-  redis.prometheusRules,
-  ingressNginx.prometheusRules,
-];
-
-
-local exporterServices = [
-  postgres.exporterService,
-  redis.exporterService,
-  ingressNginx.exporterService,
-  simpleServer.exporterService,
-];
-
-local serviceMonitors = [
-  postgres.serviceMonitor,
-  redis.serviceMonitor,
-  ingressNginx.serviceMonitor,
-  simpleServer.serviceMonitor,
-];
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
@@ -53,14 +38,19 @@ local kp =
   {
     values+:: {
       common+: {
-        namespace: 'monitoring',
+        namespace: namespace,
       },
       grafana+: {
         folderDashboards+: grafanaDashboards,
+        datasources+: [],
         config+: {
           sections+: {
             server+: {
-              root_url: values.grafana.rootUrl,
+              root_url: config.grafana.externalUrl,
+            },
+            'auth.generic_oauth': {
+              enabled: true,
+              name: 'Keycloak-OAuth',
             },
           },
         },
@@ -72,43 +62,49 @@ local kp =
     alertmanager+:: {
       alertmanager+: {
         spec+: {
-          externalUrl: 'http://alertmanager-sandbox.simple.org',
+          externalUrl: config.alertmanager.externalUrl,
         },
       },
     },
     prometheus+:: {
       prometheus+: {
         spec+: {
-          externalUrl: 'http://prometheus-sandbox.simple.org',
+          externalUrl: config.prometheus.externalUrl,
+          retention: config.prometheus.retention,
+          storage: {
+            volumeClaimTemplate: {
+              apiVersion: 'v1',
+              kind: 'PersistentVolumeClaim',
+              spec: {
+                accessModes: ['ReadWriteOnce'],
+                resources: {
+                  requests: {
+                    storage: config.prometheus.storage,
+                  },
+                },
+              },
+            },
+          },
         },
       },
     },
     ingress+:: ingress.ingressConfig([
-      {
-        name: 'alertmanager-main',
+      config.alertmanager.ingress {
         namespace: $.values.common.namespace,
-        host: 'alertmanager-sandbox.simple.org',
-        port: 'web',
       },
-      {
-        name: 'grafana',
+      config.grafana.ingress {
         namespace: $.values.common.namespace,
-        host: 'grafana-sandbox.simple.org',
-        port: 'http',
       },
-      {
-        name: 'prometheus-k8s',
+      config.prometheus.ingress {
         namespace: $.values.common.namespace,
-        host: 'prometheus-sandbox.simple.org',
-        port: 'web',
       },
     ]),
   };
 
 local manifests =
   kubePrometheus.manifests(kp) +
-  prometheusRules +
-  exporterServices +
-  serviceMonitors;
+  [service.prometheusRules for service in [postgres, redis, ingressNginx]] +
+  [service.exporterService for service in monitoredServices] +
+  [service.serviceMonitor for service in monitoredServices];
 
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
