@@ -10,6 +10,7 @@ local ingress = (import 'lib/ingress.libsonnet');
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
 
+local isEnvSystemsProduction = environment == 'systems-production';
 
 local config = {
   sandbox: (import 'config/sandbox.libsonnet'),
@@ -85,9 +86,12 @@ local kp =
   };
 
 local manifests =
-  kubePrometheus.manifests(kp) +
-  [service.prometheusRules for service in [postgres, redis, ingressNginx]] +
-  [service.exporterService for service in monitoredServices] +
-  [service.serviceMonitor for service in monitoredServices];
+  (if isEnvSystemsProduction then
+     kubePrometheus.manifests(kp)
+   else
+     kubePrometheus.manifests(kp) +
+     [service.prometheusRules for service in [postgres, redis, ingressNginx]] +
+     [service.exporterService for service in monitoredServices] +
+     [service.serviceMonitor for service in monitoredServices]);
 
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
