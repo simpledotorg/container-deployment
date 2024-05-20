@@ -42,18 +42,6 @@ local kp =
       },
       grafana+: {
         folderDashboards+: grafanaDashboards,
-        datasources+: [],
-        config+: {
-          sections+: {
-            server+: {
-              root_url: config.grafana.externalUrl,
-            },
-            'auth.generic_oauth': {
-              enabled: true,
-              name: 'Keycloak-OAuth',
-            },
-          },
-        },
       },
       prometheus+: {
         namespaces: [],
