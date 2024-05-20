@@ -82,31 +82,6 @@ spec:
 
 ---
 
-# Kube state metrics
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: kube-state-metrics
-spec:
-  destination:
-    name: ''
-    namespace: kube-system
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/manifests/kube-state-metrics
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
-
----
-
 # Reloader
 apiVersion: argoproj.io/v1alpha1
 kind: Application
