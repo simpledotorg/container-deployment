@@ -42,18 +42,6 @@ local kp =
       },
       grafana+: {
         folderDashboards+: grafanaDashboards,
-        datasources+: [],
-        config+: {
-          sections+: {
-            server+: {
-              root_url: config.grafana.externalUrl,
-            },
-            'auth.generic_oauth': {
-              enabled: true,
-              name: 'Keycloak-OAuth',
-            },
-          },
-        },
       },
       prometheus+: {
         namespaces: [],
@@ -91,12 +79,14 @@ local kp =
     ingress+:: ingress.ingressConfig([
       config.alertmanager.ingress {
         namespace: $.values.common.namespace,
+        auth_secret: 'monitoring-basic-auth',
       },
       config.grafana.ingress {
         namespace: $.values.common.namespace,
       },
       config.prometheus.ingress {
         namespace: $.values.common.namespace,
+        auth_secret: 'monitoring-basic-auth',
       },
     ]),
   };
