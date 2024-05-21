@@ -87,9 +87,9 @@ local kp =
 
 local manifests =
   (if isEnvSystemsProduction then
-     kubePrometheus.manifests(kp)
+     kubePrometheus.manifests(kp, isEnvSystemsProduction)
    else
-     kubePrometheus.manifests(kp) +
+     kubePrometheus.manifests(kp, isEnvSystemsProduction) +
      [service.prometheusRules for service in [postgres, redis, ingressNginx]] +
      [service.exporterService for service in monitoredServices] +
      [service.serviceMonitor for service in monitoredServices]);
