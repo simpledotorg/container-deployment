@@ -20,14 +20,6 @@ login_cookie_name = <session_name>
 domain = <domain>
 root_url = <root_url>
 
-[datasources]
-[[datasource]]
-name = Prometheus
-type = prometheus
-url = <prometheus_url>
-access = proxy
-basicAuth = false
-
 [security]
 # Set Admin user and password
 admin_user = <admin_user>
