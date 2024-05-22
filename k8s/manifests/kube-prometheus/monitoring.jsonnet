@@ -15,6 +15,7 @@ local isEnvSystemsProduction = environment == 'systems-production';
 local config = {
   sandbox: (import 'config/sandbox.libsonnet'),
   'systems-production': (import 'config/systems-production.libsonnet'),
+  'bangladesh-staging': (import 'config/bangladesh-staging.libsonnet'),
 }[environment];
 
 local monitoredServices =
