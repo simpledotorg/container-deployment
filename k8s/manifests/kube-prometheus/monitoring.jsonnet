@@ -10,13 +10,14 @@ local ingress = (import 'lib/ingress.libsonnet');
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
 
-local isEnvSystemsProduction = environment == 'systems-production';
-
 local config = {
   sandbox: (import 'config/sandbox.libsonnet'),
   'systems-production': (import 'config/systems-production.libsonnet'),
   'bangladesh-staging': (import 'config/bangladesh-staging.libsonnet'),
 }[environment];
+
+local isEnvSystemsProduction = environment == 'systems-production';
+local enableGrafana = config.grafana.enable;
 
 local monitoredServices =
   [postgres, redis, ingressNginx, simpleServer];
@@ -36,7 +37,7 @@ local kp =
         namespace: namespace,
       },
       grafana+: {
-        folderDashboards+: grafanaDashboards,
+        [if enableGrafana then 'folderDashboards']+: grafanaDashboards,
       },
       prometheus+: {
         namespaces: [],
@@ -71,26 +72,25 @@ local kp =
         },
       },
     },
-    ingress+:: ingress.ingressConfig([
-      config.alertmanager.ingress {
-        namespace: $.values.common.namespace,
-        auth_secret: 'monitoring-basic-auth',
-      },
-      config.grafana.ingress {
-        namespace: $.values.common.namespace,
-      },
-      config.prometheus.ingress {
-        namespace: $.values.common.namespace,
-        auth_secret: 'monitoring-basic-auth',
-      },
-    ]),
+    ingress+:: ingress.ingressConfig(
+      [
+        config.alertmanager.ingress {
+          namespace: $.values.common.namespace,
+          auth_secret: 'monitoring-basic-auth',
+        },
+        config.prometheus.ingress {
+          namespace: $.values.common.namespace,
+          auth_secret: 'monitoring-basic-auth',
+        },
+      ] + (if enableGrafana then [config.grafana.ingress { namespace: $.values.common.namespace }] else []),
+    ),
   };
 
 local manifests =
   (if isEnvSystemsProduction then
-     kubePrometheus.manifests(kp, isEnvSystemsProduction)
+     kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana)
    else
-     kubePrometheus.manifests(kp, isEnvSystemsProduction) +
+     kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana) +
      [service.prometheusRules for service in [postgres, redis, ingressNginx]] +
      [service.exporterService for service in monitoredServices] +
      [service.serviceMonitor for service in monitoredServices]);

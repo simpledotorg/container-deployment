@@ -1,5 +1,6 @@
 {
   grafana: {
+    enable: true,
     externalUrl: 'https://grafana.simple.org/',
     ingress: {
       name: 'grafana',

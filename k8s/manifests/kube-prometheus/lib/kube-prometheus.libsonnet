@@ -1,5 +1,5 @@
 {
-  manifests(kp, isEnvSystemsProduction=false):
+  manifests(kp, isEnvSystemsProduction=false, enableGrafana=false):
     // alertmanager is configured using sealed-secrets
     local alertmanager = std.mergePatch(kp.alertmanager, { secret: null });
 
@@ -16,7 +16,7 @@
     [kp.prometheusOperator[name] for name in std.objectFields(kp.prometheusOperator)] +
     [alertmanager[name] for name in std.objectFields(alertmanager)] +
     [kp.blackboxExporter[name] for name in std.objectFields(kp.blackboxExporter)] +
-    [grafana[name] for name in std.objectFields(grafana)] +
+    (if enableGrafana then [grafana[name] for name in std.objectFields(grafana)] else []) +
     [kp.kubeStateMetrics[name] for name in std.objectFields(kp.kubeStateMetrics)] +
     [kp.kubernetesControlPlane[name] for name in std.objectFields(kp.kubernetesControlPlane)] +
     [kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter)] +
