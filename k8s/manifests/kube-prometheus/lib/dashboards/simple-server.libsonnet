@@ -10,8 +10,7 @@ local timeSeries(title, queries) =
 
 local query(query) = g.query.prometheus.new('${datasource}', query);
 
-local datasource = g.dashboard.variable.datasource.new('datasource', 'prometheus')
-                   + g.dashboard.variable.datasource.withRegex('prometheus');
+local datasource = g.dashboard.variable.datasource.new('datasource', 'prometheus');
 
 local slos =
   g.panel.row.new('SLOs')
