@@ -1,11 +1,6 @@
 {
   grafana: {
-    externalUrl: 'https://grafana-demo.bd.simple.org/',
-    ingress: {
-      name: 'grafana',
-      host: 'grafana-demo.bd.simple.org',
-      port: 'http',
-    },
+    enable: false,
   },
   prometheus: {
     externalUrl: 'https://prometheus-demo.bd.simple.org',
