@@ -11,14 +11,14 @@ ingress:
           pathType: ImplementationSpecific
   tls:
   - hosts:
-    - dhis2-sandbox-epidemics
-    secretName: dhis2-sandbox-epidemics-tls
+    - dhis2-sandbox-epidemics.simple.org
+    secretName: dhis2-sandbox-epidemics.simple.org-tls
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: role-dhis2-sandbox-epidemics
+        - key: role-dhis2-sandbox-01
           operator: In
           values:
           - "true"
