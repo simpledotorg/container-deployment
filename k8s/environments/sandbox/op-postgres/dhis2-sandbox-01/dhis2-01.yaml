@@ -27,7 +27,7 @@ spec:
         - "ReadWriteOnce"
         resources:
           requests:
-            storage: 100Gi
+            storage: 500Gi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
