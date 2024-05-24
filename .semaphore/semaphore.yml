@@ -31,4 +31,4 @@ promotions:
   - name: Build push simple server base image
     pipeline_file: docker.yml
     auto_promote:
-      when: branch = 'dhis2-dev'
+      when: branch = 'master'
