@@ -8,55 +8,82 @@ local timeSeries(title, queries) =
   g.panel.timeSeries.new(title)
   + g.panel.timeSeries.queryOptions.withTargets(queries);
 
-local query(query) = g.query.prometheus.new('${datasource}', query);
+local stat(title, queries) =
+  g.panel.stat.new(title)
+  + g.panel.stat.queryOptions.withTargets(queries)
+  + g.panel.stat.options.withJustifyMode('center');
+
+local stateTimeline(title, queries, thresholds) =
+  g.panel.stateTimeline.new(title)
+  + g.panel.stateTimeline.queryOptions.withTargets(queries)
+  + g.panel.stateTimeline.standardOptions.thresholds.withMode('absolute')
+  + g.panel.stateTimeline.standardOptions.thresholds.withSteps(thresholds);
+
+local query(query) =
+  g.query.prometheus.new('${datasource}', query);
 
 local datasource = g.dashboard.variable.datasource.new('datasource', 'prometheus');
 
 local slos =
   g.panel.row.new('SLOs')
   + g.panel.row.withPanels([
-    g.panel.timeSeries.new('SLO: Dashboard p95 latency is under 1.2 seconds'),
+    stateTimeline(
+      'P95 Response Time < 1.2s',
+      [
+        query(
+          |||
+            simple:response_time:p95:total
+          |||
+        ) + g.query.prometheus.withLegendFormat('Total'),
+        query(
+          |||
+            simple:response_time:p95:api
+          |||
+        ) + g.query.prometheus.withLegendFormat('Api'),
+        query(
+          |||
+            simple:response_time:p95:dashboard
+          |||
+        ) + g.query.prometheus.withLegendFormat('Dashboard'),
+      ],
+      [{ color: 'green', value: null }, { color: 'red', value: 1.2 }]
+    ),
   ]);
 
 local load_balancer =
   row('Load Balancer', [
-    timeSeries(
-      'Request Rate', [query(
-        |||
-          sum(rate(nginx_ingress_controller_requests[$__rate_interval])) 
-        |||
-      )],
-    ),
+    timeSeries('Request Rate', [query(
+      |||
+        sum(rate(ruby_http_request_duration_seconds_count{}[1m])) > 0
+      |||
+    )])
+    + g.panel.timeSeries.fieldConfig.defaults.custom.withAxisLabel('Req/sec')
+    + g.panel.timeSeries.options.legend.withIsVisible(false),
     timeSeries('Non 2xx', [
       query(
         |||
-          sum(rate(nginx_ingress_controller_requests{status=~"3.."}[$__rate_interval]))
-        |||
-      ),
-      query(
-        |||
-          sum(rate(nginx_ingress_controller_requests{status=~"4.."}[$__rate_interval]))
-        |||
-      ),
-      query(
-        |||
-          sum(rate(nginx_ingress_controller_requests{status=~"5.."}[$__rate_interval]))
+          sum by(status) (rate(ruby_http_requests_total{status!~"2.."}[1m])) > 0
         |||
       ),
     ]),
-    timeSeries('Latency', [
+    timeSeries('Response Time', [
       query(
         |||
-          sum by(ingress) (nginx_ingress_controller_ingress_upstream_latency_seconds{quantile="0.99"})
+          sum(irate(ruby_http_request_duration_seconds_sum[$__rate_interval]) / irate(ruby_http_request_duration_seconds_count[$__rate_interval]) > 0)
         |||
       ),
     ]),
-    timeSeries('Healthy hosts', [
+    stat('Healthy hosts', [
       query(
         |||
-          count(nginx_ingress_controller_build_info)
+          count(kube_pod_info{namespace="simple-v1",created_by_name="simple-server"})
         |||
-      ),
+      ) + g.query.prometheus.withLegendFormat('Server'),
+      query(
+        |||
+          count(kube_pod_info{namespace="simple-v1",created_by_name="simple-worker"})
+        |||
+      ) + g.query.prometheus.withLegendFormat('Worker'),
     ]),
     timeSeries('Healthy hosts', [
       query(

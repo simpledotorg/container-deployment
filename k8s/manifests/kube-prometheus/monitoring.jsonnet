@@ -91,7 +91,7 @@ local manifests =
      kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana)
    else
      kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana) +
-     [service.prometheusRules for service in [postgres, redis, ingressNginx]] +
+     [service.prometheusRules for service in monitoredServices] +
      [service.exporterService for service in monitoredServices] +
      [service.serviceMonitor for service in monitoredServices]);
 
