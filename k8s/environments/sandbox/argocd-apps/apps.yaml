@@ -541,7 +541,7 @@ spec:
   source:
     path: k8s/manifests/dhis2
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: dhis2-epidemics
+    targetRevision: master
     helm:
       valueFiles:
         - ../../environments/sandbox/values/dhis2-sandbox-epidemics.yaml
@@ -569,7 +569,7 @@ spec:
   source:
     path: k8s/environments/sandbox/op-postgres/dhis2-sandbox-epidemics
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: dhis2-epidemics
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
