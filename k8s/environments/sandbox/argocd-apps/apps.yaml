@@ -593,7 +593,7 @@ spec:
   source:
     path: k8s/manifests/dhis2
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: dhis2-ecuador
     helm:
       valueFiles:
         - ../../environments/sandbox/values/dhis2-demo-ecuador.yaml
@@ -621,7 +621,7 @@ spec:
   source:
     path: k8s/environments/sandbox/op-postgres/dhis2-demo-ecuador
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: dhis2-ecuador
   project: default
   syncPolicy:
     syncOptions:
