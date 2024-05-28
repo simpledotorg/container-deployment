@@ -123,6 +123,7 @@ module "eks" {
         role-dhis2-sandbox-01 = "true"
       }
       instance_types = ["t3a.2xlarge"]
+      subnet_ids     = [module.vpc.private_subnets[1]]
     },
     {
       name         = "dhis2-sandbox-epd"
@@ -134,6 +135,19 @@ module "eks" {
         role-dhis2-sandbox-epidemics = "true"
       }
       instance_types = ["t3a.2xlarge"]
+      subnet_ids     = [module.vpc.private_subnets[0]]
+    },
+    {
+      name         = "dhis2-demo-ecuador"
+      create       = true
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+      labels = {
+        role-dhis2-demo-ecuador = "true"
+      }
+      instance_types = ["t3a.2xlarge"]
+      subnet_ids     = [module.vpc.private_subnets[0]]
     }
   ]
 }
