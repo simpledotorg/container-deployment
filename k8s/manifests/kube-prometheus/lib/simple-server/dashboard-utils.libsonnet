@@ -24,12 +24,16 @@ local g = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonn
     g.panel.barGauge.new(title)
     + g.panel.barGauge.queryOptions.withTargets(queries),
 
+  table(title, queries):
+    g.panel.table.new(title)
+    + g.panel.table.queryOptions.withTargets(queries),
+
   query(query, label=null):
     if label == null then
       g.query.prometheus.new('${datasource}', query)
     else
       g.query.prometheus.new('${datasource}', query)
-      + g.query.prometheus.withLegendFormat('Total'),
+      + g.query.prometheus.withLegendFormat(label),
 
   datasource:
     g.dashboard.variable.datasource.new('datasource', 'prometheus'),

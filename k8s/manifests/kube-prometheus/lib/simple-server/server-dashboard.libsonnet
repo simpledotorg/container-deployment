@@ -71,6 +71,53 @@ local load_balancer =
         |||, '{{state}}'
       ),
     ]),
+    utils.table('Slow actions in selected range', [
+      query(
+        |||
+          topk(10, avg(
+           (rate(ruby_http_request_duration_seconds_sum[$__range]) / 
+            rate(ruby_http_request_duration_seconds_count[$__range]))) 
+          by (controller, action)) 
+        |||
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
+    utils.table('Slow actions in last 24 hours', [
+      query(
+        |||
+          topk(10, avg(
+           (rate(ruby_http_request_duration_seconds_sum[1d]) / 
+            rate(ruby_http_request_duration_seconds_count[1d]))) 
+          by (controller, action)) 
+        |||
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
+    utils.table('Most frequent actions in selected range', [
+      query(
+        |||
+          topk(10, 
+            sum(
+              rate(ruby_http_request_duration_seconds_count[$__range]) * 3600 * 24) 
+            by (controller, action))
+        |||,
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
+    utils.table('Most frequent actions in last 24 hours', [
+      query(
+        |||
+          topk(10, 
+            sum(
+              rate(ruby_http_request_duration_seconds_count[1d]) * 3600 * 24) 
+            by (controller, action))
+        |||
+      ) + g.query.prometheus.withInstant(true)
+      + g.query.prometheus.withFormat('table'),
+    ]),
   ]);
 
 g.dashboard.new('Simple Server Dasboard')
