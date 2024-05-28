@@ -14,6 +14,7 @@ local config = {
   sandbox: (import 'config/sandbox.libsonnet'),
   'systems-production': (import 'config/systems-production.libsonnet'),
   'bangladesh-staging': (import 'config/bangladesh-staging.libsonnet'),
+  'bangladesh-production': (import 'config/bangladesh-production.libsonnet'),
 }[environment];
 
 local isEnvSystemsProduction = environment == 'systems-production';
