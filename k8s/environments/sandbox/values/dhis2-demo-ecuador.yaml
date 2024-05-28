@@ -18,7 +18,7 @@ affinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: role-dhis2-sandbox-01
+        - key: role-dhis2-demo-ecuador
           operator: In
           values:
           - "true"
