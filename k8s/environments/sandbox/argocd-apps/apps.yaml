@@ -526,3 +526,55 @@ spec:
     automated:
       prune: false
       selfHeal: true
+
+---
+
+# dhis2-sandbox-epidemics server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-epidemics-server
+spec:
+  destination:
+    namespace: dhis2-sandbox-epidemics
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: dhis2-epidemics
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-sandbox-epidemics.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-epidemics postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-epidemics-postgres
+spec:
+  destination:
+    namespace: dhis2-sandbox-epidemics
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-sandbox-epidemics
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: dhis2-epidemics
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
