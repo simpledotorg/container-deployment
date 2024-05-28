@@ -3,6 +3,8 @@ local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
 local grafanaDashboards = { grafanaDashboards: {
   'simple-server.json': (import 'simple-server/server-dashboard.libsonnet'),
+  'simple-sync.json': (import 'simple-server/sync-dashboard.libsonnet'),
+  'simple-database.json': (import 'simple-server/database-dashboard.libsonnet'),
 } };
 
 local prometheusRules = (import 'simple-server/prometheus-rules.libsonnet');
