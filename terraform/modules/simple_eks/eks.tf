@@ -55,6 +55,7 @@ module "eks" {
 
         instance_types = group.instance_types
         capacity_type  = "ON_DEMAND"
+        subnet_ids     = group.subnet_ids
 
         use_custom_launch_template = false
         remote_access = {

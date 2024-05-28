@@ -53,6 +53,7 @@ variable "managed_node_groups" {
     desired_size   = number
     labels         = map(string)
     instance_types = list(string)
+    subnet_ids     = list(string)
   }))
   default = []
 }
