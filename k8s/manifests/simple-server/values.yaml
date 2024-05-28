@@ -24,6 +24,9 @@ cron:
     storage: 1Gi
   appLog:
     storage: 1Gi
+  image:
+    repository: simpledotorg/server
+    tag: ""
 server:
   name: "simple-server"
   nodeSelector: {}
@@ -82,6 +85,8 @@ migration:
   podSecurityContext: {
     fsGroup: 9999
   }
+metrics:
+  enabled: false
 logTailer:
   enabled: true
   image:

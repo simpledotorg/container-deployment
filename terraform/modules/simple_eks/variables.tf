@@ -44,6 +44,19 @@ variable "key_pair_name" {
   type = string
 }
 
+variable "managed_node_groups" {
+  type = list(object({
+    name           = string
+    create         = bool
+    min_size       = number
+    max_size       = number
+    desired_size   = number
+    labels         = map(string)
+    instance_types = list(string)
+  }))
+  default = []
+}
+
 variable "db_instance_enable" {
   type    = bool
   default = false

@@ -297,7 +297,7 @@ spec:
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/sandbox/op-postgres
+    path: k8s/environments/sandbox/op-postgres/simple-server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
   project: default
@@ -426,35 +426,6 @@ spec:
 
 ---
 
-# Monitoring
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: monitoring
-spec:
-  destination:
-    name: ''
-    namespace: monitoring
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/manifests/monitoring
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
-    helm:
-      valueFiles:
-        - ../../environments/sandbox/values/alerting-rules.yaml
-        - ../../environments/sandbox/values/monitoring.yaml
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
-
----
-
 # Alphasms prometheus exporter
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -477,28 +448,6 @@ spec:
       prune: true
       selfHeal: true
 
-# Kube prometheus stack
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: kps
-spec:
-  destination:
-    namespace: kps
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/manifests/kube-prometheus-stack
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: kps
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-      - ServerSideApply=true
-    automated:
-      prune: true
-      selfHeal: true
 ---
 
 apiVersion: argoproj.io/v1alpha1
@@ -514,19 +463,118 @@ spec:
     directory:
       jsonnet:
         extVars:
-        - name: GRAFANA_ROOT_URL
-          value: grafana-sandbox.simple.org
-        - name: ALERTMANAGER_URL
-          value: alertmanager-sandbox.simple.org
-        - name: PROMETHEUS_URL
-          value: prometheus-sandbox.simple.org
+        - name: ENVIRONMENT
+          value: sandbox
         libs:
           - k8s/manifests/kube-prometheus/vendor
       exclude: '*.json'
     path: k8s/manifests/kube-prometheus
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: kube-prometheus
+    targetRevision: master
   syncPolicy:
     automated: {}
 
 ---
+
+# dhis2-sandbox-01 server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-01-server
+spec:
+  destination:
+    name: ''
+    namespace: dhis2-sandbox-01
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-sandbox-01.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-01 postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-01-postgres
+spec:
+  destination:
+    namespace: dhis2-sandbox-01
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres//dhis2-sandbox-01
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-epidemics server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-epidemics-server
+spec:
+  destination:
+    namespace: dhis2-sandbox-epidemics
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-sandbox-epidemics.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-epidemics postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-epidemics-postgres
+spec:
+  destination:
+    namespace: dhis2-sandbox-epidemics
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-sandbox-epidemics
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true

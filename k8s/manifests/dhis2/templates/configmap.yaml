@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "dhis2.fullname" . }}
+  labels:
+    {{- include "dhis2.labels" . | nindent 4 }}
+data:
+  log4j2.xml: |
+    {{- .Files.Get .Values.dhis2.log4j2ConfigFile | nindent 4 }}
+  jmx_prometheus_javaagent.yaml: |
+    {{- .Files.Get .Values.dhis2.jmxPrometheusJavaagentConfigFile | nindent 4 }}

@@ -84,9 +84,14 @@ module "eks" {
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
-  db_instance_enable = false
+  db_instance_enable = true
+  db_instance_type   = "r6a.4xlarge"
+  db_instance_count  = 2
+  db_instance_extra_labels = {
+    role-db-backup = "true"
+  }
 
-  db2_instance_enable = true
+  db2_instance_enable = false
   db2_instance_type   = "t3a.2xlarge"
   db2_instance_count  = 2
   db2_instance_extra_labels = {
@@ -100,11 +105,20 @@ module "eks" {
     "role-ingress"  = "true"
     "role-metabase" = "true"
     "role-worker"   = "true"
-    "role-cron"     = "true"
   }
 
-  cache_redis2_instance_enable = true
+  cache_redis_instance_enable = true
+  cache_redis_instance_type   = "r5a.xlarge"
+
+  cache_redis2_instance_enable = false
   cache_redis2_instance_type   = "r5a.large"
+
+  default_nodepool_instance_enable = true
+  default_nodepool_instance_count  = 1
+  default_nodepool_instance_type   = "t3a.small"
+  default_nodepool_instance_extra_labels = {
+    "role-cron" = "true"
+  }
 }
 
 module "db_backup_s3_bucket" {

@@ -1,172 +1,99 @@
-// NB! Make sure that argocd-cm has `application.instanceLabelKey` set to something else than `app.kubernetes.io/instance`,
-//     otherwise it will cause problems with prometheus target discovery.
-//     See also https://argo-cd.readthedocs.io/en/stable/faq/#why-is-my-app-out-of-sync-even-after-syncing
+local common = (import 'lib/common.libsonnet');
+local postgres = (import 'lib/postgres.libsonnet');
+local redis = (import 'lib/redis.libsonnet');
+local ingressNginx = (import 'lib/ingress-nginx.libsonnet');
+local simpleServer = (import 'lib/simple-server.libsonnet');
+local kubePrometheus = (import 'lib/kube-prometheus.libsonnet');
+local argocd = (import 'lib/argocd.libsonnet');
+local ingress = (import 'lib/ingress.libsonnet');
 
-local ingress(name, namespace, rules) = {
-  apiVersion: 'networking.k8s.io/v1',
-  kind: 'Ingress',
-  metadata: {
-    name: name,
-    namespace: namespace,
-    annotations: {
-      'nginx.ingress.kubernetes.io/auth-type': 'basic',
-      'nginx.ingress.kubernetes.io/auth-secret': 'basic-auth',
-      'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
-    },
-  },
-  spec: { rules: rules },
-};
+local environment = std.extVar('ENVIRONMENT');
+local namespace = 'monitoring';
 
-local grafana_root_url = std.extVar("GRAFANA_ROOT_URL");
-local alertmanager_url = std.extVar("ALERTMANAGER_URL");
-local prometheus_url = std.extVar("PROMETHEUS_URL");
+local config = {
+  sandbox: (import 'config/sandbox.libsonnet'),
+  'systems-production': (import 'config/systems-production.libsonnet'),
+  'bangladesh-staging': (import 'config/bangladesh-staging.libsonnet'),
+  'bangladesh-production': (import 'config/bangladesh-production.libsonnet'),
+}[environment];
+
+local isEnvSystemsProduction = environment == 'systems-production';
+local enableGrafana = config.grafana.enable;
+
+local monitoredServices =
+  [postgres, redis, ingressNginx, simpleServer];
+
+local grafanaDashboards =
+  postgres.grafanaDashboards +
+  redis.grafanaDashboards +
+  ingressNginx.grafanaDashboards +
+  simpleServer.grafanaDashboards;
+
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
-  // Uncomment the following imports to enable its patches
-  // (import 'kube-prometheus/addons/anti-affinity.libsonnet') +
-  // (import 'kube-prometheus/addons/managed-cluster.libsonnet') +
-  // (import 'kube-prometheus/addons/node-ports.libsonnet') +
-  // (import 'kube-prometheus/addons/static-etcd.libsonnet') +
-  // (import 'kube-prometheus/addons/custom-metrics.libsonnet') +
-  // (import 'kube-prometheus/addons/external-metrics.libsonnet') +
-  // (import 'kube-prometheus/addons/pyrra.libsonnet') +
+  (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
   {
     values+:: {
       common+: {
-        namespace: 'monitoring',
+        namespace: namespace,
       },
-      grafana+:: {
-        config+: {
-          sections+: {
-            server+: {
-              root_url: grafana_root_url,
-            },
-          },
-        },
+      grafana+: {
+        [if enableGrafana then 'folderDashboards']+: grafanaDashboards,
+      },
+      prometheus+: {
+        namespaces: [],
       },
     },
     alertmanager+:: {
       alertmanager+: {
         spec+: {
-          externalUrl: alertmanager_url,
+          externalUrl: config.alertmanager.externalUrl,
         },
       },
     },
     prometheus+:: {
       prometheus+: {
         spec+: {
-          externalUrl: prometheus_url ,
+          externalUrl: config.prometheus.externalUrl,
+          retention: config.prometheus.retention,
+          storage: {
+            volumeClaimTemplate: {
+              apiVersion: 'v1',
+              kind: 'PersistentVolumeClaim',
+              spec: {
+                accessModes: ['ReadWriteOnce'],
+                resources: {
+                  requests: {
+                    storage: config.prometheus.storage,
+                  },
+                },
+              },
+            },
+          },
         },
       },
     },
-    ingress+:: {
-      'alertmanager-main': ingress(
-        'alertmanager-main',
-        $.values.common.namespace,
-        [{
-          host: alertmanager_url,
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'alertmanager-main',
-                  port: {
-                    name: 'web',
-                  },
-                },
-              },
-            }],
-          },
-        }]
-      ),
-      grafana: ingress(
-        'grafana',
-        $.values.common.namespace,
-        [{
-          host: grafana_root_url,
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'grafana',
-                  port: {
-                    name: 'http',
-                  },
-                },
-              },
-            }],
-          },
-        }],
-      ),
-      'prometheus-k8s': ingress(
-        'prometheus-k8s',
-        $.values.common.namespace,
-        [{
-          host: prometheus_url,
-          http: {
-            paths: [{
-              path: '/',
-              pathType: 'Prefix',
-              backend: {
-                service: {
-                  name: 'prometheus-k8s',
-                  port: {
-                    name: 'web',
-                  },
-                },
-              },
-            }],
-          },
-        }],
-      ),
-    },
+    ingress+:: ingress.ingressConfig(
+      [
+        config.alertmanager.ingress {
+          namespace: $.values.common.namespace,
+          auth_secret: 'monitoring-basic-auth',
+        },
+        config.prometheus.ingress {
+          namespace: $.values.common.namespace,
+          auth_secret: 'monitoring-basic-auth',
+        },
+      ] + (if enableGrafana then [config.grafana.ingress { namespace: $.values.common.namespace }] else []),
+    ),
   };
 
-// Unlike in kube-prometheus/example.jsonnet where a map of file-names to manifests is returned,
-// for ArgoCD we need to return just a regular list with all the manifests.
 local manifests =
-  [kp.kubePrometheus[name] for name in std.objectFields(kp.kubePrometheus)] +
-  [kp.prometheusOperator[name] for name in std.objectFields(kp.prometheusOperator)] +
-  [kp.alertmanager[name] for name in std.objectFields(kp.alertmanager)] +
-  [kp.blackboxExporter[name] for name in std.objectFields(kp.blackboxExporter)] +
-  [kp.grafana[name] for name in std.objectFields(kp.grafana)] +
-  // [ kp.pyrra[name] for name in std.objectFields(kp.pyrra)] +
-  [kp.kubeStateMetrics[name] for name in std.objectFields(kp.kubeStateMetrics)] +
-  [kp.kubernetesControlPlane[name] for name in std.objectFields(kp.kubernetesControlPlane)] +
-  [kp.nodeExporter[name] for name in std.objectFields(kp.nodeExporter)] +
-  [kp.prometheus[name] for name in std.objectFields(kp.prometheus)] +
-  [kp.prometheusAdapter[name] for name in std.objectFields(kp.prometheusAdapter)];
+  (if isEnvSystemsProduction then
+     kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana)
+   else
+     kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana) +
+     [service.prometheusRules for service in [postgres, redis, ingressNginx]] +
+     [service.exporterService for service in monitoredServices] +
+     [service.serviceMonitor for service in monitoredServices]);
 
-local argoAnnotations(manifest) =
-  manifest {
-    metadata+: {
-      annotations+: {
-        'argocd.argoproj.io/sync-wave':
-          // Make sure to sync the Namespace & CRDs before anything else (to avoid sync failures)
-          if std.member(['CustomResourceDefinition', 'Namespace'], manifest.kind)
-          then '-5'
-          // And sync all the roles outside of the main & kube-system last (in case some of the namespaces don't exist yet)
-          else if std.objectHas(manifest, 'metadata')
-                  && std.objectHas(manifest.metadata, 'namespace')
-                  && !std.member([kp.values.common.namespace, 'kube-system'], manifest.metadata.namespace)
-          then '10'
-          else '5',
-        'argocd.argoproj.io/sync-options':
-          // Use replace strategy for CRDs, as they're too big fit into the last-applied-configuration annotation that kubectl apply wants to use
-          if manifest.kind == 'CustomResourceDefinition' then 'Replace=true'
-          else '',
-      },
-    },
-  };
-
-// Add argo-cd annotations to all the manifests
-[
-  if std.endsWith(manifest.kind, 'List') && std.objectHas(manifest, 'items')
-  then manifest { items: [argoAnnotations(item) for item in manifest.items] }
-  else argoAnnotations(manifest)
-  for manifest in manifests
-]
+argocd.addArgoAnnotations(manifests, kp.values.common.namespace)

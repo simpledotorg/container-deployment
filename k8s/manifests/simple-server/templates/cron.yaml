@@ -25,7 +25,7 @@ spec:
         {{- toYaml .Values.cron.podSecurityContext | nindent 8 }}
       containers:
       - name: {{ .Values.cron.name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ if eq .Values.cron.image.tag "" }}{{ .Values.image.repository }}:{{ .Values.image.tag }}{{ else }}{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}{{ end }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: ["bin/docker-cron"]
         resources:

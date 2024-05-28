@@ -82,31 +82,6 @@ spec:
 
 ---
 
-# Kube state metrics
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: kube-state-metrics
-spec:
-  destination:
-    name: ''
-    namespace: kube-system
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/manifests/kube-state-metrics
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local-govind
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
-
----
-
 # Reloader
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -184,32 +159,29 @@ spec:
 
 ---
 
-# Monitoring
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring
+  name: kube-prometheus
 spec:
   destination:
-    name: ''
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/manifests/monitoring
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local-govind
-    helm:
-      valueFiles:
-        - ../../environments/systems-production/values/alerting-rules.yaml
-        - ../../environments/systems-production/values/monitoring.yaml
   project: default
+  source:
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    path: k8s/manifests/kube-prometheus
+    directory:
+      jsonnet:
+        extVars:
+        - name: ENVIRONMENT
+          value:  'systems-production'
+        libs:
+          - k8s/manifests/kube-prometheus/vendor
+      exclude: '*.json'
   syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
+    automated: {}
 
 ---
 

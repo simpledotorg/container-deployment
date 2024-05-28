@@ -441,7 +441,7 @@ metadata:
   name: india-production-k8s-cache-redis-log-volume-usage
   namespace: datadog
 spec:
-  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:cache-redis*} by {pod_name} > 49392123904" # 46/48 GiB
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:india-production-k8s, pod_name:cache-redis*} by {pod_name} >  85899345920" # 80/100 GiB
   type: "query alert"
   name: "india-production-k8s-cache-redis-log-volume-usage"
   message: "@slack-alerts"
