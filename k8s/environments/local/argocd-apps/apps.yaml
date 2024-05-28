@@ -369,7 +369,7 @@ spec:
       exclude: '*.json'
     path: k8s/manifests/kube-prometheus
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: kube-prometheus-dashboards
+    targetRevision: grafana-dashboards
   syncPolicy:
     automated: {}
 
