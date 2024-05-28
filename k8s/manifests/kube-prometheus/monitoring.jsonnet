@@ -12,6 +12,7 @@ local namespace = 'monitoring';
 
 local config = {
   sandbox: (import 'config/sandbox.libsonnet'),
+  'local': (import 'config/local.libsonnet'),
   'systems-production': (import 'config/systems-production.libsonnet'),
   'bangladesh-staging': (import 'config/bangladesh-staging.libsonnet'),
   'bangladesh-production': (import 'config/bangladesh-production.libsonnet'),
