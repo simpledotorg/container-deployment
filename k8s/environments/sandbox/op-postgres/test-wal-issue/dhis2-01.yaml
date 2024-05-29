@@ -71,10 +71,10 @@ spec:
                   - "true"
       global:
         repo1-path: /pgbackrest/postgres-operator/test-wal-issue/repo1
-        repo1-retention-full: 1
-        repo1-retention-diff: 1
-        repo1-retention-full-type: count
-        repo1-retention-diff-type: count
+        repo1-retention-full: "1"
+        repo1-retention-diff: "1"
+        repo1-retention-full-type: "count"
+        repo1-retention-diff-type: "count"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
