@@ -1,0 +1,102 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: test-wal-issue
+  namespace: test-wal-issue
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-gis:ubi8-14.5-3.2-1
+  postgresVersion: 14
+  users:
+    - name: admin
+      databases:
+        - postgres
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+    - name: dhis
+      databases:
+        - dhis
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+  instances:
+    - name: pg
+      replicas: 1
+      dataVolumeClaimSpec:
+        storageClassName: "gp3"
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 100Gi
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db
+                  operator: In
+                  values:
+                  - "true"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: test-wal-issue
+                  postgres-operator.crunchydata.com/instance-set: pg
+      metadata:
+        labels:
+          tags.datadoghq.com/service: "postgrescluster-test"
+          tags.datadoghq.com/version: "14"
+          prometheus.io/app: 'postgres'
+        annotations:
+          argocd.argoproj.io/sync-options: Delete=false
+  backups:
+    pgbackrest:
+      configuration:
+      - secret:
+          name: dhis2
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db
+                  operator: In
+                  values:
+                  - "true"
+      global:
+        repo1-path: /pgbackrest/postgres-operator/test-wal-issue/repo1
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
+      repos:
+      - name: repo1
+        schedules:
+          full: "0 22 * * 0" # Sunday
+          differential: "0 22 * * 1-6" # Monday to Saturday
+        s3:
+          bucket: sandbox-simple-k8s-db-backup
+          endpoint: s3.ap-south-1.amazonaws.com
+          region: ap-south-1
+      jobs:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db
+                  operator: In
+                  values:
+                  - "true"
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        parameters:
+          max_connections: "10"
+  monitoring:
+    pgmonitor:
+      exporter:
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.5.0-0
