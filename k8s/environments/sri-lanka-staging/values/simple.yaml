@@ -1,0 +1,49 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+  hosts:
+    - host: api-demo-k8s.lk.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-demo-k8s.lk.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: api-demo.lk.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-demo.lk.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-demo-k8s.lk.simple.org
+    secretName: api-demo-k8s.lk.simple.org-tls
+  - hosts:
+    - dashboard-demo-k8s.lk.simple.org
+    secretName: dashboard-demo-k8s.lk.simple.org-tls
+  - hosts:
+    - api-demo.lk.simple.org
+    secretName: api-demo.lk.simple.org-tls
+  - hosts:
+    - dashboard-demo.lk.simple.org
+    secretName: dashboard-demo.lk.simple.org-tls
+server:
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sri-lanka-staging-k8s"]}]'
+  }
+worker:
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sri-lanka-staging-k8s"]}]'
+  }
+cron:
+  podAnnotations: {
+    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sri-lanka-staging-k8s"]}]'
+  }
+migration:
+  enabled: false

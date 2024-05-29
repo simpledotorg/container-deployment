@@ -14,6 +14,8 @@ Automation and manifests for container deployment
 - [Deploy branch for testing k8s manifest changes](./doc/DeployBranch.md)
 - [Infra Requirement for the simple web application](./doc/InfraRequirement.md)
 - [Manual Changes](./doc/Manual_Changes.md)
+- [Create New DHIS2 Instance](./doc/CreateNewDHIS2Instance.md)
+- [DHIS2 Database Restore](./doc/DHIS2DBRestore.md)
 
 ## High-Level Architecture
 

@@ -1,0 +1,118 @@
+# Default values for dhis2.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: simpledotorg/dhis2
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "2.40.3.1"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext:
+   capabilities:
+     drop:
+     - ALL
+   readOnlyRootFilesystem: false
+   runAsNonRoot: true
+   runAsUser: 65534
+   runAsGroup: 65534
+
+service:
+  type: ClusterIP
+  port: 8080
+  jmxPrometheusJavaagentPort: 12345
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+dhis2:
+  workingDirectory: /opt/dhis2
+  existingConfSecretName: dhis2
+  existingConfSecretKey: dhis.conf
+  userSecretKey: dhis2-user
+  passwordSecretKey: dhis2-password
+  confFileName: dhis.conf
+  log4j2ConfigFile: config/log4j2.xml
+  jmxPrometheusJavaagentConfigFile: config/jmx_prometheus_javaagent.yaml
+  jmxPrometheusJavaagentConfigFileName: jmx_prometheus_javaagent.yaml
+  log4j2ConfigFileName: log4j2.xml
+  catalinaOpts: "-Dcontext.path='' -javaagent:/opt/dhis2-ext/jmx_prometheus_javaagent.jar=12345:/opt/dhis2/jmx_prometheus_javaagent.yaml"
+  javaOpts: ""
+
+probes:
+  liveness:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 30
+  readiness:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 30
+  startup:
+    httpGet:
+      path: /
+      port: http
+    failureThreshold: 30
+    periodSeconds: 10
+    initialDelaySeconds: 30
+
+storage:
+  persistence: true
+  volumeSize: 10Gi
+  className: gp3
+
+monitoring:
+  enabledServiceMonitor: true
