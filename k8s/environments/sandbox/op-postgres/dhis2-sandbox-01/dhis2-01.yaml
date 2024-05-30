@@ -74,7 +74,7 @@ spec:
         repo2-retention-full: "8"
         archive-push-queue-max: "1G"
         archive-async: "y"
-        archive-timeout: "3600" # 1 hour
+        archive-timeout: "43200" # 12 hours
         log-level-console: "debug"
         log-level-file: "debug" 
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
