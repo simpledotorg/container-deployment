@@ -32,6 +32,7 @@ local grafanaDashboards =
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
+  (if config.isManagedCluster then (import 'kube-prometheus/addons/managed-cluster.libsonnet')) +
   {
     values+:: {
       common+: {

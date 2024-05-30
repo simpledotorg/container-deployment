@@ -1,4 +1,5 @@
 {
+  isManagedCluster: true,
   grafana: {
     enable: true,
     externalUrl: 'https://grafana.simple.org/',
