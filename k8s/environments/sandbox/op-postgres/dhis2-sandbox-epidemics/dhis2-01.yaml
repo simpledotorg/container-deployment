@@ -70,13 +70,14 @@ spec:
                   values:
                   - "true"
       global:
-        repo1-path: /pgbackrest/postgres-operator/dhis2-sandbox-epidemics/repo1
+        repo2-path: /pgbackrest/postgres-operator/dhis2-sandbox-epidemics/repo2
+        repo2-retention-full-type: "count"
+        repo2-retention-full: "8"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
-      - name: repo1
+      - name: repo2
         schedules:
-          full: "0 22 * * 0" # Sunday
-          differential: "0 22 * * 1-6" # Monday to Saturday
+          full: "0 */6 * * *" # Every 6 hours
         s3:
           bucket: sandbox-simple-k8s-db-backup
           endpoint: s3.ap-south-1.amazonaws.com
