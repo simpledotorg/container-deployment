@@ -109,6 +109,7 @@ spec:
           huge_pages: "try"
           min_wal_size: "1GB"
           max_wal_size: "4GB"
+          archive_mode: "on"
           max_worker_processes: "8"
           max_parallel_workers_per_gather: "4"
           max_parallel_workers: "8"
