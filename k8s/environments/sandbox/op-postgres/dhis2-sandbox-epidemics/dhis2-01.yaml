@@ -58,7 +58,7 @@ spec:
     pgbackrest:
       configuration:
       - secret:
-          name: dhis2
+          name: pgbackrest
       repoHost:
         affinity:
           nodeAffinity:
