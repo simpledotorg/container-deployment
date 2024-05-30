@@ -73,6 +73,7 @@ spec:
         repo2-path: /pgbackrest/postgres-operator/dhis2-sandbox-epidemics/repo2
         repo2-retention-full-type: "count"
         repo2-retention-full: "8"
+        archive-timeout: "1800" # 30 minutes
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo2
