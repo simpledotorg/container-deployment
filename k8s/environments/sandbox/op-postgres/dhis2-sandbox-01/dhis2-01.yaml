@@ -69,7 +69,7 @@ spec:
                   values:
                   - "true"
       global:
-        repo2-path: /pgbackrest/postgres-operator/dhis2-sandbox-01/repo2
+        repo2-path: /pgbackrest/postgres-operator/dhis2-sandbox-01/repo2-02
         repo2-retention-full-type: "count"
         repo2-retention-full: "8"
         archive-push-queue-max: "1G"
