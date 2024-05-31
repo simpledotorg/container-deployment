@@ -517,7 +517,7 @@ spec:
   source:
     path: k8s/environments/sandbox/op-postgres//dhis2-sandbox-01
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: debug-dhis2-sandbox-01-pg
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
