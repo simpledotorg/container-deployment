@@ -30,6 +30,24 @@ cron:
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:india-production-k8s"]}]'
   }
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role-db
+            operator: In
+            values:
+            - "true"
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        labelSelector:
+          matchExpressions:
+          - key: postgres-operator.crunchydata.com/role
+            operator: In
+            values:
+            - "replica"
+        topologyKey: "kubernetes.io/hostname"
 server:
   replicaCount: 6
   log:
