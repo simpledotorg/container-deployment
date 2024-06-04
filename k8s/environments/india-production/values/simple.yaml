@@ -41,7 +41,7 @@ cron:
             - "true"
     podAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
-        labelSelector:
+      - labelSelector:
           matchExpressions:
           - key: postgres-operator.crunchydata.com/role
             operator: In
