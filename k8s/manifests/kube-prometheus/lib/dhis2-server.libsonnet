@@ -8,6 +8,7 @@ local grafanaDashboards = { grafanaDashboards: {
 local DHIS2Mixin = addMixin({
   name: 'dhis2-server',
   dashboardFolder: 'DHIS2 Server',
+  mixin: grafanaDashboards,
 });
 
 {
