@@ -20,14 +20,15 @@ spec:
       password:
         type: AlphaNumeric
   instances:
-    - name: dhis2-sandbox-01-postgres
+    - name: dhis2-postgres
       replicas: 1
       dataVolumeClaimSpec:
+        storageClassName: "gp3"
         accessModes:
         - "ReadWriteOnce"
         resources:
           requests:
-            storage: 500Gi
+            storage: 100Gi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -45,10 +46,10 @@ spec:
               labelSelector:
                 matchLabels:
                   postgres-operator.crunchydata.com/cluster: dhis2-sandbox-01
-                  postgres-operator.crunchydata.com/instance-set: dhis2-sandbox-01-postgres
+                  postgres-operator.crunchydata.com/instance-set: dhis2-postgres
       metadata:
         labels:
-          tags.datadoghq.com/service: "postgrescluster-simple"
+          tags.datadoghq.com/service: "postgrescluster-dhis2"
           tags.datadoghq.com/version: "14"
           prometheus.io/app: 'postgres'
         annotations:
@@ -72,8 +73,6 @@ spec:
         repo2-path: /pgbackrest/postgres-operator/dhis2-sandbox-01/repo2
         repo2-retention-full-type: "count"
         repo2-retention-full: "8"
-        archive-push-queue-max: "1G"
-        archive-async: "y"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo2
