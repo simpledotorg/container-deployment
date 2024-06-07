@@ -16,7 +16,7 @@
     ]
   },
   "description": "Tomcat dashboard using metrics from prometheus JMX exporter",
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "gnetId": 8881,
   "graphTooltip": 0,

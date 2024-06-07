@@ -16,7 +16,7 @@
     ]
   },
   "description": "Dashboard for monitoring Apache Artemis",
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "gnetId": 9087,
   "graphTooltip": 0,

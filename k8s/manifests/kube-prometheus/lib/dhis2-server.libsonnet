@@ -1,9 +1,9 @@
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
 local grafanaDashboards = { grafanaDashboards: {
-  'dhis2-springboot.json': (import 'dhis2-server/springboot-dashboard.libsonnet'),
-  'dhis2-tomcat.json': (import 'dhis2-server/tomcat-dashboard.libsonnet'),
-  'dhis2-artemis.json': (import 'dhis2-server/artemis-dashboard.libsonnet'),
+  'dhis2-springboot.json': (import 'dhis2-server/springboot-dashboard.json'),
+  'dhis2-tomcat.json': (import 'dhis2-server/tomcat-dashboard.json'),
+  'dhis2-artemis.json': (import 'dhis2-server/artemis-dashboard.json'),
 } };
 
 
