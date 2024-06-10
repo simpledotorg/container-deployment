@@ -84,10 +84,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "jvm_info{instance=\"$instance\"}",
           "format": "table",
@@ -161,10 +157,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_uptime_millis{instance=\"$instance\"} / 1000 / 60",
           "format": "time_series",
@@ -242,10 +234,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_started{instance=\"$instance\"}",
           "format": "time_series",
@@ -324,10 +312,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "process_max_fds{instance=\"$instance\"} - process_open_fds{instance=\"$instance\"}",
           "format": "time_series",
@@ -401,10 +385,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_journal_buffer_size{instance=\"$instance\"}",
           "format": "time_series",
@@ -414,10 +394,6 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "expr": "",
           "format": "time_series",
           "intervalFactor": 1,
@@ -559,10 +535,6 @@
       ],
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_paging{instance=\"$instance\"}",
           "format": "table",
@@ -638,10 +610,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_journal_buffer_timeout{instance=\"$instance\"}",
           "format": "time_series",
@@ -651,10 +619,6 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "expr": "",
           "format": "time_series",
           "intervalFactor": 1,
@@ -725,10 +689,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_journal_max_io{instance=\"$instance\"}",
           "format": "time_series",
@@ -738,10 +698,6 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "expr": "",
           "format": "time_series",
           "intervalFactor": 1,
@@ -794,10 +750,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_message_count{instance=\"$instance\"}",
           "format": "time_series",
@@ -880,10 +832,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_connection_count{instance=\"$instance\"}",
           "format": "time_series",
@@ -893,10 +841,6 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_consumer_count{instance=\"$instance\"}",
           "format": "time_series",
@@ -979,10 +923,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "artemis_address_size{instance=\"$instance\"}",
           "format": "time_series",
@@ -1064,10 +1004,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "jvm_memory_bytes_used{instance=\"$instance\"}",
           "format": "time_series",
@@ -1150,10 +1086,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "jvm_memory_pool_bytes_used{instance=\"$instance\"}",
           "format": "time_series",
@@ -1235,10 +1167,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "jvm_gc_collection_seconds_count{instance=\"$instance\"}",
           "format": "time_series",
@@ -1320,10 +1248,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "jvm_threads_current{instance=\"$instance\"}",
           "format": "time_series",
@@ -1333,10 +1257,6 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PB7AD567477C83756"
-          },
           "editorMode": "code",
           "expr": "jvm_threads_peak{instance=\"$instance\"}",
           "format": "time_series",
