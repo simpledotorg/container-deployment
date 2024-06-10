@@ -36,3 +36,7 @@
 # Datadog k8s operator
 - [Agent Spec](https://github.com/DataDog/datadog-operator/blob/main/docs/configuration.v1alpha1.md)
 
+# Monitoring
+- [Kube Prometheus](https://github.com/prometheus-operator/kube-prometheus)
+- [Jsonnet](https://jsonnet.org/)
+- [Grafonnet](https://github.com/grafana/grafonnet)
