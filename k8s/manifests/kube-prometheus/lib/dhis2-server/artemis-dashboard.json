@@ -16,7 +16,7 @@
     ]
   },
   "description": "Dashboard for monitoring Apache Artemis",
-  "editable": false,
+  "editable": true,
   "fiscalYearStartMonth": 0,
   "gnetId": 9087,
   "graphTooltip": 0,
@@ -24,10 +24,6 @@
   "links": [],
   "panels": [
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -105,10 +101,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -186,10 +178,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -271,10 +259,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -357,10 +341,6 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -449,10 +429,6 @@
     },
     {
       "columns": [],
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fontSize": "100%",
       "gridPos": {
         "h": 9,
@@ -602,10 +578,6 @@
       "type": "table-old"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -693,10 +665,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -788,10 +756,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -878,10 +842,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -981,10 +941,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1071,10 +1027,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "description": "",
       "fill": 1,
       "fillGradient": 0,
@@ -1160,10 +1112,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "description": "",
       "fill": 1,
       "fillGradient": 0,
@@ -1250,10 +1198,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "description": "",
       "fill": 1,
       "fillGradient": 0,
@@ -1339,10 +1283,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PB7AD567477C83756"
-      },
       "description": "",
       "fill": 1,
       "fillGradient": 0,
