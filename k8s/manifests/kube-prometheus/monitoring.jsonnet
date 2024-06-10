@@ -96,7 +96,7 @@ local manifests =
    else
      kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana) +
      [service.prometheusRules for service in monitoredServices] +
-     [service.exporterService for service in monitoredServices] +
-     [service.serviceMonitor for service in monitoredServices]);
-
+     std.flattenArrays([service.exporterServices for service in monitoredServices]) +
+     std.flattenArrays([service.serviceMonitors for service in monitoredServices]));
+     
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)

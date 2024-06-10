@@ -10,6 +10,6 @@ local redisMixin = addMixin({
 {
   grafanaDashboards: redisMixin.grafanaDashboards,
   prometheusRules: redisMixin.prometheusRules,
-  exporterService: common.exporterService('redis', 9121, 'simple-v1'),
-  serviceMonitor: common.serviceMonitor('redis', 'simple-v1'),
+  exporterServices: [common.exporterService('redis', 9121, 'simple-v1')],
+  serviceMonitors: [common.serviceMonitor('redis', 'simple-v1')],
 }
