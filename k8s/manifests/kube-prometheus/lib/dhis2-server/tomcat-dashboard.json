@@ -24,9 +24,6 @@
   "links": [],
   "panels": [
     {
-      "datasource": {
-        "uid": "$datasource"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -93,9 +90,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_serverinfo{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"}",
           "format": "table",
           "instant": true,
@@ -108,10 +102,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P4D7C5C41A3558C30"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -123,10 +113,6 @@
       "repeat": "protocol",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4D7C5C41A3558C30"
-          },
           "refId": "A"
         }
       ],
@@ -134,9 +120,6 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "uid": "$datasource"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -197,9 +180,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_maxthreads{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\",protocol=\"$protocol\"}",
           "format": "time_series",
           "instant": true,
@@ -212,9 +192,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "uid": "$datasource"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -275,9 +252,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_minsparethreads{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\",protocol=\"$protocol\"}",
           "format": "time_series",
           "instant": true,
@@ -290,9 +264,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "uid": "$datasource"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -353,9 +324,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_acceptcount{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\",protocol=\"$protocol\"}",
           "format": "time_series",
           "instant": true,
@@ -368,9 +336,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "uid": "$datasource"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -431,9 +396,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_acceptorthreadcount{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\",protocol=\"$protocol\"}",
           "format": "time_series",
           "instant": true,
@@ -446,9 +408,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "uid": "$datasource"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -509,9 +468,6 @@
       "pluginVersion": "10.4.0",
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_pollerthreadcount{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\",protocol=\"$protocol\"}",
           "format": "time_series",
           "instant": true,
@@ -528,9 +484,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "uid": "$datasource"
-      },
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -574,9 +527,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "increase(tomcat_bytesreceived_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\", protocol=\"$protocol\"}[$__interval])",
           "format": "time_series",
           "interval": "60s",
@@ -585,9 +535,6 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "increase(tomcat_bytessent_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\", protocol=\"$protocol\"}[$__interval])",
           "format": "time_series",
           "interval": "60s",
@@ -631,9 +578,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "uid": "$datasource"
-      },
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -678,9 +622,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "increase(tomcat_requestcount_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\",protocol=\"$protocol\"}[$__interval])",
           "format": "time_series",
           "interval": "60s",
@@ -689,9 +630,6 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "increase(tomcat_errorcount_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\",protocol=\"$protocol\"}[$__interval])",
           "format": "time_series",
           "interval": "60s",
@@ -737,9 +675,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "uid": "$datasource"
-      },
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -787,9 +722,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_currentthreadcount{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\", protocol=\"$protocol\"}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -797,9 +729,6 @@
           "refId": "B"
         },
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_currentthreadsbusy{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\", protocol=\"$protocol\"}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -843,9 +772,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "uid": "$datasource"
-      },
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -893,9 +819,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_connectioncount{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\", protocol=\"$protocol\"}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -903,9 +826,6 @@
           "refId": "E"
         },
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "expr": "tomcat_threadpool_keepalivecount{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\", protocol=\"$protocol\"}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -946,10 +866,6 @@
     },
     {
       "collapsed": true,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P4D7C5C41A3558C30"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -963,9 +879,6 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": {
-            "uid": "$datasource"
-          },
           "decimals": 0,
           "fill": 1,
           "fillGradient": 0,
@@ -1004,9 +917,6 @@
           "steppedLine": false,
           "targets": [
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "sum(increase(tomcat_session_sessioncounter_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"}[$__interval])) by (instance)",
               "format": "time_series",
               "interval": "60s",
@@ -1015,9 +925,6 @@
               "refId": "A"
             },
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "sum(increase(tomcat_session_expiredsessions_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"}[$__interval])) by (instance)",
               "format": "time_series",
               "interval": "60s",
@@ -1026,9 +933,6 @@
               "refId": "B"
             },
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "sum(increase(tomcat_session_rejectedsessions_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"}[$__interval])) by (instance)",
               "format": "time_series",
               "interval": "60s",
@@ -1069,9 +973,6 @@
           }
         },
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1132,9 +1033,6 @@
           "pluginVersion": "10.4.0",
           "targets": [
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "sum(tomcat_session_sessioncounter_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"} - tomcat_session_expiredsessions_total)",
               "format": "time_series",
               "intervalFactor": 1,
@@ -1145,9 +1043,6 @@
           "type": "stat"
         },
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1208,9 +1103,6 @@
           "pluginVersion": "10.4.0",
           "targets": [
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "sum(tomcat_session_sessioncounter_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"})",
               "format": "time_series",
               "intervalFactor": 1,
@@ -1221,9 +1113,6 @@
           "type": "stat"
         },
         {
-          "datasource": {
-            "uid": "$datasource"
-          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1284,9 +1173,6 @@
           "pluginVersion": "10.4.0",
           "targets": [
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "sum(tomcat_session_expiredsessions_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"})",
               "format": "time_series",
               "intervalFactor": 1,
@@ -1301,9 +1187,6 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": {
-            "uid": "$datasource"
-          },
           "decimals": 0,
           "fill": 1,
           "fillGradient": 0,
@@ -1343,9 +1226,6 @@
           "steppedLine": false,
           "targets": [
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "topk(5, increase(tomcat_servlet_requestcount_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"}[$__interval]))",
               "format": "time_series",
               "interval": "60s",
@@ -1390,9 +1270,6 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": {
-            "uid": "$datasource"
-          },
           "decimals": 0,
           "fill": 1,
           "fillGradient": 0,
@@ -1432,9 +1309,6 @@
           "steppedLine": false,
           "targets": [
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "topk(5, increase(tomcat_servlet_errorcount_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"}[$__interval]))",
               "format": "time_series",
               "interval": "60s",
@@ -1479,9 +1353,6 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": {
-            "uid": "$datasource"
-          },
           "decimals": 0,
           "description": "Top 4 servlets average processing time per request in last 5 minutes",
           "fill": 1,
@@ -1522,9 +1393,6 @@
           "steppedLine": false,
           "targets": [
             {
-              "datasource": {
-                "uid": "$datasource"
-              },
               "expr": "topk(5, increase(tomcat_servlet_processingtime_total{namespace=\"$namespace\",service=\"$service\",pod=\"$pod\"}[$__interval]) / increase(tomcat_servlet_requestcount_total[$__interval]))",
               "format": "time_series",
               "instant": false,
@@ -1567,10 +1435,6 @@
       ],
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4D7C5C41A3558C30"
-          },
           "refId": "A"
         }
       ],
@@ -1586,11 +1450,6 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "default",
-          "value": "default"
-        },
         "hide": 0,
         "includeAll": false,
         "multi": false,
@@ -1603,16 +1462,6 @@
         "type": "datasource"
       },
       {
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "$datasource"
-        },
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -1632,16 +1481,6 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "$datasource"
-        },
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -1661,16 +1500,6 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "$datasource"
-        },
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -1690,15 +1519,6 @@
       },
       {
         "allValue": "",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "$datasource"
-        },
         "definition": "",
         "hide": 0,
         "includeAll": true,
