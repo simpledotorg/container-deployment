@@ -20,6 +20,7 @@ local config = {
 
 local isEnvSystemsProduction = environment == 'systems-production';
 local enableGrafana = config.grafana.enable;
+local enableDhis2Dashboards = std.objectHas(config.grafana, 'enableDhis2Dashboards') && config.grafana.enableDhis2Dashboards;
 
 local monitoredServices =
   [postgres, redis, ingressNginx, simpleServer];
@@ -29,7 +30,7 @@ local grafanaDashboards =
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
-  dhis2Server.grafanaDashboards;
+  (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
