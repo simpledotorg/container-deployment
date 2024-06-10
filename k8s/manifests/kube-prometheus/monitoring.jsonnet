@@ -6,6 +6,7 @@ local simpleServer = (import 'lib/simple-server.libsonnet');
 local kubePrometheus = (import 'lib/kube-prometheus.libsonnet');
 local argocd = (import 'lib/argocd.libsonnet');
 local ingress = (import 'lib/ingress.libsonnet');
+local dhis2Server = (import 'lib/dhis2-server.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -19,6 +20,7 @@ local config = {
 
 local isEnvSystemsProduction = environment == 'systems-production';
 local enableGrafana = config.grafana.enable;
+local enableDhis2Dashboards = std.objectHas(config.grafana, 'enableDhis2Dashboards') && config.grafana.enableDhis2Dashboards;
 
 local monitoredServices =
   [postgres, redis, ingressNginx, simpleServer];
@@ -27,7 +29,8 @@ local grafanaDashboards =
   postgres.grafanaDashboards +
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
-  simpleServer.grafanaDashboards;
+  simpleServer.grafanaDashboards +
+  (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
