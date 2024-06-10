@@ -1755,11 +1755,6 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "bangladesh-production",
-          "value": "P594704EAF18951AC"
-        },
         "hide": 0,
         "includeAll": false,
         "label": "Data Source",
@@ -1774,15 +1769,6 @@
         "type": "datasource"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "dhis2-sandbox-01",
-          "value": "dhis2-sandbox-01"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PB7AD567477C83756"
-        },
         "definition": "label_values(jvm_info,namespace)",
         "hide": 0,
         "includeAll": false,
@@ -1802,15 +1788,6 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "172.30.2.45:8080",
-          "value": "172.30.2.45:8080"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PB7AD567477C83756"
-        },
         "definition": "label_values(jvm_classes_loaded_classes{namespace=\"$namespace\"},instance)",
         "hide": 0,
         "includeAll": false,
@@ -1833,15 +1810,6 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PB7AD567477C83756"
-        },
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -1860,15 +1828,6 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PB7AD567477C83756"
-        },
         "definition": "",
         "hide": 0,
         "includeAll": true,
