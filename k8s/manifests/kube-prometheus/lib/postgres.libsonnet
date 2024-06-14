@@ -17,9 +17,6 @@ local postgresMixin = addMixin({
     common.exporterService('postgres', 9187, 'dhis2-sandbox-epidemics')
   ],
   serviceMonitors: [
-    common.serviceMonitor('postgres', 'simple-v1'),
-    common.serviceMonitor('postgres', 'dhis2-demo-ecuador'),
-    common.serviceMonitor('postgres', 'dhis2-sandbox-01'),
-    common.serviceMonitor('postgres', 'dhis2-sandbox-epidemics')
+    common.serviceMonitor('postgres', 'simple-v1')
   ],
 }
