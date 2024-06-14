@@ -12,11 +12,11 @@ local postgresMixin = addMixin({
   prometheusRules: postgresMixin.prometheusRules,
   exporterServices: [
     common.exporterService('postgres', 9187, 'simple-v1'),
-    common.exporterService('postgres', 9187, 'dhis2-demo-ecuador'),
-    common.exporterService('postgres', 9187, 'dhis2-sandbox-01'),
-    common.exporterService('postgres', 9187, 'dhis2-sandbox-epidemics')
   ],
   serviceMonitors: [
-    common.serviceMonitor('postgres', 'simple-v1')
+    common.serviceMonitor('postgres', 'simple-v1'),
+    common.serviceMonitor('postgres', 'dhis2-demo-ecuador'),
+    common.serviceMonitor('postgres', 'dhis2-sandbox-01'),
+    common.serviceMonitor('postgres', 'dhis2-sandbox-epidemics')
   ],
 }
