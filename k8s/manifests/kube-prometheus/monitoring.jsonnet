@@ -98,7 +98,7 @@ local manifests =
      [service.prometheusRules for service in monitoredServices] +
      [service.exporterService for service in monitoredServices] +
      [service.serviceMonitor for service in monitoredServices]) +
-     postgres.prometheusRules +
+     [postgres.prometheusRules] +
      postgres.monitors(config.postgresNamespaces).exporterServices +
      postgres.monitors(config.postgresNamespaces).serviceMonitors;
      
