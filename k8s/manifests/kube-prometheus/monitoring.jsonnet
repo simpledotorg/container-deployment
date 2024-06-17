@@ -23,7 +23,7 @@ local enableGrafana = config.grafana.enable;
 local enableDhis2Dashboards = std.objectHas(config.grafana, 'enableDhis2Dashboards') && config.grafana.enableDhis2Dashboards;
 
 local monitoredServices =
-  [postgres, redis, ingressNginx, simpleServer];
+  [redis, ingressNginx, simpleServer];
 
 local grafanaDashboards =
   postgres.grafanaDashboards +
@@ -97,6 +97,9 @@ local manifests =
      kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana) +
      [service.prometheusRules for service in monitoredServices] +
      [service.exporterService for service in monitoredServices] +
-     [service.serviceMonitor for service in monitoredServices]);
-
+     [service.serviceMonitor for service in monitoredServices]) +
+     [postgres.prometheusRules] +
+     postgres.monitors(config.postgresNamespaces).exporterServices +
+     postgres.monitors(config.postgresNamespaces).serviceMonitors;
+     
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)

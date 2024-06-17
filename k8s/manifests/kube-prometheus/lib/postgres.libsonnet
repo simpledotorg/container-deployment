@@ -10,6 +10,12 @@ local postgresMixin = addMixin({
 {
   grafanaDashboards: postgresMixin.grafanaDashboards,
   prometheusRules: postgresMixin.prometheusRules,
-  exporterService: common.exporterService('postgres', 9187, 'simple-v1'),
-  serviceMonitor: common.serviceMonitor('postgres', 'simple-v1'),
+  monitors(namespaces): {
+    exporterServices: [
+      common.exporterService('postgres', 9187, ns) for ns in namespaces
+    ],
+    serviceMonitors: [
+      common.serviceMonitor('postgres', ns) for ns in namespaces
+    ],
+  }
 }

@@ -27,4 +27,5 @@
       port: 'web',
     },
   },
+  postgresNamespaces: ["simple-v1", "dhis2-demo-ecuador", "dhis2-sandbox-01", "dhis2-sandbox-epidemics"],
 }

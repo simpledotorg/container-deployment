@@ -20,4 +20,5 @@
       port: 'web',
     },
   },
+  postgresNamespaces: ["simple-v1"],
 }
