@@ -18,6 +18,6 @@ local simpleServerMixin = addMixin({
 {
   grafanaDashboards: simpleServerMixin.grafanaDashboards,
   prometheusRules: simpleServerMixin.prometheusRules,
-  exporterServices: [common.exporterService('simple-server', 9394, 'simple-v1')],
-  serviceMonitors: [common.serviceMonitor('simple-server', 'simple-v1')],
+  exporterServices: common.exporterService('simple-server', 9394, 'simple-v1'),
+  serviceMonitors: common.serviceMonitor('simple-server', 'simple-v1'),
 }

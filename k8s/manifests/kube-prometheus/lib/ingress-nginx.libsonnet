@@ -10,6 +10,6 @@ local ingressNginxMixin = addMixin({
 {
   grafanaDashboards: ingressNginxMixin.grafanaDashboards,
   prometheusRules: ingressNginxMixin.prometheusRules,
-  exporterServices: [common.exporterService('ingress-nginx', 10254, 'ingress-nginx')],
-  serviceMonitors: [common.serviceMonitor('ingress-nginx', 'ingress-nginx')],
+  exporterServices: common.exporterService('ingress-nginx', 10254, 'ingress-nginx'),
+  serviceMonitors: common.serviceMonitor('ingress-nginx', 'ingress-nginx'),
 }
