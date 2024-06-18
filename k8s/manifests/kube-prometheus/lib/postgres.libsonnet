@@ -11,9 +11,15 @@ local postgresMixin = addMixin({
 
 {
   grafanaDashboards: postgresMixin.grafanaDashboards {
-    'postgres-overview.json'+:: g.dashboard.withVariables([
-      g.dashboard.variable.query.new('namespace', 'label_values(pg_up,namespace)'),
-    ]),
+    Postgres+: {
+      'postgres-overview.json'+: {
+        templating+: {
+          list+: [
+            g.dashboard.variable.query.new('namespace', 'label_values(pg_up,namespace)'),
+          ],
+        },
+      },
+    },
   },
   prometheusRules: postgresMixin.prometheusRules,
   monitors(namespaces): {
