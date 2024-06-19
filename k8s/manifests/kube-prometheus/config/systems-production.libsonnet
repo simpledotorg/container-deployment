@@ -10,8 +10,11 @@
   },
   prometheus: {
     externalUrl: 'https://prometheus.simple.org',
-    retention: '30d',
-    storage: '10Gi',
+    retention: {
+      enable: true,
+      retention: '30d',
+      storage: '10Gi',
+    },
     ingress: {
       name: 'prometheus-k8s',
       host: 'prometheus.simple.org',
@@ -26,5 +29,5 @@
       port: 'web',
     },
   },
-  postgresNamespaces: ["simple-v1"],
+  postgresNamespaces: ['simple-v1'],
 }

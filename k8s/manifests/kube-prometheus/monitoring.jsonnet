@@ -59,8 +59,8 @@ local kp =
       prometheus+: {
         spec+: {
           externalUrl: config.prometheus.externalUrl,
-          retention: config.prometheus.retention,
-          storage: {
+          [if config.prometheus.retention.enable then 'retention']: config.prometheus.retention.retention,
+          [if config.prometheus.retention.enable then 'storage']: {
             volumeClaimTemplate: {
               apiVersion: 'v1',
               kind: 'PersistentVolumeClaim',
@@ -68,7 +68,7 @@ local kp =
                 accessModes: ['ReadWriteOnce'],
                 resources: {
                   requests: {
-                    storage: config.prometheus.storage,
+                    storage: config.prometheus.retention.storage,
                   },
                 },
               },
@@ -99,8 +99,8 @@ local manifests =
      [service.prometheusRules for service in monitoredServices] +
      [service.exporterService for service in monitoredServices] +
      [service.serviceMonitor for service in monitoredServices]) +
-     [postgres.prometheusRules] +
-     postgres.monitors(config.postgresNamespaces).exporterServices +
-     postgres.monitors(config.postgresNamespaces).serviceMonitors;
-     
+  [postgres.prometheusRules] +
+  postgres.monitors(config.postgresNamespaces).exporterServices +
+  postgres.monitors(config.postgresNamespaces).serviceMonitors;
+
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
