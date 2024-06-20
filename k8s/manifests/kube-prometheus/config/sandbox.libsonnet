@@ -1,4 +1,5 @@
 {
+  isManagedCluster: true,
   grafana: {
     enable: true,
     enableDhis2Dashboards: true,
