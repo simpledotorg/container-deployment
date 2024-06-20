@@ -34,12 +34,12 @@
     },
   },
   alertmanager: {
-    externalUrl: 'http://simples13.health.gov.lk/alertmanager',
+    externalUrl: 'http://simples5.health.gov.lk',
     ingress: {
       name: 'alertmanager-main',
-      host: 'simples13.health.gov.lk',
+      host: 'simples5.health.gov.lk',
       port: 'web',
-      path: '/alertmanager(/|$)(.*)',
+      path: '/',
     },
   },
   postgresNamespaces: ['simple-v1'],
