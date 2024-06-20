@@ -13,7 +13,7 @@
       name: 'prometheus-k8s',
       host: 'simples13.health.gov.lk',
       port: 'web',
-      path: '/prometheus(/|$)(.*)',
+      path: '/',
     },
     affinity: {
       nodeAffinity: {
