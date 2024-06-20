@@ -22,6 +22,7 @@ local config = {
 local isEnvSystemsProduction = environment == 'systems-production';
 local enableGrafana = config.grafana.enable;
 local enableDhis2Dashboards = std.objectHas(config.grafana, 'enableDhis2Dashboards') && config.grafana.enableDhis2Dashboards;
+local sslEnabled = if std.objectHas(config, 'sslEnabled') then config.sslEnabled else true;
 
 local monitoredServices =
   [redis, ingressNginx, simpleServer];
@@ -82,12 +83,14 @@ local kp =
         config.alertmanager.ingress {
           namespace: $.values.common.namespace,
           auth_secret: 'monitoring-basic-auth',
+          sslEnabled: sslEnabled,
         },
         config.prometheus.ingress {
           namespace: $.values.common.namespace,
           auth_secret: 'monitoring-basic-auth',
+          sslEnabled: sslEnabled,
         },
-      ] + (if enableGrafana then [config.grafana.ingress { namespace: $.values.common.namespace }] else []),
+      ] + (if enableGrafana then [config.grafana.ingress { namespace: $.values.common.namespace, sslEnabled: sslEnabled }] else []),
     ),
   };
 
