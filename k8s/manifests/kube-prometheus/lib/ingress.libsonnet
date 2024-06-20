@@ -42,7 +42,8 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, pa
       annotations: (if sslEnabled then ssl_annotations else {}) +
                    (if auth_secret != null then auth_annotations else {}),
     },
-    spec: { rules: [rule(name, host, port, path)], tls: [tls(host)] },
+    spec: { rules: [rule(name, host, port, path)] } +
+          (if sslEnabled then { tls: [tls(host)] } else {}),
   };
 
 
