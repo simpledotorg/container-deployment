@@ -1,8 +1,8 @@
-local rule(name, host, port) = {
+local rule(name, host, port, path) = {
   host: host,
   http: {
     paths: [{
-      path: '/',
+      path: path,
       pathType: 'Prefix',
       backend: {
         service: {
@@ -21,7 +21,7 @@ local tls(host) = {
   secretName: host + '-tls',
 };
 
-local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true) =
+local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, path) =
   local auth_annotations = {
     'nginx.ingress.kubernetes.io/auth-type': 'basic',
     'nginx.ingress.kubernetes.io/auth-secret': auth_secret,
@@ -42,7 +42,7 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true) =
       annotations: (if sslEnabled then ssl_annotations else {}) +
                    (if auth_secret != null then auth_annotations else {}),
     },
-    spec: { rules: [rule(name, host, port)], tls: [tls(host)] },
+    spec: { rules: [rule(name, host, port, path)], tls: [tls(host)] },
   };
 
 
@@ -54,7 +54,8 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true) =
       config.host,
       config.port,
       std.get(config, 'auth_secret'),
-      config.sslEnabled
+      config.sslEnabled,
+      config.path
     )
     for config in configs
   },
