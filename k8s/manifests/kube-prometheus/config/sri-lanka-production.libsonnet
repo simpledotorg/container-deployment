@@ -3,7 +3,7 @@
     enable: false,
   },
   prometheus: {
-    externalUrl: 'https://simples13.health.gov.lk/prometheus',
+    externalUrl: 'https://simples13.health.gov.lk',
     retention: {
       enable: false,
       retention: '1y',
