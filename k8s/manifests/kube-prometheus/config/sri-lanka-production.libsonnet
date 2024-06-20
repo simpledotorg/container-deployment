@@ -3,7 +3,7 @@
     enable: false,
   },
   prometheus: {
-    externalUrl: 'https://simples13.health.gov.lk',
+    externalUrl: 'https://simples13.health.gov.lk/prometheus',
     retention: {
       enable: false,
       retention: '1y',
@@ -13,7 +13,7 @@
       name: 'prometheus-k8s',
       host: 'simples13.health.gov.lk',
       port: 'web',
-      path: '/',
+      path: '/prometheus(/|$)(.*)',
     },
     affinity: {
       nodeAffinity: {
