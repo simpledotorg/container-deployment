@@ -422,7 +422,7 @@ spec:
       exclude: '*.json'
     path: k8s/manifests/kube-prometheus
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: lk-kp
   syncPolicy:
     syncOptions:
       - PruneLast=true
