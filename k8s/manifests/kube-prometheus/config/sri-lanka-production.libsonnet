@@ -15,7 +15,23 @@
       port: 'web',
       path: '/prometheus(/|$)(.*)',
     },
-    // Add affintiy
+    affinity: {
+      nodeAffinity: {
+        requiredDuringSchedulingIgnoredDuringExecution: {
+          nodeSelectorTerms: [
+            {
+              matchExpressions: [
+                {
+                  key: 'role-prometheus',
+                  operator: 'In',
+                  values: ['true'],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
   },
   alertmanager: {
     externalUrl: 'http://simples13.health.gov.lk/alertmanager',
