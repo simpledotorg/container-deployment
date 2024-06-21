@@ -52,3 +52,17 @@
     port: 443
     proto: tcp
   become: true
+
+# Allow all traffic from k3s service CIDR
+- name: allow all traffic from k3s service CIDR
+  ufw:
+    rule: allow
+    src: 10.43.0.0/16
+  become: true
+
+# Allow all traffic from k3s pod CIDR
+- name: allow all traffic from k3s pod CIDR
+  ufw:
+    rule: allow
+    src: 10.42.0.0/16
+  become: true
