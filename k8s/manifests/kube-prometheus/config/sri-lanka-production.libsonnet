@@ -34,10 +34,10 @@
     },
   },
   alertmanager: {
-    externalUrl: 'http://simples5.health.gov.lk',
+    externalUrl: 'https://simples-test.health.gov.lk',
     ingress: {
       name: 'alertmanager-main',
-      host: 'simples5.health.gov.lk',
+      host: 'simples-test.health.gov.lk',
       port: 'web',
       path: '/',
     },
