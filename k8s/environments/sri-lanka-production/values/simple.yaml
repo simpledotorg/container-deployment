@@ -30,3 +30,5 @@ worker:
   }
 migration:
   enabled: true
+metrics:
+  enabled: true
