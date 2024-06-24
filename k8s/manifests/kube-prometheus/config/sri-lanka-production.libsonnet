@@ -5,9 +5,9 @@
   prometheus: {
     externalUrl: 'https://simples13.health.gov.lk/prometheus',
     retention: {
-      enable: false,
-      retention: '1y',
-      storage: '30Gi',
+      enable: true,
+      retention: '30d',
+      storage: '10Gi',
     },
     ingress: {
       name: 'prometheus-k8s',
