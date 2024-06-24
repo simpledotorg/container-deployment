@@ -3,7 +3,7 @@
     enable: false,
   },
   prometheus: {
-    externalUrl: 'https://simples13.health.gov.lk',
+    externalUrl: 'https://simples13.health.gov.lk/prometheus',
     retention: {
       enable: false,
       retention: '1y',
@@ -13,7 +13,7 @@
       name: 'prometheus-k8s',
       host: 'simples13.health.gov.lk',
       port: 'web',
-      path: '/',
+      path: '/prometheus(/|$)(.*)',
     },
     affinity: {
       nodeAffinity: {
@@ -34,12 +34,12 @@
     },
   },
   alertmanager: {
-    externalUrl: 'https://simples5.health.gov.lk',
+    externalUrl: 'https://simples13.health.gov.lk/alertmanager',
     ingress: {
       name: 'alertmanager-main',
-      host: 'simples5.health.gov.lk',
+      host: 'simples13.health.gov.lk',
       port: 'web',
-      path: '/',
+      path: '/alertmanager(/|$)(.*)',
     },
   },
   postgresNamespaces: ['simple-v1'],
