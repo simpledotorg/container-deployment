@@ -32,5 +32,5 @@
       path: '/',
     },
   },
-  postgresNamespaces: ['simple-v1'],
+  postgresNamespaces: [],
 }
