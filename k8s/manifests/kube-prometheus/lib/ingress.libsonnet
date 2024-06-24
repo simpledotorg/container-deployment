@@ -26,7 +26,7 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, pa
     'nginx.ingress.kubernetes.io/auth-type': 'basic',
     'nginx.ingress.kubernetes.io/auth-secret': auth_secret,
     'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
-    'nginx.ingress.kubernetes.io/rewrite-target': '/$2',  //TODO: Make this optional
+    // 'nginx.ingress.kubernetes.io/rewrite-target': '/$2',  //TODO: Make this optional
   };
 
   local ssl_annotations = {
