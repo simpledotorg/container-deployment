@@ -39,7 +39,7 @@
       name: 'alertmanager-main',
       host: 'simples13.health.gov.lk',
       port: 'web',
-      path: '/prometheus(/|$)(.*)',
+      path: '/alertmanager(/|$)(.*)',
     },
   },
   postgresNamespaces: ['simple-v1'],
