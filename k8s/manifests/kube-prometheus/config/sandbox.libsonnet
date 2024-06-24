@@ -7,16 +7,21 @@
       name: 'grafana',
       host: 'grafana-sandbox.simple.org',
       port: 'http',
+      path: '/',
     },
   },
   prometheus: {
     externalUrl: 'https://prometheus-sandbox.simple.org',
-    retention: '7d',
-    storage: '10Gi',
+    retention: {
+      enable: true,
+      retention: '7d',
+      storage: '10Gi',
+    },
     ingress: {
       name: 'prometheus-k8s',
       host: 'prometheus-sandbox.simple.org',
       port: 'web',
+      path: '/',
     },
   },
   alertmanager: {
@@ -25,7 +30,8 @@
       name: 'alertmanager-main',
       host: 'alertmanager-sandbox.simple.org',
       port: 'web',
+      path: '/',
     },
   },
-  postgresNamespaces: ["simple-v1", "dhis2-demo-ecuador", "dhis2-sandbox-01", "dhis2-sandbox-epidemics"],
+  postgresNamespaces: ['simple-v1', 'dhis2-demo-ecuador', 'dhis2-sandbox-01', 'dhis2-sandbox-epidemics'],
 }

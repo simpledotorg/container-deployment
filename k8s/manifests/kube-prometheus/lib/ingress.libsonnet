@@ -1,8 +1,8 @@
-local rule(name, host, port) = {
+local rule(name, host, port, path) = {
   host: host,
   http: {
     paths: [{
-      path: '/',
+      path: path,
       pathType: 'Prefix',
       backend: {
         service: {
@@ -21,11 +21,16 @@ local tls(host) = {
   secretName: host + '-tls',
 };
 
-local ingress(name, namespace, host, port, auth_secret=null) =
+local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, path) =
   local auth_annotations = {
     'nginx.ingress.kubernetes.io/auth-type': 'basic',
     'nginx.ingress.kubernetes.io/auth-secret': auth_secret,
     'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
+  };
+
+  local ssl_annotations = {
+    'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
+    'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
   };
 
   {
@@ -34,12 +39,12 @@ local ingress(name, namespace, host, port, auth_secret=null) =
     metadata: {
       name: name,
       namespace: namespace,
-      annotations: {
-        'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
-        'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
-      } + (if auth_secret != null then auth_annotations else {}),
+      annotations: (if sslEnabled then ssl_annotations else {}) +
+                   (if auth_secret != null then auth_annotations else {}) +
+                   (if path != '/' then { 'nginx.ingress.kubernetes.io/rewrite-target': '/$2' } else {}),
     },
-    spec: { rules: [rule(name, host, port)], tls: [tls(host)] },
+    spec: { rules: [rule(name, host, port, path)] } +
+          (if sslEnabled then { tls: [tls(host)] } else {}),
   };
 
 
@@ -50,7 +55,9 @@ local ingress(name, namespace, host, port, auth_secret=null) =
       config.namespace,
       config.host,
       config.port,
-      std.get(config, 'auth_secret')
+      std.get(config, 'auth_secret'),
+      config.sslEnabled,
+      config.path
     )
     for config in configs
   },

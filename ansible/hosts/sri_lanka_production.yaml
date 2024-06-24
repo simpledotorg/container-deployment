@@ -40,6 +40,7 @@ all:
           ansible_host: 192.168.1.233
           k3s_node_labels:
             - "role-worker-redis=true"
+            - "role-prometheus=true"
         moh-hrms-simple-06:
           ansible_host: 192.168.1.219
           k3s_node_labels:
@@ -61,6 +62,7 @@ all:
           ansible_host: 192.168.1.209
           k3s_node_labels:
             - "role-worker-redis=true"
+            - "role-prometheus=true"
         moh-hrms-simple-12:
           ansible_host: 192.168.1.210
           k3s_node_labels:
