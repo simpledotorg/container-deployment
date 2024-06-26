@@ -631,6 +631,8 @@ spec:
       prune: false
       selfHeal: true
 
+---
+
 # dhis2-htn-tracking server
 apiVersion: argoproj.io/v1alpha1
 kind: Application
