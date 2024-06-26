@@ -16,6 +16,7 @@ local postgresMixin = addMixin({
         templating+: {
           list+: [
             g.dashboard.variable.query.new('namespace', 'label_values(pg_up,namespace)'),
+            g.dashboard.variable.query.new('db', 'label_values(pg_stat_database_tup_fetched{instance=~"$instance", datname!~"template.*|postgres", namespace="$namespace"},datname)'),
           ],
         },
       },
