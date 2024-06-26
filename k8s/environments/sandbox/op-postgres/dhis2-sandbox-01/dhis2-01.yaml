@@ -113,6 +113,11 @@ spec:
           max_parallel_workers_per_gather: "4"
           max_parallel_workers: "8"
           max_parallel_maintenance_workers: "4"
+          logging_collector: "on"
+          log_statement: "all"
+          log_directory: "pg_log"
+          log_filename: "postgresql-%Y-%m-%d_%H%M%S.log"
+          log_min_duration_statement: "0"
   monitoring:
     pgmonitor:
       exporter:
