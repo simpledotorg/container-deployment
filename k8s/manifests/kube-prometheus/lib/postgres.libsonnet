@@ -18,16 +18,15 @@ local postgresMixin = addMixin({
             {
               name: 'namespace',
               query: 'label_values(pg_up,namespace)',
-              datasource: {
-                uid: '$datasource',
-              },
+              datasource: '$datasource',
+              label: 'namespace',
+
             },
             {
               name: 'db',
               query: 'label_values(pg_stat_database_tup_fetched{instance=~"$instance", datname!~"template.*|postgres", namespace="$namespace"},datname)',
-              datasource: {
-                uid: '$datasource',
-              },
+              datasource: '$datasource',
+              label: 'db',
             },
           ],
         },
