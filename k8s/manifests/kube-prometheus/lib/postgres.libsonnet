@@ -37,7 +37,7 @@ local postgresMixin = addMixin({
               skipUrlSync: false,
               sort: 0,
               type: 'query',
-            }
+            },
             {
               allValue: '.+',
               datasource: {
