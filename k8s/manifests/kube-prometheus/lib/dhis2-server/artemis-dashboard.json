@@ -1333,7 +1333,10 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query"
+        "type": "query",
+        "datasource": {
+          "uid": "$datasource"
+        }
       },
       {
         "definition": "label_values(jvm_info{namespace=\"$namespace\"},instance)",
@@ -1355,7 +1358,10 @@
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
-        "useTags": false
+        "useTags": false,
+        "datasource": {
+          "uid": "$datasource"
+        }
       }
     ]
   },
