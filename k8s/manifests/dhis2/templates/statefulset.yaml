@@ -44,6 +44,12 @@ spec:
             items:
               - key: {{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
                 path: {{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
+        - name: server-xml
+          configMap:
+            name: {{ include "dhis2.fullname" . }}
+            items:
+              - key: {{ .Values.dhis2.serverXmlConfigFileName }}
+                path: {{ .Values.dhis2.serverXmlConfigFileName }}
       initContainers:
         - name: dhis2-home-permissions
           image: busybox
@@ -86,6 +92,9 @@ spec:
             - name: jmx-prometheus-javaagent-yaml
               mountPath: {{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
               subPath: {{ .Values.dhis2.jmxPrometheusJavaagentConfigFileName }}
+            - name: server-xml
+              mountPath: /usr/local/tomcat/conf/server.xml
+              subPath: server.xml
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

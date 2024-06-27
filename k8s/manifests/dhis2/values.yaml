@@ -84,6 +84,8 @@ dhis2:
   passwordSecretKey: dhis2-password
   confFileName: dhis.conf
   log4j2ConfigFile: config/log4j2.xml
+  serverXmlConfigFile: config/server.xml
+  serverXmlConfigFileName: server.xml
   jmxPrometheusJavaagentConfigFile: config/jmx_prometheus_javaagent.yaml
   jmxPrometheusJavaagentConfigFileName: jmx_prometheus_javaagent.yaml
   log4j2ConfigFileName: log4j2.xml
