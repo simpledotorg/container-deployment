@@ -94,6 +94,9 @@
         }
       ],
       "title": "JVM",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -167,6 +170,9 @@
         }
       ],
       "title": "Uptime",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -244,6 +250,9 @@
         }
       ],
       "title": "Started",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -322,6 +331,9 @@
         }
       ],
       "title": "Free File Descriptors",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "gauge"
     },
     {
@@ -401,6 +413,9 @@
         }
       ],
       "title": "Journal Buffer Size",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -546,6 +561,9 @@
         }
       ],
       "title": "Address Paging",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "transform": "table",
       "type": "table-old"
     },
@@ -626,6 +644,9 @@
         }
       ],
       "title": "Journal Buffer Timeout",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -705,6 +726,9 @@
         }
       ],
       "title": "Journal Max I/O",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -762,6 +786,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Message Count",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -853,6 +880,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Connections and Consumers",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -935,6 +965,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Artemis Address Size",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1016,6 +1049,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "JMV Memory Usage",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1098,6 +1134,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "JMV Memory Pool Usage",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1179,6 +1218,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "JMV GC Counts",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1269,6 +1311,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "JMV Threads",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
