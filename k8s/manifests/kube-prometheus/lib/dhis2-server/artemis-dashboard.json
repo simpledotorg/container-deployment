@@ -1335,7 +1335,8 @@
         "sort": 0,
         "type": "query",
         "datasource": {
-          "uid": "$datasource"
+          "uid": "$datasource",
+          "type": "prometheus"
         }
       },
       {
@@ -1360,7 +1361,8 @@
         "type": "query",
         "useTags": false,
         "datasource": {
-          "uid": "$datasource"
+          "uid": "$datasource",
+          "type": "prometheus"
         }
       }
     ]
