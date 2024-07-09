@@ -4,6 +4,7 @@ local grafanaDashboards = { grafanaDashboards: {
   'dhis2-springboot.json': (import 'dhis2-server/springboot-dashboard.json'),
   'dhis2-tomcat.json': (import 'dhis2-server/tomcat-dashboard.json'),
   'dhis2-artemis.json': (import 'dhis2-server/artemis-dashboard.json'),
+  'dhis2-version-tracking.json': (import 'dhis2-server/version-tracking-dashboard.json'),
 } };
 
 
