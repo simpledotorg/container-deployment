@@ -1477,7 +1477,11 @@
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
-        "useTags": false
+        "useTags": false,
+        "datasource": {
+          "uid": "$datasource",
+          "type": "prometheus"
+        }
       },
       {
         "allValue": ".*",
@@ -1496,7 +1500,11 @@
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
-        "useTags": false
+        "useTags": false,
+        "datasource": {
+          "uid": "$datasource",
+          "type": "prometheus"
+        }
       },
       {
         "allValue": ".*",
@@ -1515,7 +1523,11 @@
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
-        "useTags": false
+        "useTags": false,
+        "datasource": {
+          "uid": "$datasource",
+          "type": "prometheus"
+        }
       },
       {
         "allValue": "",
@@ -1533,7 +1545,11 @@
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
-        "useTags": false
+        "useTags": false,
+        "datasource": {
+          "uid": "$datasource",
+          "type": "prometheus"
+        }
       }
     ]
   },

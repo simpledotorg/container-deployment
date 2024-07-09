@@ -1785,7 +1785,11 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query"
+        "type": "query",
+        "datasource": {
+          "uid": "$datasource",
+          "type": "prometheus"
+        }
       },
       {
         "definition": "label_values(jvm_classes_loaded_classes{namespace=\"$namespace\"},instance)",
@@ -1807,7 +1811,11 @@
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
-        "useTags": false
+        "useTags": false,
+        "datasource": {
+          "uid": "$datasource",
+          "type": "prometheus"
+        }
       },
       {
         "definition": "",
@@ -1825,7 +1833,11 @@
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
-        "useTags": false
+        "useTags": false,
+        "datasource": {
+          "uid": "$datasource",
+          "type": "prometheus"
+        }
       },
       {
         "definition": "",
@@ -1843,7 +1855,11 @@
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
-        "useTags": false
+        "useTags": false,
+        "datasource": {
+          "uid": "$datasource",
+          "type": "prometheus"
+        }
       }
     ]
   },
