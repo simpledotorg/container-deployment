@@ -85,7 +85,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "jvm_info{instance=\"$instance\"}",
+          "expr": "jvm_info{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "intervalFactor": 1,
@@ -158,7 +158,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_uptime_millis{instance=\"$instance\"} / 1000 / 60",
+          "expr": "artemis_uptime_millis{instance=\"$instance\", namespace=\"$namespace\"} / 1000 / 60",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -235,7 +235,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_started{instance=\"$instance\"}",
+          "expr": "artemis_started{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -313,7 +313,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "process_max_fds{instance=\"$instance\"} - process_open_fds{instance=\"$instance\"}",
+          "expr": "process_max_fds{instance=\"$instance\", namespace=\"$namespace\"} - process_open_fds{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -386,7 +386,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_journal_buffer_size{instance=\"$instance\"}",
+          "expr": "artemis_journal_buffer_size{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -536,7 +536,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_paging{instance=\"$instance\"}",
+          "expr": "artemis_paging{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -611,7 +611,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_journal_buffer_timeout{instance=\"$instance\"}",
+          "expr": "artemis_journal_buffer_timeout{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -690,7 +690,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_journal_max_io{instance=\"$instance\"}",
+          "expr": "artemis_journal_max_io{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -751,7 +751,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_message_count{instance=\"$instance\"}",
+          "expr": "artemis_message_count{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ address }}",
@@ -833,7 +833,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_connection_count{instance=\"$instance\"}",
+          "expr": "artemis_connection_count{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Connection Count",
@@ -842,7 +842,7 @@
         },
         {
           "editorMode": "code",
-          "expr": "artemis_consumer_count{instance=\"$instance\"}",
+          "expr": "artemis_consumer_count{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ address }}",
@@ -924,7 +924,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "artemis_address_size{instance=\"$instance\"}",
+          "expr": "artemis_address_size{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ address }}",
@@ -1005,7 +1005,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "jvm_memory_bytes_used{instance=\"$instance\"}",
+          "expr": "jvm_memory_bytes_used{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ area }} ",
@@ -1087,7 +1087,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "jvm_memory_pool_bytes_used{instance=\"$instance\"}",
+          "expr": "jvm_memory_pool_bytes_used{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ pool }} ",
@@ -1168,7 +1168,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "jvm_gc_collection_seconds_count{instance=\"$instance\"}",
+          "expr": "jvm_gc_collection_seconds_count{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ gc }}",
@@ -1249,7 +1249,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "jvm_threads_current{instance=\"$instance\"}",
+          "expr": "jvm_threads_current{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Current",
@@ -1258,7 +1258,7 @@
         },
         {
           "editorMode": "code",
-          "expr": "jvm_threads_peak{instance=\"$instance\"}",
+          "expr": "jvm_threads_peak{instance=\"$instance\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Peak",
