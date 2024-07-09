@@ -348,19 +348,19 @@ spec:
 
 ---
 
-# Alphasms prometheus exporter
+# RTSL prometheus exporter
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: alphasms-exporter
+  name: rtsl-exporter
 spec:
   destination:
-    namespace: alphasms-exporter
+    namespace: rtsl-exporter
     server: 'https://kubernetes.default.svc'
   source:
-    path: charts/alphasms-exporter
-    repoURL: 'https://github.com/simpledotorg/alphasms_exporter.git'
-    targetRevision: main
+    path: charts/rtsl-exporter
+    repoURL: 'https://github.com/simpledotorg/rtsl_exporter.git'
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
