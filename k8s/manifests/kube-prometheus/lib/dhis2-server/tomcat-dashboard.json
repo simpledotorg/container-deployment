@@ -98,6 +98,9 @@
         }
       ],
       "title": "Server info",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -117,6 +120,9 @@
         }
       ],
       "title": "Protocol [$protocol]",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "row"
     },
     {
@@ -189,6 +195,9 @@
         }
       ],
       "title": "Max threads",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -261,6 +270,9 @@
         }
       ],
       "title": "Min spare threads",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -333,6 +345,9 @@
         }
       ],
       "title": "Accept count",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -405,6 +420,9 @@
         }
       ],
       "title": "Acceptor thread count",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -477,6 +495,9 @@
         }
       ],
       "title": "Poller thread count",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -546,6 +567,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Traffic send/recv",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -641,6 +665,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Request  count / error count",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -739,6 +766,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Threads",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -836,6 +866,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Connections",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -944,6 +977,9 @@
           "thresholds": [],
           "timeRegions": [],
           "title": "Session count",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -1040,6 +1076,9 @@
             }
           ],
           "title": "Session current count",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "type": "stat"
         },
         {
@@ -1110,6 +1149,9 @@
             }
           ],
           "title": "Session total created",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "type": "stat"
         },
         {
@@ -1180,6 +1222,9 @@
             }
           ],
           "title": "Session total expired",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "type": "stat"
         },
         {
@@ -1237,6 +1282,9 @@
           "thresholds": [],
           "timeRegions": [],
           "title": "Top 5 servlet request count",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -1320,6 +1368,9 @@
           "thresholds": [],
           "timeRegions": [],
           "title": "Top 5 servlet error count",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -1405,6 +1456,9 @@
           "thresholds": [],
           "timeRegions": [],
           "title": "Top 5 servlets average processing time per request",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -1439,6 +1493,9 @@
         }
       ],
       "title": "Servlet Stats",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "row"
     }
   ],

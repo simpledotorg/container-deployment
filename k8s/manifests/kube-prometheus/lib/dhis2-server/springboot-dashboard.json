@@ -39,6 +39,9 @@
         }
       ],
       "title": "Basic Statistics",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "row"
     },
     {
@@ -115,6 +118,9 @@
         }
       ],
       "title": "Uptime",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -195,6 +201,9 @@
         }
       ],
       "title": "Heap Used",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "gauge"
     },
     {
@@ -285,6 +294,9 @@
         }
       ],
       "title": "Non-Heap Used",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "gauge"
     },
     {
@@ -349,6 +361,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Process Open Files",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -449,6 +464,9 @@
         }
       ],
       "title": "Start time",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "stat"
     },
     {
@@ -514,6 +532,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "CPU Usage",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -604,6 +625,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Load Average",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -647,6 +671,9 @@
         }
       ],
       "title": "JVM Statistics - Memory",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "row"
     },
     {
@@ -723,6 +750,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "$memory_pool_heap (heap)",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -803,6 +833,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Classes Unloaded",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -904,6 +937,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "$memory_pool_nonheap (non-heap)",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -993,6 +1029,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Mapped Buffers",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1075,6 +1114,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Classes Loaded",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1166,6 +1208,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Memory Allocate/Promote",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1255,6 +1300,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Direct Buffers",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1354,6 +1402,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Threads",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1397,6 +1448,9 @@
         }
       ],
       "title": "JVM Statistics - GC",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "row"
     },
     {
@@ -1455,6 +1509,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "GC Count",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1538,6 +1595,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "GC Stop the World Duration",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1581,6 +1641,9 @@
         }
       ],
       "title": "HTTP Statistics",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "type": "row"
     },
     {
@@ -1638,6 +1701,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Request Count",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1720,6 +1786,9 @@
       "thresholds": [],
       "timeRegions": [],
       "title": "Response Time",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "tooltip": {
         "shared": true,
         "sort": 0,
