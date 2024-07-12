@@ -10,11 +10,7 @@ spec:
   message: "@slack-alerts"
   options:
     notifyNoData: true
-    noDataTimeframe: 30
-    renotify_interval: 1440
-		renotify_statuses:
-			- alert
-			- no data
+    noDataTimeframe: 30 
   tags:
     - "env:bangladesh-production-k8s"
     - "generated:kubernetes"
