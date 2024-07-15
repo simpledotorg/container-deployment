@@ -394,7 +394,12 @@ spec:
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
   syncPolicy:
-    automated: {}
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
 ---
 
