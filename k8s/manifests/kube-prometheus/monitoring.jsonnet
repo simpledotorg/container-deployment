@@ -38,6 +38,7 @@ local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
   (import 'kube-prometheus/addons/networkpolicies-disabled.libsonnet') +
+  (import 'kube-prometheus/addons/managed-cluster.libsonnet') +
   {
     values+:: {
       common+: {
