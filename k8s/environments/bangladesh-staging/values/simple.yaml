@@ -5,10 +5,6 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
-    - host: api-demo-k8s.bd.simple.org
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
     - host: api-demo.bd.simple.org
       paths:
         - path: /
@@ -18,9 +14,6 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls:
-  - hosts:
-    - api-demo-k8s.bd.simple.org
-    secretName: api-demo-k8s.bd.simple.org-tls
   - hosts:
     - api-demo.bd.simple.org
     secretName: api-demo.bd.simple.org-tls
