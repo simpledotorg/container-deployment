@@ -1,0 +1,120 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: dhis2-c61c699a
+  namespace: dhis2-c61c699a
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-gis:ubi8-14.5-3.2-1
+  postgresVersion: 14
+  users:
+    - name: admin
+      databases:
+        - postgres
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+    - name: dhis
+      databases:
+        - dhis
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+  instances:
+    - name: dhis2-postgres
+      replicas: 1
+      dataVolumeClaimSpec:
+        storageClassName: "gp3"
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 100Gi
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role-dhis2-c61c699a
+                operator: In
+                values:
+                - "true"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: dhis2-c61c699a
+                  postgres-operator.crunchydata.com/instance-set: dhis2-postgres
+      metadata:
+        labels:
+          tags.datadoghq.com/service: "postgrescluster-dhis2"
+          tags.datadoghq.com/version: "14"
+          prometheus.io/app: 'postgres'
+        annotations:
+          argocd.argoproj.io/sync-options: Delete=false
+  backups:
+    pgbackrest:
+      configuration:
+      - secret:
+          name: pgbackrest
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-dhis2-c61c699a
+                  operator: In
+                  values:
+                  - "true"
+      global:
+        repo2-path: /pgbackrest/postgres-operator/dhis2-c61c699a/repo2
+        repo2-retention-full-type: "count"
+        repo2-retention-full: "8"
+        archive-timeout: "3600" # 1 hour
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
+      repos:
+      - name: repo2
+        schedules:
+          full: "0 */6 * * *" # Every 6 hours
+        s3:
+          bucket: sandbox-simple-k8s-db-backup
+          endpoint: s3.ap-south-1.amazonaws.com
+          region: ap-south-1
+      jobs:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-dhis2-c61c699a
+                  operator: In
+                  values:
+                  - "true"
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        parameters:
+          max_connections: "100"
+          shared_buffers: "8GB"
+          effective_cache_size: "24GB"
+          maintenance_work_mem: "2GB"
+          checkpoint_completion_target: "0.9"
+          wal_buffers: "16MB"
+          default_statistics_target: "100"
+          random_page_cost: "1.1"
+          effective_io_concurrency: "200"
+          work_mem: "20971kB"
+          huge_pages: "try"
+          min_wal_size: "1GB"
+          max_wal_size: "4GB"
+          max_worker_processes: "8"
+          max_parallel_workers_per_gather: "4"
+          max_parallel_workers: "8"
+          max_parallel_maintenance_workers: "4"
+  monitoring:
+    pgmonitor:
+      exporter:
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.5.0-0
