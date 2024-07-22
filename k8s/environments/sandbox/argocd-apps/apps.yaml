@@ -609,3 +609,55 @@ spec:
     automated:
       prune: false
       selfHeal: true
+
+---
+
+# dhis2-c61c699a server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-c61c699a-server
+spec:
+  destination:
+    namespace: dhis2-c61c699a
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-c61c699a.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-c61c699a postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-c61c699a-postgres
+spec:
+  destination:
+    namespace: dhis2-c61c699a
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-c61c699a
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
