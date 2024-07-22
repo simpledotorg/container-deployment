@@ -6,7 +6,7 @@
     externalUrl: 'https://prometheus.bd.simple.org',
     retention: {
       enable: true,
-      retention: '1y',
+      retention: '14d',
       storage: '30Gi',
     },
     ingress: {
