@@ -160,6 +160,18 @@ module "eks" {
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[0]]
+    },
+    {
+      name         = "dhis2-c61c699a"
+      create       = true
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+      labels = {
+        role-dhis2-c61c699a = "true"
+      }
+      instance_types = ["t3a.2xlarge"]
+      subnet_ids     = [module.vpc.private_subnets[0]]
     }
   ]
 }
