@@ -243,3 +243,11 @@ python scripts/argocd_password_setup.py
 - Once the promotion job finishes, get the image tag SHA from the [container registry](https://hub.docker.com/r/simpledotorg/server/tags)
 - Update the image tag on the [respective ArgoCD](https://docs.google.com/spreadsheets/d/1JCfFYetk9Jrtc5iUHp-7Fx5V3QqpuCWojjcEibRJN7I/edit#gid=0): Application (eg: simple-server) > App Details > Parameters > image.tag
 - Wait for the application to finish auto-syncing
+
+## Connecting to DHIS2 instance and db
+- If you do not already have access to the Kubernetes cluster, please connect to the cluster by following this [doc](#connecting-to-a-k8s-cluster)
+- We use namespaces (e.g., -n simple-v1). Running `kubectl get ns` will list all available namespaces, allowing you to select the relevant one
+- `kubectl get pods -n <ns>` will show a list of pods available in that namespace
+- `kubectl exec -it <pod-name> /bin/bash -n <ns>` will allow you to connect to the pod
+- The DHIS2 configuration file path is `/opt/dhis2/dhis.conf`
+- To connect to PostgreSQL, identify the PostgreSQL pod using the `kubectl get pods -n <ns>` command, then use the `kubectl exec <>` command to connect and the `psql` command to access the database.
