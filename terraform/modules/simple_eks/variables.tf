@@ -54,6 +54,7 @@ variable "managed_node_groups" {
     labels         = map(string)
     instance_types = list(string)
     subnet_ids     = list(string)
+    tags           = map(string)
   }))
   default = []
 }
