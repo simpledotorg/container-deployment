@@ -124,6 +124,10 @@ module "eks" {
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[1]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-sandbox-01"
+      }
     },
     {
       name         = "dhis2-sandbox-epd"
@@ -136,6 +140,10 @@ module "eks" {
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-sandbox-epd"
+      }
     },
     {
       name         = "dhis2-demo-ecuador"
@@ -148,6 +156,10 @@ module "eks" {
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-demo-ecuador"
+      }
     },
     {
       name         = "dhis2-htn-tracking"
@@ -160,6 +172,10 @@ module "eks" {
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-htn-tracking"
+      }
     },
     {
       name         = "dhis2-c61c699a"
@@ -172,6 +188,10 @@ module "eks" {
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-c61c699a"
+      }
     }
   ]
 }

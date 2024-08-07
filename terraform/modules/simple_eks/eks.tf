@@ -61,6 +61,8 @@ module "eks" {
         remote_access = {
           ec2_ssh_key = var.key_pair_name
         }
+
+        tags = group.tags
       }
     },
 
