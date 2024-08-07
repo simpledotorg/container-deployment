@@ -70,6 +70,11 @@ module "eks" {
 
   aws_profile = "${local.service}-${local.env}"
 
+  cluster_addon_coredns_version         = "v1.10.1-eksbuild.2"
+  cluster_addon_kubeproxy_version       = "v1.28.1-eksbuild.1"
+  cluster_addon_vpccni_version          = "v1.14.1-eksbuild.1"
+  cluster_addon_awsebscsidriver_version = "v1.25.0-eksbuild.1"
+
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
