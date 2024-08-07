@@ -251,3 +251,6 @@ python scripts/argocd_password_setup.py
 - `kubectl exec -it <pod-name> /bin/bash -n <ns>` will allow you to connect to the pod
 - The DHIS2 configuration file path is `/opt/dhis2/dhis.conf`
 - To connect to PostgreSQL, identify the PostgreSQL pod using the `kubectl get pods -n <ns>` command, then use the `kubectl exec <>` command to connect and the `psql` command to access the database.
+
+## SSO user creation and login
+To login with SSO, first you need to create your user profile. Please log in as an admin at https://sso.simple.org/admin/, create a user account for yourself, and assign the "simple_team" group to your account. You can find the password in 1Password. After creating your account, log out from the admin account and log in to Grafana using the new username and password you created for yourself
