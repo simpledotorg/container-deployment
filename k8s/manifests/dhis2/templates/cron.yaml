@@ -1,0 +1,33 @@
+{{- if .Values.cron.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron
+spec:
+  schedule: "0 1 * * *"  # Run the job at 01:00 every day
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: postgres
+            image: "{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}"
+            command: {{ .Values.cron.command }}
+            env:
+              - name: PGPASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.cron.existingSecret.name }}
+                    key: {{ .Values.cron.existingSecret.pgPasswordKey }}
+              - name: PGUSER
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.cron.existingSecret.name }}
+                    key: {{ .Values.cron.existingSecret.pgUserKey }}
+              - name: PGHOST
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.cron.existingSecret.name }}
+                    key: {{ .Values.cron.existingSecret.pgHostKey }}
+          restartPolicy: OnFailure
+{{- end }}

@@ -116,3 +116,15 @@ storage:
 
 monitoring:
   enabledServiceMonitor: true
+
+cron:
+  enabled: true
+  image:
+    repository: "postgres"
+    tag: "14"
+  existingSecret:
+    name: "dhis2"
+    pgPasswordKey: "pgPassword"
+    pgUserKey: "pgUser"
+    pgHostKey: "pgHost"
+  command: ""
