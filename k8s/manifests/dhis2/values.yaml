@@ -127,4 +127,4 @@ cron:
     pgPasswordKey: "pgPassword"
     pgUserKey: "pgUser"
     pgHostKey: "pgHost"
-  command: ""
+    pgDatabaseKey: "pgDatabase"
