@@ -15,7 +15,7 @@ spec:
             command:
               - "sh"
               - "-c"
-              - "psql -d $PGDATABASE -c '\\dt'"
+              - "psql -d $PGDATABASE -c 'SELECT update_overdue_pending_call_trigger_function();'"
             env:
               - name: PGPASSWORD
                 valueFrom:
