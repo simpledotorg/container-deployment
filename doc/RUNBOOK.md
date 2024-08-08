@@ -254,3 +254,13 @@ python scripts/argocd_password_setup.py
 
 ## SSO user creation and login
 To login with SSO, first you need to create your user profile. Please log in as an admin at https://sso.simple.org/admin/, create a user account for yourself, and assign the "simple_team" group to your account. You can find the password in 1Password. After creating your account, log out from the admin account and log in to Grafana using the new username and password you created for yourself
+
+## Upgrading DHIS2 Version
+- Along with the official [image](https://hub.docker.com/r/dhis2/core/tags), additional tools need to be deployed for monitoring purposes. Therefore, a new image has been pushed to [Simple Docker Hub repository](https://hub.docker.com/r/simpledotorg/dhis2/tags).
+- Before upgrading, please verify that the required image is available. If not, create a new image by updating the image tag [here](../docker/dhis2.Dockerfile). After merging/pushing to the master branch, GitHub Actions will create a new image. Please verify its availability on Docker Hub.
+- Once the image availability is confirmed, update the image tag in the relevant values file. Example: [dhis2-htn-tracking](../k8s/environments/sandbox/values/dhis2-htn-tracking.yaml).
+```
+image:
+  tag: <>
+```
+- For upgrading VM based deployments, [please refer to this document](https://github.com/simpledotorg/dhis2-setup/blob/main/DHIS2VersionUpgrade.md)
