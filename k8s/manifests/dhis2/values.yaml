@@ -118,7 +118,7 @@ monitoring:
   enabledServiceMonitor: true
 
 cron:
-  enabled: true
+  enabled: false
   image:
     repository: "postgres"
     tag: "14"
