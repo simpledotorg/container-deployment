@@ -84,7 +84,38 @@ local database =
     ),
   ]);
 
-g.dashboard.new('Simple Database Dasboard')
+local database_queries =
+  utils.row('Database Queries', [
+    utils.table('Max Runtime (Top N)', [
+      query(
+        |||
+          max(max_over_time(ccp_pg_stat_statements_top_max_exec_time_ms{}[$__range])) without(instance, ip, deployment, pod)
+        |||
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
+    utils.table('Mean Runtime (Top N)', [
+      query(
+        |||
+          avg(avg_over_time(ccp_pg_stat_statements_top_max_exec_time_ms{}[$__range])) without(instance, ip, deployment, pod)
+        |||
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
+    utils.table('Total Runtime (Top N)', [
+      query(
+        |||
+          max(max_over_time(ccp_pg_stat_statements_top_max_exec_time_ms{}[$__range])) without(instance, ip, deployment, pod)
+        |||
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
+  ]);
+
+g.dashboard.new('Simple Database Dashboard')
 + g.dashboard.withUid('simple-database-dashboard')
 + g.dashboard.withDescription('Simple database dashboard')
 + g.dashboard.withTimezone('browser')
@@ -92,5 +123,6 @@ g.dashboard.new('Simple Database Dasboard')
 + g.dashboard.withPanels(
   g.util.grid.makeGrid([
     database,
+    database_queries,
   ])
 )

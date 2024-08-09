@@ -95,6 +95,18 @@ local load_balancer =
       g.query.prometheus.withInstant(true) +
       g.query.prometheus.withFormat('table'),
     ]),
+    utils.table('Slow requests in last 24 hours', [
+      query(
+        |||
+          topk(10, avg(
+           (rate(ruby_http_request_duration_seconds_sum[1d]) /
+            rate(ruby_http_request_duration_seconds_count[1d])))
+          by (controller, path))
+        |||
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
     utils.table('Most frequent actions in selected range', [
       query(
         |||
