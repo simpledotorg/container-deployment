@@ -61,7 +61,7 @@ spec:
         repoName: repo2
         options:
         - --type=time
-        - --target="2024-08-09 06:00:00-00"
+        - --target="2024-08-09 05:00:00-00"
       configuration:
       - secret:
           name: pgbackrest
@@ -78,7 +78,6 @@ spec:
       global:
         repo2-path: /pgbackrest/postgres-operator/dhis2-htn-tracking/repo2
         repo2-retention-full-type: "count"
-        repo2-s3-uri-style: "path"
         repo2-retention-full: "8"
         archive-timeout: "3600" # 1 hour
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
@@ -87,7 +86,7 @@ spec:
         schedules:
           full: "0 */6 * * *" # Every 6 hours
         s3:
-          bucket: sandbox-simple-k8s-db-backup
+          bucket: s3://sandbox-simple-k8s-db-backup
           endpoint: s3.ap-south-1.amazonaws.com
           region: ap-south-1
       jobs:
