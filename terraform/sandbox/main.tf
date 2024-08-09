@@ -119,6 +119,12 @@ module "eks" {
       min_size     = 1
       max_size     = 1
       desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
       labels = {
         role-dhis2-sandbox-01 = "true"
       }
@@ -135,6 +141,12 @@ module "eks" {
       min_size     = 1
       max_size     = 1
       desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
       labels = {
         role-dhis2-sandbox-epidemics = "true"
       }
@@ -151,6 +163,12 @@ module "eks" {
       min_size     = 1
       max_size     = 1
       desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
       labels = {
         role-dhis2-demo-ecuador = "true"
       }
@@ -167,6 +185,12 @@ module "eks" {
       min_size     = 1
       max_size     = 1
       desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
       labels = {
         role-dhis2-htn-tracking = "true"
       }
@@ -183,6 +207,12 @@ module "eks" {
       min_size     = 1
       max_size     = 1
       desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
       labels = {
         role-dhis2-c61c699a = "true"
       }
