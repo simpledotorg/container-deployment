@@ -86,7 +86,7 @@ spec:
         schedules:
           full: "0 */6 * * *" # Every 6 hours
         s3:
-          bucket: s3://sandbox-simple-k8s-db-backup
+          bucket: sandbox-simple-k8s-db-backup
           endpoint: s3.ap-south-1.amazonaws.com
           region: ap-south-1
       jobs:
