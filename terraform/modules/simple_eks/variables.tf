@@ -46,15 +46,17 @@ variable "key_pair_name" {
 
 variable "managed_node_groups" {
   type = list(object({
-    name           = string
-    create         = bool
-    min_size       = number
-    max_size       = number
-    desired_size   = number
-    labels         = map(string)
-    instance_types = list(string)
-    subnet_ids     = list(string)
-    tags           = map(string)
+    name                       = string
+    create                     = bool
+    min_size                   = number
+    max_size                   = number
+    desired_size               = number
+    labels                     = map(string)
+    instance_types             = list(string)
+    subnet_ids                 = list(string)
+    tags                       = map(string)
+    use_custom_launch_template = bool
+    remote_access              = map(string)
   }))
   default = []
 }

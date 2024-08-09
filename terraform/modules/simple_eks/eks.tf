@@ -57,10 +57,8 @@ module "eks" {
         capacity_type  = "ON_DEMAND"
         subnet_ids     = group.subnet_ids
 
-        use_custom_launch_template = false
-        remote_access = {
-          ec2_ssh_key = var.key_pair_name
-        }
+        use_custom_launch_template = group.use_custom_launch_template
+        remote_access              = group.remote_access
 
         tags = group.tags
       }
