@@ -78,6 +78,7 @@ spec:
       global:
         repo2-path: /pgbackrest/postgres-operator/dhis2-htn-tracking/repo2
         repo2-retention-full-type: "count"
+        repo2-s3-uri-style: "path"
         repo2-retention-full: "8"
         archive-timeout: "3600" # 1 hour
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
