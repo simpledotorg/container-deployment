@@ -53,7 +53,7 @@ local sync_from_user =
     ]),
   ]);
 
-g.dashboard.new('Simple Sync Dasboard')
+g.dashboard.new('Simple Sync Dashboard')
 + g.dashboard.withUid('simple-sync-dashboard')
 + g.dashboard.withDescription('Simple sync dashboard')
 + g.dashboard.withTimezone('browser')

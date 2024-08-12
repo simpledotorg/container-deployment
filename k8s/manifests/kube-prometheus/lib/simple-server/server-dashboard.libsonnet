@@ -95,6 +95,30 @@ local load_balancer =
       g.query.prometheus.withInstant(true) +
       g.query.prometheus.withFormat('table'),
     ]),
+    utils.table('Slow requests in last 24 hours', [
+      query(
+        |||
+          topk(10, avg(
+           (rate(ruby_http_request_duration_seconds_sum[1d]) /
+            rate(ruby_http_request_duration_seconds_count[1d])))
+          by (controller, path))
+        |||
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
+    utils.table('Slow requests in selected range', [
+      query(
+        |||
+          topk(10, avg(
+           (rate(ruby_http_request_duration_seconds_sum[$__range]) /
+            rate(ruby_http_request_duration_seconds_count[$__range])))
+          by (controller, path))
+        |||
+      ) +
+      g.query.prometheus.withInstant(true) +
+      g.query.prometheus.withFormat('table'),
+    ]),
     utils.table('Most frequent actions in selected range', [
       query(
         |||
@@ -120,7 +144,7 @@ local load_balancer =
     ]),
   ]);
 
-g.dashboard.new('Simple Server Dasboard')
+g.dashboard.new('Simple Server Dashboard')
 + g.dashboard.withUid('simple-server-dashboard')
 + g.dashboard.withDescription('Simple server dashboard')
 + g.dashboard.withTimezone('browser')

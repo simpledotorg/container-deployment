@@ -84,7 +84,7 @@ local database =
     ),
   ]);
 
-g.dashboard.new('Simple Database Dasboard')
+g.dashboard.new('Simple Database Dashboard')
 + g.dashboard.withUid('simple-database-dashboard')
 + g.dashboard.withDescription('Simple database dashboard')
 + g.dashboard.withTimezone('browser')
