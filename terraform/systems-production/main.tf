@@ -80,14 +80,16 @@ module "eks" {
 
   managed_node_groups = [
     {
-      name         = "default-02"
+      name         = "default-03"
       create       = true
       min_size     = 2
       max_size     = 2
       desired_size = 2
 
-      use_custom_launch_template = true
-      remote_access              = {}
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
 
       labels = {
         role-default = "true"
@@ -98,7 +100,8 @@ module "eks" {
         Service    = "shared"
         Deployment = "k8s"
       }
-  }]
+    }
+  ]
 }
 
 output "vpc_id" {
