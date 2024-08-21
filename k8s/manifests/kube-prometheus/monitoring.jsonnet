@@ -17,7 +17,7 @@ local config = {
   'bangladesh-staging': (import 'config/bangladesh-staging.libsonnet'),
   'bangladesh-production': (import 'config/bangladesh-production.libsonnet'),
   'sri-lanka-production': (import 'config/sri-lanka-production.libsonnet'),
-  'india-production': (import 'config/inida-production.libsonnet'),
+  'india-production': (import 'config/india-production.libsonnet'),
 }[environment];
 
 local isEnvSystemsProduction = environment == 'systems-production';
