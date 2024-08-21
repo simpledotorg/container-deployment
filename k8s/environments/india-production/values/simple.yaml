@@ -72,3 +72,5 @@ workerCphc:
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker-cphc","tags": ["env:india-production-k8s"]}]'
   }
+metrics:
+  enabled: true
