@@ -423,3 +423,37 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
+
+# Prometheus monitoring
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    directory:
+      jsonnet:
+        extVars:
+        - name: ENVIRONMENT
+          value: india-production
+        libs:
+          - k8s/manifests/kube-prometheus/vendor
+      exclude: '*.json'
+    path: k8s/manifests/kube-prometheus
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: in-prod-prom
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
