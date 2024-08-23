@@ -30,6 +30,7 @@ argo-cd:
       accounts.atharva: login 
       accounts.roypeter: login
       accounts.bola: login
+      accounts.manu: login
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
