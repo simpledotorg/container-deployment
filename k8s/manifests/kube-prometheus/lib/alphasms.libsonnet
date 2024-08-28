@@ -12,11 +12,15 @@ local prometheusRules = {
             expr: |||
               alphasms_user_balance_amount < 1000
             |||,
-            for: '5m',
+            'for': '5m',
             labels: {
               severity: 'critical'
+            },
+            annotations: {
+              summary: "Alphasms balance is below threshold",
+              description: "The AlphaSMS balance has fallen below threshold"
             }
-          }
+          },
         ],
       },
     ],
