@@ -45,7 +45,7 @@ local grafanaDashboards = { grafanaDashboards: {
         }
       ]
     },
-    "editable": true,
+    "editable": false,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
     "id": 45,
@@ -54,7 +54,7 @@ local grafanaDashboards = { grafanaDashboards: {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "PB7AD567477C83756"
+          "uid": "${datasource}"
         },
         "fieldConfig": {
           "defaults": {
@@ -133,7 +133,7 @@ local grafanaDashboards = { grafanaDashboards: {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "PB7AD567477C83756"
+              "uid": "${datasource}"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -153,7 +153,7 @@ local grafanaDashboards = { grafanaDashboards: {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "PB7AD567477C83756"
+          "uid": "${datasource}"
         },
         "fieldConfig": {
           "defaults": {
@@ -232,7 +232,7 @@ local grafanaDashboards = { grafanaDashboards: {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "PB7AD567477C83756"
+              "uid": "${datasource}"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -252,7 +252,7 @@ local grafanaDashboards = { grafanaDashboards: {
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "PB7AD567477C83756"
+          "uid": "${datasource}"
         },
         "fieldConfig": {
           "defaults": {
@@ -331,7 +331,7 @@ local grafanaDashboards = { grafanaDashboards: {
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "PB7AD567477C83756"
+              "uid": "${datasource}"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -352,7 +352,27 @@ local grafanaDashboards = { grafanaDashboards: {
     "schemaVersion": 39,
     "tags": [],
     "templating": {
-      "list": []
+      "list": [
+        {
+          "current": {
+            "selected": true,
+            "text": "india-production",
+            "value": "PD40295E098CBF9C7"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "datasource",
+          "multi": false,
+          "name": "datasource",
+          "options": [],
+          "query": "prometheus",
+          "queryValue": "",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "type": "datasource"
+        }
+      ]
     },
     "time": {
       "from": "now-6h",
@@ -362,7 +382,7 @@ local grafanaDashboards = { grafanaDashboards: {
     "timezone": "browser",
     "title": "Alphasms",
     "uid": "cdw615x70c4xsc",
-    "version": 1,
+    "version": 2,
     "weekStart": ""
   }
 }};
