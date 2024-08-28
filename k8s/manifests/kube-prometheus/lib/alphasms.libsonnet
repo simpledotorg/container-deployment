@@ -33,6 +33,18 @@ local prometheusRules = {
               description: 'No data for alphasms_user_balance_amount has been received'
             }
           }
+          {
+            alert: 'AlphasmsValidityLow',
+            expr: '(alphasms_user_balance_validity - time()) / 86400 < 10',
+            'for': '5m',
+            labels: {
+              severity: 'critical'
+            },
+            annotations: {
+              summary: 'Alphasms balance validity is less than 10 days',
+              description: 'The validity of the balance for Alphasms will expire in less than 10 days'
+            }
+          }
         ],
       },
     ],
