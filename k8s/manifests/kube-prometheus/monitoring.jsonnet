@@ -7,6 +7,7 @@ local kubePrometheus = (import 'lib/kube-prometheus.libsonnet');
 local argocd = (import 'lib/argocd.libsonnet');
 local ingress = (import 'lib/ingress.libsonnet');
 local dhis2Server = (import 'lib/dhis2-server.libsonnet');
+local alphasms = (import 'lib/alphasms.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -21,6 +22,7 @@ local config = {
 }[environment];
 
 local isEnvSystemsProduction = environment == 'systems-production';
+local isEnvSandbox = environment == 'sandbox';
 local enableGrafana = config.grafana.enable;
 local enableDhis2Dashboards = std.objectHas(config.grafana, 'enableDhis2Dashboards') && config.grafana.enableDhis2Dashboards;
 local sslEnabled = if std.objectHas(config, 'sslEnabled') then config.sslEnabled else true;
@@ -30,6 +32,7 @@ local monitoredServices =
 
 local grafanaDashboards =
   postgres.grafanaDashboards +
+  alphasms.grafanaDashboards +
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
@@ -100,14 +103,17 @@ local kp =
 
 local manifests =
   (if isEnvSystemsProduction then
-     kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana)
+    kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana)
    else
-     kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana) +
-     [service.prometheusRules for service in monitoredServices] +
-     [service.exporterService for service in monitoredServices] +
-     [service.serviceMonitor for service in monitoredServices]) +
+    kubePrometheus.manifests(kp, isEnvSystemsProduction, enableGrafana) +
+    [service.prometheusRules for service in monitoredServices] +
+    [service.exporterService for service in monitoredServices] +
+    [service.serviceMonitor for service in monitoredServices]) +
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
-  postgres.monitors(config.postgresNamespaces).serviceMonitors;
+  postgres.monitors(config.postgresNamespaces).serviceMonitors +
+  (if isEnvSandbox then
+    [alphasms.prometheusRules]
+  );
 
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
