@@ -21,6 +21,18 @@ local prometheusRules = {
               description: "The AlphaSMS balance has fallen below threshold"
             }
           },
+          {
+            alert: 'AlphasmsBalanceNoData',
+            expr: 'absent(alphasms_user_balance_amount)',
+            'for': '60m',
+            labels: {
+              severity: 'critical'
+            },
+            annotations: {
+              summary: "Alphasms balance no data",
+              description: 'No data for alphasms_user_balance_amount has been received'
+            }
+          }
         ],
       },
     ],
