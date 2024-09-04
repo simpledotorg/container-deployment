@@ -6,6 +6,7 @@ provider "registry.terraform.io/hashicorp/aws" {
   constraints = ">= 3.72.0, >= 4.35.0, >= 4.47.0, >= 4.57.0, >= 4.66.1, 4.66.1"
   hashes = [
     "h1:7GytS2hRFKZDR1GgcS/nNQlyAjaMelF09HJ5xFFWneM=",
+    "h1:D/qzK7fE3pgdg25W1u5GqI+VILy8UmhzXruz6c8rJ7g=",
     "zh:001c707174b7d6bf89a96cf806f925bb852d1a285fb80b81222cbeb4743bcb79",
     "zh:19bc6ac0a7fd1c564fd56c536f1743f71a5e7ca724e21ea51a6a79218939733d",
     "zh:3dac5c27f40b511239e9fe6f97dc0b6c95f630ba328001820ddc764e766a5ca2",
@@ -28,6 +29,7 @@ provider "registry.terraform.io/hashicorp/cloudinit" {
   version     = "2.3.2"
   constraints = ">= 2.0.0"
   hashes = [
+    "h1:Vl0aixAYTV/bjathX7VArC5TVNkxBCsi3Vq7R4z1uvc=",
     "h1:ocyv0lvfyvzW4krenxV5CL4Jq5DiA3EUfoy8DR6zFMw=",
     "zh:2487e498736ed90f53de8f66fe2b8c05665b9f8ff1506f751c5ee227c7f457d1",
     "zh:3d8627d142942336cf65eea6eb6403692f47e9072ff3fa11c3f774a3b93130b3",
@@ -49,6 +51,7 @@ provider "registry.terraform.io/hashicorp/kubernetes" {
   constraints = ">= 2.10.0, >= 2.20.0"
   hashes = [
     "h1:E7VAZorKe5oXn6h1nxP3ROwWNiQSrZlTawzix1sh8kM=",
+    "h1:Xe79v44FUVUxxZz8GQ9puZoW+AsNGyJmTB58RG9cjkw=",
     "zh:30bc224c94d2c90a7d44554f2ad30e3b62c7ffc6ddb7d4fd31b9acafb8b5ad77",
     "zh:3903cc9f0c3169a24265c4920d925ed7e37cbc4312237b29bd5b4ddcd6bdc535",
     "zh:512240f6dad36c0116a8717487a4ea12a6b4191028782c5b6749037892e2c6ed",
@@ -68,6 +71,7 @@ provider "registry.terraform.io/hashicorp/time" {
   version     = "0.9.1"
   constraints = ">= 0.9.0"
   hashes = [
+    "h1:NUv/YtEytDQncBQ2mTxnUZEy/rmDlPYmE9h2iokR0vk=",
     "h1:VxyoYYOCaJGDmLz4TruZQTSfQhvwEcMxvcKclWdnpbs=",
     "zh:00a1476ecf18c735cc08e27bfa835c33f8ac8fa6fa746b01cd3bcbad8ca84f7f",
     "zh:3007f8fc4a4f8614c43e8ef1d4b0c773a5de1dcac50e701d8abc9fdc8fcb6bf5",
@@ -89,6 +93,7 @@ provider "registry.terraform.io/hashicorp/tls" {
   constraints = ">= 3.0.0"
   hashes = [
     "h1:GZcFizg5ZT2VrpwvxGBHQ/hO9r6g0vYdQqx3bFD3anY=",
+    "h1:pe9vq86dZZKCm+8k1RhzARwENslF3SXb9ErHbQfgjXU=",
     "zh:23671ed83e1fcf79745534841e10291bbf34046b27d6e68a5d0aab77206f4a55",
     "zh:45292421211ffd9e8e3eb3655677700e3c5047f71d8f7650d2ce30242335f848",
     "zh:59fedb519f4433c0fdb1d58b27c210b27415fddd0cd73c5312530b4309c088be",
