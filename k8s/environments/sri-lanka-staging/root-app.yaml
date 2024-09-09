@@ -10,7 +10,7 @@ spec:
   source:
     path: k8s/environments/sri-lanka-staging/argocd-apps
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: lk-demo-v2
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
