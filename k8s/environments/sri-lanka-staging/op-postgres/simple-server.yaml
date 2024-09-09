@@ -70,7 +70,8 @@ spec:
                 storage: 10Gi
       - name: repo2
         schedules:
-          full: "0 */6 * * *" # Every 6 hours
+          full: "0 20 * * 0" 
+          differential: "0 20 * * 1-6"
         s3:
           bucket: simple-lk-db-backup
           endpoint: http://storage.ptdstore036.hcppt01.sltidc.lk
