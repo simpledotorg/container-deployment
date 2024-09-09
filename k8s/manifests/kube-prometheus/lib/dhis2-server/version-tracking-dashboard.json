@@ -95,132 +95,13 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "dhis2_system_info_dhis2_htn_tracking_simple_org",
+          "expr": "dhis2_system_info",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "dhis2_system_info_dhis2_sandbox2_simple_org",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "dhis2_system_info_dhis2_staging1_simple_org",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "C",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "dhis2_system_info_dhis2_demo_ecuador_simple_org",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "D",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "dhis2_system_info_dhis2_nigeria_sandbox1_simple_org",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "E",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "dhis2_system_info_dhis2_sandbox_simple_org",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "F",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "dhis2_system_info_dhis2_nigeria_sandbox1_simple_org",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "G",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "dhis2_system_info_dhis2_sandbox_epidemics_simple_org",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "H",
           "useBackend": false
         }
       ],
