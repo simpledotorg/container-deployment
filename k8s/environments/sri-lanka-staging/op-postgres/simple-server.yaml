@@ -55,6 +55,7 @@ spec:
         repo2-path: /pgbackrest/postgres-operator/sri-lanka-staging/repo2
         repo2-retention-full-type: "count"
         repo2-retention-full: "1"
+        repo2-s3-verify-tls: "n"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
@@ -75,7 +76,6 @@ spec:
           bucket: simple-lk-db-backup
           endpoint: https://storage.ptdstore036.hcppt01.sltidc.lk
           region: "dummy"
-          verifyTLS: false
   patroni:
     dynamicConfiguration:
       synchronous_mode: true
