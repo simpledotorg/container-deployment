@@ -52,7 +52,7 @@ spec:
           name: pgbackrest
       global:
         repo1-retention-full: "2"
-        repo2-path: /pgbackrest/postgres-operator/sri-lanka-staging/repo2
+        repo2-path: /sri-lanka-staging/repo2
         repo2-retention-full-type: "count"
         repo2-retention-full: "1"
         repo2-storage-verify-tls: "n"
@@ -74,7 +74,7 @@ spec:
         schedules:
           full: "0 */6 * * *" # Every 6 hours
         s3:
-          bucket: simple-lk-db-backup
+          bucket: storage
           endpoint: https://storage.ptdstore036.hcppt01.sltidc.lk
           region: "dummy"
   patroni:
