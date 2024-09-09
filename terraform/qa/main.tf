@@ -98,6 +98,8 @@ module "k8s_server_qa" {
   tags = {
     Terraform   = "true"
     Environment = "qa"
+    Service     = "simple"
+    Deployment  = "k8s"
   }
 
   root_block_device = [

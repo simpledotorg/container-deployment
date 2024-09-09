@@ -1,15 +1,23 @@
 local common = (import 'common.libsonnet');
+local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
-local grafanaDashboards = {
-  'Simple Server': {
-    'rails-performance.json': (import 'dashboards/rails-performance.json'),
-    'simple-server.json': (import 'dashboards/simple-server.libsonnet'),
-  },
-};
+local grafanaDashboards = { grafanaDashboards: {
+  'simple-server.json': (import 'simple-server/server-dashboard.libsonnet'),
+  'simple-sync.json': (import 'simple-server/sync-dashboard.libsonnet'),
+  'simple-database.json': (import 'simple-server/database-dashboard.libsonnet'),
+} };
+
+local prometheusRules = (import 'simple-server/prometheus-rules.libsonnet');
+
+local simpleServerMixin = addMixin({
+  name: 'simple-server',
+  dashboardFolder: 'Simple Server',
+  mixin: prometheusRules + grafanaDashboards,
+});
 
 {
-  grafanaDashboards: grafanaDashboards,
-  prometheusRules: {},
+  grafanaDashboards: simpleServerMixin.grafanaDashboards,
+  prometheusRules: simpleServerMixin.prometheusRules,
   exporterService: common.exporterService('simple-server', 9394, 'simple-v1'),
   serviceMonitor: common.serviceMonitor('simple-server', 'simple-v1'),
 }

@@ -6,10 +6,6 @@ ingress:
       proxy_set_header X-Forwarded-Ssl on;
 
   hosts:
-    - host: simples5.health.gov.lk
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
     - host: api-simple.health.gov.lk
       paths:
         - path: /
@@ -33,4 +29,6 @@ worker:
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sri-lanka-production-k8s"]}]'
   }
 migration:
+  enabled: true
+metrics:
   enabled: true

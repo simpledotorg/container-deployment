@@ -36,7 +36,7 @@ server:
 worker:
   enabled: true
   log:
-    storage: 10Gi
+    storage: 50Gi
   podAnnotations: {
     ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:bangladesh-production-k8s"]}]'
   }

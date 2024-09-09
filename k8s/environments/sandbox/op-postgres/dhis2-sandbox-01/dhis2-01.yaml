@@ -20,14 +20,15 @@ spec:
       password:
         type: AlphaNumeric
   instances:
-    - name: dhis2-sandbox-01-postgres
+    - name: dhis2-postgres
       replicas: 1
       dataVolumeClaimSpec:
+        storageClassName: "gp3"
         accessModes:
         - "ReadWriteOnce"
         resources:
           requests:
-            storage: 500Gi
+            storage: 100Gi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -45,10 +46,10 @@ spec:
               labelSelector:
                 matchLabels:
                   postgres-operator.crunchydata.com/cluster: dhis2-sandbox-01
-                  postgres-operator.crunchydata.com/instance-set: dhis2-sandbox-01-postgres
+                  postgres-operator.crunchydata.com/instance-set: dhis2-postgres
       metadata:
         labels:
-          tags.datadoghq.com/service: "postgrescluster-simple"
+          tags.datadoghq.com/service: "postgrescluster-dhis2"
           tags.datadoghq.com/version: "14"
           prometheus.io/app: 'postgres'
         annotations:
@@ -57,7 +58,7 @@ spec:
     pgbackrest:
       configuration:
       - secret:
-          name: dhis2
+          name: pgbackrest
       repoHost:
         affinity:
           nodeAffinity:
@@ -69,13 +70,14 @@ spec:
                   values:
                   - "true"
       global:
-        repo1-path: /pgbackrest/postgres-operator/dhis2-sandbox-01/repo1
+        repo2-path: /pgbackrest/postgres-operator/dhis2-sandbox-01/repo2
+        repo2-retention-full-type: "count"
+        repo2-retention-full: "8"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
-      - name: repo1
+      - name: repo2
         schedules:
-          full: "0 22 * * 0" # Sunday
-          differential: "0 22 * * 1-6" # Monday to Saturday
+          full: "0 */6 * * *" # Every 6 hours
         s3:
           bucket: sandbox-simple-k8s-db-backup
           endpoint: s3.ap-south-1.amazonaws.com
@@ -111,6 +113,11 @@ spec:
           max_parallel_workers_per_gather: "4"
           max_parallel_workers: "8"
           max_parallel_maintenance_workers: "4"
+          logging_collector: "on"
+          log_statement: "all"
+          log_directory: "pg_log"
+          log_filename: "postgresql-%Y-%m-%d_%H%M%S.log"
+          log_min_duration_statement: "0"
   monitoring:
     pgmonitor:
       exporter:

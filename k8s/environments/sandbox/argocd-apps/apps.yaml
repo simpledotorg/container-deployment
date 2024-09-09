@@ -107,84 +107,6 @@ spec:
 
 ---
 
-# Kube state metrics
-# Moved to monitoring stack
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: kube-state-metrics
-# spec:
-#   destination:
-#     name: ''
-#     namespace: kube-system
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/manifests/kube-state-metrics
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: master
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
-
----
-
-# # Datadog operator
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: datadog-operator
-# spec:
-#   destination:
-#     name: ''
-#     namespace: datadog
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/manifests/datadog-operator
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: master
-#     helm:
-#       valueFiles:
-#         - values.yaml
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
-
-# ---
-
-# Datadog agent
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: datadog
-# spec:
-#   destination:
-#     name: ''
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     path: k8s/environments/sandbox/op-datadog
-#     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-#     targetRevision: master
-#   project: default
-#   syncPolicy:
-#     syncOptions:
-#       - PruneLast=true
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
-
-# ---
-
 # Reloader
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -426,19 +348,19 @@ spec:
 
 ---
 
-# Alphasms prometheus exporter
+# RTSL prometheus exporter
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: alphasms-exporter
+  name: rtsl-exporter
 spec:
   destination:
-    namespace: alphasms-exporter
+    namespace: rtsl-exporter
     server: 'https://kubernetes.default.svc'
   source:
-    path: charts/alphasms-exporter
-    repoURL: 'https://github.com/simpledotorg/alphasms_exporter.git'
-    targetRevision: main
+    path: charts/rtsl-exporter
+    repoURL: 'https://github.com/simpledotorg/rtsl_exporter.git'
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:
@@ -472,7 +394,12 @@ spec:
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: master
   syncPolicy:
-    automated: {}
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
 
 ---
 
@@ -593,7 +520,7 @@ spec:
   source:
     path: k8s/manifests/dhis2
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: dhis2-ecuador
+    targetRevision: master
     helm:
       valueFiles:
         - ../../environments/sandbox/values/dhis2-demo-ecuador.yaml
@@ -621,7 +548,111 @@ spec:
   source:
     path: k8s/environments/sandbox/op-postgres/dhis2-demo-ecuador
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: dhis2-ecuador
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-htn-tracking server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-htn-tracking-server
+spec:
+  destination:
+    namespace: dhis2-htn-tracking
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-htn-tracking.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-htn-tracking postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-htn-tracking-postgres
+spec:
+  destination:
+    namespace: dhis2-htn-tracking
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-htn-tracking
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-c61c699a server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-c61c699a-server
+spec:
+  destination:
+    namespace: dhis2-c61c699a
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-c61c699a.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-c61c699a postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-c61c699a-postgres
+spec:
+  destination:
+    namespace: dhis2-c61c699a
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-c61c699a
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
   project: default
   syncPolicy:
     syncOptions:

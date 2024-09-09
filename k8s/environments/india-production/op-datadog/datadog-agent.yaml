@@ -26,3 +26,5 @@ spec:
       enabled: true
     apm:
       enabled: true
+    eventCollection:
+      collectKubernetesEvents: true

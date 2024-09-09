@@ -243,3 +243,24 @@ python scripts/argocd_password_setup.py
 - Once the promotion job finishes, get the image tag SHA from the [container registry](https://hub.docker.com/r/simpledotorg/server/tags)
 - Update the image tag on the [respective ArgoCD](https://docs.google.com/spreadsheets/d/1JCfFYetk9Jrtc5iUHp-7Fx5V3QqpuCWojjcEibRJN7I/edit#gid=0): Application (eg: simple-server) > App Details > Parameters > image.tag
 - Wait for the application to finish auto-syncing
+
+## Connecting to DHIS2 instance and db
+- If you do not already have access to the Kubernetes cluster, please connect to the cluster by following this [doc](#connecting-to-a-k8s-cluster)
+- We use namespaces (e.g., -n simple-v1). Running `kubectl get ns` will list all available namespaces, allowing you to select the relevant one
+- `kubectl get pods -n <ns>` will show a list of pods available in that namespace
+- `kubectl exec -it <pod-name> /bin/bash -n <ns>` will allow you to connect to the pod
+- The DHIS2 configuration file path is `/opt/dhis2/dhis.conf`
+- To connect to PostgreSQL, identify the PostgreSQL pod using the `kubectl get pods -n <ns>` command, then use the `kubectl exec <>` command to connect and the `psql` command to access the database.
+
+## SSO user creation and login
+To login with SSO, first you need to create your user profile. Please log in as an admin at https://sso.simple.org/admin/, create a user account for yourself, and assign the "simple_team" group to your account. You can find the password in 1Password. After creating your account, log out from the admin account and log in to Grafana using the new username and password you created for yourself
+
+## Upgrading DHIS2 Version
+- Along with the official [image](https://hub.docker.com/r/dhis2/core/tags), additional tools need to be deployed for monitoring purposes. Therefore, a new image has been pushed to [Simple Docker Hub repository](https://hub.docker.com/r/simpledotorg/dhis2/tags).
+- Before upgrading, please verify that the required image is available. If not, create a new image by updating the image tag [here](../docker/dhis2.Dockerfile). After merging/pushing to the master branch, GitHub Actions will create a new image. Please verify its availability on Docker Hub.
+- Once the image availability is confirmed, update the image tag in the relevant values file. Example: [dhis2-htn-tracking](../k8s/environments/sandbox/values/dhis2-htn-tracking.yaml).
+```
+image:
+  tag: <>
+```
+- For upgrading VM based deployments, [please refer to this document](https://github.com/simpledotorg/dhis2-setup/blob/main/DHIS2VersionUpgrade.md)

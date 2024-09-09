@@ -70,12 +70,38 @@ module "eks" {
 
   aws_profile = "${local.service}-${local.env}"
 
+  cluster_addon_coredns_version         = "v1.10.1-eksbuild.2"
+  cluster_addon_kubeproxy_version       = "v1.28.1-eksbuild.1"
+  cluster_addon_vpccni_version          = "v1.14.1-eksbuild.1"
+  cluster_addon_awsebscsidriver_version = "v1.25.0-eksbuild.1"
+
   nodepool_subnet_ids = [module.vpc.private_subnets[0]] # Use only one subnet for nodepool
   nodepool_disk_size  = 50
 
-  default_nodepool_instance_enable = true
-  default_nodepool_instance_type   = "c6a.xlarge"
-  default_nodepool_instance_count  = 2
+  managed_node_groups = [
+    {
+      name         = "default-03"
+      create       = true
+      min_size     = 2
+      max_size     = 2
+      desired_size = 2
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
+      labels = {
+        role-default = "true"
+      }
+      instance_types = ["c6a.xlarge"]
+      subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service    = "shared"
+        Deployment = "k8s"
+      }
+    }
+  ]
 }
 
 output "vpc_id" {

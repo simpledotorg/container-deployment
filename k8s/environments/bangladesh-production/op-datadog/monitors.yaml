@@ -422,7 +422,7 @@ metadata:
   name: bangladesh-production-k8s-worker-log-volume-usage
   namespace: datadog
 spec:
-  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:simple-worker-*} by {pod_name} > 7516192768" # 7/10 GiB
+  query: "max(last_5m):max:kubernetes.kubelet.volume.stats.used_bytes{env:bangladesh-production-k8s, pod_name:simple-worker-*} by {pod_name} > 42949672960" # 40/50 GiB
   type: "query alert"
   name: "bangladesh-production-k8s-worker-log-volume-usage"
   message: "@slack-alerts"

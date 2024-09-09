@@ -1,3 +1,5 @@
+image:
+  tag: 2.40.3.2
 ingress:
   enabled: true
   className: "nginx"
@@ -18,7 +20,7 @@ affinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: role-dhis2-sandbox-01
+        - key: role-dhis2-sandbox-epidemics
           operator: In
           values:
           - "true"

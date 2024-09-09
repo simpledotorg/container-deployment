@@ -28,7 +28,9 @@ argo-cd:
       accounts.akshatha: login 
       accounts.dan: login 
       accounts.atharva: login 
-      accounts.roypeter: login 
+      accounts.roypeter: login
+      accounts.bola: login
+      accounts.manu: login
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
@@ -37,10 +39,7 @@ argo-cd:
         p, role:cicd, applications, sync, *, allow
         p, role:cicd, applications, update, *, allow
         g, cicd, role:cicd
-        g, govind, role:admin
         g, priyanga, role:admin
-        g, olttwa, role:admin
-        g, akshatha, role:admin
         g, dan, role:admin
         g, atharva, role:admin
         g, roypeter, role:admin

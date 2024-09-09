@@ -74,7 +74,7 @@ module "eks" {
 
   nodepool_subnet_ids = [module.vpc.private_subnets[1]] # Use single zone avoid volume mount issues during node replacement
 
-  cluster_addon_coredns_version         = "v1.10.1-eksbuild.2"
+  cluster_addon_coredns_version         = "v1.10.1-eksbuild.4"
   cluster_addon_kubeproxy_version       = "v1.28.1-eksbuild.1"
   cluster_addon_vpccni_version          = "v1.11.4-eksbuild.1"
   cluster_addon_awsebscsidriver_version = "v1.26.0-eksbuild.1"
@@ -119,11 +119,21 @@ module "eks" {
       min_size     = 1
       max_size     = 1
       desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
       labels = {
         role-dhis2-sandbox-01 = "true"
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[1]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-sandbox-01"
+      }
     },
     {
       name         = "dhis2-sandbox-epd"
@@ -131,11 +141,21 @@ module "eks" {
       min_size     = 1
       max_size     = 1
       desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
       labels = {
         role-dhis2-sandbox-epidemics = "true"
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-sandbox-epd"
+      }
     },
     {
       name         = "dhis2-demo-ecuador"
@@ -143,11 +163,65 @@ module "eks" {
       min_size     = 1
       max_size     = 1
       desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
       labels = {
         role-dhis2-demo-ecuador = "true"
       }
       instance_types = ["t3a.2xlarge"]
       subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-demo-ecuador"
+      }
+    },
+    {
+      name         = "dhis2-htn-tracking"
+      create       = true
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
+      labels = {
+        role-dhis2-htn-tracking = "true"
+      }
+      instance_types = ["t3a.2xlarge"]
+      subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-htn-tracking"
+      }
+    },
+    {
+      name         = "dhis2-c61c699a"
+      create       = true
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
+      labels = {
+        role-dhis2-c61c699a = "true"
+      }
+      instance_types = ["t3a.2xlarge"]
+      subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-c61c699a"
+      }
     }
   ]
 }

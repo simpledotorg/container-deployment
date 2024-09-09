@@ -11,7 +11,6 @@ argo-cd:
           more_set_headers "Referrer-Policy: no-referrer";
       ingressClassName: "nginx"
       hosts:
-        - simples13.health.gov.lk
         - argocd-simple.health.gov.lk
       paths:
         - /
@@ -35,10 +34,7 @@ argo-cd:
         p, role:cicd, applications, sync, *, allow
         p, role:cicd, applications, update, *, allow
         g, cicd, role:cicd
-        g, govind, role:admin
         g, priyanga, role:admin
-        g, olttwa, role:admin
-        g, akshatha, role:admin
         g, dan, role:admin
         g, atharva, role:admin
         g, roypeter, role:admin

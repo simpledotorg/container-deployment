@@ -1,3 +1,5 @@
+image:
+  tag: 40.3.0
 ingress:
   enabled: true
   className: "nginx"

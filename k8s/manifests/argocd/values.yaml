@@ -1,2 +1,0 @@
-ingress:
-  hostname: "argocd.<env-name>.example.com"
