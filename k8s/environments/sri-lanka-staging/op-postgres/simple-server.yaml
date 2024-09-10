@@ -57,7 +57,7 @@ spec:
         repo2-retention-full: "1"
         repo2-storage-verify-tls: "n"
         repo2-s3-uri-style: "path"
-      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.49-0
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
         schedules:
