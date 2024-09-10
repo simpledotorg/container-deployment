@@ -52,7 +52,7 @@ spec:
           name: pgbackrest
       global:
         repo1-retention-full: "2"
-        repo2-path: /sri-lanka-staging/repo2
+        repo2-path: /sri-lanka-staging-01/repo2
         repo2-retention-full-type: "count"
         repo2-retention-full: "1"
         repo2-storage-verify-tls: "n"
