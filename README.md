@@ -23,6 +23,10 @@ Automation and manifests for container deployment
 
 - **[Kubernetes](https://kubernetes.io/)**: Acts as the container orchestration platform, deploying all application components as containers within a Kubernetes cluster. This setup enables high availability, effective scaling, and seamless management of containerized applications.
 
+- **[K3s](https://k3s.io/)**: A lightweight Kubernetes distribution, providing a simplified installation process and reduced resource requirements. K3s is used to deploy Kubernetes clusters on Virtual Machines (VMs).
+
+- **[Helm](https://helm.sh/)**: A package manager for Kubernetes that simplifies the deployment and management of applications within the cluster. Helm charts are used to define the desired state of applications, making it easy to install, upgrade, and remove applications in a consistent manner.
+
 - **[ArgoCD](https://argoproj.github.io/cd/)**: Facilitates Continuous Delivery (CD) by automating the deployment and synchronization of Kubernetes configurations. Supports various templating engines like Helm, Kustomize, and Jsonnet, making the management of complex deployments straightforward.
 
 - **[Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets)**: Used for the secure handling of secrets within the Kubernetes environment. Sealed Secrets are encrypted and safely stored in the repository, to be decrypted in the cluster as required, enhancing the security of sensitive information.
