@@ -55,7 +55,7 @@ spec:
     pgbackrest:
       configuration:
       - secret:
-        name: pgbackrest
+          name: pgbackrest
       global:
         # Number of full backups to retain
         repo1-retention-full: "2"
