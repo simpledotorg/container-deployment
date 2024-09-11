@@ -53,6 +53,9 @@ spec:
           argocd.argoproj.io/sync-options: Delete=false
   backups:
     pgbackrest:
+      configuration:
+      - secret:
+        name: pgbackrest
       global:
         # Number of full backups to retain
         repo1-retention-full: "2"
