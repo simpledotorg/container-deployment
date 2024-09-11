@@ -59,11 +59,6 @@ spec:
       global:
         # Number of full backups to retain
         repo1-retention-full: "2"
-        repo2-path: /qa/repo2
-        repo2-retention-full-type: "count"
-        repo2-retention-full: "1"
-        repo2-storage-verify-tls: "n"
-        repo2-s3-uri-style: "path"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
@@ -77,13 +72,6 @@ spec:
             resources:
               requests:
                 storage: 10Gi
-      - name: repo2
-        schedules:
-          full: "0 */6 * * *" # Every 6 hours
-        s3:
-          bucket: storage
-          endpoint: https://storage.ptdstore036.hcppt01.sltidc.lk
-          region: "default"
   patroni:
     dynamicConfiguration:
       synchronous_mode: true
