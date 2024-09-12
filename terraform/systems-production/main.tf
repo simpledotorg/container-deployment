@@ -13,7 +13,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">=4.66.1"
+      version = "4.66.1"
     }
   }
 }
@@ -38,6 +38,7 @@ provider "aws" {
 
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
+  version = "4.0.2"
 
   name = local.vpc_name
   cidr = "172.28.0.0/16"

@@ -43,6 +43,7 @@ provider "aws" {
 
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
+  version = "4.0.2"
 
   name = local.vpc_name
   cidr = "172.33.0.0/16"
