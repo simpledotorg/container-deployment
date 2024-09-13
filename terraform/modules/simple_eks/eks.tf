@@ -6,7 +6,8 @@ module "eks" {
   cluster_version = var.cluster_version
 
   cluster_endpoint_public_access = true
-
+  kms_key_enable_default_policy = true
+  
   cluster_addons = {
     coredns = {
       addon_version : var.cluster_addon_coredns_version
