@@ -31,6 +31,7 @@ argo-cd:
       accounts.roypeter: login
       accounts.bola: login
       accounts.manu: login
+      accounts.ayushi: login
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
@@ -43,3 +44,4 @@ argo-cd:
         g, dan, role:admin
         g, atharva, role:admin
         g, roypeter, role:admin
+        g, ayushi, role:admin
