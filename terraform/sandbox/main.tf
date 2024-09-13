@@ -203,6 +203,28 @@ module "eks" {
       }
     },
     {
+      name         = "dhis2-phc"
+      create       = true
+      min_size     = 1
+      max_size     = 1
+      desired_size = 1
+
+      use_custom_launch_template = false
+      remote_access = {
+        ec2_ssh_key = local.key_pair_name
+      }
+
+      labels = {
+        role-dhis2-phc = "true"
+      }
+      instance_types = ["t3a.2xlarge"]
+      subnet_ids     = [module.vpc.private_subnets[0]]
+      tags = {
+        Service  = "dhis2"
+        Instance = "dhis2-phc"
+      }
+    },
+    {
       name         = "dhis2-c61c699a"
       create       = true
       min_size     = 1
