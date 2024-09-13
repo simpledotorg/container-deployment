@@ -62,12 +62,12 @@ spec:
         repo3-retention-full: "1"
         repo3-storage-verify-tls: "n"
         repo3-s3-uri-style: "path"
-        repo4-type=sftp
-        repo4-path=/home/ubuntu/lk-staging-db-backups
-        repo4-host=3.7.92.234
-        repo4-host-port=22
-        repo4-host-key-file=/tmp/sftp-key
-        repo4-host-cmd=sftp
+        repo4-type: "sftp"
+        repo4-path: "/home/ubuntu/lk-staging-db-backups"
+        repo4-host: "3.7.92.234"
+        repo4-host-port: "22"
+        repo4-host-key-file: "/tmp/sftp-key"
+        repo4-host-cmd: "sftp"
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
