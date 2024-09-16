@@ -22,14 +22,10 @@ argo-cd:
   configs:
     cm:
       accounts.cicd: login
-      accounts.govind: login 
       accounts.priyanga: login 
-      accounts.olttwa: login 
-      accounts.akshatha: login 
       accounts.dan: login 
       accounts.atharva: login 
       accounts.roypeter: login
-      admin.enabled: true
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:

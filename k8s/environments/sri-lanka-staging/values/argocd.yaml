@@ -21,15 +21,15 @@ argo-cd:
       https: false
   configs:
     cm:
-      admin.enabled: true
       accounts.cicd: login
-      accounts.govind: login 
       accounts.priyanga: login 
-      accounts.olttwa: login 
-      accounts.akshatha: login 
       accounts.dan: login 
       accounts.atharva: login 
       accounts.roypeter: login 
+      accounts.ayushi: login
+      accounts.gyan: login
+      accounts.igbanam: login
+      accounts.arnaud: login
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
@@ -42,3 +42,7 @@ argo-cd:
         g, dan, role:admin
         g, atharva, role:admin
         g, roypeter, role:admin
+        g, ayushi, role:admin
+        g, gyan, role:admin
+        g, igbanam, role:admin
+        g, arnaud, role:admin
