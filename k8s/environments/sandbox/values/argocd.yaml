@@ -32,6 +32,7 @@ argo-cd:
       accounts.gyan: login
       accounts.igbanam: login
       accounts.arnaud: login
+      accounts.sagar: login
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
@@ -48,3 +49,4 @@ argo-cd:
         g, gyan, role:admin
         g, igbanam, role:admin
         g, arnaud, role:admin
+        g, sagar, role:admin
