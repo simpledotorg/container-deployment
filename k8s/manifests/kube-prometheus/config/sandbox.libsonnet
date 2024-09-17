@@ -14,7 +14,7 @@
     externalUrl: 'https://prometheus-sandbox.simple.org',
     retention: {
       enable: true,
-      retention: '7d',
+      retention: '30d',
       storage: '10Gi',
     },
     ingress: {
