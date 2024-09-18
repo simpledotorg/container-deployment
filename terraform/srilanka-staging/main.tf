@@ -101,7 +101,7 @@ module "k8s_server" {
 
   root_block_device = [
     {
-      "volume_size" : "100"
+      "volume_size" : "150"
     }
   ]
 }
