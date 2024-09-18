@@ -16,6 +16,8 @@ Automation and manifests for container deployment
 - [Manual Changes](./doc/Manual_Changes.md)
 - [Create New DHIS2 Instance](./doc/CreateNewDHIS2Instance.md)
 - [DHIS2 Database Restore](./doc/DHIS2DBRestore.md)
+- [Monitoring](./doc/Monitoring.md)
+- [Terraform](terraform/README.md)
 
 ## High-Level Architecture
 

@@ -42,7 +42,7 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+  source  = "terraform-aws-modules/vpc/aws"
   version = "4.0.2"
 
   name = local.vpc_name
@@ -61,7 +61,7 @@ module "vpc" {
 
 resource "aws_key_pair" "simple_aws_key" {
   key_name   = local.key_pair_name
-  public_key = file("~/.ssh/simple_aws_key.pub") # Get it from password store
+  public_key = file("~/.ssh/simple_aws_key.pub") # Retrieve it from 1Password under the name 'AWS Master SSH Key'. Only the public key is needed.
 }
 
 module "eks" {
