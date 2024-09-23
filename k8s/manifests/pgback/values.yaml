@@ -4,13 +4,13 @@ image:
   tag: "14"
 
 pgback:
-  cronSchedule: "*/30 * * * *"
+  cronSchedule: "0 0 * * *"
   pgSecretName: "simple-pguser-simple"
   pgHostSecretKey: "host"
   pgUserSecretKey: "user"
   pgPasswordSecretKey: "password"
   s3SecretName: "pgback"
-  s3SecretIDKey: "key"
-  s3SecretKeyKey: "id"
-  s3BucketKey: "bucket"
-  s3EndpointKey: "endpoint"
+  s3SecretIDKey: "aws_access_key_id"
+  s3SecretKeyKey: "aws_secret_access_key"
+  s3BucketKey: "s3_bucket"
+  s3EndpointKey: "s3_endpoint"
