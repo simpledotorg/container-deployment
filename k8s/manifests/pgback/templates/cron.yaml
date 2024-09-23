@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: pgback
@@ -28,12 +28,12 @@ spec:
                     secretKeyRef:
                       name: "{{ .Values.pgback.pgSecretName }}"
                       key: "{{ .Values.pgback.pgPasswordSecretKey }}"
-                - name: S3_ACCESS_KEY_ID
+                - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
                       name: "{{ .Values.pgback.s3SecretName }}"
                       key: "{{ .Values.pgback.s3SecretIDKey }}"
-                - name: S3_SECRET_ACCESS_KEY
+                - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
                       name: "{{ .Values.pgback.s3SecretName }}"
