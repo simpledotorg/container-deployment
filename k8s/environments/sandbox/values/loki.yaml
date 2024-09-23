@@ -1,0 +1,9 @@
+# loki:
+#   gateway:
+#    ingress:
+#      enabled: true
+#      hosts:
+#        - host: FIXME
+#          paths:
+#            - path: /
+#              pathType: Prefix
