@@ -18,6 +18,10 @@ loki:
       max_concurrent: 4
     auth_enabled: false
 
+  monitoring:
+    serviceMonitor:
+      enabled: true
+
   #gateway:
   #  ingress:
   #    enabled: true
