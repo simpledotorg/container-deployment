@@ -15,7 +15,7 @@
     retention: {
       enable: true,
       retention: '30d',
-      storage: '10Gi',
+      storage: '35Gi',
     },
     ingress: {
       name: 'prometheus-k8s',
