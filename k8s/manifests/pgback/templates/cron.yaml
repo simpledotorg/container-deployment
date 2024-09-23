@@ -1,0 +1,56 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pgback
+spec:
+  schedule: "{{ .Values.pgback.cronSchedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: pgback
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              env:
+                - name: PGHOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .Values.pgback.pgSecretName }}"
+                      key: "{{ .Values.pgback.pgHostSecretKey }}"
+                - name: PGUSER
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .Values.pgback.pgSecretName }}"
+                      key: "{{ .Values.pgback.pgUserSecretKey }}"
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .Values.pgback.pgSecretName }}"
+                      key: "{{ .Values.pgback.pgPasswordSecretKey }}"
+                - name: S3_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .Values.pgback.s3SecretName }}"
+                      key: "{{ .Values.pgback.s3SecretIDKey }}"
+                - name: S3_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .Values.pgback.s3SecretName }}"
+                      key: "{{ .Values.pgback.s3SecretKeyKey }}"
+                - name: S3_BUCKET
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .Values.pgback.s3SecretName }}"
+                      key: "{{ .Values.pgback.s3BucketKey }}"
+                - name: S3_ENDPOINT
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .Values.pgback.s3SecretName }}"
+                      key: "{{ .Values.pgback.s3EndpointKey }}"
+              args:
+                - /bin/sh
+                - -c
+                - |
+                  apt update -y &&  apt install awscli -y && pg_dumpall -h $PGHOST -U $PGUSER | gzip | openssl enc -aes-256-cbc -e -k $PGPASSWORD | aws --endpoint-url $S3_ENDPOINT s3 cp - s3://$S3_BUCKET/backup-$(date +\%Y-\%m-\%dT\%H:\%M:\%S).sql.gz.enc --no-verify-ssl
+          restartPolicy: OnFailure

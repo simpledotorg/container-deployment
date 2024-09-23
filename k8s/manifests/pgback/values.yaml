@@ -1,0 +1,16 @@
+image:
+  repository: postgres
+  pullPolicy: IfNotPresent
+  tag: "14"
+
+pgback:
+  cronSchedule: "0 0 * * *"
+  pgSecretName: "simple-pguser-simple"
+  pgHostSecretKey: "host"
+  pgUserSecretKey: "user"
+  pgPasswordSecretKey: "password"
+  s3SecretName: "pgback"
+  s3SecretIDKey: "key"
+  s3SecretKeyKey: "id"
+  s3BucketKey: "bucket"
+  s3EndpointKey: "endpoint"
