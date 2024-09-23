@@ -4,7 +4,7 @@ image:
   tag: "14"
 
 pgback:
-  cronSchedule: "0 0 * * *"
+  cronSchedule: "*/30 * * * *"
   pgSecretName: "simple-pguser-simple"
   pgHostSecretKey: "host"
   pgUserSecretKey: "user"
