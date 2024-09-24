@@ -14,8 +14,8 @@
     externalUrl: 'https://prometheus-sandbox.simple.org',
     retention: {
       enable: true,
-      retention: '7d',
-      storage: '10Gi',
+      retention: '30d',
+      storage: '35Gi',
     },
     ingress: {
       name: 'prometheus-k8s',
