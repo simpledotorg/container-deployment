@@ -58,6 +58,8 @@ loki:
     replicas: 0
   distributor:
     replicas: 0
+  compactor:
+    replicas: 0
   indexGateway:
     replicas: 0
   bloomCompactor:
@@ -66,8 +68,6 @@ loki:
     replicas: 0
 
   # Set up the retention period
-  compactor:
-    replicas: 1
   limits_config:
     retention_period: 24h
   table_manager:
