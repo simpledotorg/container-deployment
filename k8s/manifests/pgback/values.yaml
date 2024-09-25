@@ -5,6 +5,8 @@ image:
 
 pgback:
   cronSchedule: "*/30 * * * *" # every 30 minutes
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
   pgSecretName: "simple-pguser-simple"
   pgHostSecretKey: "host"
   pgUserSecretKey: "user"

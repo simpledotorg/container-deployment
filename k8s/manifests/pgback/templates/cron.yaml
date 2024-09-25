@@ -4,6 +4,8 @@ metadata:
   name: pgback
 spec:
   schedule: "{{ .Values.pgback.cronSchedule }}"
+  successfulJobsHistoryLimit: "{{ .Values.pgback.successfulJobsHistoryLimit }}"
+  failedJobsHistoryLimit: "{{ .Values.pgback.failedJobsHistoryLimit }}"
   jobTemplate:
     spec:
       template:
