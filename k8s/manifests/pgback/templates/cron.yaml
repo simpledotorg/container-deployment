@@ -48,9 +48,17 @@ spec:
                     secretKeyRef:
                       name: "{{ .Values.pgback.s3SecretName }}"
                       key: "{{ .Values.pgback.s3EndpointKey }}"
+              volumeMounts:
+                - name: pgback-script
+                  mountPath: /scripts/backup.sh
+                  subPath: backup.sh
               args:
                 - /bin/sh
                 - -c
                 - |
-                  apt update -y &&  apt install awscli -y && pg_dumpall -h $PGHOST -U $PGUSER | gzip | openssl enc -aes-256-cbc -e -k $PGPASSWORD | aws --endpoint-url $S3_ENDPOINT s3 cp - s3://$S3_BUCKET/backup-$(date +\%Y-\%m-\%dT\%H:\%M:\%S).sql.gz.enc --no-verify-ssl
+                  chmod +x /scripts/backup.sh && /scripts/backup.sh
           restartPolicy: OnFailure
+          volumes:
+            - name: pgback-script
+              configMap:
+                name: pgback-script
