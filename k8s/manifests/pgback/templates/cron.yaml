@@ -50,13 +50,13 @@ spec:
                       key: "{{ .Values.pgback.s3EndpointKey }}"
               volumeMounts:
                 - name: pgback-script
-                  mountPath: /scripts/backup.sh
+                  mountPath: /backup.sh
                   subPath: backup.sh
               args:
                 - /bin/sh
                 - -c
                 - |
-                  chmod +x /scripts/backup.sh && /scripts/backup.sh
+                  sh /backup.sh
           restartPolicy: OnFailure
           volumes:
             - name: pgback-script
