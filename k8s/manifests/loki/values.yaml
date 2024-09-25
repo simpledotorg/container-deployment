@@ -19,8 +19,11 @@ loki:
     auth_enabled: false
 
   monitoring:
+    enabled: true
     serviceMonitor:
       enabled: true
+    metricsInstance:
+      enabled: false
 
   #gateway:
   #  ingress:
