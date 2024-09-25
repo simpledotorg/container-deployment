@@ -65,11 +65,11 @@ loki:
   bloomGateway:
     replicas: 0
 
-# Set up the retention period
-compactor:
-  replicas: 1
-limits_config:
-  retention_period: 24h
-table_manager:
-  retention_deletes_enabled: true
-  retention_period: 24h
+  # Set up the retention period
+  compactor:
+    replicas: 1
+  limits_config:
+    retention_period: 24h
+  table_manager:
+    retention_deletes_enabled: true
+    retention_period: 24h
