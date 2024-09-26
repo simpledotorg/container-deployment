@@ -1,6 +1,6 @@
 argo-cd:
-  notifications:
-    argocdUrl: "https://argocd-sandbox.simple.org"
+  global:
+    domain: argocd-sandbox.simple.org
   server:
     ingress:
       enabled: true
@@ -33,11 +33,18 @@ argo-cd:
       accounts.igbanam: login
       accounts.arnaud: login
       accounts.sagar: login
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.example.com/realms/master
+        clientID: argocd
+        clientSecret: $oidc.keycloak.clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
       policy.default: role:readonly
       policy.csv: |
+        g, ArgoCDAdmins, role:admin
         p, role:cicd, applications, sync, *, allow
         p, role:cicd, applications, update, *, allow
         g, cicd, role:cicd
