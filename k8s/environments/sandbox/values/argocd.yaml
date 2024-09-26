@@ -38,7 +38,7 @@ argo-cd:
       oidc.config: |
         name: Keycloak
         issuer: https://sso.simple.org/realms/master
-        clientID: argocd
+        clientID: argocd-sandbox.simple.org
         clientSecret: $argocd-secret-extra:oidc.keycloak.clientSecret
         requestedScopes: ["openid", "profile", "email", "groups"]
       url: https://argocd-sandbox.simple.org
