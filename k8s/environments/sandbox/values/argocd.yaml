@@ -37,7 +37,7 @@ argo-cd:
         name: Keycloak
         issuer: https://keycloak.example.com/realms/master
         clientID: argocd
-        clientSecret: $oidc.keycloak.clientSecret
+        clientSecret: $argocd-secret-extra:oidc.keycloak.clientSecret
         requestedScopes: ["openid", "profile", "email", "groups"]
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
