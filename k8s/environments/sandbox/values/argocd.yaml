@@ -1,6 +1,8 @@
 argo-cd:
   global:
     domain: argocd-sandbox.simple.org
+  notifications:
+    argocdUrl: "https://argocd-sandbox.simple.org"
   server:
     ingress:
       enabled: true
@@ -39,6 +41,7 @@ argo-cd:
         clientID: argocd
         clientSecret: $argocd-secret-extra:oidc.keycloak.clientSecret
         requestedScopes: ["openid", "profile", "email", "groups"]
+      url: https://argocd-sandbox.simple.org
        
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
