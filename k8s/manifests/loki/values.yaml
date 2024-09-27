@@ -20,7 +20,7 @@ loki:
     # Set up the retention period
     limits_config:
       retention_period: 24h
-    commonConfig:
+    server:
       log_level: warn
 
   monitoring:
