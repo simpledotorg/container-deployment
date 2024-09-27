@@ -50,6 +50,8 @@ loki:
   # Enable minio for storage
   minio:
     enabled: true
+    persistence:
+      size: 10Gi
 
   # Zero out replica counts of other deployment modes
   singleBinary:
