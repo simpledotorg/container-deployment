@@ -17,10 +17,11 @@ loki:
       # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
       max_concurrent: 4
     auth_enabled: false
-
     # Set up the retention period
     limits_config:
       retention_period: 24h
+    commonConfig:
+      log_level: warn
 
   monitoring:
     serviceMonitor:
