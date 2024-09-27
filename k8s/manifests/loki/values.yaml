@@ -18,6 +18,10 @@ loki:
       max_concurrent: 4
     auth_enabled: false
 
+    # Set up the retention period
+    limits_config:
+      retention_period: 24h
+
   monitoring:
     serviceMonitor:
       enabled: true
@@ -66,10 +70,3 @@ loki:
     replicas: 0
   bloomGateway:
     replicas: 0
-
-  # Set up the retention period
-  limits_config:
-    retention_period: 24h
-  table_manager:
-    retention_deletes_enabled: true
-    retention_period: 24h
