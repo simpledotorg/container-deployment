@@ -369,7 +369,7 @@ local grafanaDashboards = { grafanaDashboards: {
             "useBackend": false
           }
         ],
-        "title": "Validity",
+        "title": "Validity (in days)",
         "type": "timeseries"
       }
     ],
