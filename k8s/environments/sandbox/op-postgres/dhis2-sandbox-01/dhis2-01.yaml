@@ -118,6 +118,9 @@ spec:
           log_directory: "pg_log"
           log_filename: "postgresql-%Y-%m-%d_%H%M%S.log"
           log_min_duration_statement: "0"
+          log_rotation_size : "1024MB"
+          log_truncate_on_rotation: "on"
+          log_rotation_age: "7d"
   monitoring:
     pgmonitor:
       exporter:
