@@ -1,6 +1,7 @@
 local common = (import 'lib/common.libsonnet');
 local postgres = (import 'lib/postgres.libsonnet');
 local redis = (import 'lib/redis.libsonnet');
+local loki = (import 'lib/loki.libsonnet');
 local ingressNginx = (import 'lib/ingress-nginx.libsonnet');
 local simpleServer = (import 'lib/simple-server.libsonnet');
 local kubePrometheus = (import 'lib/kube-prometheus.libsonnet');
@@ -34,6 +35,7 @@ local grafanaDashboards =
   postgres.grafanaDashboards +
   alphasms.grafanaDashboards +
   redis.grafanaDashboards +
+  loki.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
