@@ -171,7 +171,7 @@ local grafanaDashboards = { grafanaDashboards: {
             "useBackend": false
           }
         ],
-        "title": "Balance (in $)",
+        "title": "Balance (Taka(BDT))",
         "type": "timeseries"
       },
       {
