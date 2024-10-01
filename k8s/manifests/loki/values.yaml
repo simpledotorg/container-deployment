@@ -75,3 +75,7 @@ loki:
     replicas: 0
   bloomGateway:
     replicas: 0
+
+  promtail:
+    serviceMonitor:
+      enabled: true
