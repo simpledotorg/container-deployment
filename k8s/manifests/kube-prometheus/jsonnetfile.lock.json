@@ -104,6 +104,36 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "mixin-utils"
+        }
+      },
+      "version": "349a4d4936014ab83ace72f500424d6ef098201e",
+      "sum": "LoYq5QxJmUXEtqkEG8CFUBLBhhzDDaNANHc7Gz36ZdM="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/loki.git",
+          "subdir": "production/loki-mixin"
+        }
+      },
+      "version": "11b92eeb95612a2bb002ea22f048c55ae20557a2",
+      "sum": "uJMPEVgFrGl7nWrbjEVm0FP10KtH7V2Ko/Ugl8K43u8="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/mimir.git",
+          "subdir": "operations/mimir-mixin"
+        }
+      },
+      "version": "e8e1e13dd9d186954b422406a79eeabbf2cfccaa",
+      "sum": "e9Y1e66H8oirog9QHNJxi7uESmdHlvxYqM21yo6Yhuk="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/jsonnet-libs/docsonnet.git",
           "subdir": "doc-util"
         }
@@ -180,6 +210,16 @@
       },
       "version": "76f2e1ef95be0df752037baa040781c5219e1fb3",
       "sum": "IgpAgyyBZ7VT2vr9kSYQP/lkZUNQnbqpGh2sYCtUKs0="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/prometheus-operator/kube-prometheus.git",
+          "subdir": "jsonnet/kube-prometheus/lib"
+        }
+      },
+      "version": "2a14b95595fd6767bdeb03ca7460b15a3793d503",
+      "sum": "QKRgrgEZ3k9nLmLCrDBaeIGVqQZf+AvZTcnhdLk3TrA="
     },
     {
       "source": {
