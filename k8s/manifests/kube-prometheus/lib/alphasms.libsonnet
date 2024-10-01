@@ -359,7 +359,7 @@ local grafanaDashboards = { grafanaDashboards: {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": (sum (alphasms_user_balance_validity) - time()) / 86400,
+            "expr": "(sum (alphasms_user_balance_validity) - time()) / 86400",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
