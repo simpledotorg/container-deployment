@@ -86,12 +86,11 @@ local kp =
           [if std.objectHas(config.prometheus, 'affinity') && config.prometheus.affinity != null then 'affinity']: config.prometheus.affinity,
           additionalArgs: [
             {
-              "name": "--labels",
+              "name": "labels",
               "value": "cluster=' + environment + '"
             }
           ]
         },
-
       },
     },
     ingress+:: ingress.ingressConfig(
