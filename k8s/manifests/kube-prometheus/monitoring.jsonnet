@@ -84,9 +84,6 @@ local kp =
             },
           },
           [if std.objectHas(config.prometheus, 'affinity') && config.prometheus.affinity != null then 'affinity']: config.prometheus.affinity,
-          externalLabels: {
-            cluster: environment,
-          },
         },
       },
     },
