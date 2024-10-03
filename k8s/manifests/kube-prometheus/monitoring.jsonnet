@@ -84,17 +84,9 @@ local kp =
             },
           },
           [if std.objectHas(config.prometheus, 'affinity') && config.prometheus.affinity != null then 'affinity']: config.prometheus.affinity,
-          additionalScrapeConfigs: [
-            {
-              job_name: 'all',
-              relabel_configs: [
-                {
-                  target_label: 'cluster',
-                  replacement: environment,
-                },
-              ],
-            },
-          ],
+          externalLabels: {
+            cluster: environment,
+          },
         },
       },
     },
