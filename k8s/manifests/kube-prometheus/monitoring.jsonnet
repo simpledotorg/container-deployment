@@ -1,13 +1,3 @@
-local addClusterLabelToServiceMonitors(manifests, environment) =
-  std.map(
-    function(m) 
-      if std.objectHas(m, 'kind') && m.kind == 'ServiceMonitor' then
-        m { spec+: { metricRelabelings+: [{ targetLabel: 'cluster', replacement: environment }] } }
-      else
-        m,
-    manifests
-  );
-
 local common = (import 'lib/common.libsonnet');
 local postgres = (import 'lib/postgres.libsonnet');
 local redis = (import 'lib/redis.libsonnet');
@@ -94,6 +84,18 @@ local kp =
             },
           },
           [if std.objectHas(config.prometheus, 'affinity') && config.prometheus.affinity != null then 'affinity']: config.prometheus.affinity,
+          scrapeClasses: [
+            {
+              name: 'prometheus',
+              default: true,
+              relabelings: [
+                {
+                  targetLabel: 'cluster',
+                  replacement: environment,
+                },
+              ],
+            }
+          ]
         },
       },
     },
@@ -126,5 +128,4 @@ local manifests =
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
   (if isEnvSandbox then [alphasms.prometheusRules] else []);
 
-local manifestsWithLabels = addClusterLabelToServiceMonitors(manifests, environment);
-argocd.addArgoAnnotations(manifestsWithLabels, kp.values.common.namespace)
+argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
