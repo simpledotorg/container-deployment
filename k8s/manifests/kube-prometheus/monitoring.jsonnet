@@ -91,6 +91,7 @@ local kp =
               tlsConfig: {},
               relabelings: [
                 {
+                  action: 'replace',
                   targetLabel: 'cluster',
                   replacement: environment,
                 },
