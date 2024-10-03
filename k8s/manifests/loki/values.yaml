@@ -79,3 +79,5 @@ loki:
 promtail:
   serviceMonitor:
     enabled: true
+  extraArgs:
+    - "-client.external-labels=cluster=sandbox"
