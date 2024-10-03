@@ -85,6 +85,9 @@ local kp =
           },
           [if std.objectHas(config.prometheus, 'affinity') && config.prometheus.affinity != null then 'affinity']: config.prometheus.affinity,
         },
+        additionalArgs: [
+          '--labels="cluster=' + environment + '"'
+        ]
       },
     },
     ingress+:: ingress.ingressConfig(
