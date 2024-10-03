@@ -2,7 +2,7 @@ local addClusterLabelToServiceMonitors(manifests, environment) =
   std.map(
     function(m) 
       if std.objectHas(m, 'kind') && m.kind == 'ServiceMonitor' then
-        m { spec+: { relabelings+: [{ targetLabel: 'cluster', replacement: environment }] } }
+        m { spec+: { metricRelabelings+: [{ targetLabel: 'cluster', replacement: environment }] } }
       else
         m,
     manifests
