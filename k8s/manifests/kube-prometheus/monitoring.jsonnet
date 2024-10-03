@@ -88,6 +88,7 @@ local kp =
             {
               name: 'prometheus',
               default: true,
+              tlsConfig: {},
               relabelings: [
                 {
                   targetLabel: 'cluster',
