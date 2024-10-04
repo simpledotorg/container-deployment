@@ -1,3 +1,13 @@
+local addClusterLabelToServiceMonitors(manifests) =
+  std.map(
+    function(m) 
+      if std.objectHas(m, 'kind') && m.kind == 'ServiceMonitor' then
+        m { spec+: { scrapeClass+: 'prometheus' } }
+      else
+        m,
+    manifests
+  );
+
 local common = (import 'lib/common.libsonnet');
 local postgres = (import 'lib/postgres.libsonnet');
 local redis = (import 'lib/redis.libsonnet');
@@ -130,4 +140,5 @@ local manifests =
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
   (if isEnvSandbox then [alphasms.prometheusRules] else []);
 
-argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
+local manifestsWithLabels = addClusterLabelToServiceMonitors(manifests);
+argocd.addArgoAnnotations(manifestsWithLabels, kp.values.common.namespace)
