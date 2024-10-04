@@ -2,7 +2,7 @@ local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
 local replaceClusterString = function(content)
   std.parseJson(
-    std.strReplace(std.toString(content), 'cluster=~"$cluster",', '') // Convert to string, replace, and parse back to JSON
+    std.strReplace(std.toString(content), 'cluster=~\\\"$cluster\\\",', '') // Convert to string, replace, and parse back to JSON
   );
 
 local grafanaDashboards = { grafanaDashboards: {
