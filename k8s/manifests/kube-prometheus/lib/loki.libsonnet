@@ -8,10 +8,10 @@ local grafanaDashboards = { grafanaDashboards: {
   'loki-deletion.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-deletion.json'),
   'loki-mixin-recording-rules.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-mixin-recording-rules.json'),
   'loki-operational.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-operational.json'),
-  'loki-reads.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-reads.json'),
+  'loki-reads-resources.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-reads.json'),
   'loki-resources-overview.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-resources-overview.json'),
   'loki-retention.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-retention.json'),
-  'loki-writes.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-writes.json'),
+  'loki-writes-resources.json': (import 'loki-mixin-compiled-ssd/dashboards/loki-writes.json'),
 }};
 
 local LokiMixin = addMixin({
