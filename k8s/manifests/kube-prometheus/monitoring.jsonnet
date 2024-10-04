@@ -106,6 +106,13 @@ local kp =
                   replacement: environment,
                 },
               ],
+              metricRelabelings: [
+                {
+                  action: 'replace',
+                  targetLabel: 'cluster',
+                  replacement: environment,
+                },
+              ],
             }
           ]
         },
