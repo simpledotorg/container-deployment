@@ -178,36 +178,7 @@ local grafanaDashboards = {
             }
           ],
           "title": "Email Limit Count",
-          "type": "timeseries",
-          "alert": {
-            "alertRuleTags": {},
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [0.95],
-                  "type": "gt"
-                },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": ["A"]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "avg"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "keep_last_state",
-            "frequency": "1m",
-            "handler": 1,
-            "message": "Email Limit Count exceeds 95% of the limit",
-            "name": "Email Limit Alert",
-            "noDataState": "no_data",
-            "notifications": []
-          }
+          "type": "timeseries"
         },
         {
           "datasource": {
@@ -240,36 +211,7 @@ local grafanaDashboards = {
             }
           ],
           "title": "Email Remaining Count",
-          "type": "timeseries",
-          "alert": {
-            "alertRuleTags": {},
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [0],
-                  "type": "lt"
-                },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": ["A"]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "avg"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "keep_last_state",
-            "frequency": "1m",
-            "handler": 1,
-            "message": "Email Remaining Count is 0",
-            "name": "Email Remaining Alert",
-            "noDataState": "no_data",
-            "notifications": []
-          }
+          "type": "timeseries"
         },
         {
           "datasource": {
