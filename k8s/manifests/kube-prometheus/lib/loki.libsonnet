@@ -15,6 +15,9 @@ local grafanaDashboards = { grafanaDashboards: {
   'loki-resources-overview.json': replaceClusterString(import 'loki-mixin-compiled-ssd/dashboards/loki-resources-overview.json'),
   'loki-retention.json': replaceClusterString(import 'loki-mixin-compiled-ssd/dashboards/loki-retention.json'),
   'loki-writes.json': replaceClusterString(import 'loki-mixin-compiled-ssd/dashboards/loki-writes.json'),
+  
+  // https://grafana.com/grafana/dashboards/17781-loki-metrics-dashboard
+  'loki-overview.json': (import 'loki/dashboards/17781_rev1.json'),
 }};
 
 local LokiMixin = addMixin({
