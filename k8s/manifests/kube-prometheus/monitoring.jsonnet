@@ -8,6 +8,7 @@ local argocd = (import 'lib/argocd.libsonnet');
 local ingress = (import 'lib/ingress.libsonnet');
 local dhis2Server = (import 'lib/dhis2-server.libsonnet');
 local alphasms = (import 'lib/alphasms.libsonnet');
+local loki = (import 'lib/loki.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -36,6 +37,7 @@ local grafanaDashboards =
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
+  loki.grafanaDashboards +
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
 
 local kp =
