@@ -52,7 +52,7 @@ local kp =
       },
       grafana+: {
         [if enableGrafana then 'folderDashboards']+: grafanaDashboards,
-        [if isEnvSandbox then 'datasources']+: [
+        [if enableGrafana then 'datasources']+: [
           {
             type: 'loki',
             url: 'http://loki-read.loki.svc.cluster.local:3100',
