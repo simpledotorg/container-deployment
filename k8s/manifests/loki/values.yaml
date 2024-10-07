@@ -29,15 +29,6 @@ loki:
     serviceMonitor:
       enabled: true
 
-  #gateway:
-  #  ingress:
-  #    enabled: true
-  #    hosts:
-  #      - host: FIXME
-  #        paths:
-  #          - path: /
-  #            pathType: Prefix
-
   deploymentMode: SimpleScalable
 
   backend:

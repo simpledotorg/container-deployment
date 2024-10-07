@@ -1,9 +1,20 @@
-# loki:
-#   gateway:
-#    ingress:
-#      enabled: true
-#      hosts:
-#        - host: FIXME
-#          paths:
-#            - path: /
-#              pathType: Prefix
+loki:
+  gateway:
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/auth-type: basic
+        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+        nginx.ingress.kubernetes.io/auth-secret: loki-basic-auth
+      labels: {}
+      hosts:
+        - host: gateway.loki.sandbox.simple.org
+          paths:
+            - path: /
+      tls:
+        - secretName: loki-gateway-tls
+          hosts:
+            - gateway.loki.sandbox.simple.org
