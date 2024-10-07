@@ -52,7 +52,7 @@ local kp =
       },
       grafana+: {
         [if enableGrafana then 'folderDashboards']+: grafanaDashboards,
-        [if enableGrafana then 'datasources']: [
+        [if enableGrafana then 'datasources']+: [
           {
             name: 'loki',
             type: 'loki',
@@ -61,16 +61,6 @@ local kp =
             isDefault: false,
             orgId: 1,
             editable: false,
-          },
-          {
-            access: 'proxy',
-            editable: false,
-            isDefault: true,
-            name: 'prometheus',
-            orgId: 1,
-            type: 'prometheus',
-            url: 'http://prometheus-k8s.monitoring.svc:9090',
-            version: 1
           },
         ],
       },
