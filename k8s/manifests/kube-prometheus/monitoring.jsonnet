@@ -54,14 +54,6 @@ local kp =
         [if enableGrafana then 'folderDashboards']+: grafanaDashboards,
         [if enableGrafana then 'datasources']: [
           {
-            type: 'loki',
-            url: 'http://loki-read.loki.svc.cluster.local:3100',
-            access: 'proxy',
-            isDefault: false,
-            orgId: 1,
-            editable: false,
-          },
-          {
             access: 'proxy',
             editable: false,
             isDefault: true,
