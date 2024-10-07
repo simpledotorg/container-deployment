@@ -52,6 +52,14 @@ local kp =
       },
       grafana+: {
         [if enableGrafana then 'folderDashboards']+: grafanaDashboards,
+        [if isEnvSandbox then 'datasources']+: [{
+          loki: {
+            type: 'loki',
+            url: 'http://loki-read.loki.svc.cluster.local:3100',
+            access: 'proxy',
+            isDefault: false,
+          },
+        }],
       },
       prometheus+: {
         namespaces: [],
