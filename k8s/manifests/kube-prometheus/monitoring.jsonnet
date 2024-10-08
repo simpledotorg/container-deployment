@@ -35,7 +35,7 @@ local monitoredServices =
 local grafanaDashboards =
   postgres.grafanaDashboards +
   alphasms.grafanaDashboards +
-  sendgrid.grafanaDashboards+
+  sendgrid.grafanaDashboards +
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
