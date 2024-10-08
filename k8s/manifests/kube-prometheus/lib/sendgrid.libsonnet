@@ -2,7 +2,7 @@
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
 local prometheusRules = {
-  prometheusRules +:: {
+  prometheusRules+:: {
     groups+: [
       {
         name: 'sendgrid.rules',
@@ -14,7 +14,7 @@ local prometheusRules = {
             |||,
             'for': '5m',
             labels: {
-              severity: 'warning'
+              severity: 'critical'
             },
             annotations: {
               summary: "SendGrid email usage has exceeded 95% of total balance",
@@ -731,6 +731,6 @@ local sendgridMixin = addMixin({
 });
 
 {
-  grafanaDashboards: grafanaDashboards.grafanaDashboards,
-  prometheusRules: prometheusRules.prometheusRules,
+  grafanaDashboards: sendgridMixin.grafanaDashboards,
+  prometheusRules: sendgridMixin.prometheusRules,
 }
