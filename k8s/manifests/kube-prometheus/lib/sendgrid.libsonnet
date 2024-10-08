@@ -674,7 +674,7 @@ local grafanaDashboards = { grafanaDashboards: {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "sum by (account_name) (sendgrid_plan_expiration_seconds)",
+            "expr": "sum by (account_name) (sendgrid_plan_expiration_seconds) / 86400",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -684,7 +684,7 @@ local grafanaDashboards = { grafanaDashboards: {
             "useBackend": false
           }
         ],
-        "title": "Plan Expiration Time (seconds)",
+        "title": "Plan Expiration Time (in days)",
         "type": "timeseries"
       }
     ],
