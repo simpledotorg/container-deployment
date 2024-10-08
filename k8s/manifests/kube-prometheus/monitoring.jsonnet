@@ -56,7 +56,7 @@ local kp =
           {
             name: 'loki',
             type: 'loki',
-            url: 'http://loki-read.loki.svc.cluster.local:3100',
+            url: 'http://loki-gateway.loki.svc.cluster.local',
             access: 'proxy',
             isDefault: false,
             orgId: 1,
