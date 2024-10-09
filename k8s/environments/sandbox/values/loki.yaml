@@ -44,3 +44,5 @@ loki:
           secretKeyRef:
             name: loki-secrets
             key: LOKI_S3_SECRETACCESSKEY
+  minio:
+    enabled: false
