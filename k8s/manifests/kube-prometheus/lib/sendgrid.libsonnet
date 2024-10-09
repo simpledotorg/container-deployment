@@ -134,17 +134,16 @@ local grafanaDashboards = { grafanaDashboards: {
                 "mode": "off"
               }
             },
+            "fieldMinMax": false,
             "mappings": [],
+            "max": 100,
+            "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
                   "color": "green",
                   "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
                 }
               ]
             }
@@ -157,7 +156,7 @@ local grafanaDashboards = { grafanaDashboards: {
           "x": 0,
           "y": 0
         },
-        "id": 2,
+        "id": 1,
         "options": {
           "legend": {
             "calcs": [],
@@ -168,7 +167,14 @@ local grafanaDashboards = { grafanaDashboards: {
           "tooltip": {
             "mode": "single",
             "sort": "none"
-          }
+          },
+          "yaxes": [
+            {
+              "max": 100,
+              "min": 0,
+              "show": true
+            }
+          ]
         },
         "targets": [
           {
@@ -178,7 +184,7 @@ local grafanaDashboards = { grafanaDashboards: {
             },
             "disableTextWrap": false,
             "editorMode": "code",
-            "expr": "max by (account_name) (sendgrid_email_remaining_count)/ max by (account_name) (sendgrid_email_limit_count)",
+            "expr": "max by (account_name) (sendgrid_email_remaining_count) / max by (account_name) (sendgrid_email_limit_count) * 100",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -423,7 +429,7 @@ local grafanaDashboards = { grafanaDashboards: {
           "x": 0,
           "y": 8
         },
-        "id": 8,
+        "id": 1,
         "options": {
           "legend": {
             "calcs": [],
@@ -444,7 +450,7 @@ local grafanaDashboards = { grafanaDashboards: {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "sum by (account_name) (sendgrid_email_remaining_count)",
+            "expr": "sum by (account_name) (sendgrid_email_limit_count)",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -454,7 +460,7 @@ local grafanaDashboards = { grafanaDashboards: {
             "useBackend": false
           }
         ],
-        "title": "Email Remaining Count",
+        "title": "Email Limit Count",
         "type": "timeseries"
       },
       {
@@ -522,7 +528,7 @@ local grafanaDashboards = { grafanaDashboards: {
           "x": 8,
           "y": 8
         },
-        "id": 1,
+        "id": 8,
         "options": {
           "legend": {
             "calcs": [],
@@ -543,7 +549,7 @@ local grafanaDashboards = { grafanaDashboards: {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "sum by (account_name) (sendgrid_email_limit_count)",
+            "expr": "sum by (account_name) (sendgrid_email_remaining_count)",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -553,7 +559,7 @@ local grafanaDashboards = { grafanaDashboards: {
             "useBackend": false
           }
         ],
-        "title": "Email Limit Count",
+        "title": "Email Remaining Count",
         "type": "timeseries"
       },
       {
@@ -892,14 +898,14 @@ local grafanaDashboards = { grafanaDashboards: {
       ]
     },
     "time": {
-      "from": "2024-10-09T05:45:22.874Z",
-      "to": "2024-10-09T08:11:09.982Z"
+      "from": "now-6h",
+      "to": "now"
     },
     "timepicker": {},
     "timezone": "browser",
     "title": "SendGrid",
     "uid": "P1809F7CD0C75ACF3",
-    "version": 3,
+    "version": 4,
     "weekStart": ""
   }
 }};
