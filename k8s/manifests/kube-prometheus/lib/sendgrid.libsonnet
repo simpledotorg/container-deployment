@@ -355,7 +355,7 @@ local grafanaDashboards = { grafanaDashboards: {
             "useBackend": false
           }
         ],
-        "title": "Email Used Count",
+        "title": "Remaining Email",
         "type": "stat"
       },
       {
@@ -899,7 +899,7 @@ local grafanaDashboards = { grafanaDashboards: {
     "timezone": "browser",
     "title": "SendGrid",
     "uid": "P1809F7CD0C75ACF3",
-    "version": 2,
+    "version": 3,
     "weekStart": ""
   }
 }};
