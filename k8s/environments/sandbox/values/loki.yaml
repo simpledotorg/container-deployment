@@ -30,6 +30,8 @@ loki:
         region: ap-south-1
         secretAccessKey: "${LOKI_S3_SECRETACCESSKEY}"
         accessKeyId: "${LOKI_S3_ACCESKEYID}"
+    rulerConfig:
+      alertmanager_url: http://alertmanager-main.monitoring.svc.cluster.local:9093
   backend:
     extraArgs:
       - '-config.expand-env=true'
@@ -74,3 +76,32 @@ loki:
             key: LOKI_S3_SECRETACCESSKEY
   minio:
     enabled: false
+  ruler:
+    enbabled: true
+    replicas: 1
+    extraArgs:
+      - '-config.expand-env=true'
+    extraEnv:
+      - name: LOKI_S3_ACCESKEYID
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_ACCESKEYID
+      - name: LOKI_S3_SECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_SECRETACCESSKEY
+    directories:
+      tenant_foo:
+        rules1.txt: |
+          groups:
+            - name: always_fire
+              rules:
+                - alert: AlwaysFiringAlert
+                  expr: vector(1)
+                  for: 10m
+                  labels:
+                    severity: critical
+                  annotations:
+                    summary: This alert is always firing for testing purposes
