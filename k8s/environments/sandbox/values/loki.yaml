@@ -32,6 +32,7 @@ loki:
         accessKeyId: "${LOKI_S3_ACCESKEYID}"
     rulerConfig:
       alertmanager_url: http://alertmanager-main.monitoring.svc.cluster.local:9093
+      rule_path: /etc/loki/rules
   backend:
     extraArgs:
       - '-config.expand-env=true'
