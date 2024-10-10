@@ -78,7 +78,7 @@ loki:
     enabled: false
   ruler:
     enbabled: true
-    replicas: 1
+    replicas: 0
     extraArgs:
       - '-config.expand-env=true'
     extraEnv:
