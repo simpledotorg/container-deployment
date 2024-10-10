@@ -40,13 +40,14 @@ local prometheusRules = {
             expr: |||
               sendgrid_plan_expiration_seconds < 1 or absent(sendgrid_plan_expiration_seconds)
             |||,
-            'for': '1h',
+            'for': '5h',
             labels: {
               severity: 'critical'
             },
             annotations: {
               summary: "SendGrid plan has expired",
               description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing."
+              
             }
           },
           {
