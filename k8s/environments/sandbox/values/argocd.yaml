@@ -24,17 +24,6 @@ argo-cd:
   configs:
     cm:
       accounts.cicd: login
-      accounts.priyanga: login 
-      accounts.dan: login 
-      accounts.atharva: login 
-      accounts.roypeter: login
-      accounts.bola: login
-      accounts.manu: login
-      accounts.ayushi: login
-      accounts.gyan: login
-      accounts.igbanam: login
-      accounts.arnaud: login
-      accounts.sagar: login
       oidc.config: |
         name: Keycloak
         issuer: https://sso.simple.org/realms/master
@@ -51,12 +40,3 @@ argo-cd:
         p, role:cicd, applications, sync, *, allow
         p, role:cicd, applications, update, *, allow
         g, cicd, role:cicd
-        g, priyanga, role:admin
-        g, dan, role:admin
-        g, atharva, role:admin
-        g, roypeter, role:admin
-        g, ayushi, role:admin
-        g, gyan, role:admin
-        g, igbanam, role:admin
-        g, arnaud, role:admin
-        g, sagar, role:admin
