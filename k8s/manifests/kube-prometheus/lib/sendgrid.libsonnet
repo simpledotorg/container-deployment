@@ -1,6 +1,6 @@
 
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
-local urls = import 'kube-prometheus/lib/endpoint_urls.json';
+local urls = import 'kube-prometheus/lib/endpoint_urls.yaml';
 
 local prometheusRules = {
   prometheusRules+:: {
@@ -20,7 +20,7 @@ local prometheusRules = {
             annotations: {
               summary: "SendGrid email usage has exceeded 95% of total balance",
               description: "The SendGrid email usage is greater than 95% for account {{ $labels.account_name }}.
-              For details, visit the SendGrid Dashboard: ${endpoint_urls.urls.sendgrid_dashboard}. You can also check the Alert Manager Dashboard: ${endpoint_urls.urls.alert_manager_dashboard}.""
+              For details, visit the SendGrid Dashboard: ${urls.urls.sendgrid_dashboard}. You can also check the Alert Manager Dashboard: ${urls.urls.alert_manager_dashboard}.""
             }
           },
           {
@@ -48,7 +48,7 @@ local prometheusRules = {
             },
             annotations: {
               summary: "SendGrid plan has expired",
-              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing. For details, visit the SendGrid Dashboard: ${endpoint_urls.urls.sendgrid_dashboard}. You can also check the Alert Manager Dashboard: ${endpoint_urls.urls.alert_manager_dashboard}."
+              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing. For details, visit the SendGrid Dashboard: ${urls.urls.sendgrid_dashboard}. You can also check the Alert Manager Dashboard: ${urls.urls.alert_manager_dashboard}."
             }
           },
           {
