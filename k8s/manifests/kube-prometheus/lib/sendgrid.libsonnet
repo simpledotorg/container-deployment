@@ -21,7 +21,10 @@ local prometheusRules = {
               summary: "SendGrid email usage has exceeded 95% of total balance",
               description: "The SendGrid email usage is greater than 95% for account {{ $labels.account_name }}.
                             For details, visit the SendGrid Dashboard: {{ $urls.urls.sendgrid_dashboard }}. You can also check the Alert Manager Dashboard: ${urls.urls.alert_manager_dashboard}.
-                            test : <${urls.urls.sendgrid_dashboard}|SendGrid Dashboard>.",
+                            test : <${urls.urls.sendgrid_dashboard}|SendGrid Dashboard>.
+                            For details, visit the SendGrid Dashboard: https://app.sendgrid.com/.
+                             You can also check the Alert Manager Dashboard: https://grafana-sandbox.simple.org/d/alertmanager-overview/alertmanager-overview."
+
             }
           },
           {
