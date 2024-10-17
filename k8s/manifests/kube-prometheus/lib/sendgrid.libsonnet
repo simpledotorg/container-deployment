@@ -13,7 +13,7 @@ local prometheusRules = {
             expr: |||
               sendgrid_email_used_count < 0.95 * sendgrid_email_limit_count
             |||,
-            'for': '5m',
+            'for': '2m',
             labels: {
               severity: 'critical'
             },
@@ -54,15 +54,16 @@ local prometheusRules = {
           {
             alert: 'SendGridServiceUnreachable',
             expr: |||
-              sendgrid_monitoring_http_return_code != 200
+              sendgrid_monitoring_http_return_code == 200
             |||,
-            'for': '1h',
+            'for': '2m',
             labels: {
               severity: 'critical'
             },
             annotations: {
               summary: "SendGrid service is unreachable",
-              description: "The SendGrid service for account {{ $labels.account_name }} returned a non-200 response code."
+              description: "The SendGrid service for account {{ $labels.account_name }} returned a non-200 response code.
+              For details, visit the SendGrid Dashboard: <${urls.urls.sendgrid_dashboard}|SendGrid Dashboard>"
             }
           }
         ],
