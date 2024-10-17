@@ -11,7 +11,7 @@ local prometheusRules = {
           {
             alert: 'SendGridEmailRemainingLow',
             expr: |||
-              sendgrid_email_used_count < 0.95 * sendgrid_email_limit_count
+              sendgrid_email_used_count > 0.95 * sendgrid_email_limit_count
             |||,
             'for': '5m',
             labels: {
@@ -20,8 +20,8 @@ local prometheusRules = {
             annotations: {
               summary: "SendGrid email usage has exceeded 95% of total balance",
               description: "The SendGrid email usage is greater than 95% for account {{ $labels.account_name }}.
-              For details, visit the SendGrid Dashboard: {{ $urls.urls.sendgrid_dashboard }}. You can also check the Alert Manager Dashboard: ${urls.urls.alert_manager_dashboard}.
-              test : <${urls.urls.sendgrid_dashboard}|SendGrid Dashboard>."
+                            For details, visit the SendGrid Dashboard: {{ $urls.urls.sendgrid_dashboard }}. You can also check the Alert Manager Dashboard: ${urls.urls.alert_manager_dashboard}.
+                            test : <${urls.urls.sendgrid_dashboard}|SendGrid Dashboard>."
             }
           },
           {
@@ -49,7 +49,9 @@ local prometheusRules = {
             },
             annotations: {
               summary: "SendGrid plan has expired",
-              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing."
+              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing.
+                            For details, visit the SendGrid Dashboard: {{ $urls.urls.sendgrid_dashboard }}. You can also check the Alert Manager Dashboard: ${urls.urls.alert_manager_dashboard}.
+                            test : <${urls.urls.sendgrid_dashboard}|SendGrid Dashboard>."
             }
           },
           {
