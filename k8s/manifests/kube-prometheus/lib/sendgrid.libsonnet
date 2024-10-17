@@ -1,5 +1,6 @@
 
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
+local urls = import 'kube-prometheus/lib/urls.json';
 
 local prometheusRules = {
   prometheusRules+:: {
@@ -40,14 +41,13 @@ local prometheusRules = {
             expr: |||
               sendgrid_plan_expiration_seconds < 1 or absent(sendgrid_plan_expiration_seconds)
             |||,
-            'for': '5h',
+            'for': '1h',
             labels: {
               severity: 'critical'
             },
             annotations: {
               summary: "SendGrid plan has expired",
-              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing."
-              
+              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing. For details, visit the SendGrid Dashboard: ${urls.urls.sendgrid_dashboard}. You can also check the Alert Manager Dashboard: ${urls.urls.alert_manager_dashboard}."
             }
           },
           {
