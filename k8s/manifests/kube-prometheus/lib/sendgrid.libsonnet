@@ -11,7 +11,7 @@ local prometheusRules = {
           {
             alert: 'SendGridEmailRemainingLow',
             expr: |||
-              sendgrid_email_used_count != 0.95 * sendgrid_email_limit_count
+              1 == 1
             |||,
             'for': '5m',
             labels: {
