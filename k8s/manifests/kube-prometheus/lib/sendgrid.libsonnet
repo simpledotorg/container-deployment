@@ -20,7 +20,7 @@ local prometheusRules = {
             annotations: {
               summary: "SendGrid email usage has exceeded 95% of total balance",
               description: "The SendGrid email usage is greater than 95% for account {{ $labels.account_name }}.
-              For details, visit the SendGrid Dashboard: ${urls.urls.sendgrid_dashboard}. You can also check the Alert Manager Dashboard: ${urls.urls.alert_manager_dashboard}."
+              For details, visit the SendGrid Dashboard: {{ $urls.urls.sendgrid_dashboard }}"
             }
           },
           {
