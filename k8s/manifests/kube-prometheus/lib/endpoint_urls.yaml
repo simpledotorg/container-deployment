@@ -1,3 +1,0 @@
-urls:
-  sendgrid_dashboard: "https://app.sendgrid.com/"
-  alert_manager_dashboard: "https://grafana-sandbox.simple.org/d/alertmanager-overview/alertmanager-overview"
