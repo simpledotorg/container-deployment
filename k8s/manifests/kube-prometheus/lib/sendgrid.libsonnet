@@ -19,11 +19,8 @@ local prometheusRules = {
             },
             annotations: {
               summary: "SendGrid email usage has exceeded 95% of total balance",
-              description: |||
-                The SendGrid email usage is greater than 95% for account {{ $labels.account_name }}.
-
-                For more details, visit the [Alertmanager Overview]({{ urls.alertmanagerOverview }}) and manage your SendGrid account [here]({{ urls.sendgridAccount }}).
-              |||
+              description: "The SendGrid email usage is greater than 95% for account {{ $labels.account_name }}.\n\n" +
+                "For more details, visit the [Alertmanager Overview]({{ urls.alertmanagerOverview }}) and manage your SendGrid account [here]({{ urls.sendgridAccount }})."
             }
           },
           {
@@ -37,11 +34,8 @@ local prometheusRules = {
             },
             annotations: {
               summary: "SendGrid email balance has reached 0",
-              description: |||
-                The SendGrid email balance is 0 or missing for account {{ $labels.account_name }}.
-
-                For more details, visit the [Alertmanager Overview]({{ urls.alertmanagerOverview }}) and manage your SendGrid account [here]({{ urls.sendgridAccount }}).
-              |||
+              description: "The SendGrid email balance is 0 or missing for account {{ $labels.account_name }}.\n\n" +
+                "For more details, visit the [Alertmanager Overview]({{ urls.alertmanagerOverview }}) and manage your SendGrid account [here]({{ urls.sendgridAccount }})."
             }
           },
           {
@@ -55,11 +49,8 @@ local prometheusRules = {
             },
             annotations: {
               summary: "SendGrid plan has expired",
-              description: |||
-                The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing.
-
-                For more details, visit the [Alertmanager Overview]({{ urls.alertmanagerOverview }}) and manage your SendGrid account [here]({{ urls.sendgridAccount }}).
-              |||
+              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing.\n\n" +
+                "For more details, visit the [Alertmanager Overview]({{ urls.alertmanagerOverview }}) and manage your SendGrid account [here]({{ urls.sendgridAccount }})."
             }
           },
           {
@@ -73,11 +64,8 @@ local prometheusRules = {
             },
             annotations: {
               summary: "SendGrid service is unreachable",
-              description: |||
-                The SendGrid service for account {{ $labels.account_name }} returned a non-200 response code.
-
-                For more details, visit the [Alertmanager Overview]({{ urls.alertmanagerOverview }}) and manage your SendGrid account [here]({{ urls.sendgridAccount }}).
-              |||
+              description: "The SendGrid service for account {{ $labels.account_name }} returned a non-200 response code.\n\n" +
+                "For more details, visit the [Alertmanager Overview]({{ urls.alertmanagerOverview }}) and manage your SendGrid account [here]({{ urls.sendgridAccount }})."
             }
           }
         ],
