@@ -1,6 +1,6 @@
 
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
-local urls = (import 'kube-prometheus/lib/endpoint_urls.libsonnet');
+local urls = (import 'kube-prometheus/lib/endpoint-urls.libsonnet');
 
 local prometheusRules = {
   prometheusRules+:: {
