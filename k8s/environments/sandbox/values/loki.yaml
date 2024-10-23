@@ -30,6 +30,16 @@ loki:
         region: ap-south-1
         secretAccessKey: "${LOKI_S3_SECRETACCESSKEY}"
         accessKeyId: "${LOKI_S3_ACCESKEYID}"
+    rulerConfig:
+      alertmanager_url: http://alertmanager-main.monitoring:9093
+      rule_path:  /loki/rules/fake/
+      storage:
+        type: local
+        local:
+          directory: /loki/rules/
+      ring:
+        kvstore:
+          store: inmemory
   backend:
     extraArgs:
       - '-config.expand-env=true'
@@ -72,5 +82,32 @@ loki:
           secretKeyRef:
             name: loki-secrets
             key: LOKI_S3_SECRETACCESSKEY
+  extraObjects:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: loki-alerting-rules
+      labels:
+        loki_rule: "rules"
+    data:
+      loki-alerting-rules.yaml: |-
+        groups:
+          - name: test2
+            rules:
+            - alert: example2
+              expr: vector(1)
+              for: 3m
+              labels:
+                severity: critical
+                category: logs
+              annotations:
+                message: "Please ignore, loki test alert."
+                summary: "Please ignore, loki test alert."
+                description: "Please ignore, loki test alert."
+  sidecar:
+    skipTlsVerify: true
+    rules:
+      labelValue: "rules"
+      folder: "/loki/rules/fake/"
   minio:
     enabled: false
