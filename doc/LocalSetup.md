@@ -10,7 +10,7 @@
 
 ## Install Argocd
 - Add hem repo `helm repo add argo https://argoproj.github.io/argo-helm`
-- Install `helm install argocd argo/argo-cd --create-namespace -n argocd --set notifications.secret.create=false --set configs.global.image.tag=v2.9.17 --version 5.14.1`
+- Install `helm install argocd argo/argo-cd --create-namespace -n argocd --set notifications.secret.create=false --set global.image.tag=v2.9.17 --version 5.14.1`
 
 ## Create manifests
 - Create a new branch for local setup `git checkout -b local-<your-name>`. Replace `<your-name>`, ex: `local-john`
