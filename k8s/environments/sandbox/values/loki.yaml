@@ -105,7 +105,6 @@ loki:
                 summary: "Please ignore, loki test alert."
                 description: "Please ignore, loki test alert."
   sidecar:
-    skipTlsVerify: true
     rules:
       labelValue: "rules"
       folder: "/loki/rules/fake/"
