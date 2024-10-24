@@ -93,18 +93,18 @@ loki:
     data:
       loki-alerting-rules.yaml: |-
         groups:
-          - name: test2
+          - name: loki-alerts
             rules:
-            - alert: example2
-              expr: vector(1)
-              for: 3m
+            - alert: HighErrorRateInLokiNamespace
+              expr: |
+                sum(count_over_time({namespace="loki"} |= "error" [10m])) > 1000
+              for: 5m
               labels:
                 severity: critical
                 category: logs
               annotations:
-                message: "Please ignore, loki test alert."
-                summary: "Please ignore, loki test alert."
-                description: "Please ignore, loki test alert."
+                message: "High error rate detected in namespace 'loki'. More than 1000 error logs in the last 10 minutes."
+                description: "The number of logs with 'error' messages in the namespace 'loki' has exceeded 1000 in the past 10 minutes."
   sidecar:
     rules:
       labelValue: "rules"
