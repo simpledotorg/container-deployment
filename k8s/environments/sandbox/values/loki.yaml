@@ -32,6 +32,7 @@ loki:
         accessKeyId: "${LOKI_S3_ACCESKEYID}"
     rulerConfig:
       alertmanager_url: http://alertmanager-main.monitoring:9093
+      enable_alertmanager_v2: true
       rule_path:  /loki/rules/fake/
       storage:
         type: local
