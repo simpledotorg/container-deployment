@@ -25,6 +25,23 @@ loki:
     compactor:
       retention_enabled: true
       delete_request_store: s3
+    rulerConfig:
+      alertmanager_url: http://alertmanager-main.monitoring:9093
+      enable_alertmanager_v2: true
+      rule_path:  /loki/rules/fake/
+      storage:
+        type: local
+        local:
+          directory: /loki/rules/
+      ring:
+        kvstore:
+          store: inmemory
+    storage:
+      type: s3
+      s3:
+        region: ap-south-1
+        secretAccessKey: "${LOKI_S3_SECRETACCESSKEY}"
+        accessKeyId: "${LOKI_S3_ACCESKEYID}"
   monitoring:
     serviceMonitor:
       enabled: true
@@ -33,21 +50,59 @@ loki:
 
   backend:
     replicas: 3
+    extraArgs:
+      - '-config.expand-env=true'
+    extraEnv:
+      - name: LOKI_S3_ACCESKEYID
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_ACCESKEYID
+      - name: LOKI_S3_SECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_SECRETACCESSKEY
   read:
     replicas: 3
+    extraArgs:
+      - '-config.expand-env=true'
+    extraEnv:
+      - name: LOKI_S3_ACCESKEYID
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_ACCESKEYID
+      - name: LOKI_S3_SECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_SECRETACCESSKEY
   write:
     replicas: 3
+    extraArgs:
+      - '-config.expand-env=true'
+    extraEnv:
+      - name: LOKI_S3_ACCESKEYID
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_ACCESKEYID
+      - name: LOKI_S3_SECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_SECRETACCESSKEY
   
-  # Enable minio for storage
+  # Disable minio for storage
   minio:
-    enabled: true
+    enabled: false
     persistence:
       size: 10Gi
 
   # Zero out replica counts of other deployment modes
   singleBinary:
     replicas: 0
-
   ingester:
     replicas: 0
   querier:
@@ -66,6 +121,34 @@ loki:
     replicas: 0
   bloomGateway:
     replicas: 0
+
+  # Rules configuration 
+  extraObjects:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: loki-alerting-rules
+      labels:
+        loki_rule: "rules"
+    data:
+      loki-alerting-rules.yaml: |-
+        groups:
+          - name: loki-alerts
+            rules:
+            - alert: HighErrorRateInLokiNamespace
+              expr: |
+                sum(count_over_time({namespace="loki"} |= "error" [10m])) > 1000
+              for: 5m
+              labels:
+                severity: critical
+                category: logs
+              annotations:
+                message: "High error rate detected in namespace 'loki'. More than 1000 error logs in the last 10 minutes."
+                description: "The number of logs with 'error' messages in the namespace 'loki' has exceeded 1000 in the past 10 minutes."
+  sidecar:
+    rules:
+      labelValue: "rules"
+      folder: "/loki/rules/fake/"
 
 promtail:
   serviceMonitor:
