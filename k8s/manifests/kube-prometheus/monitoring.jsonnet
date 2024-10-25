@@ -8,6 +8,7 @@ local argocd = (import 'lib/argocd.libsonnet');
 local ingress = (import 'lib/ingress.libsonnet');
 local dhis2Server = (import 'lib/dhis2-server.libsonnet');
 local alphasms = (import 'lib/alphasms.libsonnet');
+local rtslExporterAlerts = (import 'lib/rtsl_exporter_alerts.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -36,8 +37,8 @@ local grafanaDashboards =
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
-  (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
-
+  (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {}) +
+  rtslExporterAlerts.grafanaDashboards;
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
@@ -112,6 +113,6 @@ local manifests =
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
-  (if isEnvSandbox then [alphasms.prometheusRules] else []);
-
+  (if isEnvSandbox then [alphasms.prometheusRules] else []) +
+   rtslExporterAlerts.prometheusRules;
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
