@@ -14,8 +14,16 @@
 
 ## Create manifests
 - Create a new branch for local setup `git checkout -b local-<your-name>`. Replace `<your-name>`, ex: `local-john`
-- Replace the `targetRevision: local` to `targetRevision: local-<your-name>` in `k8s/environments/local/argocd-apps` and ` k8s/environments/local/root-app.yaml`
-- Git push branch `git push origin local-<your-name>`
+- Replace the `targetRevision: local` to `targetRevision: local-<your-name>` in `k8s/environments/local/argocd-apps` and `k8s/environments/local/root-app.yaml`
+
+    Use the sed command as shown below, or alternatively, use an IDE
+    ```
+    for file in k8s/environments/local/argocd-apps/apps.yaml k8s/environments/local/root-app.yaml; do
+      sed -i 's/targetRevision:local/targetRevision:local-<your-name>/g' "$file"
+    done
+    ```
+
+- Commit and push the changes to the branch `git push origin local-<your-name>`
 
 ## Create root Argocd app
 - `kubectl create -f  k8s/environments/local/root-app.yaml -n argocd`
