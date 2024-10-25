@@ -14,8 +14,16 @@
 
 ## Create manifests
 - Create a new branch for local setup `git checkout -b local-<your-name>`. Replace `<your-name>`, ex: `local-john`
-- Replace the `targetRevision: local` to `targetRevision: local-<your-name>` in `k8s/environments/local/argocd-apps` and ` k8s/environments/local/root-app.yaml`
-- Git push branch `git push origin local-<your-name>`
+- Replace the `targetRevision: local` to `targetRevision: local-<your-name>` in `k8s/environments/local/argocd-apps` and `k8s/environments/local/root-app.yaml`
+
+    Use the sed command as shown below, or alternatively, use an IDE
+    ```
+    for file in k8s/environments/local/argocd-apps/apps.yaml k8s/environments/local/root-app.yaml; do
+      sed -i 's/targetRevision:local/targetRevision:local-<your-name>/g' "$file"
+    done
+    ```
+
+- Commit and push the changes to the branch `git push origin local-<your-name>`
 
 ## Create root Argocd app
 - `kubectl create -f  k8s/environments/local/root-app.yaml -n argocd`
@@ -75,8 +83,27 @@ kubeseal <k8s/environments/local/secrets/simple-server.sealedsecret.yaml.decrypt
 - Login `kubectl exec -it simple-server-0 bash -n simple-v1`
 - Run db schema load `bundle exec rake db:schema:load`
 - Run db migrate `bundle exec rake db:migrate`
-- Run db seed `bundle exec rake db:seed`
+
+## Data Seeding
+Data seeding can be a bit tricky, as the Rails environment is set up for production by default. Seeding is disabled in the production environment, and if we manually set the environment to development, the database name defaults to `simple-server_development`, while the database here is named `simple`. Follow the steps below to run the seed successfully:
+
+1. Log in to the server:  
+   ```shell
+   kubectl exec -it simple-server-0 bash -n simple-v1
+   ```
+2. Install development gems:  
+   ```shell
+   bundle config set --local with 'development'
+   ```
+3. Update the database configuration to use the correct database name by replacing `simple-server_development` with `simple` in `config/database.yml`:  
+   ```shell
+   sed -i 's/simple-server_development/simple/g' config/database.yml
+   ```
+4. Run the seed command:  
+   ```shell
+   RAILS_ENV=development SIMPLE_SERVER_ENV=development bundle exec rake db:seed
+   ```
 
 ## Access simple app UI
 - `kubectl port-forward svc/simple-server -n simple-v1 8081:80`
-- `ngrok http 8081`
+- `ngrok http 8081` and open the ngrok https url in browser. username: `admin@simple.org`, password: `Resolve2SaveLives`
