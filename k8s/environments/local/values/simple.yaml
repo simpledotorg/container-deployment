@@ -12,3 +12,5 @@ ingress:
   - hosts:
     - api.local.simple.org
     secretName: api.local.simple.org-tls
+metrics:
+  enabled: true
