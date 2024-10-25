@@ -10,7 +10,7 @@ spec:
   source:
     path: k8s/environments/local/argocd-apps
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: local
+    targetRevision: sagar_local_test
   project: default
   syncPolicy:
     syncOptions:
