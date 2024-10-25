@@ -75,8 +75,27 @@ kubeseal <k8s/environments/local/secrets/simple-server.sealedsecret.yaml.decrypt
 - Login `kubectl exec -it simple-server-0 bash -n simple-v1`
 - Run db schema load `bundle exec rake db:schema:load`
 - Run db migrate `bundle exec rake db:migrate`
-- Run db seed `bundle exec rake db:seed`
+
+## Data Seeding
+Data seeding can be a bit tricky, as the Rails environment is set up for production by default. Seeding is disabled in the production environment, and if we manually set the environment to development, the database name defaults to `simple-server_development`, while the database here is named `simple`. Follow the steps below to run the seed successfully:
+
+1. Log in to the server:  
+   ```shell
+   kubectl exec -it simple-server-0 bash -n simple-v1
+   ```
+2. Install development gems:  
+   ```shell
+   bundle config set --local with 'development'
+   ```
+3. Update the database configuration to use the correct database name by replacing `simple-server_development` with `simple` in `config/database.yml`:  
+   ```shell
+   sed -i 's/simple-server_development/simple/g' config/database.yml
+   ```
+4. Run the seed command:  
+   ```shell
+   RAILS_ENV=development SIMPLE_SERVER_ENV=development bundle exec rake db:seed
+   ```
 
 ## Access simple app UI
 - `kubectl port-forward svc/simple-server -n simple-v1 8081:80`
-- `ngrok http 8081`
+- `ngrok http 8081` and open the ngrok https url in browser. username: `admin@simple.org`, password: `Resolve2SaveLives`
