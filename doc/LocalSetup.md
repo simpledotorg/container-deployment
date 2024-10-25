@@ -80,7 +80,7 @@ kubeseal <k8s/environments/local/secrets/simple-server.sealedsecret.yaml.decrypt
 - Wait for Argocd sync to complete
 
 ## Login to simple server pod setup db
-- Login `kubectl exec -it simple-server-0 bash -n simple-v1`
+- Login `kubectl exec -it simple-server-0 -n simple-v1 -- bash`
 - Run db schema load `bundle exec rake db:schema:load`
 - Run db migrate `bundle exec rake db:migrate`
 
@@ -89,11 +89,11 @@ Data seeding can be a bit tricky, as the Rails environment is set up for product
 
 1. Log in to the server:  
    ```shell
-   kubectl exec -it simple-server-0 bash -n simple-v1
+   kubectl exec -it simple-server-0 -n simple-v1 -- bash
    ```
 2. Install development gems:  
    ```shell
-   bundle config set --local with 'development'
+   bundle install --with development
    ```
 3. Update the database configuration to use the correct database name by replacing `simple-server_development` with `simple` in `config/database.yml`:  
    ```shell
