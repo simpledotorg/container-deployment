@@ -14,3 +14,5 @@ ingress:
     secretName: api.local.simple.org-tls
 metrics:
   enabled: true
+migration:
+  enabled: true
