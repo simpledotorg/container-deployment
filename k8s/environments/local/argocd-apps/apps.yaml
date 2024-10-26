@@ -341,3 +341,57 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
+
+# RTSL_EXPORTER
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rtsl-exporter
+spec:
+  destination:
+    namespace: rtsl-exporter
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: charts/rtsl-exporter
+    repoURL: 'https://github.com/simpledotorg/rtsl_exporter.git'
+    targetRevision: sagar_local_test
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    directory:
+      jsonnet:
+        extVars:
+          - name: ENVIRONMENT
+            value: sandbox
+        libs:
+          - k8s/manifests/kube-prometheus/vendor
+      exclude: '*.json'
+    path: k8s/manifests/kube-prometheus
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: sagar_local_test
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
