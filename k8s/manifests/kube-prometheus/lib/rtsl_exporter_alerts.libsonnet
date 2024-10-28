@@ -28,15 +28,12 @@ local prometheusRules = {
   },
 };
 
-local grafanaDashboards = {};
-
 local rtslExporterMixin = addMixin({
   name: 'rtsl_exporter',
   dashboardFolder: 'RTSL Exporter',
-  mixin: prometheusRules + grafanaDashboards,
+  mixin: prometheusRules
 });
 
 {
-  grafanaDashboards: rtslExporterMixin.grafanaDashboards,
-  prometheusRules: rtslExporterMixin.prometheusRules,
+  prometheusRules: rtslExporterMixin.prometheusRules
 }
