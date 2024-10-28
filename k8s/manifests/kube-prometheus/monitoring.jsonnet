@@ -128,8 +128,7 @@ local manifests =
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
-  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] else []);
+  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] +
+  [rtslExporterAlerts.prometheusRules] else []);
 
-  (if isEnvSandbox then [alphasms.prometheusRules] else []) +
-   rtslExporterAlerts.prometheusRules;
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
