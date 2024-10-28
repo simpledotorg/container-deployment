@@ -43,8 +43,6 @@ local grafanaDashboards =
   loki.grafanaDashboards +
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
 
-  (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {}) +
-  rtslExporterAlerts.grafanaDashboards;
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
