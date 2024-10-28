@@ -98,7 +98,7 @@ ssh -J ubuntu@3.7.92.234 -p 6547 ubuntu@122.255.9.11
 
 - Step2: Login to container
 ```
-kubectl exec -it simple-server-0 /bin/bash -n simple-v1
+kubectl exec -it simple-server-0 -n simple-v1 -- bash
 ```
 
 - Step3: Run Rails console command
@@ -112,7 +112,7 @@ bundle exec rails c
 
 - Step2: Login to container
 ```
-kubectl exec -it simple-server-0 /bin/bash -n simple-v1
+kubectl exec -it simple-server-0 -n simple-v1 -- bash
 ```
 
 - Step3: Run psql comand
@@ -248,7 +248,7 @@ python scripts/argocd_password_setup.py
 - If you do not already have access to the Kubernetes cluster, please connect to the cluster by following this [doc](#connecting-to-a-k8s-cluster)
 - We use namespaces (e.g., -n simple-v1). Running `kubectl get ns` will list all available namespaces, allowing you to select the relevant one
 - `kubectl get pods -n <ns>` will show a list of pods available in that namespace
-- `kubectl exec -it <pod-name> /bin/bash -n <ns>` will allow you to connect to the pod
+- `kubectl exec -it <pod-name> -n <ns> -- bash` will allow you to connect to the pod
 - The DHIS2 configuration file path is `/opt/dhis2/dhis.conf`
 - To connect to PostgreSQL, identify the PostgreSQL pod using the `kubectl get pods -n <ns>` command, then use the `kubectl exec <>` command to connect and the `psql` command to access the database.
 

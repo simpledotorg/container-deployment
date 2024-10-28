@@ -161,7 +161,7 @@ local grafanaDashboards = { grafanaDashboards: {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "alphasms_user_balance_amount",
+            "expr": "sum (alphasms_user_balance_amount)",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -171,7 +171,7 @@ local grafanaDashboards = { grafanaDashboards: {
             "useBackend": false
           }
         ],
-        "title": "Balance",
+        "title": "Balance (Taka(BDT))",
         "type": "timeseries"
       },
       {
@@ -260,7 +260,7 @@ local grafanaDashboards = { grafanaDashboards: {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "alphasms_user_balance_error",
+            "expr": "sum (alphasms_user_balance_error)",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -359,7 +359,7 @@ local grafanaDashboards = { grafanaDashboards: {
             },
             "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "(alphasms_user_balance_validity - time()) / 86400",
+            "expr": "(sum (alphasms_user_balance_validity) - time()) / 86400",
             "fullMetaSearch": false,
             "includeNullMetadata": true,
             "instant": false,
@@ -369,7 +369,7 @@ local grafanaDashboards = { grafanaDashboards: {
             "useBackend": false
           }
         ],
-        "title": "Validity",
+        "title": "Validity (in days)",
         "type": "timeseries"
       }
     ],

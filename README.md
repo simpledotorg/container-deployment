@@ -18,6 +18,7 @@ Automation and manifests for container deployment
 - [DHIS2 Database Restore](./doc/DHIS2DBRestore.md)
 - [Monitoring](./doc/Monitoring.md)
 - [Terraform](terraform/README.md)
+- [Kubeprometheus Jsonnet](k8s/manifests/kube-prometheus/README.md)
 
 ## High-Level Architecture
 

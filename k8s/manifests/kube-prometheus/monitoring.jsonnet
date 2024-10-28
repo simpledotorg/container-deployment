@@ -8,6 +8,8 @@ local argocd = (import 'lib/argocd.libsonnet');
 local ingress = (import 'lib/ingress.libsonnet');
 local dhis2Server = (import 'lib/dhis2-server.libsonnet');
 local alphasms = (import 'lib/alphasms.libsonnet');
+local loki = (import 'lib/loki.libsonnet');
+local sendgrid = (import 'lib/sendgrid.libsonnet');
 local rtslExporterAlerts = (import 'lib/rtsl_exporter_alerts.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
@@ -34,9 +36,13 @@ local monitoredServices =
 local grafanaDashboards =
   postgres.grafanaDashboards +
   alphasms.grafanaDashboards +
+  sendgrid.grafanaDashboards +
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
+  loki.grafanaDashboards +
+  (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
+
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {}) +
   rtslExporterAlerts.grafanaDashboards;
 local kp =
@@ -51,6 +57,17 @@ local kp =
       },
       grafana+: {
         [if enableGrafana then 'folderDashboards']+: grafanaDashboards,
+        [if enableGrafana then 'datasources']+: [
+          {
+            name: 'loki',
+            type: 'loki',
+            url: 'http://loki-gateway.loki.svc.cluster.local',
+            access: 'proxy',
+            isDefault: false,
+            orgId: 1,
+            editable: false,
+          },
+        ],
       },
       prometheus+: {
         namespaces: [],
@@ -113,6 +130,8 @@ local manifests =
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
+  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] else []);
+
   (if isEnvSandbox then [alphasms.prometheusRules] else []) +
    rtslExporterAlerts.prometheusRules;
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)

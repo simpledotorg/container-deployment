@@ -327,7 +327,7 @@ metadata:
   name: india-production-k8s-db-diff-backup-failed
   namespace: datadog
 spec:
-  query: "avg(last_5m):max:crunchy_data.ccp_backrest_last_diff_backup_time_since_completion_seconds{env:india-production-k8s} / (60 * 60) > 25"
+  query: "avg(last_5m):max:crunchy_data.ccp_backrest_last_diff_backup_time_since_completion_seconds{env:india-production-k8s} / (60 * 60) > 180"
   type: "query alert"
   name: "india-production-k8s-db-diff-backup-failed"
   message: "@slack-alerts"

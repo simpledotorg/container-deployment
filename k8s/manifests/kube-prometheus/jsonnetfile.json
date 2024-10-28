@@ -45,6 +45,15 @@
         }
       },
       "version": "main"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/loki.git",
+          "subdir": "production/loki-mixin-compiled-ssd"
+        }
+      },
+      "version": "main"
     }
   ],
   "legacyImports": true
