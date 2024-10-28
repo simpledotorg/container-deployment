@@ -13,7 +13,7 @@ local prometheusRules = {
             expr: |||
               up{job="rtsl-exporter", namespace="rtsl-exporter", service="rtsl-exporter"} == 0
             |||,
-            'for': '5m',
+            'for': '3s',
             labels: {
               severity: 'critical'
             },
