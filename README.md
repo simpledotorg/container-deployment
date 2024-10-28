@@ -21,6 +21,8 @@ Automation and manifests for container deployment
 - [Kubeprometheus Jsonnet](k8s/manifests/kube-prometheus/README.md)
 - [Loki](./doc/Loki.md)
 - [SSO](./doc/SSO.md)
+- [CICD](./doc/CICD.md)
+- [AWS](./doc/AWS.md)
 
 ## High-Level Architecture
 
