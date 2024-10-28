@@ -6,7 +6,7 @@ local prometheusRules = {
   prometheusRules+:: {
     groups+: [
       {
-        name: 'rtsl_exporter.rules',
+        name: 'rtsl-exporter.rules',
         rules: [
           {
             alert: 'RtslExporterDown',
@@ -29,7 +29,7 @@ local prometheusRules = {
 };
 
 local rtslExporterMixin = addMixin({
-  name: 'rtsl_exporter',
+  name: 'rtsl-exporter',
   dashboardFolder: 'RTSL Exporter',
   mixin: prometheusRules
 });
