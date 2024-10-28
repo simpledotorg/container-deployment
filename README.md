@@ -19,6 +19,7 @@ Automation and manifests for container deployment
 - [Monitoring](./doc/Monitoring.md)
 - [Terraform](terraform/README.md)
 - [Kubeprometheus Jsonnet](k8s/manifests/kube-prometheus/README.md)
+- [Loki](./doc/Loki.md)
 
 ## High-Level Architecture
 
