@@ -10,7 +10,6 @@ local dhis2Server = (import 'lib/dhis2-server.libsonnet');
 local alphasms = (import 'lib/alphasms.libsonnet');
 local loki = (import 'lib/loki.libsonnet');
 local sendgrid = (import 'lib/sendgrid.libsonnet');
-local loki2 = (import 'lib/loki2.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -40,7 +39,7 @@ local grafanaDashboards =
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
-  loki2.grafanaDashboards +
+  loki.grafanaDashboards +
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
 
 local kp =
@@ -126,7 +125,7 @@ local manifests =
     [service.exporterService for service in monitoredServices] +
     [service.serviceMonitor for service in monitoredServices]) +
   [postgres.prometheusRules] +
-  [loki2.prometheusRules] +
+  [loki.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
   (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] else []);
