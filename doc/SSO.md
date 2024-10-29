@@ -1,4 +1,3 @@
-Here is an improved version of your markdown document with grammar and clarity adjustments:
 # SSO
 [sso.simple.org](https://sso.simple.org/)
 
