@@ -15,4 +15,4 @@ ingress:
 metrics:
   enabled: true
 migration:
-  enabled: true
+  enabled: false
