@@ -18,13 +18,8 @@ loki:
       max_concurrent: 4
     auth_enabled: false
     # Set up the retention period
-    limits_config:
-      retention_period: 672h # 4 weeks
     server:
       log_level: warn
-    compactor:
-      retention_enabled: true
-      delete_request_store: s3
     rulerConfig:
       alertmanager_url: http://alertmanager-main.monitoring:9093
       enable_alertmanager_v2: true
