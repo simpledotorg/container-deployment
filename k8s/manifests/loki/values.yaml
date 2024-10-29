@@ -131,13 +131,14 @@ loki:
       labels:
         loki_rule: "rules"
     data:
+      # Example alert
       loki-alerting-rules.yaml: |-
         groups:
           - name: loki-alerts
             rules:
             - alert: HighErrorRateInLokiNamespace
               expr: |
-                sum(count_over_time({namespace="loki"} |= "error" [10m])) > 1000
+                sum(count_over_time({namespace="loki"} |= "error" [10m])) > 1000000
               for: 5m
               labels:
                 severity: critical
