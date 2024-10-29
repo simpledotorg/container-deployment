@@ -12,5 +12,3 @@ loki:
     enabled: true
     persistence:
       size: 10Gi
-  loki:
-    storage:

@@ -36,12 +36,6 @@ loki:
       ring:
         kvstore:
           store: inmemory
-    storage:
-      type: s3
-      s3:
-        region: ap-south-1
-        secretAccessKey: "${LOKI_S3_SECRETACCESSKEY}"
-        accessKeyId: "${LOKI_S3_ACCESKEYID}"
   monitoring:
     serviceMonitor:
       enabled: true
