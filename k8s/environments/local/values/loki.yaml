@@ -14,4 +14,3 @@ loki:
       size: 10Gi
   loki:
     storage:
-      type: s3
