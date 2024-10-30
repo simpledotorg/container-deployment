@@ -1,5 +1,3 @@
-
-
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
 local prometheusRules = {
@@ -11,15 +9,15 @@ local prometheusRules = {
           {
             alert: 'RtslExporterDown',
             expr: |||
-              up{job="rtsl-exporter", namespace="rtsl-exporter", service="rtsl-exporter"} == 0
+              absent_over_time(up{job="rtsl-exporter", namespace="rtsl-exporter", service="rtsl-exporter"}[1m])
             |||,
-            'for': '3s',
+            'for': '1m',
             labels: {
               severity: 'critical'
             },
             annotations: {
-              summary: "RTSL Exporter service is down",
-              description: "The RTSL Exporter service is not reachable."
+              summary: "RTSL Exporter service down",
+              description: "No metrics have been received from the RTSL Exporter service for the past 1 minute."
             }
           }
         ],
