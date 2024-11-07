@@ -12,15 +12,6 @@ vCPU: 8
 Memory: 32GB
 ```
 
-Database VMs (DB Backup) - 1
-```
-OS: Ubuntu 22.04 LTS
-Default disk: 100GB
-Data storage disk: 2TB
-vCPU: 4
-Memory: 8GB
-```
-
 Application VMs (Server, Worker, Metabase and other components) - 3
 ```
 OS: Ubuntu 22.04 LTS
