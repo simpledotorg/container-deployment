@@ -12,7 +12,7 @@ During provisioning, ensure that there is sufficient capacity for future scaling
 
 ## Database Backups
 
-Ensure that databases are backed up to a different data center or cloud-based storage for disaster recovery purposes.
+Ensure that databases are backed up to a separate data center or cloud-based storage for disaster recovery purposes. We use the [Pg Operator](https://github.com/CrunchyData/postgres-operator) for deploying Postgres clusters, which supports periodic backups. This can be utilized here as well. If a cloud provider is not an option, S3-compatible servers like [MinIO](https://min.io/) can be deployed and used. Alternatively, a custom cron script, such as [this example](https://github.com/simpledotorg/container-deployment/pull/200), can also be implemented.
 
 ## Migration Strategy
 
