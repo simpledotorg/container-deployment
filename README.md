@@ -23,6 +23,7 @@ Automation and manifests for container deployment
 - [SSO](./doc/SSO.md)
 - [CICD](./doc/CICD.md)
 - [AWS](./doc/AWS.md)
+- [Kubernetes Upgrade](./doc/K8sUpgrade.md)
 
 ## High-Level Architecture
 
