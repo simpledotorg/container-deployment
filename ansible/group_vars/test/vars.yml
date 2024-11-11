@@ -18,4 +18,4 @@ ssh_keys:
 
 ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q ubuntu@134.209.158.183 -o StrictHostKeyChecking=no" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' # Proxy to the bastion host
 
-k3s_release_version: v1.28.5+k3s1
+k3s_release_version: v1.31.2+k3s1
