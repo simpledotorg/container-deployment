@@ -25,3 +25,5 @@ loki:
         chunks: "rtsl-bangaladesh-staging-loki"
         ruler:  "rtsl-bangaladesh-staging-loki"
         admin:  "rtsl-bangaladesh-staging-loki"
+    compactor: {}
+    rulerConfig: {}
