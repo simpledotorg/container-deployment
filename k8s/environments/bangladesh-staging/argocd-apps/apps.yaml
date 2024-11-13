@@ -389,7 +389,7 @@ spec:
   source:
     path: k8s/manifests/loki
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13616
     helm:
       valueFiles:
         - ../../environments/bangladesh-staging/values/loki.yaml
