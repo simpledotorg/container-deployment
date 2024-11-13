@@ -26,6 +26,13 @@ terraform {
 
 AWS Key Pair: Ensure the public key of the AWS key pair, retrieved from 1Password (`AWS Master SSH Key`), is placed in the `~/.ssh/simple_aws_key.pub` file
 
+Initialize the Terraform
+
+```
+
+terraform init
+
+```
 Validate the changes
 ```
 terraform plan

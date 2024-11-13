@@ -71,7 +71,7 @@ module "eks" {
   subnets         = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
   cluster_name    = local.cluster_name
-  cluster_version = "1.28"
+  cluster_version = "1.29"
   tags            = local.tags
   key_pair_name   = aws_key_pair.simple_aws_key.key_name
 
@@ -119,6 +119,13 @@ module "eks" {
 module "db_backup_s3_bucket" {
   source      = "../modules/simple_s3"
   bucket_name = local.db_backup_s3_bucket_name
+  tags        = local.tags
+  allowed_ips = module.vpc.nat_public_ips
+}
+
+module "loki_s3_bucket" {
+  source      = "../modules/simple_s3"
+  bucket_name = "rtsl-bangaladesh-staging-loki"
   tags        = local.tags
   allowed_ips = module.vpc.nat_public_ips
 }
@@ -172,5 +179,26 @@ output "db_backup_s3_access_key" {
 
 output "db_backup_s3_access_secret" {
   value     = module.db_backup_s3_bucket.access_secret
+  sensitive = true
+}
+
+output "loki_s3_bucket_id" {
+  value = module.loki_s3_bucket.bucket_id
+}
+
+output "loki_s3_bucket_arn" {
+  value = module.loki_s3_bucket.bucket_arn
+}
+
+output "loki_s3_user_arn" {
+  value = module.loki_s3_bucket.bucket_arn
+}
+
+output "loki_s3_access_key" {
+  value = module.loki_s3_bucket.access_key
+}
+
+output "loki_s3_access_secret" {
+  value     = module.loki_s3_bucket.access_secret
   sensitive = true
 }
