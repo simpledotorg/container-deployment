@@ -27,3 +27,54 @@ loki:
         admin:  "rtsl-bangaladesh-staging-loki"
     compactor: {}
     rulerConfig: {}
+    extraMemberlistConfig:
+      bind_addr:
+        - ${MY_POD_IP}
+  backend:
+    extraEnv:
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+      - name: LOKI_S3_ACCESKEYID
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_ACCESKEYID
+      - name: LOKI_S3_SECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_SECRETACCESSKEY
+  read:
+    extraEnv:
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+      - name: LOKI_S3_ACCESKEYID
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_ACCESKEYID
+      - name: LOKI_S3_SECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_SECRETACCESSKEY
+  write:
+    extraEnv:
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+      - name: LOKI_S3_ACCESKEYID
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_ACCESKEYID
+      - name: LOKI_S3_SECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: loki-secrets
+            key: LOKI_S3_SECRETACCESSKEY
