@@ -7,8 +7,14 @@ spec:
   override:
     nodeAgent:
       env:
-        - name: DD_DOGSTATSD_NON_LOCAL_TRAFFIC
-          value: "true"
+        - name: DD_ENABLE_PAYLOADS_EVENTS
+          value: "false"
+        - name: DD_ENABLE_PAYLOADS_SERIES
+          value: "false"
+        - name: DD_ENABLE_PAYLOADS_SERVICE_CHECKS
+          value: "false"
+        - name: DD_ENABLE_PAYLOADS_SKETCHES
+          value: "false"
   global:
     logLevel: "error"
     clusterName: "bangladesh-production-k8s"
@@ -25,4 +31,4 @@ spec:
     logCollection:
       enabled: true
     apm:
-      enabled: true
+      enabled: false
