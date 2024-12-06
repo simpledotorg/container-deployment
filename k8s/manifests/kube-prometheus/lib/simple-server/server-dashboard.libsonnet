@@ -38,6 +38,7 @@ local load_balancer =
       query('sum(rate(ruby_http_request_duration_seconds_count{controller!~"api/.+"}[$__rate_interval])) > 0', 'Dashboard'),
     ])
     + g.panel.timeSeries.fieldConfig.defaults.custom.withAxisLabel('Req/sec')
+    + g.panel.timeSeries.standardOptions.withUnit('reqps')
     + g.panel.timeSeries.options.legend.withIsVisible(false),
     utils.timeSeries('Non 2xx', [
       query('sum by(status) (rate(ruby_http_requests_total{status!~"2.."}[$__rate_interval])) > 0', 'All'),
@@ -63,7 +64,8 @@ local load_balancer =
             / irate(ruby_http_request_duration_seconds_count{controller!~"api/.+"}[$__rate_interval]) > 0)
         |||, 'All'
       ),
-    ]),
+    ])
+    + g.panel.timeSeries.standardOptions.withUnit('s'),
     utils.barGauge('Nginx Connections', [
       query(
         |||
