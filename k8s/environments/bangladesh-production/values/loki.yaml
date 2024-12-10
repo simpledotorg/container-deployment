@@ -11,14 +11,14 @@ loki:
         nginx.ingress.kubernetes.io/auth-secret: loki-basic-auth
       labels: {}
       hosts:
-        - host: gateway.loki.bangladesh-production.simple.org
+        - host: gateway-loki-prod.bd.simple.org
           paths:
             - path: /
               pathType: ImplementationSpecific
       tls:
         - secretName: loki-gateway-tls
           hosts:
-            - gateway.loki.bangladesh-production.simple.org
+            - gateway-loki-prod.bd.simple.org
   loki:
     storage:
       bucketNames:
