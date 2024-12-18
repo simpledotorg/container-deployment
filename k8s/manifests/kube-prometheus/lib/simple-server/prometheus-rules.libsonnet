@@ -24,6 +24,29 @@
           },
         ],
       },
+      {
+        name: 'simple-notifications.rules',
+        rules: [
+          {
+            record: 'simple:notifications:errors:1h',
+            expr: |||
+	      irate(ruby_sms_errors[1h]) > 10
+            |||,
+          },
+	  {
+            record: 'simple:notifications:errors:1m',
+            expr: |||
+	      irate(ruby_sms_errors[1m]) > 1
+            |||,
+          },
+	  {
+            record: 'simple:notifications:sent_error_rate',
+            expr: |||
+	      rate(ruby_sms_sent[1h]) < rate(ruby_sms_errors[1h])
+            |||,
+          },
+        ],
+      }
     ],
   },
 }

@@ -15,10 +15,10 @@ local sync_to_user =
     utils.timeSeries('Latency', [
       query(
         |||
-          sum by(controller) (rate(ruby_http_request_duration_seconds_sum{action="sync_to_user"}[$__rate_interval])) * 1000
+          sum by(controller) (rate(ruby_http_request_duration_seconds_sum{action="sync_to_user"}[$__rate_interval]))
         |||
       ),
-    ]),
+    ]) + g.panel.timeSeries.standardOptions.withUnit('s'),
     utils.timeSeries('Error Rate', [
       query(
         |||
@@ -40,10 +40,10 @@ local sync_from_user =
     utils.timeSeries('Latency', [
       query(
         |||
-          sum by(controller) (rate(ruby_http_request_duration_seconds_sum{action="sync_from_user"}[$__rate_interval])) * 1000
+          sum by(controller) (rate(ruby_http_request_duration_seconds_sum{action="sync_from_user"}[$__rate_interval]))
         |||
       ),
-    ]),
+    ]) + g.panel.timeSeries.standardOptions.withUnit('s'),
     utils.timeSeries('Error Rate', [
       query(
         |||

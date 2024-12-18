@@ -18,7 +18,7 @@ local database =
           |||
         ),
       ],
-    ),
+    ) + g.panel.timeSeries.standardOptions.withUnit('Bps'),
     utils.timeSeries(
       'Latency', [
         query(
@@ -27,7 +27,7 @@ local database =
           |||
         ),
       ],
-    ),
+    ) + g.panel.timeSeries.standardOptions.withUnit('ms'),
     utils.timeSeries(
       'Active Connections', [
         query(
@@ -45,7 +45,7 @@ local database =
           |||
         ),
       ],
-    ),
+    ) + g.panel.timeSeries.standardOptions.withUnit('percent'),
     utils.timeSeries(
       'Memory Usage', [
         query(
@@ -54,7 +54,7 @@ local database =
           |||
         ),
       ],
-    ),
+    ) + g.panel.timeSeries.standardOptions.withUnit('bytes'),
     utils.timeSeries(
       'Available disk space', [
         query(
@@ -63,7 +63,7 @@ local database =
           |||
         ),
       ],
-    ),
+    ) + g.panel.timeSeries.standardOptions.withUnit('bytes'),
     utils.timeSeries(
       'Query Rate', [
         query(
@@ -81,7 +81,7 @@ local database =
           |||
         ),
       ],
-    ),
+    ) + g.panel.timeSeries.standardOptions.withUnit('bytes'),
   ]);
 
 g.dashboard.new('Simple Database Dashboard')

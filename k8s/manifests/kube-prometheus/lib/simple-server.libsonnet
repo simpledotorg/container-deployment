@@ -6,6 +6,7 @@ local grafanaDashboards = { grafanaDashboards: {
   'simple-sync.json': (import 'simple-server/sync-dashboard.libsonnet'),
   'simple-database.json': (import 'simple-server/database-dashboard.libsonnet'),
   'matview-refresh.json': (import 'simple-server/matview-dashboard.libsonnet'),
+  'experiments-and-sms.json': (import 'simple-server/experiments-and-sms.libsonnet'),
 } };
 
 local prometheusRules = (import 'simple-server/prometheus-rules.libsonnet');
