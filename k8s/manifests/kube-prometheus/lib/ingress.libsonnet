@@ -33,6 +33,8 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, pa
     'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
   };
 
+  local apply_auth = (auth_secret != null) && (path != "/metrics");
+
   {
     apiVersion: 'networking.k8s.io/v1',
     kind: 'Ingress',
@@ -40,7 +42,7 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, pa
       name: name,
       namespace: namespace,
       annotations: (if sslEnabled then ssl_annotations else {}) +
-                   (if auth_secret != null then auth_annotations else {}) +
+                   (if apply_auth(auth_secret, path) then auth_annotations(auth_secret) else {}) +
                    (if path != '/' then { 'nginx.ingress.kubernetes.io/rewrite-target': '/$2' } else {}),
     },
     spec: { rules: [rule(name, host, port, path)] } +
