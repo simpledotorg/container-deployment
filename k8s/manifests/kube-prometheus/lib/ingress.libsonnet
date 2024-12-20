@@ -33,7 +33,7 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, pa
     'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
   };
 
-  local apply_auth = (auth_secret != null) && (path == "/metrics");
+  local apply_auth = (auth_secret != null) || (path == "/metrics");
 
   {
     apiVersion: 'networking.k8s.io/v1',
