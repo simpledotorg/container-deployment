@@ -22,6 +22,7 @@ local tls(host) = {
 };
 
 local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, path) =
+local apply_auth = (auth_secret != null) || (path == "/metrics");
   local auth_annotations = {
     'nginx.ingress.kubernetes.io/auth-type': 'basic',
     'nginx.ingress.kubernetes.io/auth-secret': auth_secret,
@@ -33,7 +34,6 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, pa
     'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
   };
 
-  local apply_auth = (auth_secret != null) || (path == "/metrics");
 
   {
     apiVersion: 'networking.k8s.io/v1',
