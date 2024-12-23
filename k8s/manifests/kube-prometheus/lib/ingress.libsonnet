@@ -22,19 +22,18 @@ local tls(host) = {
 };
 
 local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, path) =
- local auth_annotations = (if path == '/metrics' && auth_secret != null then
-   {
-     'nginx.ingress.kubernetes.io/auth-type': 'basic',
-     'nginx.ingress.kubernetes.io/auth-secret': auth_secret,
-     'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
-   }
-   else {}
- );
+  local auth_annotations = {
+    'nginx.ingress.kubernetes.io/auth-type': 'basic',
+    'nginx.ingress.kubernetes.io/auth-secret': auth_secret,
+    'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
+  };
 
   local ssl_annotations = {
     'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
     'nginx.ingress.kubernetes.io/force-ssl-redirect': 'true',
   };
+
+  local apply_auth = (auth_secret != null) || (path == "/metrics");
 
   {
     apiVersion: 'networking.k8s.io/v1',
@@ -43,7 +42,7 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, pa
       name: name,
       namespace: namespace,
       annotations: (if sslEnabled then ssl_annotations else {}) +
-                   (if auth_secret != null && path == '/metrics' then auth_annotations else {}) +
+                   (if apply_auth then auth_annotations else {}) +
                    (if path != '/' then { 'nginx.ingress.kubernetes.io/rewrite-target': '/$2' } else {}),
     },
     spec: { rules: [rule(name, host, port, path)] } +
