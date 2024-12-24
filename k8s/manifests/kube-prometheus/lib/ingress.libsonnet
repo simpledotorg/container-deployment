@@ -40,7 +40,7 @@ local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, pa
       name: name,
       namespace: namespace,
       annotations: (if sslEnabled then ssl_annotations else {}) +
-                   (if auth_secret != null then auth_annotations else {}) +
+                   (if auth_secret != null && path != '/' then auth_annotations else {}) +
                    (if path != '/' then { 'nginx.ingress.kubernetes.io/rewrite-target': '/$2' } else {}),
     },
     spec: { rules: [rule(name, host, port, path)] } +
