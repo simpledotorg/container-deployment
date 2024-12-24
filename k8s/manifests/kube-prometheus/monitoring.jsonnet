@@ -112,26 +112,7 @@ local kp =
           auth_secret: 'monitoring-basic-auth',
           sslEnabled: sslEnabled,
         },
-      ] +(if enableGrafana then [
-              {
-                name: config.grafana.ingress.name,
-                namespace: $.values.common.namespace,
-                host: config.grafana.ingress.host,
-                port: config.grafana.ingress.port,
-                auth_secret: null,
-                sslEnabled: sslEnabled,
-                path: config.grafana.ingress.path,
-              },
-              {
-                name: 'grafana-metrics-ingress',
-                namespace: $.values.common.namespace,
-                host: config.grafana.ingress.host,
-                port: config.grafana.ingress.port,
-                auth_secret: 'monitoring-basic-auth',
-                sslEnabled: sslEnabled,
-                path: '/metrics',
-              },
-            ] else []),
+      ] + (if enableGrafana then [config.grafana.ingress { namespace: $.values.common.namespace,auth_secret: "grafana-metrics-auth",routes: [{ path: "/", allowPublicAccess: true },{ path: "/metrics", auth_secret: "grafana-metrics-auth" }],sslEnabled: sslEnabled,}] else []),
     ),
   };
 
