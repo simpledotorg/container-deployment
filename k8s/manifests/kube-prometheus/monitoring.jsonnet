@@ -115,9 +115,9 @@ local kp =
       ] + (if enableGrafana then [
               config.grafana.ingress {
                 namespace: $.values.common.namespace,
-                auth_secret: 'monitoring-basic-auth',
+                auth_secret: null,
                 sslEnabled: sslEnabled,
-                host: config.grafana.ingress.host,
+                path: config.grafana.ingress.path,
               },
               {
                 namespace: $.values.common.namespace,
