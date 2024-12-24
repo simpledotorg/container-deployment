@@ -100,27 +100,20 @@ local kp =
         },
       },
     },
-       ingress+:: ingress.ingressConfig(
-         [
-           config.alertmanager.ingress {
-             namespace: $.values.common.namespace,
-             auth_secret: 'monitoring-basic-auth',
-             sslEnabled: sslEnabled,
-           },
-           config.prometheus.ingress {
-             namespace: $.values.common.namespace,
-             auth_secret: 'monitoring-basic-auth',
-             sslEnabled: sslEnabled,
-           },
-         ] + (if enableGrafana then [config.grafana.ingress {
-             namespace: $.values.common.namespace,
-             sslEnabled: sslEnabled,
-             paths: [
-               { path: '/', enableAuth: false },
-               { path: '/metrics', enableAuth: true, auth_secret: 'monitoring-basic-auth' },
-             ],
-           }] else []),
-       ),
+    ingress+:: ingress.ingressConfig(
+      [
+        config.alertmanager.ingress {
+          namespace: $.values.common.namespace,
+          auth_secret: 'monitoring-basic-auth',
+          sslEnabled: sslEnabled,
+        },
+        config.prometheus.ingress {
+          namespace: $.values.common.namespace,
+          auth_secret: 'monitoring-basic-auth',
+          sslEnabled: sslEnabled,
+        },
+      ] + (if enableGrafana then [config.grafana.ingress { namespace: $.values.common.namespace,auth_secret: 'monitoring-basic-auth', sslEnabled: sslEnabled,paths: [{  path: '/', enableAuth: false, }, { path: '/metrics',enableAuth: true,},],}] else []),
+    ),
   };
 
 local manifests =
