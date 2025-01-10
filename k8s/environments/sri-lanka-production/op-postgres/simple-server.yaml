@@ -120,6 +120,7 @@ spec:
           max_parallel_workers_per_gather: "4"
           max_parallel_workers: "8"
           max_parallel_maintenance_workers: "4"
+          hot_standby_feedback: "on"
   monitoring:
     pgmonitor:
       exporter:
