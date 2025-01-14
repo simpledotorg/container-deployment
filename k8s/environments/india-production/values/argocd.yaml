@@ -26,7 +26,8 @@ argo-cd:
       accounts.dan: login 
       accounts.atharva: login 
       accounts.roypeter: login
-       
+      accounts.sagar: login
+
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
     rbac:
       policy.default: role:readonly
@@ -38,3 +39,4 @@ argo-cd:
         g, dan, role:admin
         g, atharva, role:admin
         g, roypeter, role:admin
+        g, sagar, role:admin
