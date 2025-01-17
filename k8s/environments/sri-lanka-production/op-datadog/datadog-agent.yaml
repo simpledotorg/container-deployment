@@ -1,28 +1,28 @@
-apiVersion: datadoghq.com/v2alpha1
-kind: DatadogAgent
-metadata:
-  name: datadog-agent
-  namespace: datadog
-spec:
-  override:
-    nodeAgent:
-      env:
-        - name: DD_DOGSTATSD_NON_LOCAL_TRAFFIC
-          value: "true"
-  global:
-    logLevel: "error"
-    clusterName: "sri-lanka-production-k8s"
-    tags: 
-     - env:sri-lanka-production-k8s
-    credentials:
-      apiSecret:
-        secretName: datadog
-        keyName: api-key
-      appSecret:
-        secretName: datadog
-        keyName: app-key
-  features:
-    logCollection:
-      enabled: true
-    apm:
-      enabled: true
+#apiVersion: datadoghq.com/v2alpha1
+#kind: DatadogAgent
+#metadata:
+#  name: datadog-agent
+#  namespace: datadog
+#spec:
+#  override:
+#    nodeAgent:
+#      env:
+#        - name: DD_DOGSTATSD_NON_LOCAL_TRAFFIC
+#          value: "true"
+#  global:
+#    logLevel: "error"
+#    clusterName: "sri-lanka-production-k8s"
+#    tags:
+#     - env:sri-lanka-production-k8s
+#    credentials:
+#      apiSecret:
+#        secretName: datadog
+#        keyName: api-key
+#      appSecret:
+#        secretName: datadog
+#        keyName: app-key
+#  features:
+#    logCollection:
+#      enabled: true
+#    apm:
+#      enabled: true
