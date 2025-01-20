@@ -413,7 +413,7 @@ local grafanaDashboards = { grafanaDashboards: {
 
 local alphasmsMixin = addMixin({
   name: 'alphasms',
-  dashboardFolder: 'Alphasms',
+  dashboardFolder: 'Service Providers',
   mixin: prometheusRules + grafanaDashboards,
 });
 
