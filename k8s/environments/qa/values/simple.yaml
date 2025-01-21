@@ -20,14 +20,14 @@ ingress:
     - dashboard-qa.simple.org
     secretName: dashboard-qa.simple.org-tls
 server:
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:qa"]}]'
-  }
+#  podAnnotations: {
+#    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:qa"]}]'
+#  }
 worker:
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:qa"]}]'
-  }
+#  podAnnotations: {
+#    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:qa"]}]'
+#  }
 cron:
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:qa"]}]'
-  }
+#  podAnnotations: {
+#    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:qa"]}]'
+#  }

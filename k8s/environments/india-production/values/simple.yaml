@@ -48,29 +48,29 @@ cron:
             values:
             - "replica"
         topologyKey: "kubernetes.io/hostname"
-#server:
-#  replicaCount: 6
-#  log:
-#    storage: 10Gi
+server:
+  replicaCount: 6
+  log:
+    storage: 10Gi
 #  podAnnotations: {
 #    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:india-production-k8s"]}]'
 #  }
-#worker:
-#  enabled: true
-#  replicaCount: 2
-#  log:
-#    storage: 100Gi
+worker:
+  enabled: true
+  replicaCount: 2
+  log:
+    storage: 100Gi
 #  podAnnotations: {
 #    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:india-production-k8s"]}]'
 #  }
 migration:
   enabled: true
-#workerCphc:
-#  enabled: false
-#  log:
-#    storage: 10Gi
+workerCphc:
+  enabled: false
+  log:
+    storage: 10Gi
 #  podAnnotations: {
 #    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker-cphc","tags": ["env:india-production-k8s"]}]'
 #  }
-#metrics:
-#  enabled: true
+metrics:
+  enabled: true

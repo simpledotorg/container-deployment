@@ -20,27 +20,27 @@ ingress:
   - hosts:
     - dashboard.bd.simple.org
     secretName: dashboard.bd.simple.org-tls
-#cron:
-#  enabled: true
-#  log:
-#    storage: 10Gi
+cron:
+  enabled: true
+  log:
+    storage: 10Gi
 #  podAnnotations: {
 #    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:bangladesh-production-k8s"]}]'
 #  }
-#server:
-#  log:
-#    storage: 10Gi
+server:
+  log:
+    storage: 10Gi
 #  podAnnotations: {
 #    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:bangladesh-production-k8s"]}]'
 #  }
-#worker:
-#  enabled: true
-#  log:
-#    storage: 50Gi
+worker:
+  enabled: true
+  log:
+    storage: 50Gi
 #  podAnnotations: {
 #    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:bangladesh-production-k8s"]}]'
 #  }
 migration:
   enabled: true
-#metrics:
-#  enabled: true
+metrics:
+  enabled: true
