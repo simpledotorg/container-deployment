@@ -107,58 +107,6 @@ spec:
 
 ---
 
-# Datadog operator
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: datadog-operator
-spec:
-  destination:
-    name: ''
-    namespace: datadog
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/manifests/datadog-operator
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
-    helm:
-      valueFiles:
-        - values.yaml
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
-
----
-
-# Datadog agent
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: datadog
-spec:
-  destination:
-    name: ''
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/environments/india-production/op-datadog
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
-
----
-
 # Reloader
 apiVersion: argoproj.io/v1alpha1
 kind: Application

@@ -36,18 +36,9 @@ ingress:
     secretName: dashboard-demo.simple.org-tls
 cron:
   enabled: true
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:bangladesh-staging-k8s"]}]'
-  }
 server:
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:bangladesh-staging-k8s"]}]'
-  }
 worker:
   enabled: true
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:bangladesh-staging-k8s"]}]'
-  }
 migration:
   enabled: true
 metrics:
