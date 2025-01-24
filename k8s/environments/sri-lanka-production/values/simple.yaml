@@ -16,7 +16,6 @@ ingress:
           pathType: ImplementationSpecific
 cron:
   enabled: true
-server:
 worker:
   enabled: true
 migration:

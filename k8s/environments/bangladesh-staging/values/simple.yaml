@@ -36,7 +36,6 @@ ingress:
     secretName: dashboard-demo.simple.org-tls
 cron:
   enabled: true
-server:
 worker:
   enabled: true
 migration:
