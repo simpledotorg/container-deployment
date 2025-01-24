@@ -20,6 +20,14 @@ ingress:
   - hosts:
     - dashboard-sandbox.simple.org
     secretName: dashboard-sandbox.simple.org-tls
+cron:
+  enabled: true
+server:
+  replicaCount: 1
+worker:
+  enabled: true
+  log:
+    storage: 20Gi
 migration:
   enabled: true
 workerCphc:
