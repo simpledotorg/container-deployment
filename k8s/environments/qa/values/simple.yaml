@@ -19,7 +19,4 @@ ingress:
   - hosts:
     - dashboard-qa.simple.org
     secretName: dashboard-qa.simple.org-tls
-server:
-worker:
-cron:
 
