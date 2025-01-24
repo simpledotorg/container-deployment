@@ -23,10 +23,6 @@ ingress:
   - hosts:
     - dashboard.simple.org
     secretName: dashboard.simple.org-tls
-cron:
-  enabled: true
-  log:
-    storage: 10Gi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -45,20 +41,7 @@ cron:
             values:
             - "replica"
         topologyKey: "kubernetes.io/hostname"
-server:
-  replicaCount: 6
-  log:
-    storage: 10Gi
-worker:
-  enabled: true
-  replicaCount: 2
-  log:
-    storage: 100Gi
 migration:
   enabled: true
-workerCphc:
-  enabled: false
-  log:
-    storage: 10Gi
 metrics:
   enabled: true

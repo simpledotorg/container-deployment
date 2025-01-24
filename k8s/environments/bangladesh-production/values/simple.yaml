@@ -20,20 +20,6 @@ ingress:
   - hosts:
     - dashboard.bd.simple.org
     secretName: dashboard.bd.simple.org-tls
-cron:
-  enabled: true
-  log:
-    storage: 10Gi
-
-server:
-  log:
-    storage: 10Gi
-
-worker:
-  enabled: true
-  log:
-    storage: 50Gi
-
 migration:
   enabled: true
 metrics:

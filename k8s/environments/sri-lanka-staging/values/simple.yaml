@@ -33,8 +33,5 @@ ingress:
   - hosts:
     - dashboard-demo.lk.simple.org
     secretName: dashboard-demo.lk.simple.org-tls
-server:
-worker:
-cron:
 migration:
   enabled: false
