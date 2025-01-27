@@ -56,13 +56,13 @@ local load_balancer =
         |||
           sum(irate(ruby_http_request_duration_seconds_sum{controller=~"api/.+"}[$__rate_interval])
             / irate(ruby_http_request_duration_seconds_count{controller=~"api/.+"}[$__rate_interval]) > 0)
-        |||, ''
+        |||, 'API'
       ),
       query(
         |||
           sum(irate(ruby_http_request_duration_seconds_sum{controller!~"api/.+"}[$__rate_interval])
             / irate(ruby_http_request_duration_seconds_count{controller!~"api/.+"}[$__rate_interval]) > 0)
-        |||, 'All'
+        |||, 'Dashboard'
       ),
     ])
     + g.panel.timeSeries.standardOptions.withUnit('s'),
