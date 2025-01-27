@@ -14,9 +14,24 @@ prometheus:
       basic_auth:
         username: 'db25a3474d90'
         password_file: '/etc/secrets/default'
+      relabel_configs:
+        # Add country label (Changed)
+        - source_labels: [__address__]
+          regex: 'prometheus-sandbox.simple.org.*'
+          action: replace
+          target_label: country
+          replacement: 'sandbox'
+        # Add environment label (Changed)
+        - source_labels: [__address__]
+          regex: 'prometheus-sandbox.simple.org.*'
+          action: replace
+          target_label: environment
+          replacement: 'sandbox'
   server:
     persistentVolume:
       size: 100Gi
+    extraArgs:
+      storage.tsdb.retention.time: 60d
     extraSecretMounts:
       - name: secret-files
         mountPath: /etc/secrets
