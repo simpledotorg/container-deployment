@@ -41,9 +41,9 @@ local load_balancer =
     + g.panel.timeSeries.standardOptions.withUnit('reqps')
     + g.panel.timeSeries.options.legend.withIsVisible(false),
     utils.timeSeries('Non 2xx', [
-      query('sum by(status) (rate(ruby_http_requests_total{status!~"2.."}[$__rate_interval])) > 0', 'All'),
-      query('sum by(status) (rate(ruby_http_requests_total{status!~"2..",controller=~"api/.+"}[$__rate_interval])) > 0', 'API'),
-      query('sum by(status) (rate(ruby_http_requests_total{status!~"2..",controller!~"api/.+"}[$__rate_interval])) > 0', 'Dashboard'),
+      query('sum by(status) (rate(ruby_http_requests_total{status!~"2.."}[$__rate_interval])) > 0', 'All {{status}}'),
+      query('sum by(status) (rate(ruby_http_requests_total{status!~"2..",controller=~"api/.+"}[$__rate_interval])) > 0', 'API {{status}}'),
+      query('sum by(status) (rate(ruby_http_requests_total{status!~"2..",controller!~"api/.+"}[$__rate_interval])) > 0', 'Dashboard {{status}}'),
     ]),
     utils.timeSeries('Response Time', [
       query(
@@ -56,7 +56,7 @@ local load_balancer =
         |||
           sum(irate(ruby_http_request_duration_seconds_sum{controller=~"api/.+"}[$__rate_interval])
             / irate(ruby_http_request_duration_seconds_count{controller=~"api/.+"}[$__rate_interval]) > 0)
-        |||, 'All'
+        |||, ''
       ),
       query(
         |||
