@@ -22,11 +22,11 @@ prometheus:
           - '{__name__=~".+"}'
       static_configs:
         - targets:
-            - 'prometheus-sandbox.simple.org'
-            - 'prometheus-demo.bd.simple.org'
-            - 'prometheus.in.simple.org'
-            - 'prometheus-sandbox.simple.org'
-            - 'simples13.health.gov.lk/prometheus'
+          - 'prometheus-sandbox.simple.org'
+          - 'prometheus-demo.bd.simple.org'
+          - 'prometheus.in.simple.org'
+          - 'prometheus-sandbox.simple.org'
+          - 'simples13.health.gov.lk/prometheus'
       basic_auth:
         username: 'db25a3474d90'
         password_file: '/etc/secrets/default'
