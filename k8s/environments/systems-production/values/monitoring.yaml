@@ -1,3 +1,15 @@
+# Secret resource for Grafana OAuth client_id and client_secret
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: grafana-sso
+#   namespace: monitoring
+# data:
+#   oauth_client_id: <base64_client_id>
+#   oauth_client_secret: <base64_client_secret>
+
+---
+# Prometheus configuration
 prometheus:
   extraScrapeConfigs: |
     - job_name: 'federate'
@@ -10,10 +22,60 @@ prometheus:
           - '{__name__=~".+"}'
       static_configs:
         - targets:
-          - 'prometheus-sandbox.simple.org'
+            - 'prometheus-sandbox.simple.org'
+            - 'prometheus-demo.bd.simple.org'
+            - 'prometheus.in.simple.org'
+            - 'prometheus-sandbox.simple.org'
+            - 'simples13.health.gov.lk/prometheus'
       basic_auth:
         username: 'db25a3474d90'
         password_file: '/etc/secrets/default'
+      relabel_configs:
+        - target_label: 'country'
+          replacement: 'bgd'
+          source_labels: [__param_target]
+          regex: 'prometheus.bd.simple.org'
+        - target_label: 'environment'
+          replacement: 'prod'
+          source_labels: [__param_target]
+          regex: 'prometheus.bd.simple.org'
+
+        - target_label: 'country'
+          replacement: 'lka'
+          source_labels: [__param_target]
+          regex: 'simples13.health.gov.lk/prometheus'
+        - target_label: 'environment'
+          replacement: 'prod'
+          source_labels: [__param_target]
+          regex: 'simples13.health.gov.lk/prometheus'
+
+        - target_label: 'country'
+          replacement: 'ind'
+          source_labels: [__param_target]
+          regex: 'prometheus.in.simple.org'
+        - target_label: 'environment'
+          replacement: 'prod'
+          source_labels: [__param_target]
+          regex: 'prometheus.in.simple.org'
+
+        - target_label: 'country'
+          replacement: 'bgd'
+          source_labels: [__param_target]
+          regex: 'prometheus-demo.bd.simple.org'
+        - target_label: 'environment'
+          replacement: 'demo'
+          source_labels: [__param_target]
+          regex: 'prometheus-demo.bd.simple.org'
+
+        - target_label: 'country'
+          replacement: 'sandbox'
+          source_labels: [__param_target]
+          regex: 'prometheus-sandbox.simple.org'
+        - target_label: 'environment'
+          replacement: 'sandbox'
+          source_labels: [__param_target]
+          regex: 'prometheus-sandbox.simple.org'
+
   server:
     persistentVolume:
       size: 100Gi
@@ -37,6 +99,7 @@ prometheus:
         - secretName: prometheus.simple.org-tls
           hosts:
             - prometheus.simple.org
+
   alertmanager:
     ingress:
       className: nginx
@@ -59,42 +122,43 @@ prometheus:
     extraArgs:
       web.external-url: "https://alertmanager.simple.org"
       web.route-prefix: "/"
-grafana:
-  admin:
-    existingSecret: "grafana-secrets"
-  ingress:
-    enabled: true
-    annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt-prod"
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    hosts:
-      - grafana.simple.org
-    tls:
-      - secretName: grafana.simple.org-tls
-        hosts:
-          - grafana.simple.org
-  persistence:
-    enabled: true
-    size: 50Gi
-  grafana.ini:
-    server:
-      root_url: "https://grafana.simple.org/"
-    auth.generic_oauth:
+
+  grafana:
+    admin:
+      existingSecret: "grafana-secrets"
+    ingress:
       enabled: true
-      name: Keycloak-OAuth
-      allow_sign_up: true
-      client_id: $__file{/etc/secrets/oauth_client_id}
-      client_secret: $__file{/etc/secrets/oauth_client_secret}
-      scopes: openid email profile offline_access roles
-      email_attribute_path: email
-      login_attribute_path: username
-      name_attribute_path: full_name
-      auth_url: https://sso.simple.org/realms/master/protocol/openid-connect/auth
-      token_url: https://sso.simple.org/realms/master/protocol/openid-connect/token
-      api_url: https://sso.simple.org/realms/master/protocol/openid-connect/userinfo
-      role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
-  extraSecretMounts:
-    - name: grafana-sso
-      mountPath: /etc/secrets
-      secretName: grafana-sso
-      readOnly: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      hosts:
+        - grafana.simple.org
+      tls:
+        - secretName: grafana.simple.org-tls
+          hosts:
+            - grafana.simple.org
+    persistence:
+      enabled: true
+      size: 50Gi
+    grafana.ini:
+      server:
+        root_url: "https://grafana.simple.org/"
+      auth.generic_oauth:
+        enabled: true
+        name: Keycloak-OAuth
+        allow_sign_up: true
+        client_id: $__file{/etc/secrets/oauth_client_id}
+        client_secret: $__file{/etc/secrets/oauth_client_secret}
+        scopes: openid email profile offline_access roles
+        email_attribute_path: email
+        login_attribute_path: username
+        name_attribute_path: full_name
+        auth_url: https://sso.simple.org/realms/master/protocol/openid-connect/auth
+        token_url: https://sso.simple.org/realms/master/protocol/openid-connect/token
+        api_url: https://sso.simple.org/realms/master/protocol/openid-connect/userinfo
+        role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
+    extraSecretMounts:
+      - name: grafana-sso
+        mountPath: /etc/secrets
+        secretName: grafana-sso
+        readOnly: true
