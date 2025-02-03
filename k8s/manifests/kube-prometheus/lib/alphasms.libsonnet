@@ -32,7 +32,7 @@ local prometheusRules = {
               summary: "Alphasms balance no data",
               description: 'No data for alphasms_user_balance_amount has been received'
             }
-          }
+          },
           {
             alert: 'AlphasmsValidityLow',
             expr: '(alphasms_user_balance_validity - time()) / 86400 < 10',
