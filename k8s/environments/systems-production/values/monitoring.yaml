@@ -1,19 +1,20 @@
 prometheus:
-  extraScrapeConfigs: |
-    - job_name: 'federate'
-      scheme: https
-      scrape_interval: 15s
-      honor_labels: true
-      metrics_path: '/federate'
-      params:
-        'match[]':
-          - '{__name__=~".+"}'
-      static_configs:
-        - targets:
-          - 'prometheus-sandbox.simple.org'
-      basic_auth:
-        username: 'db25a3474d90'
-        password_file: '/etc/secrets/default'
+  prometheusSpec:
+      additionalScrapeConfigs: |
+        - job_name: 'federate'
+        scheme: https
+        scrape_interval: 15s
+        honor_labels: true
+        metrics_path: '/federate'
+        params:
+          'match[]':
+            - '{__name__=~".+"}'
+        static_configs:
+          - targets:
+            - 'prometheus-sandbox.simple.org'
+        basic_auth:
+          username: 'db25a3474d90'
+          password_file: '/etc/secrets/default'
   server:
     persistentVolume:
       size: 100Gi
