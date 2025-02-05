@@ -20,7 +20,7 @@ vCPU: 8
 Memory: 16GB
 ```
 
-Cache VMs - 1 (Reids)
+Cache VMs - 1 (Redis)
 ```
 OS: Ubuntu 22.04 LTS
 Default disk: 100GB
