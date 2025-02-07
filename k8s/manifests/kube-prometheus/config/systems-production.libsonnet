@@ -3,20 +3,12 @@
     enable: true,
     enableDhis2Dashboards: true,
     externalUrl: 'https://grafana.simple.org/',
-    ingress: [
-       {
-         name: 'grafana',
-         host: 'grafana.simple.org',
-         port: 'http',
-         path: '/',
-       },
-       {
-         name: 'grafana',
-         host: 'grafana.simple.org',
-         port: 'http',
-         path: '/metrics',
-       }
-     ],
+    ingress: {
+      name: 'grafana',
+      host: 'grafana.simple.org',
+      port: 'http',
+      path: '/',
+    },
   },
   prometheus: {
     externalUrl: 'https://prometheus.simple.org',

@@ -22,17 +22,11 @@ local tls(host) = {
 };
 
 local ingress(name, namespace, host, port, auth_secret=null, sslEnabled=true, path) =
-  local auth_annotations =
-   if path == '/metrics' then {
-        'nginx.ingress.kubernetes.io/auth-type': 'basic',
-        'nginx.ingress.kubernetes.io/auth-secret': 'monitoring-basic-auth',
-        'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
-      }
-      else {
-        'nginx.ingress.kubernetes.io/auth-type': 'basic',
-        'nginx.ingress.kubernetes.io/auth-secret': auth_secret,
-        'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
-      };
+  local auth_annotations = {
+    'nginx.ingress.kubernetes.io/auth-type': 'basic',
+    'nginx.ingress.kubernetes.io/auth-secret': auth_secret,
+    'nginx.ingress.kubernetes.io/auth-realm': 'Authentication Required',
+  };
 
   local ssl_annotations = {
     'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
