@@ -401,32 +401,32 @@ spec:
       prune: true
       selfHeal: true
 
----
-
-# Loki
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: loki
-spec:
-  destination:
-    namespace: loki
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: k8s/manifests/loki
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
-    helm:
-      valueFiles:
-        - ../../environments/sandbox/values/loki.yaml
-  project: default
-  syncPolicy:
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
+#---
+#
+## Loki
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  name: loki
+#spec:
+#  destination:
+#    namespace: loki
+#    server: 'https://kubernetes.default.svc'
+#  source:
+#    path: k8s/manifests/loki
+#    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+#    targetRevision: master
+#    helm:
+#      valueFiles:
+#        - ../../environments/sandbox/values/loki.yaml
+#  project: default
+#  syncPolicy:
+#    syncOptions:
+#      - PruneLast=true
+#      - CreateNamespace=true
+#    automated:
+#      prune: true
+#      selfHeal: true
 
 ---
 
