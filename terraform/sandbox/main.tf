@@ -130,7 +130,7 @@ module "eks" {
         role-dhis2-sandbox-01 = "true"
       }
       instance_types = ["t3a.2xlarge"]
-      subnet_ids     = [module.vpc.private_subnets[1]]
+      subnet_ids     = [module.vpc.private_subnets[1],module.vpc.private_subnets[0]]
       tags = {
         Service  = "dhis2"
         Instance = "dhis2-sandbox-01"
