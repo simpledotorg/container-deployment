@@ -22,21 +22,12 @@ ingress:
     secretName: dashboard-sandbox.simple.org-tls
 cron:
   enabled: true
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sandbox-k8s"]}]'
-  }
 server:
   replicaCount: 1
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sandbox-k8s"]}]'
-  }
 worker:
   enabled: true
   log:
     storage: 20Gi
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sandbox-k8s"]}]'
-  }
 migration:
   enabled: true
 workerCphc:

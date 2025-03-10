@@ -69,7 +69,7 @@ module "eks" {
   subnets         = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
   cluster_name    = local.cluster_name
-  cluster_version = "1.28"
+  cluster_version = "1.32"
   tags            = local.tags
   key_pair_name   = aws_key_pair.simple_aws_key.key_name
 
@@ -77,8 +77,9 @@ module "eks" {
 
   cluster_addon_coredns_version         = "v1.10.1-eksbuild.4"
   cluster_addon_kubeproxy_version       = "v1.28.1-eksbuild.1"
-  cluster_addon_vpccni_version          = "v1.11.4-eksbuild.1"
+  cluster_addon_vpccni_version          = "v1.19.2-eksbuild.1"
   cluster_addon_awsebscsidriver_version = "v1.26.0-eksbuild.1"
+
 
   db_instance_enable = true
   db_instance_type   = "r5.xlarge"
@@ -130,7 +131,7 @@ module "eks" {
         role-dhis2-sandbox-01 = "true"
       }
       instance_types = ["t3a.2xlarge"]
-      subnet_ids     = [module.vpc.private_subnets[1]]
+      subnet_ids     = [module.vpc.private_subnets[1],module.vpc.private_subnets[2]]
       tags = {
         Service  = "dhis2"
         Instance = "dhis2-sandbox-01"

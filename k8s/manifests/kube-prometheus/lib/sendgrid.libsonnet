@@ -914,7 +914,7 @@ local grafanaDashboards = { grafanaDashboards: {
 
 local sendgridMixin = addMixin({
   name: 'sendgrid',
-  dashboardFolder: 'SendGrid',
+  dashboardFolder: 'Service Providers',
   mixin: prometheusRules + grafanaDashboards,
 });
 
