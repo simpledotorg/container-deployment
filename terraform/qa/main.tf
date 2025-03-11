@@ -5,10 +5,16 @@ variable "aws_region" {
 locals {
   qa_server_count      = 3
   qa_server_name_sufix = "k3s-qa"
+  tags = {
+    Terraform   = "true"
+    Environment = "qa"
+    Service     = "simple"
+    Deployment  = "k8s"
+  }
 }
 
 terraform {
-  required_version = "1.3.5"
+  required_version = "1.4.6"
 
   backend "s3" {
     bucket         = "simple-server-development-terraform-state"
@@ -22,7 +28,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.42.0"
+      version = ">= 4.42.0"
     }
   }
 }
@@ -121,6 +127,13 @@ resource "aws_eip" "eip_qa" {
   vpc   = true
 }
 
+module "loki_s3_bucket" {
+  source      = "../modules/simple_s3"
+  bucket_name = "rtsl-qa-loki"
+  tags        = local.tags
+  allowed_ips = module.k8s_server_qa[*].public_ip
+}
+
 # QA outputs
 output "k8s_server_qa_id" {
   value = module.k8s_server_qa.*.id
@@ -137,3 +150,24 @@ output "k8s_server_qa_private_ip" {
 output "k8s_server_qa_sg_id" {
   value = module.k8s_server_sg_qa.security_group_id
 }
+output "loki_s3_bucket_id" {
+  value = module.loki_s3_bucket.bucket_id
+}
+
+output "loki_s3_bucket_arn" {
+  value = module.loki_s3_bucket.bucket_arn
+}
+
+output "loki_s3_user_arn" {
+  value = module.loki_s3_bucket.user_arn
+}
+
+output "loki_s3_access_key" {
+  value = module.loki_s3_bucket.access_key
+}
+
+output "loki_s3_access_secret" {
+  value     = module.loki_s3_bucket.access_secret
+  sensitive = true
+}
+

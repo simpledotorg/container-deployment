@@ -5,15 +5,15 @@ all:
     k3s_master_node:
       hosts:
         node-01:
-          ansible_host: 172.31.46.178
+          ansible_host: 172.31.39.228
     k3s_master_nodes:
       children:
         k3s_master_node:
       hosts:
         node-02:
-          ansible_host: 172.31.32.138
+          ansible_host: 172.31.46.233
         node-03:
-          ansible_host: 172.31.37.111
+          ansible_host: 172.31.46.49
     k3s_worker_nodes:
       hosts:
     k3s_cluster:

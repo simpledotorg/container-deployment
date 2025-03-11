@@ -7,4 +7,5 @@ k8s_namespaces:
   - argocd
   - simple-v1
   - datadog
+  - loki
 kubeconfig: /etc/rancher/k3s/k3s.yaml
