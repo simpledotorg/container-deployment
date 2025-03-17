@@ -28,3 +28,6 @@ admin_password = <admin_password>
 # Use Keycloak for user management
 disable_login_form = false
 disable_signout_menu = false
+
+[auth.anonymous]
+enabled = false
