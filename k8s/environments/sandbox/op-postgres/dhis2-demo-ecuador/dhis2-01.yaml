@@ -49,8 +49,6 @@ spec:
                   postgres-operator.crunchydata.com/instance-set: dhis2-postgres
       metadata:
         labels:
-          tags.datadoghq.com/service: "postgrescluster-dhis2"
-          tags.datadoghq.com/version: "14"
           prometheus.io/app: 'postgres'
         annotations:
           argocd.argoproj.io/sync-options: Delete=false

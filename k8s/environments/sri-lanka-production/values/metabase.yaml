@@ -10,6 +10,9 @@ metabase:
         if ($request_method = OPTIONS ) {
           return 405;
         }
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     className: "nginx"
     hosts:
       - host: simples9.health.gov.lk

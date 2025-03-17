@@ -33,17 +33,5 @@ ingress:
   - hosts:
     - dashboard-demo.lk.simple.org
     secretName: dashboard-demo.lk.simple.org-tls
-server:
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-server","tags": ["env:sri-lanka-staging-k8s"]}]'
-  }
-worker:
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-worker","tags": ["env:sri-lanka-staging-k8s"]}]'
-  }
-cron:
-  podAnnotations: {
-    ad.datadoghq.com/log-tailer.logs: '[{"source": "simple-server","service": "simple-cron","tags": ["env:sri-lanka-staging-k8s"]}]'
-  }
 migration:
   enabled: false
