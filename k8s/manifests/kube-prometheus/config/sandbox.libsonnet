@@ -25,16 +25,16 @@
     },
   },
   blackboxExporter: {
-    enable: true
+    enable: true,
     probeTargets: [
       {
         name: 'google',
-        url: 'http://www.google.com'
+        url: 'http://www.google.com',
         module: 'http_2xx',
       },
       {
-        name: 'github'
-        url: 'http://www.github.com'
+        name: 'github',
+        url: 'http://www.github.com',
         module: 'http_2xx',
       }
     ]
