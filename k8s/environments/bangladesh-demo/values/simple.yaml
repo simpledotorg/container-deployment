@@ -5,35 +5,35 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
-    - host: api-demo.dghs.gov.bd.simple.org
+    - host: api-demo.dghs.gov.bd
       paths:
         - path: /
           pathType: ImplementationSpecific
-    - host: dashboard-demo.dghs.gov.bd.simple.org
+    - host: dashboard-demo.dghs.gov.bd
       paths:
         - path: /
           pathType: ImplementationSpecific
-    - host: api-demo.dghs.gov.bd.simple.org
+    - host: api-demo.dghs.gov.bd
       paths:
         - path: /
           pathType: ImplementationSpecific
-    - host: dashboard-demo.dghs.gov.bd.simple.org
+    - host: dashboard-demo.dghs.gov.bd
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
   - hosts:
     - api-demo.dghs.gov.bd.simple.org
-    secretName: api-demo.dghs.gov.bd.simple.org-tls
+    secretName: api-demo.dghs.gov.bd-tls
   - hosts:
     - dashboard-demo.dghs.gov.bd.simple.org
-    secretName: dashboard-demo.dghs.gov.bd.simple.org-tls
+    secretName: dashboard-demo.dghs.gov.bd-tls
   - hosts:
     - api-demo.dghs.gov.bd.simple.org
-    secretName: api-demo.dghs.gov.bd.simple.org-tls
+    secretName: api-demo.dghs.gov.bd-tls
   - hosts:
     - dashboard-demo.dghs.gov.bd.simple.org
-    secretName: dashboard-demo.dghs.gov.bd.simple.org-tls
+    secretName: dashboard-demo.dghs.gov.bd-tls
 cron:
   enabled: true
 worker:
