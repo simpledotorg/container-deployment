@@ -1,0 +1,42 @@
+---
+
+# ssh_keys
+# A list of SSH keys of developers that require access to the deployment servers.
+# eg.
+# ssh_keys:
+#   - ssh-rsa AAAAB.....
+#   - ssh-ed25519 AAAAC.....
+ssh_keys:
+  # SemaphoreCI
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCt/h+ObkK2dDhFe07QCrH33D8ER79buKWzd1aH5cZPV73c6ffM4T7PQfC2RLQ+joEg7QxxZ20WKzOUudhtP+2jKeyIJ2pn7FahscrjM7Pd/OjgvZMgeXRHzeWDmwsd23F9yjepi2Gg6WKjjAqLHq4jUB84YBzrVXxAw99rwZwEicOpPMEbT8hJU67FSRHJr0B99+pqp9Zt4v7qqTWaoVOQML2MFVoJfZu7cm9nD/7K0SYsJgyCdALkMns6zhEmbaA8G2Wc928ivdyNDFShletYoq4B53kZPH4jWipQo7SVGo93krJtKDGtUHGgBk2llfF/fPRj7aO4lMVVPCf/CxzI22FuWqofkeIbwOELpPmi5uhB+DchGQhP23cbaEUdfEA/jewpubQZG7+HqWTZbGSLD0f63UhkB+WaIw1XnW8VG4U55zJJ8jWlJZYHsqkCIY+tV0XPpDfyGNaUmWd5+Taboa/cES/AKdwgdBP/VCcbnexOKMiXnIEbXQfk06IQwIGZlR5mYCB5ZYYjuwqLrCIyYYDlNcFh+fLO/Dxkd2uZo3M2WZuuEmiUG3MvDAHIuMnrV4eqgYGbrLKYbhS2UTfe5mv1vPjCmJWk+NE2vVKMw7PKkE6hYSglikR+hplXVHE1Ep5eK1dMjsdmY4QglFzKdpehJsSrggn7u8PMbkp+aQ== semaphore@simple.org
+  # Sagar Shinde
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDCuiwgaHRvizd4/H2ZsF3GE07/iOc8RMmG60FSz8e1KDYgNvJEfj5HHN6mYlQGXcOucFLC/Jv3OQmOxQolUOpPvL3uQIDQfvNBsy46VNYO5MWV50J+lRZ4qBU2jlPFA5LDDXdyjgFLeQ8+3ZE6itCOxzIrWhkZX0lXx8e+k/kQB0fWmAsOzc2oPNYSNlH9lFgGVAYWVjtWlE/sNG0Ib3CjWEXcK2gwtGQgoAzLfoKF/S7MlsyW7ZoxDKsLuovjhRnqxPNP78YAYYNP7mbE5EPynKVolfwFGpn5J/R9xxmeeSukvMoC0fIhzZnQNYqVXlBYgpTu4YA2kQ47qk+gaFj/FT35g+mlmcVXFcamdz6CVGJVeWdI+sitlyV5TZZWQGANgcSpiLMvAyiQ6YHi9HfxJiRUMxMDRsn7e0JuGzMNcI1lB8SydNLgcQu5ePkNByZFhXhj1iLK5TLy5/mwd0J7TEPdYGKP7gwkrNopRRQYRJt3GzKf3e8fyaGe0R/mxQbUKi6OKMGq4nnNgFzhKSlfO/jHo+M5rojRDss/TCbZNov+Xe3sChVG5YX2e1s9eOJyLJLVsSuBqEG7oJEUp7ZpqZmaA4+QgoJww9XbrxLdKcNCKlRzoIAJC3LxCriDmVbBCpbQD9HRKMqqhiemFcA3G4HiY3EUOvPiGl8mHqtVIw== sagar@RTSL-KM7PF34L72
+  # Dany
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuGxwb82iexg03FhzbM3YeUc+sO5Y2W/5Y+YtuByU53By0lqyYF54+TG08yVymrne/+jJR7PVx14HaELwsBajzuAJRN5SJUbOPcEKX2G3rsN2/XU2Z38fJdSK46NiP6exgKI6N74FL1mLoQ3HJC4ij0NtBIFgkcOKR9C6Z1HRNrZRiz+yztkgOwykL5bKoVcK+lE7gGI/swz7owuSR8WgmGjjjA1L3dOFUTmrG6m7ctEUo+MQNJdfnfXDGtpPcuv5S9o9ZufjQOZM36rrbj5y1fWlFwmQ36c9StAjzZ9Qvs3u8cfm7uMLUGnMge1UAm03YFC9PN3IayDtay6x/yjWQ37/tAjPlGL7h9+cBmnO9XzdMEdmyymgkeAW+PnIXGkKkk7C6dJDTvNMVv/12rIb9cfP3mJ1Ig7iirlc+A4mMm3EC2HW8vbOgDlYDCzjOcYOmDxySD4rOkRrTkziZXhJHVuknLOQCGZQaWNTzSVHy9Ye0LBawU9bqdO2BVjnEZpU= dan@Danys-MacBook-Pro.local
+  # Igbanam
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2BmErmsOJsyqymkp/UKBSTov+68eMJNGd6D3BmB08J igbanam@resolvetosavelives.org
+  # Gyan
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDRWAWg26kzLUHbP1RD8O7RMIroZda284I0GgVr8Zx41fiFOs4RNAJkC2Q7b1cmrE2O7/VeVwSYdxWIM6LOQ+IeCmTk/vEP+1JLIrUX8MK4r4fojPSDEnm/FhdqMd2eu9lHWZnLuhGBQogKTbvGxroQsUpkEK2txkK1HExLZXWT+uiiHqokRCZW2KMIf2nf4HyTTvRu5zj4SCS6wpgbqDZw4cD7GFPB8m9OLSxQVYh29n3lCKW6QDF3XR1BWxhUbyc+w5riX7uHU7tZNTe9VnlALRBwoxJ4iqcCEs2nIQlo8AYzueCjdGKLW4ebZxhf+52W8yfIh8TebOEjLrpMK2t2qguJkow9S7tS2Dcja67OR/Jeue23XAoa4CsmXGIpqg8x/wI3HbxyAxn9+F9fTZQ6DjFzznlgSoiJ21THb3s04rMfa07AcZ7Rip9mVYHk7cc77scnSvILmwKxpqKfC7CinjBBn97x4y0Is6cFPVGqJGM+nz2iex2AlrbxAEd4EDf/TZesLF99MYuBuSnbtnWfieI2y8SvhjI8vJAvMwpv7eaqmwy4z0fcQWoJdlko42X3aFTSUQSGjznAmf/pqo58ezHk5EDx/jMNqlAIEMu4sAIP6Jm+8QlzyUIS4egjJZjNI/4a4phNHYAiGE1WuKbs6kAbtT94vmChuFGUFw9w8Q== ggupta@rtsl.org
+
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCTcVb4hUXk2eTfWSfee0W2HaXGERZoz/eFlCo0LK6PswmCGuPFgbUn40eCnpgn+OXGA2u1hVkZ1k15ydjidXTZ5IWrgSdiRN0eZ5snrFnOaD9unBzJW6X+Vhs0JHunYdWjO7IawQkwzxcsDcVR4DM8kZ1aj49EK7xe95OOdYs0N212B456rSI4wjqNOOtvaxK7BLpuPSD/Ej3CngeOyXvqoNrd3Z7IhEoh7pctJDElCv3YkUA87zD3vThatY1x3Hb7X/TbbId9XhcWzZOqAPgXhQiJSRcFlTLc3LzaWE5MMtCYeNKpp5011Q7KKXEzqTjA1JhqcHi8fv70Jo9hTI97CQzC9q/reL/oEZK+IQ5aEDniRCx9RgCM7FnxtI79ElpncMmRAmbUsGTdjkEVhYu3BKTPB39MH4mwuPm+jvtGyG3KRjRASpusS6jx7KczLx6H6sMsnxcXTg5tErEVzF1EI9Vtzye7QwtSHV8sVjZKq1+ruhS9Ltbqlvhn0wSj79l6kYfJ2c9Qd78xh6DgVIXz0bwFV9BSae7fJ9Zb/phMC2DaTob6ZPUs6qNzULNF7cGj2VD4MlTtKYAYrmahGU6HIW4APIHJIdYLXx5Gn+5cxSubkmq3gbJ15iJjunoL9AlJsH0PeqBKms04ZAYkZTq5W0eUywRZl39btdgRDVbC6w== ubuntu
+# Append pem key path to set ssh key for ProxyCommand. Example: `ProxyCommand="ssh -W %h:%p -q ubuntu@3.109.6.46 -i ~/.ssh/simple-dev.pem"`
+ansible_ssh_common_args: >
+  -o ProxyCommand="ssh -W %h:%p -q ubuntu@35.154.189.194 -p 13223 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+
+# Set ec2 specific network interface
+ansible_private_network_interface: "ansible_ens33"
+
+# k3s
+k3s_agent:
+  flannel-iface: "ens33" # Use private ip networking interface for k3s clustering.
+  node-label: "{{ k3s_node_labels }}"
+
+k3s_server:
+  flannel-iface: "ens5" # Use private ip networking interface for k3s clustering.
+  write-kubeconfig-mode: "644" # Set kubeconfig file permission to 644.
+  disable:
+    - traefik # Disable traefik ingress controller.
+  node-label: "{{ k3s_node_labels }}"
+
+k3s_release_version: v1.32.3+k3s1
