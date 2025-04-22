@@ -24,21 +24,18 @@
       path: '/',
     },
   },
-  blackboxExporter: {
-    enable: true
-    probeTargets: [
+  blackboxProbes: [
       {
         name: 'google',
-        url: 'http://www.google.com'
+        targets: ['http://www.google.com'],
         module: 'http_2xx',
       },
       {
-        name: 'github'
-        url: 'http://www.github.com'
+        name: 'github',
+        targets: ['http://www.github.com'],
         module: 'http_2xx',
-      }
-    ]
-  },
+      },
+  ],
   alertmanager: {
     externalUrl: 'http://alertmanager-sandbox.simple.org',
     ingress: {

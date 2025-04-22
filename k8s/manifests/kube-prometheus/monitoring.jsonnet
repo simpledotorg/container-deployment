@@ -10,6 +10,7 @@ local dhis2Server = (import 'lib/dhis2-server.libsonnet');
 local alphasms = (import 'lib/alphasms.libsonnet');
 local loki = (import 'lib/loki.libsonnet');
 local sendgrid = (import 'lib/sendgrid.libsonnet');
+local blackboxProbes = (import 'lib/blackbox-probe.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -42,55 +43,11 @@ local grafanaDashboards =
   loki.grafanaDashboards +
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
 
-local blackboxProbeMonitors = 
-  if std.objectHas(config.blackboxExporter, 'probeTargets') then [
-    {
-      apiVersion: 'monitoring.coreos.com/v1',
-      kind: 'ServiceMonitor',
-      metadata: {
-        name: 'blackbox-probe-' + target.name,
-        namespace: 'monitoring',
-        labels: {
-          team: 'infra',
-        },
-      },
-      spec: {
-        jobLabel: 'blackbox',
-        endpoints: [{
-          port: 'probe',
-          path: '/probe',
-          params: {
-            module: [target.module],
-          },
-          interval: '30s',
-          scrapeTimeout: '10s',
-          metricRelabelings: [
-            {
-              sourceLabels: ['__address__'],
-              targetLabel: '__param_target',
-            },
-            {
-              sourceLabels: ['__param_target'],
-              targetLabel: 'instance',
-            },
-            {
-              targetLabel: '__address__',
-              replacement: 'blackbox-exporter.monitoring.svc.cluster.local:9115',
-            },
-          ],
-        }],
-        selector: {
-          matchLabels: {
-            app: 'blackbox-exporter',
-          },
-        },
-        namespaceSelector: {
-          matchNames: ['monitoring'],
-        },
-      },
-    }
-    for target in config.blackboxExporter.probeTargets
-  ] else [];
+local blackboxProbeMonitors = blackboxProbes(
+  namespace,
+  'blackbox-exporter',
+  config.blackboxProbes
+);
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
@@ -102,7 +59,6 @@ local kp =
       common+: {
         namespace: namespace,
       },
-      blackboxExporter+: config.blackboxExporter,
       grafana+: {
         [if enableGrafana then 'folderDashboards']+: grafanaDashboards,
         [if enableGrafana then 'datasources']+: [
@@ -178,6 +134,6 @@ local manifests =
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
-  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] + [loki.prometheusRules] else []);
+  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] + [loki.prometheusRules] else []) + blackboxProbeMonitors;
 
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
