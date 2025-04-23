@@ -26,13 +26,13 @@
   },
   blackboxProbes: [
       {
-        name: 'google',
-        targets: ['http://www.google.com'],
-        module: 'http_2xx',
-      },
-      {
-        name: 'github',
-        targets: ['http://www.github.com'],
+        name: 'simple',
+        targets: ['https://api.simple.org/'],
+        labels: {
+          service: 'simple_server',
+          environment: 'prod',
+          country: 'ind',
+        },
         module: 'http_2xx',
       },
   ],

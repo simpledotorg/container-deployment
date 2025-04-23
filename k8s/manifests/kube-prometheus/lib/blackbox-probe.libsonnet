@@ -1,21 +1,26 @@
-function(namespace, blackboxExporterServiceName, probeConfigs)[
+function(namespace, probeConfigs)[
     {
         apiVersion: 'monitoring.coreos.com/v1',
         kind: 'Probe',
         metadata:{
             name: 'blackbox-' + probe.name,
             namespace: namespace,
+            labels:{
+              release: 'prometheus-stack',
+            },
         },
         spec: {
           jobName: 'blackbox-' + probe.name,
           interval: '30s',
           module: probe.module,
           prober: {
-            url: blackboxExporterServiceName + '.' + namespace + '.svc.cluster.local:9115',
+            path: '/probe',
+            url: 'blackbox-exporter.monitoring.svc.cluster.local:19115',
           },
           targets: {
             staticConfig: {
-              targets: probe.targets,
+              static: probe.targets,
+              labels: probe.labels,
             },
           },
         },

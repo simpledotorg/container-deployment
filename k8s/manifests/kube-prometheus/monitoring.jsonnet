@@ -45,7 +45,6 @@ local grafanaDashboards =
 
 local blackboxProbeMonitors = blackboxProbes(
   namespace,
-  'blackbox-exporter',
   config.blackboxProbes
 );
 
@@ -87,6 +86,11 @@ local kp =
     prometheus+:: {
       prometheus+: {
         spec+: {
+          probeSelector+: {
+            matchLabels: {
+              release: 'prometheus-stack',
+            },
+          },
           externalUrl: config.prometheus.externalUrl,
           [if config.prometheus.retention.enable then 'retention']: config.prometheus.retention.retention,
           [if config.prometheus.retention.enable then 'storage']: {
