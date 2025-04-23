@@ -115,16 +115,16 @@
       },
       module: 'http_2xx',
     },
-    // {
-    //   name: 'simple-dashboard-lka',
-    //   targets: ['https://dashboard.lk.simple.org/'],
-    //   labels: {
-    //     service: 'simple_dashboard',
-    //     environment: 'prod',
-    //     country: 'lka',
-    //   },
-    //   module: 'http_2xx',
-    // },
+    {
+      name: 'simple-dashboard-lka',
+      targets: ['https://dashboard-simple.health.gov.lk/'],
+      labels: {
+        service: 'simple_dashboard',
+        environment: 'prod',
+        country: 'lka',
+      },
+      module: 'http_2xx',
+    },
     {
       name: 'simple-metabase-lka',
       targets: ['https://metabase-simple.health.gov.lk/'],
