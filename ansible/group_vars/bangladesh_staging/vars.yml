@@ -33,7 +33,7 @@ k3s_agent:
   node-label: "{{ k3s_node_labels }}"
 
 k3s_server:
-  flannel-iface: "ens5" # Use private ip networking interface for k3s clustering.
+  flannel-iface: "ens33" # Use private ip networking interface for k3s clustering.
   write-kubeconfig-mode: "644" # Set kubeconfig file permission to 644.
   disable:
     - traefik # Disable traefik ingress controller.
