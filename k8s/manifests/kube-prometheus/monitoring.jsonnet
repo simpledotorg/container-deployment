@@ -43,10 +43,11 @@ local grafanaDashboards =
   loki.grafanaDashboards +
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
 
-local blackboxProbeMonitors = blackboxProbes(
-  namespace,
-  config.blackboxProbes
-);
+local blackboxProbeMonitors =
+  if std.objectHas(config, 'blackboxProbes') then
+    blackboxProbes(namespace, config.blackboxProbes)
+  else
+    [];
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
@@ -135,9 +136,10 @@ local manifests =
     [service.prometheusRules for service in monitoredServices] +
     [service.exporterService for service in monitoredServices] +
     [service.serviceMonitor for service in monitoredServices]) +
+  blackboxProbeMonitors +
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
-  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] + [loki.prometheusRules] else []) + blackboxProbeMonitors;
+  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] + [loki.prometheusRules] else []);
 
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)
