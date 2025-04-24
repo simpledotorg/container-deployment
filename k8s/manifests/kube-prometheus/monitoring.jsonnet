@@ -10,6 +10,7 @@ local dhis2Server = (import 'lib/dhis2-server.libsonnet');
 local alphasms = (import 'lib/alphasms.libsonnet');
 local loki = (import 'lib/loki.libsonnet');
 local sendgrid = (import 'lib/sendgrid.libsonnet');
+local blackboxProbes = (import 'lib/blackbox-probe.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -41,6 +42,12 @@ local grafanaDashboards =
   simpleServer.grafanaDashboards +
   loki.grafanaDashboards +
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
+
+local blackboxProbeMonitors =
+  if std.objectHas(config, 'blackboxProbes') then
+    blackboxProbes(namespace, config.blackboxProbes)
+  else
+    [];
 
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
@@ -80,6 +87,11 @@ local kp =
     prometheus+:: {
       prometheus+: {
         spec+: {
+          probeSelector+: {
+            matchLabels: {
+              release: 'prometheus-stack',
+            },
+          },
           externalUrl: config.prometheus.externalUrl,
           [if config.prometheus.retention.enable then 'retention']: config.prometheus.retention.retention,
           [if config.prometheus.retention.enable then 'storage']: {
@@ -124,6 +136,7 @@ local manifests =
     [service.prometheusRules for service in monitoredServices] +
     [service.exporterService for service in monitoredServices] +
     [service.serviceMonitor for service in monitoredServices]) +
+  blackboxProbeMonitors +
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
