@@ -157,7 +157,7 @@
     },
     {
       name: 'simple-metabase-eth',
-      targets: ['https://simple.moh.gov.et/'],
+      targets: ['https://simple.moh.gov.et/metabase/'],
       labels: {
         service: 'metabase',
         environment: 'prod',
