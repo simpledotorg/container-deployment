@@ -11,10 +11,10 @@ spec:
   source:
     path: k8s/manifests/argo-cd
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
     helm:
       valueFiles:
-        - ../../environments/bangladesh-staging/values/argocd.yaml
+        - ../../environments/bangladesh-demo/values/argocd.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -39,7 +39,7 @@ spec:
   source:
     path: k8s/manifests/cert-manager
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
     helm:
       valueFiles:
         - values.yaml
@@ -64,9 +64,9 @@ spec:
     name: ''
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/bangladesh-staging/configmaps
+    path: k8s/environments/bangladesh-demo/configmaps
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
   project: default
   syncPolicy:
     syncOptions:
@@ -91,7 +91,7 @@ spec:
   source:
     path: k8s/manifests/ingress
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
     helm:
       valueFiles:
         - values.aws-nlb.yaml
@@ -119,7 +119,7 @@ spec:
   source:
     path: k8s/manifests/reloader
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
     helm:
       valueFiles:
         - values.yaml
@@ -147,7 +147,7 @@ spec:
   source:
     path: k8s/manifests/sealed-secrets
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
   project: default
   syncPolicy:
     syncOptions:
@@ -169,9 +169,9 @@ spec:
     name: ''
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/bangladesh-staging/secrets
+    path: k8s/environments/bangladesh-demo/secrets
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
   project: default
   syncPolicy:
     syncOptions:
@@ -194,7 +194,7 @@ spec:
   source:
     path: k8s/manifests/pgo
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
   project: default
   syncPolicy:
     syncOptions:
@@ -218,9 +218,9 @@ spec:
     namespace: simple-v1
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/bangladesh-staging/op-postgres
+    path: k8s/environments/bangladesh-demo/op-postgres
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
   project: default
   syncPolicy:
     syncOptions:
@@ -245,7 +245,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
     helm:
       valueFiles:
         - values.affinity-cache.yaml
@@ -273,7 +273,7 @@ spec:
   source:
     path: k8s/manifests/redis
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
     helm:
       valueFiles:
         - values.affinity-worker.yaml
@@ -301,11 +301,11 @@ spec:
   source:
     path: k8s/manifests/simple-server
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
     helm:
       valueFiles:
         - values.affinity.yaml
-        - ../../environments/bangladesh-staging/values/simple.yaml
+        - ../../environments/bangladesh-demo/values/simple.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -330,11 +330,11 @@ spec:
   source:
     path: k8s/manifests/metabase
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
     helm:
       valueFiles:
         - values.affinity.yaml
-        - ../../environments/bangladesh-staging/values/metabase.yaml
+        - ../../environments/bangladesh-demo/values/metabase.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -366,7 +366,7 @@ spec:
       exclude: '*.json'
     path: k8s/manifests/kube-prometheus
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-13946
   syncPolicy:
     syncOptions:
       - PruneLast=true
