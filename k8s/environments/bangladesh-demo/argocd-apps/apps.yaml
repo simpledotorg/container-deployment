@@ -360,7 +360,7 @@ spec:
       jsonnet:
         extVars:
         - name: ENVIRONMENT
-          value: bangladesh-staging
+          value: bangladesh-demo
         libs:
           - k8s/manifests/kube-prometheus/vendor
       exclude: '*.json'
