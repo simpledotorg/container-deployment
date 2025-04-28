@@ -250,7 +250,7 @@ local grafanaDashboards = { grafanaDashboards: {
     },
     "timepicker": {},
     "timezone": "browser",
-    "title": "SSL Expiry Dashboard",
+    "title": "SSL Certificate Status Dashboard",
     "uid": "aejuy0izg7nr4a",
     "version": 10,
     "weekStart": ""
