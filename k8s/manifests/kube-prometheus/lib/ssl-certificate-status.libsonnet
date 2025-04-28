@@ -250,7 +250,7 @@ local grafanaDashboards = { grafanaDashboards: {
     },
     "timepicker": {},
     "timezone": "browser",
-    "title": "SSL Certificate Status Dashboard",
+    "title": "SSL Certificate Monitoring Status Dashboard",
     "uid": "aejuy0izg7nr4a",
     "version": 10,
     "weekStart": ""
@@ -259,7 +259,7 @@ local grafanaDashboards = { grafanaDashboards: {
 
 local sslExpiryMixin = addMixin({
   name: 'sslCertificateStatus',
-  dashboardFolder: 'SSL Certificate Status',
+  dashboardFolder: 'SSL Certificate Monitoring Status',
   mixin: grafanaDashboards,
 });
 
