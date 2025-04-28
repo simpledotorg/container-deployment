@@ -1,5 +1,45 @@
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
+local prometheusRules = {
+  prometheusRules+:: {
+    groups: [
+      {
+        name: 'sslexpiryalerts.rules',
+        rules: [
+          {
+            alert: 'SSLExpiryAlert',
+            expr: |||
+              probe_ssl_earliest_cert_expiry - time() < 3456000
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'warning'
+            },
+            annotations: {
+              summary: "SSL certificate is about to expire within 40 days",
+              description: "The SSL certificate for {{ $labels.instance }} will expire in less than 40 days."
+            }
+          },
+          {
+            alert: 'SSLExpiryWithinOneDay',
+            expr: |||
+              probe_ssl_earliest_cert_expiry - time() < 86400
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'critical'
+            },
+            annotations: {
+              summary: "SSL certificate is about to expire within 1 day",
+              description: "The SSL certificate for {{ $labels.instance }} will expire in one day."
+            }
+          },
+        ],
+      },
+    ],
+  },
+};
+
 local grafanaDashboards = { grafanaDashboards: {
   'ssl-certificate-status.json': {
     "annotations": {
@@ -258,11 +298,12 @@ local grafanaDashboards = { grafanaDashboards: {
 }};
 
 local sslExpiryMixin = addMixin({
-  name: 'sslCertificateStatus',
+  name: 'ssl-certificate-status',
   dashboardFolder: 'SSL Certificate Monitoring Status',
-  mixin: grafanaDashboards,
+  mixin: prometheusRules + grafanaDashboards,
 });
 
 {
   grafanaDashboards: sslExpiryMixin.grafanaDashboards,
+  prometheusRules: sslExpiryMixin.prometheusRules,
 }

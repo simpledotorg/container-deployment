@@ -139,6 +139,7 @@ local manifests =
     [service.exporterService for service in monitoredServices] +
     [service.serviceMonitor for service in monitoredServices]) +
   blackboxProbeMonitors +
+  [sslCertificateStatus.prometheusRules] +
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
