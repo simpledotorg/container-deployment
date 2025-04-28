@@ -8,7 +8,7 @@ spec:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: k8s/environments/bangladesh-staging/argocd-apps
+    path: k8s/environments/bangladesh-demo/argocd-apps
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
     targetRevision: sagar-shinde/sc-13946
   project: default
