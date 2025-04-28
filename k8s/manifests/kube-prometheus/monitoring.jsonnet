@@ -10,6 +10,7 @@ local dhis2Server = (import 'lib/dhis2-server.libsonnet');
 local alphasms = (import 'lib/alphasms.libsonnet');
 local loki = (import 'lib/loki.libsonnet');
 local sendgrid = (import 'lib/sendgrid.libsonnet');
+local sslCertificateStatus = (import 'lib/ssl-certificate-status.libsonnet');
 local blackboxProbes = (import 'lib/blackbox-probe.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
@@ -37,6 +38,7 @@ local grafanaDashboards =
   postgres.grafanaDashboards +
   alphasms.grafanaDashboards +
   sendgrid.grafanaDashboards +
+  sslCertificateStatus.grafanaDashboards +
   redis.grafanaDashboards +
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
