@@ -7,33 +7,33 @@ local prometheusRules = {
         name: 'sslexpiryalerts.rules',
         rules: [
           {
-            alert: 'SSLExpiryAlert',
+            alert: 'SSLExpiryWithin30Days',
             expr: |||
-              probe_ssl_earliest_cert_expiry - time() < 3456000
+              probe_ssl_earliest_cert_expiry - time() < 2592000
             |||,
             'for': '5m',
             labels: {
               severity: 'warning'
             },
             annotations: {
-              summary: "SSL certificate is about to expire within 40 days",
-              description: "The SSL certificate for {{ $labels.instance }} will expire in less than 40 days."
+              summary: "SSL certificate is about to expire within 30 days",
+              description: "The SSL certificate for {{ $labels.instance }} will expire in less than 30 days."
             }
           },
           {
-            alert: 'SSLExpiryWithinOneDay',
+            alert: 'ProductionEnvironmentDown',
             expr: |||
-              probe_ssl_earliest_cert_expiry - time() < 86400
+              up{environment="production"} == 0
             |||,
             'for': '5m',
             labels: {
               severity: 'critical'
             },
             annotations: {
-              summary: "SSL certificate is about to expire within 1 day",
-              description: "The SSL certificate for {{ $labels.instance }} will expire in one day."
+              summary: "Production environment is down",
+              description: "The production environment instance {{ $labels.instance }} has been down for more than 5 minutes."
             }
-          },
+          }
         ],
       },
     ],
@@ -290,7 +290,7 @@ local grafanaDashboards = { grafanaDashboards: {
     },
     "timepicker": {},
     "timezone": "browser",
-    "title": "SSL Certificate Monitoring Status Dashboard",
+    "title": "SSL Certificates Validity",
     "uid": "aejuy0izg7nr4a",
     "version": 10,
     "weekStart": ""
@@ -299,7 +299,7 @@ local grafanaDashboards = { grafanaDashboards: {
 
 local sslExpiryMixin = addMixin({
   name: 'ssl-certificate-status',
-  dashboardFolder: 'SSL Certificate Monitoring Status',
+  dashboardFolder: 'Endpoints Monitoring',
   mixin: prometheusRules + grafanaDashboards,
 });
 
