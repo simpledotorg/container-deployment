@@ -284,10 +284,6 @@ local grafanaDashboards = { grafanaDashboards: {
         }
       ]
     },
-    "time": {
-      "from": "now-6h",
-      "to": "now"
-    },
     "timepicker": {},
     "timezone": "browser",
     "title": "SSL Certificates Validity",
