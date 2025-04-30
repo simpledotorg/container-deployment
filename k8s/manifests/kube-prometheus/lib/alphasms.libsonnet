@@ -10,7 +10,7 @@ local prometheusRules = {
           {
             alert: 'AlphasmsBalanceLow',
             expr: |||
-              alphasms_user_balance_amount < 10000
+              alphasms_user_balance_amount < 50000
             |||,
             'for': '5m',
             labels: {
