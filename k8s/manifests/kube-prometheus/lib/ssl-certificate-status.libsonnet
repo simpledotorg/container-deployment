@@ -13,7 +13,7 @@ local prometheusRules = {
             |||,
             'for': '5m',
             labels: {
-              severity: 'warning'
+              severity: 'critical'
             },
             annotations: {
               summary: "SSL certificate is about to expire within 30 days",
