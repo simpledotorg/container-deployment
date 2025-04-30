@@ -9,9 +9,9 @@ local prometheusRules = {
           {
             alert: 'SSLExpiryWithin30Days',
             expr: |||
-              probe_ssl_earliest_cert_expiry - time() < 3456000
+              probe_ssl_earliest_cert_expiry - time() < 2592000
             |||,
-            'for': '1m',
+            'for': '5m',
             labels: {
               severity: 'critical'
             },
