@@ -89,6 +89,10 @@ local kp =
     prometheus+:: {
       prometheus+: {
         spec+: {
+          additionalScrapeConfigs: if isEnvSystemsProduction then {
+            name: 'additional-scrape-configs',
+            key: 'prometheus-additional.yaml',
+          } else null,
           probeSelector+: {
             matchLabels: {
               release: 'prometheus-stack',
