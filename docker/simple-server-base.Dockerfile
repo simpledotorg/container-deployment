@@ -1,7 +1,7 @@
 # Ruby version 2.7.8
-FROM phusion/passenger-ruby27:2.0.1
+FROM phusion/passenger-customizable:2.0.1
 
-## Install build dependencies for Ruby
+## Install build dependencies for Ruby and app
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
@@ -17,7 +17,10 @@ RUN apt-get update && \
       jq \
       cron \
       vim \
-      s3cmd && \
+      s3cmd \
+      libnss3-tools \
+      firefox \
+      kmod && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -27,14 +30,19 @@ RUN wget https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz && \
     tar -xvzf ruby-2.7.8.tar.gz && \
     cd ruby-2.7.8 && \
     ./configure && make -j$(nproc) && make install && \
-    cd .. && rm -rf ruby-2.7.8 ruby-2.7.8.tar.gz
+    cd .. && rm -rf ruby-2.7.8 ruby-2.7.8.tar.gz && \
+    ln -sf /usr/local/bin/ruby /usr/bin/ruby && \
+    ln -sf /usr/local/bin/gem /usr/bin/gem
+
+# Install a compatible version of Bundler for Ruby 2.7.8
+RUN gem install bundler -v 2.4.22
 
 # Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg && apt-key add /root/yarn-pubkey.gpg
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y --no-install-recommends yarn
 
-# Node
+# Node.js 16
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get update && apt-get install -y --no-install-recommends nodejs
 
@@ -43,7 +51,6 @@ RUN apt policy postgresql && \
   curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
   echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
   apt update && apt install -y postgresql-client-14 && apt autoremove -y
-
 # Install CPHC VPN Client
 RUN apt-get install libnss3-tools firefox kmod wget -y
 
