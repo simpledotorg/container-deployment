@@ -21,9 +21,11 @@ RUN apt-get update && \
       libnss3-tools \
       firefox \
       kmod \
-      libpq-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+      libpq-dev 
+    
+RUN apt-get clean
+
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Ruby 2.7.8 from source
 WORKDIR /usr/src
