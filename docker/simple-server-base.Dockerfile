@@ -39,23 +39,26 @@ RUN wget https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz && \
 RUN gem install bundler -v 2.4.22
 
 # Install Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg && apt-key add /root/yarn-pubkey.gpg && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y --no-install-recommends yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg && apt-key add /root/yarn-pubkey.gpg
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y --no-install-recommends yarn
 
 # Install Node.js 16
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get update && apt-get install -y --no-install-recommends nodejs
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get update && apt-get install -y --no-install-recommends nodejs
 
 # Install Postgres client 14
-RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    apt-get update && apt-get install -y postgresql-client-14 && apt-get autoremove -y
+RUN apt policy postgresql && \
+  curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
+  echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+  apt update && apt install -y postgresql-client-14 && apt autoremove -y
+# Install CPHC VPN Client
+RUN apt-get install libnss3-tools firefox kmod wget -y
 
 # Download CPHC VPN Client
 WORKDIR /home/app
-RUN wget https://in-simple-assets-public.s3.ap-south-1.amazonaws.com/linux_phat_client.tgz && \
-    tar -xvf linux_phat_client.tgz && rm -rf linux_phat_client.tgz
+RUN wget https://in-simple-assets-public.s3.ap-south-1.amazonaws.com/linux_phat_client.tgz
+RUN tar -xvf linux_phat_client.tgz && rm -rf linux_phat_client.tgz
 
 # Move logrotate cron to hourly
 RUN mv /etc/cron.daily/logrotate /etc/cron.hourly/
