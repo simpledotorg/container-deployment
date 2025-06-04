@@ -42,7 +42,7 @@ local prometheusRules = {
             expr: |||
               sendgrid_plan_expiration_seconds < 1 or absent(sendgrid_plan_expiration_seconds)
             |||,
-            'for': '5h',
+            'for': '14h',
             labels: {
               severity: 'critical'
             },
