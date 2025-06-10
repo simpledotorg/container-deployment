@@ -42,7 +42,7 @@ local prometheusRules = {
             expr: |||
               sendgrid_plan_expiration_seconds{account_name!="ethiopia_production"} < 0 or absent(sendgrid_plan_expiration_seconds{account_name!="ethiopia_production"})
             |||,
-            'for': '1m',
+            'for': '5h',
             labels: {
               severity: 'critical'
             },
