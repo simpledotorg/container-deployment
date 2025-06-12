@@ -420,7 +420,9 @@ spec:
     syncOptions:
       - PruneLast=true
       - CreateNamespace=true
-    automated: false
+    automated:
+      prune: true
+      selfHeal: true
 
 ---
 
