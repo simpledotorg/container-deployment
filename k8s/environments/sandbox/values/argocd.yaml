@@ -3,6 +3,11 @@ argo-cd:
     domain: argocd-sandbox.simple.org
   notifications:
     argocdUrl: "https://argocd-sandbox.simple.org"
+  controller:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true                     
   server:
     ingress:
       enabled: true
