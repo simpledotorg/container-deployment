@@ -13,26 +13,12 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-    - host: api-demo.dghs.gov.bd
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-    - host: dashboard-demo.dghs.gov.bd
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
   tls:
   - hosts:
-    - api-demo.dghs.gov.bd.simple.org
+    - api-demo.dghs.gov.bd
     secretName: api-demo.dghs.gov.bd-tls
   - hosts:
-    - dashboard-demo.dghs.gov.bd.simple.org
-    secretName: dashboard-demo.dghs.gov.bd-tls
-  - hosts:
-    - api-demo.dghs.gov.bd.simple.org
-    secretName: api-demo.dghs.gov.bd-tls
-  - hosts:
-    - dashboard-demo.dghs.gov.bd.simple.org
+    - dashboard-demo.dghs.gov.bd
     secretName: dashboard-demo.dghs.gov.bd-tls
 cron:
   enabled: true
