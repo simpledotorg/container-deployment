@@ -4,6 +4,16 @@ all:
       hosts:
         node-01:
           ansible_host: 172.16.18.121
+          k3s_node_labels:
+            - "role-ingress=true"
+            - "role-db=true"
+            - "role-cache-redis=true"
+            - "role-worker-redis=true"
+            - "role-prometheus=true"
+            - "role-server=true"
+            - "role-metabase=true"
+            - "role-worker=true"
+            - "role-cron=true"
     k3s_master_nodes:
       children:
         k3s_master_node:

@@ -34,7 +34,7 @@ spec:
         #As we plans to migrate to DC soon, we will skip this for now.
         resources:
           requests:
-            storage: 100Gi
+            storage: 50Gi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -90,7 +90,7 @@ spec:
             - "ReadWriteOnce"
             resources:
               requests:
-                storage: 100Gi
+                storage: 50Gi
       - name: repo2
         schedules:
           full: "0 22 * * 0" 
