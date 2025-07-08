@@ -6,28 +6,35 @@ all:
           ansible_host: 172.16.18.121
           k3s_node_labels:
             - "role-ingress=true"
+            - "role-server=true"
+            - "role-prometheus=true"
+        node-02:
+          ansible_host: 172.16.18.122
+          k3s_node_labels:
+            - "role-server=true"
+            - "role-metabase=true"
+            - "role-cron=true"
+        node-03:
+          ansible_host: 172.16.18.123
+          k3s_node_labels:
+            - "role-server=true"
             - "role-db=true"
             - "role-cache-redis=true"
             - "role-worker-redis=true"
-            - "role-prometheus=true"
-            - "role-server=true"
-            - "role-metabase=true"
             - "role-worker=true"
-            - "role-cron=true"
+
     k3s_master_nodes:
       children:
         k3s_master_node:
-      hosts:
-#        node-02:
-#          ansible_host:
-#        node-03:
-#          ansible_host:
+
     k3s_worker_nodes:
       hosts: {}
+
     k3s_cluster:
       children:
         k3s_master_nodes:
         k3s_worker_nodes:
+
     bangladesh_staging:
       children:
         k3s_cluster:
