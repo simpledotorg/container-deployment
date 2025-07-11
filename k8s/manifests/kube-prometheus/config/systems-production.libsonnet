@@ -176,6 +176,106 @@
       module: 'http_2xx',
     },
     {
+      name: 'dhis2-c61c699a',
+      targets: ['https://dhis2-c61c699a.simple.org/dhis-web-commons/security/login.action'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-c61c699a-htn',
+      targets: ['https://dhis2-htn-dm-demo.simple.org/dhis-web-commons/security/login.action'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-ecuador-sandbox',
+      targets: ['https://dhis2-ecuador-sandbox.simple.org/'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-htn-tracking',
+      targets: ['https://dhis2-htn-tracking.simple.org/dhis-web-commons/security/login.action'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-phc',
+      targets: ['https://dhis2-phc.simple.org/dhis-web-commons/security/login.action'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-sandbox-01',
+      targets: ['https://dhis2-sandbox1.simple.org/dhis-web-commons/security/login.action'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-sandbox-epidemics',
+      targets: ['https://dhis2-sandbox-epidemics.simple.org/dhis-web-commons/security/login.action'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-v1-api',
+      targets: ['https://api-sandbox.simple.org/'],
+      labels: {
+        service: 'simple_server',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-v1-dashboard',
+      targets: ['https://dashboard-sandbox.simple.org/'],
+      labels: {
+        service: 'simple_dashboard',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-v1-metabase',
+      targets: ['https://metabase-sandbox.simple.org/'],
+      labels: {
+        service: 'metabase',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },                                                  
+    {
       name: 'simple-argocd-sandbox',
       targets: ['https://argocd-sandbox.simple.org/'],
       labels: {
