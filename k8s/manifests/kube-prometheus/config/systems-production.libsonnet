@@ -165,6 +165,26 @@
       },
       module: 'http_2xx',
     },
+    {
+      name: 'dhis2-demo-ecuador-login',
+      targets: ['https://dhis2-demo-ecuador.simple.org/dhis-web-commons/security/login.action'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-argocd-sandbox',
+      targets: ['https://argocd-sandbox.simple.org/'],
+      labels: {
+        service: 'argocd',
+        environment: 'sandbox',
+        country: 'null',
+      },
+      module: 'http_2xx',
+    },    
   ],
   alertmanager: {
     externalUrl: 'http://alertmanager.simple.org',
