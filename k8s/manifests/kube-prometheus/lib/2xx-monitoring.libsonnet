@@ -1,5 +1,30 @@
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
 
+local prometheusRules = {
+  prometheusRules+:: {
+    groups: [
+      {
+        name: 'SandboxDownalerts.rules',
+        rules: [
+          {
+            alert: 'SandboxEnvironmentDown',
+            expr: |||
+              up{environment="sandbox"} == 0
+            |||,
+            for: '5m',
+            labels: {
+              severity: 'critical',
+            },
+            annotations: {
+              summary: 'Sandbox environment is down',
+              description: 'The sandbox environment instance {{ $labels.instance }} has been down for more than 5 minutes.',
+            }      
+          }
+        ],
+      },
+    ],
+  },
+};       
 local grafanaDashboards = {
   grafanaDashboards: {
     '2xx-monitoring.json': {
@@ -207,9 +232,10 @@ local grafanaDashboards = {
 local mixin = addMixin({
   name: '2xx-monitoring',
   dashboardFolder: 'Endpoints Monitoring',
-  mixin: grafanaDashboards,
+  mixin: prometheusRules + grafanaDashboards,
 });
 
 {
   grafanaDashboards: mixin.grafanaDashboards,
+  prometheusRules: mixin.prometheusRules,
 }
