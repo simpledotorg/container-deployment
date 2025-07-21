@@ -1,0 +1,13 @@
+---
+ansible_port: 22
+deploy_user: "deploy"
+ruby_version: "2.7.4"
+bundler_version: "2.3.22"
+app_name: "simple-server"
+rbenv_root: "/home/{{ deploy_user }}/.rbenv"
+bundle_path: "{{ rbenv_root }}/shims/bundle"
+aws_deploy: false
+database_name: "{{ app_env }}-{{ app_name }}-db"
+metabase_database_name: "{{ app_env }}-{{ app_name }}-db-metabase"
+nginx_port: 8008  # Use 8008 (HTTP Alternate) to avoid conflict with HAProxy in case deployment is on a single box
+metabase_port: 3031
