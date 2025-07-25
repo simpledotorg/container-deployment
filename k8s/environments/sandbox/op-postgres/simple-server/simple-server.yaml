@@ -79,25 +79,25 @@ spec:
       repos:
       - name: repo3
       # Remove backup for DHIS2 perf test
-      # - name: repo1
-      #   schedules:
-      #     full: "0 20 * * 0"
-      #     differential: "0 20 * * 1-6"
-      #   volume:
-      #     volumeClaimSpec:
-      #       accessModes:
-      #       - "ReadWriteOnce"
-      #       resources:
-      #         requests:
-      #           storage: 200Gi
-      # - name: repo2
-      #   schedules:
-      #     full: "0 22 * * 0"
-      #     differential: "0 22 * * 1-6"
-      #   s3:
-      #     bucket: sandbox-simple-k8s-db-backup
-      #     endpoint: s3.ap-south-1.amazonaws.com
-      #     region: ap-south-1
+      - name: repo1
+        schedules:
+          full: "0 20 * * 0"
+          differential: "0 20 * * 1-6"
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 200Gi
+      - name: repo2
+        schedules:
+          full: "0 22 * * 0"
+          differential: "0 22 * * 1-6"
+        s3:
+          bucket: sandbox-simple-k8s-db-backup
+          endpoint: s3.ap-south-1.amazonaws.com
+          region: ap-south-1
       jobs:
         affinity:
           nodeAffinity:
