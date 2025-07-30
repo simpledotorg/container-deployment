@@ -40,7 +40,7 @@ local prometheusRules = {
           {
             alert: 'SendGridPlanExpired',
             expr: |||
-              sendgrid_plan_expiration_seconds{account_name!="ethiopia_production"} < 0 or absent(sendgrid_plan_expiration_seconds{account_name!="ethiopia_production"})
+              sendgrid_plan_expiration_seconds < 1 or absent(sendgrid_plan_expiration_seconds)
             |||,
             'for': '5h',
             labels: {
