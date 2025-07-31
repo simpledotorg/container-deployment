@@ -28,7 +28,7 @@ spec:
       replicas: 1
       dataVolumeClaimSpec:
         accessModes:
-        - "ReadWriteOnce"
+          - "ReadWriteOnce"
         resources:
           requests:
             storage: 1000Gi
@@ -36,20 +36,20 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: role-db
-                operator: In
-                values:
-                - "true"
+              - matchExpressions:
+                  - key: role-db
+                    operator: In
+                    values:
+                      - "true"
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchLabels:
-                  postgres-operator.crunchydata.com/cluster: simple
-                  postgres-operator.crunchydata.com/instance-set: instance1
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    postgres-operator.crunchydata.com/cluster: simple
+                    postgres-operator.crunchydata.com/instance-set: instance1
       metadata:
         labels:
           prometheus.io/app: 'postgres'
@@ -58,18 +58,8 @@ spec:
   backups:
     pgbackrest:
       configuration:
-      - secret:
-          name: pgo-s3-creds
-      repoHost:
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: role-db-backup
-                  operator: In
-                  values:
-                  - "true"
+        - secret:
+            name: pgo-s3-creds
       global:
         repo1-path: /pgbackrest/repo1
         repo2-path: /pgbackrest/repo2
@@ -79,49 +69,27 @@ spec:
         archive-timeout: "3600"
         db-timeout: "60"
       repos:
-      - name: repo1
-        schedules:
-          full: "0 */6 * * *" # Every 6 hours
-        s3:
-          bucket: sandbox-simple-k8s-db-backup
-          endpoint: s3.ap-south-1.amazonaws.com
-          region: ap-south-1
-      - name: repo2
-        schedules:
-          full: "0 12 * * *" # Daily at noon
-        s3:
-          bucket: sandbox-simple-k8s-db-backup
-          endpoint: s3.ap-south-1.amazonaws.com
-          region: ap-south-1
-      - name: repo3
-        schedules:
-          full: "0 0 * * 0" # Weekly on Sunday
-        s3:
-          bucket: sandbox-simple-k8s-db-backup
-          endpoint: s3.ap-south-1.amazonaws.com
-          region: ap-south-1
-  
-      # Remove backup for DHIS2 perf test
-      #- name: repo1
-       # schedules:
-        #  full: "0 20 * * 0"
-         # differential: "0 20 * * 1-6"
-        #volume:
-         # volumeClaimSpec:
-          #  accessModes:
-           # - "ReadWriteOnce"
-            #resources:
-             # requests:
-              #  storage: 200Gi
-      #- name: repo2
-      #  schedules:
-       #   full: "0 22 * * 0"
-        #  differential: "0 22 * * 1-6"
-        #s3:
-         # bucket: sandbox-simple-k8s-db-backup
-          #endpoint: s3.ap-south-1.amazonaws.com
-          #region: ap-south-1
-
+        - name: repo1
+          schedules:
+            full: "*/10 * * * *" # Every 10 minutes
+          s3:
+            bucket: sandbox-simple-k8s-db-backup
+            endpoint: s3.ap-south-1.amazonaws.com
+            region: ap-south-1
+        - name: repo2
+          schedules:
+            full: "0 12 * * *" # Daily at noon
+          s3:
+            bucket: sandbox-simple-k8s-db-backup
+            endpoint: s3.ap-south-1.amazonaws.com
+            region: ap-south-1
+        - name: repo3
+          schedules:
+            full: "0 0 * * 0" # Weekly on Sunday
+          s3:
+            bucket: sandbox-simple-k8s-db-backup
+            endpoint: s3.ap-south-1.amazonaws.com
+            region: ap-south-1
   patroni:
     dynamicConfiguration:
       synchronous_mode: true
