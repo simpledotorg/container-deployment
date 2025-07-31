@@ -71,7 +71,7 @@ spec:
       repos:
         - name: repo1
           schedules:
-            full: "*/10 * * * *" # Every 10 minutes
+            full: "0 */6 * * *" # Every 10 minutes
           s3:
             bucket: sandbox-simple-k8s-db-backup
             endpoint: s3.ap-south-1.amazonaws.com
