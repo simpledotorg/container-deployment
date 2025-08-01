@@ -1,18 +1,19 @@
 local g = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
-local common = (import 'common.libsonnet');
-local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
+local common = import 'common.libsonnet';
+local addMixin = import 'kube-prometheus/lib/mixin.libsonnet';
 
 local postgresMixin = addMixin({
   name: 'postgres',
   dashboardFolder: 'Postgres',
-  mixin: (import 'postgres_mixin/mixin.libsonnet'),
+  mixin: import 'postgres_mixin/mixin.libsonnet',
 });
 
-
 {
-  grafanaDashboards: postgresMixin.grafanaDashboards {
-    Postgres+: {
-      'postgres-overview.json'+: {
+  grafanaDashboards:
+    // Merge base dashboards + custom additions
+    postgresMixin.grafanaDashboards +
+    {
+      'postgres-overview.json': postgresMixin.grafanaDashboards['postgres-overview.json'] {
         templating+: {
           list+: [
             {
@@ -68,8 +69,41 @@ local postgresMixin = addMixin({
         },
       },
     },
+
+  prometheusRules: postgresMixin.prometheusRules + {
+    groups+: [
+      {
+        name: 'custom-postgres.rules',
+        rules: [
+          {
+            alert: 'PostgresDatabaseStorageAlert',
+            expr: 'pg_up == 0',
+            for: '5m',
+            labels: {
+              severity: 'critical',
+            },
+            annotations: {
+              summary: 'PostgreSQL instance down',
+              description: 'The PostgreSQL exporter is not responding for {{ $labels.instance }}',
+            },
+          },
+          {
+            alert: 'PostgresDatabaseAlmostFull',
+            expr: 'pg_database_size_bytes / pg_database_max_size_bytes > 0.001',
+            for: '5m',
+            labels: {
+              severity: 'warning',
+            },
+            annotations: {
+              summary: 'PostgreSQL DB {{ $labels.datname }} is more than 1% full',
+              description: 'Database {{ $labels.datname }} is at {{ humanize (100 * (pg_database_size_bytes / pg_database_max_size_bytes)) }}% capacity.',
+            },
+          },
+        ],
+      },
+    ],
   },
-  prometheusRules: postgresMixin.prometheusRules,
+
   monitors(namespaces): {
     exporterServices: [
       common.exporterService('postgres', 9187, ns)
