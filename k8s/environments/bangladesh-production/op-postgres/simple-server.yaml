@@ -75,8 +75,8 @@ spec:
                   - "true"
       global:
         # Number of full backups to retain
-        repo1-retention-full: "2" 
-        repo2-retention-full: "2"
+        repo1-retention-full: "1"
+        repo2-retention-full: "4"
         repo2-path: /pgbackrest/postgres-operator/simple/repo2
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
       repos:
