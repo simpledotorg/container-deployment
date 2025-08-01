@@ -12,7 +12,7 @@ local prometheusRules = {
           {
             alert: 'SendGridEmailRemainingLow',
             expr: |||
-              sendgrid_email_used_count > 0.95 * sendgrid_email_limit_count
+              sendgrid_email_used_count{account_name!="ethiopia_production"} > 0.95 * sendgrid_email_limit_count{account_name!="ethiopia_production"}
             |||,
             'for': '5m',
             labels: {
@@ -26,7 +26,7 @@ local prometheusRules = {
           {
             alert: 'SendGridEmailRemainingZero',
             expr: |||
-              sendgrid_email_remaining_count < 1 or absent(sendgrid_email_remaining_count)
+              sendgrid_email_remaining_count{account_name!="ethiopia_production"} < 1 or absent(sendgrid_email_remaining_count{account_name!="ethiopia_production"})
             |||,
             'for': '5m',
             labels: {
@@ -40,7 +40,7 @@ local prometheusRules = {
           {
             alert: 'SendGridPlanExpired',
             expr: |||
-              sendgrid_plan_expiration_seconds < 1 or absent(sendgrid_plan_expiration_seconds)
+              sendgrid_plan_expiration_seconds{account_name!="ethiopia_production"} < 1 or absent(sendgrid_plan_expiration_seconds{account_name!="ethiopia_production"})
             |||,
             'for': '5h',
             labels: {
@@ -48,13 +48,13 @@ local prometheusRules = {
             },
             annotations: {
               summary: "SendGrid plan has expired",
-              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing.\n\nFor more details, visit the [Alertmanager] (" + urls.alertmanagerOverview + ") and manage your [SendGrid](" + urls.sendgridAccount + ")."
+              description: "The SendGrid plan for account {{ $labels.account_name }} has expired or data is missing.\n\nFor more details, visit the [Alertmanager](" + urls.alertmanagerOverview + ") and manage your [SendGrid](" + urls.sendgridAccount + ")."
             }
           },
           {
             alert: 'SendGridServiceUnreachable',
             expr: |||
-              sendgrid_monitoring_http_return_code != 200
+              sendgrid_monitoring_http_return_code{account_name!="ethiopia_production"} != 200
             |||,
             'for': '1h',
             labels: {
