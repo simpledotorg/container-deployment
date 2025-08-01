@@ -1,17 +1,19 @@
 local g = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
-local common = (import 'common.libsonnet');
-local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
+local common = import 'common.libsonnet';
+local addMixin = import 'kube-prometheus/lib/mixin.libsonnet';
 
 local postgresMixin = addMixin({
   name: 'postgres',
   dashboardFolder: 'Postgres',
-  mixin: (import 'postgres_mixin/mixin.libsonnet'),
+  mixin: import 'postgres_mixin/mixin.libsonnet',
 });
 
 {
-  grafanaDashboards: postgresMixin.grafanaDashboards {
-    Postgres+: {
-      'postgres-overview.json'+: {
+  grafanaDashboards:
+    // Merge base dashboards + custom additions
+    postgresMixin.grafanaDashboards +
+    {
+      'postgres-overview.json': postgresMixin.grafanaDashboards['postgres-overview.json'] {
         templating+: {
           list+: [
             {
@@ -67,7 +69,6 @@ local postgresMixin = addMixin({
         },
       },
     },
-  },
 
   prometheusRules: postgresMixin.prometheusRules + {
     groups+: [
