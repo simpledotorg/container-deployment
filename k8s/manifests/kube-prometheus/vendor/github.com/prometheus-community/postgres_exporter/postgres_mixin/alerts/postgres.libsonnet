@@ -120,6 +120,20 @@
               severity: 'warning',
             },
           },
+          {
+            alert: 'PostgresDatabaseAlmostFull',
+            expr: |||
+              pg_database_size_bytes / pg_database_max_size_bytes > 0.1
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'warning',
+            },
+            annotations: {
+              summary: 'PostgreSQL DB {{ $labels.datname }} is more than 10% full',
+              description: 'Database {{ $labels.datname }} is at {{ humanize (100 * (pg_database_size_bytes / pg_database_max_size_bytes)) }}% capacity.',
+            },
+          },
         ],
       },
     ],
