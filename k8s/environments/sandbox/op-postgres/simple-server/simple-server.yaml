@@ -71,21 +71,21 @@ spec:
       repos:
         - name: repo1
           schedules:
-            full: "0 */6 * * *" # Every 10 minutes
+            full: "0 */6 * * *"        # Every 6 hours
           s3:
             bucket: sandbox-simple-k8s-db-backup
             endpoint: s3.ap-south-1.amazonaws.com
             region: ap-south-1
         - name: repo2
           schedules:
-            full: "0 12 * * *" # Daily at noon
+            full: "0 15 * * 1-6"       # Monday to Saturday at 3 PM
           s3:
             bucket: sandbox-simple-k8s-db-backup
             endpoint: s3.ap-south-1.amazonaws.com
             region: ap-south-1
         - name: repo3
           schedules:
-            full: "0 0 * * 0" # Weekly on Sunday
+            full: "0 15 * * 0"        # Sunday at 3 PM
           s3:
             bucket: sandbox-simple-k8s-db-backup
             endpoint: s3.ap-south-1.amazonaws.com
