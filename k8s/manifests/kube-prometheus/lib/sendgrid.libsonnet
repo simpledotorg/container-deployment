@@ -1,6 +1,4 @@
-
 local addMixin = (import 'kube-prometheus/lib/mixin.libsonnet');
-
 local urls = import './endpoint-urls.libsonnet';
 
 local prometheusRules = {
@@ -12,7 +10,11 @@ local prometheusRules = {
           {
             alert: 'SendGridEmailRemainingLow',
             expr: |||
-              sendgrid_email_used_count{account_name!="ethiopia_production"} > 0.95 * sendgrid_email_limit_count{account_name!="ethiopia_production"}
+              (
+                sendgrid_email_used_count > 0.95 * sendgrid_email_limit_count
+              )
+              and
+              account_name != "ethiopia_production"
             |||,
             'for': '5m',
             labels: {
@@ -26,7 +28,13 @@ local prometheusRules = {
           {
             alert: 'SendGridEmailRemainingZero',
             expr: |||
-              sendgrid_email_remaining_count{account_name!="ethiopia_production"} < 1 or absent(sendgrid_email_remaining_count{account_name!="ethiopia_production"})
+              (
+                sendgrid_email_remaining_count < 1
+                or
+                absent(sendgrid_email_remaining_count)
+              )
+              and
+              account_name != "ethiopia_production"
             |||,
             'for': '5m',
             labels: {
@@ -40,7 +48,13 @@ local prometheusRules = {
           {
             alert: 'SendGridPlanExpired',
             expr: |||
-              sendgrid_plan_expiration_seconds{account_name!="ethiopia_production"} < 1 or absent(sendgrid_plan_expiration_seconds{account_name!="ethiopia_production"})
+              (
+                sendgrid_plan_expiration_seconds < 1
+                or
+                absent(sendgrid_plan_expiration_seconds)
+              )
+              and
+              account_name != "ethiopia_production"
             |||,
             'for': '5h',
             labels: {
@@ -54,7 +68,9 @@ local prometheusRules = {
           {
             alert: 'SendGridServiceUnreachable',
             expr: |||
-              sendgrid_monitoring_http_return_code{account_name!="ethiopia_production"} != 200
+              sendgrid_monitoring_http_return_code != 200
+              and
+              account_name != "ethiopia_production"
             |||,
             'for': '1h',
             labels: {
