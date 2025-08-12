@@ -21,7 +21,7 @@ ssh_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCTcVb4hUXk2eTfWSfee0W2HaXGERZoz/eFlCo0LK6PswmCGuPFgbUn40eCnpgn+OXGA2u1hVkZ1k15ydjidXTZ5IWrgSdiRN0eZ5snrFnOaD9unBzJW6X+Vhs0JHunYdWjO7IawQkwzxcsDcVR4DM8kZ1aj49EK7xe95OOdYs0N212B456rSI4wjqNOOtvaxK7BLpuPSD/Ej3CngeOyXvqoNrd3Z7IhEoh7pctJDElCv3YkUA87zD3vThatY1x3Hb7X/TbbId9XhcWzZOqAPgXhQiJSRcFlTLc3LzaWE5MMtCYeNKpp5011Q7KKXEzqTjA1JhqcHi8fv70Jo9hTI97CQzC9q/reL/oEZK+IQ5aEDniRCx9RgCM7FnxtI79ElpncMmRAmbUsGTdjkEVhYu3BKTPB39MH4mwuPm+jvtGyG3KRjRASpusS6jx7KczLx6H6sMsnxcXTg5tErEVzF1EI9Vtzye7QwtSHV8sVjZKq1+ruhS9Ltbqlvhn0wSj79l6kYfJ2c9Qd78xh6DgVIXz0bwFV9BSae7fJ9Zb/phMC2DaTob6ZPUs6qNzULNF7cGj2VD4MlTtKYAYrmahGU6HIW4APIHJIdYLXx5Gn+5cxSubkmq3gbJ15iJjunoL9AlJsH0PeqBKms04ZAYkZTq5W0eUywRZl39btdgRDVbC6w== ubuntu
 # Append pem key path to set ssh key for ProxyCommand. Example: `ProxyCommand="ssh -W %h:%p -q ubuntu@3.109.6.46 -i ~/.ssh/simple-dev.pem"`
 ansible_ssh_common_args: >
-  -o ProxyCommand="ssh -W %h:%p -q ubuntu@3.108.97.190 -p 17430 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+  -o ProxyCommand="ssh -W %h:%p -q ubuntu@3.108.97.190 -p 11435 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
   -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 
 # Set ec2 specific network interface
