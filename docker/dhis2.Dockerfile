@@ -1,4 +1,4 @@
-FROM dhis2/core:2.40.5.0
+FROM dhis2/core:2.40.8.2
 
 USER root
 RUN mkdir -p /opt/dhis2-ext
