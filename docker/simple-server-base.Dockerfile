@@ -1,9 +1,6 @@
 # Base Phusion image with customizable Ruby support
 FROM phusion/passenger-customizable:2.0.1
 
-# Set ENV variables (fixed warning)
-ENV HOME=/root
-
 # Install base packages needed for Ruby compilation and general tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
