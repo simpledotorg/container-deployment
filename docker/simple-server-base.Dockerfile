@@ -35,6 +35,9 @@ RUN wget https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz && \
 # Install specific bundler version
 RUN gem install bundler -v 2.4.22
 
+# Symlink the bundle executable for the 'app' user to find
+RUN ln -sf $(which bundle) /usr/bin/bundle
+
 # Install general system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
   redis-server \
