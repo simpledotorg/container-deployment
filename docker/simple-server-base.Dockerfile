@@ -28,15 +28,22 @@ RUN wget https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz && \
     tar -xvzf ruby-2.7.8.tar.gz && \
     cd ruby-2.7.8 && \
     ./configure && make -j"$(nproc)" && make install && \
-    cd .. && rm -rf ruby-2.7.8 ruby-2.7.8.tar.gz && \
-    ln -sf /usr/local/bin/ruby /usr/bin/ruby && \
-    ln -sf /usr/local/bin/gem /usr/bin/gem
+    cd .. && rm -rf ruby-2.7.8 ruby-2.7.8.tar.gz
 
 # Install specific bundler version
 RUN gem install bundler -v 2.4.22
 
-# Symlink the bundle executable for the 'app' user to find
-RUN ln -sf $(which bundle) /usr/bin/bundle
+# --- 🚀 Permanent Fix for RVM Conflict ---
+# Remove the global RVM configuration file
+RUN rm -f /etc/profile.d/rvm.sh
+
+# Switch to the 'app' user to clean their profile and set the PATH
+USER app
+RUN rm -f /home/app/.bash_profile /home/app/.profile /home/app/.rvmrc
+RUN echo 'export PATH=/usr/local/bin:$PATH' >> /home/app/.bashrc
+USER root
+
+# --- End of Fix ---
 
 # Install general system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
