@@ -18,35 +18,33 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
   gnupg2 \
   lsb-release \
-  git \
-  vim \
-  jq \
-  cron \
-  s3cmd \
-  libnss3-tools \
-  && apt-get clean && rm -rf /var/lib/apt/lists/*
+  git
 
 WORKDIR /usr/src
 RUN wget https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz && \
     tar -xvzf ruby-2.7.8.tar.gz && \
     cd ruby-2.7.8 && \
     ./configure && make -j"$(nproc)" && make install && \
-    cd .. && rm -rf ruby-2.7.8 ruby-2.7.8.tar.gz && \
-    ln -sf /usr/local/bin/ruby /usr/bin/ruby && \
-    ln -sf /usr/local/bin/gem /usr/bin/gem
+    cd .. && rm -rf ruby-2.7.8 ruby-2.7.8.tar.gz
 
 RUN gem install bundler -v 2.4.22
 
-RUN mkdir -p /home/app/.gem && chown -R app:app /home/app/.gem
-ENV PATH=/home/app/.gem/bin:/usr/local/bin:$PATH
-ENV GEM_HOME=/home/app/.gem
-ENV GEM_PATH=/home/app/.gem
-ENV GEM_ROOT=
-ENV MY_RUBY_HOME= 
+RUN rm -f /etc/profile.d/rvm.sh
 
 USER app
-RUN gem install bundler -v 2.4.22
+RUN rm -f /home/app/.bash_profile /home/app/.profile /home/app/.rvmrc
+RUN echo 'export PATH=/usr/local/bin:$PATH' >> /home/app/.bashrc
 USER root
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  redis-server \
+  jq \
+  cron \
+  vim \
+  s3cmd \
+  libnss3-tools \
+  firefox \
+  kmod
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
@@ -55,13 +53,15 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get update && apt-get install -y --no-install-recommends nodejs
 
-RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    apt-get update && apt-get install -y postgresql-client-14 libpq-dev && apt-get autoremove -y
+RUN apt policy postgresql && \
+  curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
+  echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+  apt-get update && apt-get install -y postgresql-client-14 libpq-dev && apt-get autoremove -y
 
 WORKDIR /home/app
 RUN wget https://in-simple-assets-public.s3.ap-south-1.amazonaws.com/linux_phat_client.tgz && \
-    tar -xvf linux_phat_client.tgz && rm -rf linux_phat_client.tgz
+    tar -xvf linux_phat_client.tgz && \
+    rm -rf linux_phat_client.tgz
 
 RUN mv /etc/cron.daily/logrotate /etc/cron.hourly/
 
