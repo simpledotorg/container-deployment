@@ -43,12 +43,12 @@ RUN echo "--- Verifying the installed binaries ---" && \
     /usr/local/bin/bundle -v
 
 RUN echo "--- Fixing RVM and PATH conflicts ---" && \
-    rm -rf /usr/local/rvm && \
+    rm -rf /usr/local/rvm /etc/profile.d/rvm.sh && \
     ln -sf /usr/local/bin/ruby /usr/bin/ruby && \
     ln -sf /usr/local/bin/bundle /usr/bin/bundle
 
 USER app
-RUN rm -f /home/app/.bash_profile /home/app/.profile /home/app/.rvmrc
+RUN rm -f /home/app/.bash_profile /home/app/.profile /home/app/.rvmrc /home/app/.bashrc
 USER root
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
