@@ -3,7 +3,42 @@ argo-cd:
     domain: argocd-sandbox.simple.org
   notifications:
     argocdUrl: "https://argocd-sandbox.simple.org"
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  controller:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true                     
+  dex:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  repoServer:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  applicationSet:
+    metrics:
+      enabled: true
+      service:
+        servicePort: 8080
+      serviceMonitor:
+        enabled: true
+  redis:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true                     
   server:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     ingress:
       enabled: true
       annotations:
