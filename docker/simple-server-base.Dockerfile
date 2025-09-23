@@ -1,5 +1,7 @@
 FROM phusion/passenger-customizable:2.0.1
 
+RUN rm -rf /usr/local/rvm /etc/profile.d/rvm.sh
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
   libssl-dev \
@@ -33,16 +35,15 @@ RUN wget https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz && \
     ./configure && make -j"$(nproc)" && make install && \
     cd .. && rm -rf ruby-2.7.8 ruby-2.7.8.tar.gz && \
     ln -sf /usr/local/bin/ruby /usr/bin/ruby && \
-    ln -sf /usr/local/bin/gem /usr/bin/gem
+    ln -sf /usr/local/bin/gem /usr/bin/gem && \
+    ln -sf /usr/local/bin/bundle /usr/bin/bundle
 
 RUN gem install bundler -v 2.4.22
 
 RUN mkdir -p /home/app/.gem && chown -R app:app /home/app/.gem
-ENV PATH=/home/app/.gem/bin:/usr/local/bin:$PATH
+ENV PATH=/usr/local/bin:/home/app/.gem/bin:$PATH
 ENV GEM_HOME=/home/app/.gem
 ENV GEM_PATH=/home/app/.gem
-ENV GEM_ROOT=
-ENV MY_RUBY_HOME= 
 
 USER app
 RUN gem install bundler -v 2.4.22
