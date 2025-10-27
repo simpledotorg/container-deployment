@@ -19,3 +19,13 @@ metabase:
     - hosts:
       - metabase.bd.simple.org
       secretName: metabase.bd.simple.org-tls
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 1
+      memory: 4Gi
+  extraEnvVars:
+    - name: JAVA_OPTS
+      value: "-Xmx2g -Xms2g -XX:+UseG1GC -XX:+MaxRAMPercentage=75.0 -XX:+HeapDumpOnOutOfMemoryError"
