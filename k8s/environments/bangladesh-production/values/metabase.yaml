@@ -28,4 +28,4 @@ metabase:
       memory: 4Gi
   extraEnvVars:
     - name: JAVA_OPTS
-      value: "-Xmx2g -Xms2g -XX:+UseG1GC -XX:+MaxRAMPercentage=75.0 -XX:+HeapDumpOnOutOfMemoryError"
+      value: "-XX:+UseG1GC -XX:MaxRAMPercentage=75.0 -Xms1g -Xss1m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp"
