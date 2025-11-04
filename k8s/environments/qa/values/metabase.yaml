@@ -30,5 +30,5 @@ metabase:
       cpu: 500m
       memory: 2Gi
   extraEnvVars:
-    - name: JAVA_OPTS
+    - name: JAVA_TOOL_OPTIONS
       value: "-XX:+UseG1GC -XX:MaxRAMPercentage=75.0 -Xms512m -Xss1m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp"
