@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patient-scoring
+  labels:
+    app.kubernetes.io/name: patient-scoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: patient-scoring
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: patient-scoring
+    spec:
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: patient-scoring
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+        - /bin/bash
+        - -c
+        - |
+          set -e
+
+          # Construct DATABASE_URL from environment variables
+          export DATABASE_URL="postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
+
+          echo "============================================"
+          echo "Patient Scoring Container Started"
+          echo "============================================"
+          echo "Database Host: ${DB_HOST}:${DB_PORT}"
+          echo "Database Name: ${DB_NAME}"
+          echo "============================================"
+          echo ""
+          echo "To run scoring manually:"
+          echo "  kubectl exec -it <pod-name> -n <namespace> -- /bin/bash -c 'cd /app && ./train.sh && ./scoring.sh'"
+          echo ""
+          echo "Scheduled runs are handled by the patient-scoring-cronjob CronJob."
+          echo "============================================"
+
+          # Keep container alive
+          tail -f /dev/null
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.database.secretName }}
+              key: user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.database.secretName }}
+              key: password
+        - name: DB_HOST
+          value: "{{ .Values.database.host }}"
+        - name: DB_PORT
+          value: "{{ .Values.database.port }}"
+        - name: DB_NAME
+          value: "{{ .Values.database.name }}"
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

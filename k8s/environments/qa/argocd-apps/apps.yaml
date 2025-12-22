@@ -394,3 +394,31 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+---
+
+# Patient Scoring - ML model for patient risk scoring (runs every 15 days)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: patient-scoring
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/patient-scoring
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
