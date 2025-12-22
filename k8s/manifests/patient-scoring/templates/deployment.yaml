@@ -45,6 +45,7 @@ spec:
           touch /var/log/scoring.log
 
           # Setup cron job file with proper format
+          mkdir -p /etc/cron.d
           cat > /etc/cron.d/patient-scoring << CRONEOF
           SHELL=/bin/bash
           PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
@@ -71,11 +72,23 @@ spec:
           echo "============================================"
           echo "Container Ready!"
           echo ""
-          echo "To run manually:"
-          echo "  ./train.sh && ./scoring.sh"
+          echo "To run manually from outside the pod:"
+          echo "  kubectl exec -it <pod-name> -n <namespace> -- /bin/bash -c 'cd /app && ./train.sh && ./scoring.sh'"
+          echo ""
+          echo "To run manually inside the pod:"
+          echo "  cd /app && ./train.sh && ./scoring.sh"
           echo ""
           echo "To check logs:"
           echo "  tail -f /var/log/scoring.log"
+          echo "============================================"
+
+          # Run initial scoring job on startup
+          echo ""
+          echo "Running initial scoring job on startup..."
+          echo "============================================"
+          cd /app && ./train.sh && ./scoring.sh >> /var/log/scoring.log 2>&1
+          echo "Initial scoring job completed!"
+          echo "Next scheduled run: {{ .Values.schedule }}"
           echo "============================================"
 
           # Keep container alive and tail logs
