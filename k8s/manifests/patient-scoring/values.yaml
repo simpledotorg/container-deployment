@@ -1,6 +1,6 @@
 image:
   repository: simpledotorg/simple_patient_scoring
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   tag: main
 
 # Cron schedule: Every 15 days at midnight
