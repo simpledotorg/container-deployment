@@ -410,7 +410,7 @@ spec:
   source:
     path: k8s/manifests/patient-scoring
     repoURL: 'https://github.com/simpledotorg/container-deployment.git'
-    targetRevision: master
+    targetRevision: sagar-shinde/sc-17559
     helm:
       valueFiles:
         - values.yaml
