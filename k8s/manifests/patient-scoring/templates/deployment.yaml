@@ -34,65 +34,18 @@ spec:
           echo "============================================"
           echo "Patient Scoring Container Started"
           echo "============================================"
-          echo "Schedule: {{ .Values.schedule }}"
           echo "Database Host: ${DB_HOST}:${DB_PORT}"
           echo "Database Name: ${DB_NAME}"
           echo "============================================"
           echo ""
-
-          # Create log directory
-          mkdir -p /var/log
-          touch /var/log/scoring.log
-
-          # Setup cron job file with proper format
-          mkdir -p /etc/cron.d
-          cat > /etc/cron.d/patient-scoring << CRONEOF
-          SHELL=/bin/bash
-          PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-          DB_USER=${DB_USER}
-          DB_PASSWORD=${DB_PASSWORD}
-          DB_HOST=${DB_HOST}
-          DB_PORT=${DB_PORT}
-          DB_NAME=${DB_NAME}
-
-          # Run scoring every 15 days at midnight
-          {{ .Values.schedule }} root cd /app && export DATABASE_URL="postgres://\${DB_USER}:\${DB_PASSWORD}@\${DB_HOST}:\${DB_PORT}/\${DB_NAME}" && ./train.sh && ./scoring.sh >> /var/log/scoring.log 2>&1
-
-          CRONEOF
-
-          chmod 0644 /etc/cron.d/patient-scoring
-          crontab /etc/cron.d/patient-scoring
-
-          echo "Cron job configured successfully"
-          echo ""
-
-          # Start cron daemon
-          service cron start || cron
-
-          echo "============================================"
-          echo "Container Ready!"
-          echo ""
-          echo "To run manually from outside the pod:"
+          echo "To run scoring manually:"
           echo "  kubectl exec -it <pod-name> -n <namespace> -- /bin/bash -c 'cd /app && ./train.sh && ./scoring.sh'"
           echo ""
-          echo "To run manually inside the pod:"
-          echo "  cd /app && ./train.sh && ./scoring.sh"
-          echo ""
-          echo "To check logs:"
-          echo "  tail -f /var/log/scoring.log"
+          echo "Scheduled runs are handled by the patient-scoring-cronjob CronJob."
           echo "============================================"
 
-          # Run initial scoring job on startup
-          echo ""
-          echo "Running initial scoring job on startup..."
-          echo "============================================"
-          cd /app && ./train.sh && ./scoring.sh >> /var/log/scoring.log 2>&1
-          echo "Initial scoring job completed!"
-          echo "Next scheduled run: {{ .Values.schedule }}"
-          echo "============================================"
-
-          # Keep container alive and tail logs
-          tail -f /var/log/scoring.log
+          # Keep container alive
+          tail -f /dev/null
         env:
         - name: DB_USER
           valueFrom:
