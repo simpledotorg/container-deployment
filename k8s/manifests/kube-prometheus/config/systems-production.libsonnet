@@ -86,6 +86,16 @@
       module: 'http_2xx',
     },
     {
+      name: 'simple-server-bgd',
+      targets: ['https://api-demo.bd.simple.org'],
+      labels: {
+        service: 'simple_server',
+        environment: 'staging',
+        country: 'bgd',
+      },
+      module: 'http_2xx',
+    },
+    {
       name: 'simple-metabase-bgd',
       targets: ['https://metabase.bd.simple.org/'],
       labels: {
