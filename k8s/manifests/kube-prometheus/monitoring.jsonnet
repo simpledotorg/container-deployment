@@ -12,6 +12,7 @@ local loki = (import 'lib/loki.libsonnet');
 local sendgrid = (import 'lib/sendgrid.libsonnet');
 local sslCertificateStatus = (import 'lib/ssl-certificate-status.libsonnet');
 local blackboxProbes = (import 'lib/blackbox-probe.libsonnet');
+local http2xxMonitoring = (import 'lib/2xx-monitoring.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -43,6 +44,7 @@ local grafanaDashboards =
   ingressNginx.grafanaDashboards +
   simpleServer.grafanaDashboards +
   loki.grafanaDashboards +
+  http2xxMonitoring.grafanaDashboards +
   (if enableDhis2Dashboards then dhis2Server.grafanaDashboards else {});
 
 local blackboxProbeMonitors =
