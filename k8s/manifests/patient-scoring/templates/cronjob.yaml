@@ -33,7 +33,7 @@ spec:
             - |
               set -e
 
-              # Function to push metrics to Pushgateway
+              # Function to push metrics to Pushgateway using Python
               push_metrics() {
                 local score_name="$1"
                 local start_time="$2"
@@ -41,8 +41,11 @@ spec:
                 local status="$4"
                 local duration=$((end_time - start_time))
 
-                cat <<METRICS_EOF | curl --data-binary @- "${PUSHGATEWAY_URL}/metrics/job/patient_scoring/score/${score_name}"
-              # HELP simple_scoring_batch_last_run_date Epoch timestamp of the last scoring batch run
+                python3 << PYTHON_EOF
+              import urllib.request
+              import urllib.error
+
+              metrics = """# HELP simple_scoring_batch_last_run_date Epoch timestamp of the last scoring batch run
               # TYPE simple_scoring_batch_last_run_date gauge
               simple_scoring_batch_last_run_date{score="${score_name}"} ${end_time}
               # HELP simple_scoring_batch_last_run_status Status of the last scoring batch run (1=success, 0=failure)
@@ -51,7 +54,17 @@ spec:
               # HELP simple_scoring_batch_last_run_duration_in_seconds Duration of the last scoring batch run in seconds
               # TYPE simple_scoring_batch_last_run_duration_in_seconds gauge
               simple_scoring_batch_last_run_duration_in_seconds{score="${score_name}"} ${duration}
-              METRICS_EOF
+              """
+
+              url = "${PUSHGATEWAY_URL}/metrics/job/patient_scoring/score/${score_name}"
+              try:
+                  req = urllib.request.Request(url, data=metrics.encode('utf-8'), method='POST')
+                  req.add_header('Content-Type', 'text/plain')
+                  with urllib.request.urlopen(req) as response:
+                      print(f"Metrics pushed for {score_name}: {response.status}")
+              except urllib.error.URLError as e:
+                  print(f"Failed to push metrics for {score_name}: {e}")
+              PYTHON_EOF
               }
 
               # Construct DATABASE_URL from environment variables
