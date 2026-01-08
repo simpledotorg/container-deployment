@@ -40,45 +40,38 @@ spec:
                 local end_time="$3"
                 local status="$4"
                 local duration=$((end_time - start_time))
-
                 echo "Pushing metrics for score: ${score_name}, status: ${status}, duration: ${duration}s"
-
-                python3 -c "
+                cat > /tmp/push_metrics.py << 'PYEOF'
 import urllib.request
 import urllib.error
 import sys
-
-score_name = '${score_name}'
-end_time = '${end_time}'
-status = '${status}'
-duration = '${duration}'
-pushgateway_url = '${PUSHGATEWAY_URL}'
-
-lb = '{'
-rb = '}'
-metrics = '''# HELP simple_scoring_batch_last_run_date Epoch timestamp of the last scoring batch run
+import os
+score = os.environ['SCORE_NAME']
+end = os.environ['END_TIME']
+stat = os.environ['STATUS']
+dur = os.environ['DURATION']
+url = os.environ['PUSH_URL']
+metrics = """# HELP simple_scoring_batch_last_run_date Epoch timestamp of the last scoring batch run
 # TYPE simple_scoring_batch_last_run_date gauge
-simple_scoring_batch_last_run_date%sscore=\"%s\"%s %s
+simple_scoring_batch_last_run_date{score="%s"} %s
 # HELP simple_scoring_batch_last_run_status Status of the last scoring batch run (1=success, 0=failure)
 # TYPE simple_scoring_batch_last_run_status gauge
-simple_scoring_batch_last_run_status%sscore=\"%s\"%s %s
+simple_scoring_batch_last_run_status{score="%s"} %s
 # HELP simple_scoring_batch_last_run_duration_in_seconds Duration of the last scoring batch run in seconds
 # TYPE simple_scoring_batch_last_run_duration_in_seconds gauge
-simple_scoring_batch_last_run_duration_in_seconds%sscore=\"%s\"%s %s
-''' % (lb, score_name, rb, end_time, lb, score_name, rb, status, lb, score_name, rb, duration)
-
-url = '%s/metrics/job/patient_scoring/score/%s' % (pushgateway_url, score_name)
-print('Pushing to: %s' % url)
-
+simple_scoring_batch_last_run_duration_in_seconds{score="%s"} %s
+""" % (score, end, score, stat, score, dur)
+print("Pushing to: %s" % url)
 try:
     req = urllib.request.Request(url, data=metrics.encode('utf-8'), method='POST')
     req.add_header('Content-Type', 'text/plain')
-    with urllib.request.urlopen(req) as response:
-        print('Metrics pushed successfully: HTTP %s' % response.status)
-except urllib.error.URLError as e:
-    print('Failed to push metrics: %s' % e, file=sys.stderr)
+    resp = urllib.request.urlopen(req)
+    print("Metrics pushed successfully: HTTP %s" % resp.status)
+except Exception as e:
+    print("Failed to push metrics: %s" % e)
     sys.exit(1)
-"
+PYEOF
+                SCORE_NAME="${score_name}" END_TIME="${end_time}" STATUS="${status}" DURATION="${duration}" PUSH_URL="${PUSHGATEWAY_URL}/metrics/job/patient_scoring/score/${score_name}" python3 /tmp/push_metrics.py
               }
 
               # Construct DATABASE_URL from environment variables
