@@ -54,27 +54,29 @@ status = '${status}'
 duration = '${duration}'
 pushgateway_url = '${PUSHGATEWAY_URL}'
 
+lb = '{'
+rb = '}'
 metrics = '''# HELP simple_scoring_batch_last_run_date Epoch timestamp of the last scoring batch run
 # TYPE simple_scoring_batch_last_run_date gauge
-simple_scoring_batch_last_run_date{{score=\"{score}\"}} {end}
+simple_scoring_batch_last_run_date%sscore=\"%s\"%s %s
 # HELP simple_scoring_batch_last_run_status Status of the last scoring batch run (1=success, 0=failure)
 # TYPE simple_scoring_batch_last_run_status gauge
-simple_scoring_batch_last_run_status{{score=\"{score}\"}} {stat}
+simple_scoring_batch_last_run_status%sscore=\"%s\"%s %s
 # HELP simple_scoring_batch_last_run_duration_in_seconds Duration of the last scoring batch run in seconds
 # TYPE simple_scoring_batch_last_run_duration_in_seconds gauge
-simple_scoring_batch_last_run_duration_in_seconds{{score=\"{score}\"}} {dur}
-'''.format(score=score_name, end=end_time, stat=status, dur=duration)
+simple_scoring_batch_last_run_duration_in_seconds%sscore=\"%s\"%s %s
+''' % (lb, score_name, rb, end_time, lb, score_name, rb, status, lb, score_name, rb, duration)
 
-url = f'{pushgateway_url}/metrics/job/patient_scoring/score/{score_name}'
-print(f'Pushing to: {url}')
+url = '%s/metrics/job/patient_scoring/score/%s' % (pushgateway_url, score_name)
+print('Pushing to: %s' % url)
 
 try:
     req = urllib.request.Request(url, data=metrics.encode('utf-8'), method='POST')
     req.add_header('Content-Type', 'text/plain')
     with urllib.request.urlopen(req) as response:
-        print(f'Metrics pushed successfully: HTTP {response.status}')
+        print('Metrics pushed successfully: HTTP %s' % response.status)
 except urllib.error.URLError as e:
-    print(f'Failed to push metrics: {e}', file=sys.stderr)
+    print('Failed to push metrics: %s' % e, file=sys.stderr)
     sys.exit(1)
 "
               }
