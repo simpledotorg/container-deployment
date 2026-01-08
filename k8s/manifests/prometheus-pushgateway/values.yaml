@@ -1,0 +1,19 @@
+image:
+  repository: prom/pushgateway
+  tag: v1.6.2
+  pullPolicy: IfNotPresent
+
+service:
+  port: 9091
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "50m"
+  limits:
+    memory: "128Mi"
+    cpu: "100m"
+
+nodeSelector: {}
+affinity: {}
+tolerations: []

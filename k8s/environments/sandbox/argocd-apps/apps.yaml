@@ -795,6 +795,34 @@ spec:
 
 ---
 
+# Prometheus Pushgateway - For batch job metrics (patient-scoring)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-pushgateway
+spec:
+  destination:
+    name: ''
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/prometheus-pushgateway
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
 # Patient Scoring - ML model for patient risk scoring (runs every 15 days)
 apiVersion: argoproj.io/v1alpha1
 kind: Application

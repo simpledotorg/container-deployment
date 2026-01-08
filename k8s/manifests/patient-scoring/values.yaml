@@ -31,3 +31,7 @@ tolerations: []
 # Pod security context
 podSecurityContext:
   fsGroup: 9999
+
+# Pushgateway configuration for metrics
+pushgateway:
+  namespace: "monitoring"
