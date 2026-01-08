@@ -6,6 +6,11 @@ image:
 service:
   port: 9091
 
+# Enable ServiceMonitor for Prometheus Operator
+# Set to false for clusters without Prometheus Operator
+serviceMonitor:
+  enabled: true
+
 resources:
   requests:
     memory: "64Mi"

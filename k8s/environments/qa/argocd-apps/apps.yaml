@@ -414,6 +414,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - ../../environments/qa/values/pushgateway.yaml
   project: default
   syncPolicy:
     syncOptions:
