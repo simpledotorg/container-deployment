@@ -41,37 +41,12 @@ spec:
                 local status="$4"
                 local duration=$((end_time - start_time))
                 echo "Pushing metrics for score: ${score_name}, status: ${status}, duration: ${duration}s"
-                cat > /tmp/push_metrics.py << 'PYEOF'
-import urllib.request
-import urllib.error
-import sys
-import os
-score = os.environ['SCORE_NAME']
-end = os.environ['END_TIME']
-stat = os.environ['STATUS']
-dur = os.environ['DURATION']
-url = os.environ['PUSH_URL']
-metrics = """# HELP simple_scoring_batch_last_run_date Epoch timestamp of the last scoring batch run
-# TYPE simple_scoring_batch_last_run_date gauge
-simple_scoring_batch_last_run_date{score="%s"} %s
-# HELP simple_scoring_batch_last_run_status Status of the last scoring batch run (1=success, 0=failure)
-# TYPE simple_scoring_batch_last_run_status gauge
-simple_scoring_batch_last_run_status{score="%s"} %s
-# HELP simple_scoring_batch_last_run_duration_in_seconds Duration of the last scoring batch run in seconds
-# TYPE simple_scoring_batch_last_run_duration_in_seconds gauge
-simple_scoring_batch_last_run_duration_in_seconds{score="%s"} %s
-""" % (score, end, score, stat, score, dur)
-print("Pushing to: %s" % url)
-try:
-    req = urllib.request.Request(url, data=metrics.encode('utf-8'), method='POST')
-    req.add_header('Content-Type', 'text/plain')
-    resp = urllib.request.urlopen(req)
-    print("Metrics pushed successfully: HTTP %s" % resp.status)
-except Exception as e:
-    print("Failed to push metrics: %s" % e)
-    sys.exit(1)
-PYEOF
-                SCORE_NAME="${score_name}" END_TIME="${end_time}" STATUS="${status}" DURATION="${duration}" PUSH_URL="${PUSHGATEWAY_URL}/metrics/job/patient_scoring/score/${score_name}" python3 /tmp/push_metrics.py
+                export SCORE_NAME="${score_name}"
+                export END_TIME="${end_time}"
+                export STATUS="${status}"
+                export DURATION="${duration}"
+                export PUSH_URL="${PUSHGATEWAY_URL}/metrics/job/patient_scoring/score/${score_name}"
+                python3 /scripts/push_metrics.py || echo "Warning: Failed to push metrics"
               }
 
               # Construct DATABASE_URL from environment variables
@@ -138,6 +113,14 @@ PYEOF
               value: "{{ .Values.database.name }}"
             resources:
               {{- toYaml .Values.resources | nindent 14 }}
+            volumeMounts:
+            - name: metrics-script
+              mountPath: /scripts
+          volumes:
+          - name: metrics-script
+            configMap:
+              name: patient-scoring-metrics-script
+              defaultMode: 0755
           {{- with .Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
