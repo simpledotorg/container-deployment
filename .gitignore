@@ -18,3 +18,4 @@ argocd_password_setup_users.txt
 k8s/manifests/*/charts/*.tgz
 k8s/manifests/monitoring/vendor/
 
+scripts/
