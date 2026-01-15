@@ -1,5 +1,5 @@
 # Container deployment
-Automation and manifests for container deployment
+Automation and manifests for container deployment.
 
 ## Index
 - [Secret Management](./doc/SecretManagement.md)
