@@ -1,0 +1,26 @@
+image:
+  tag: 2.40.8.2
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: dhis2-sandbox-epidemics.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - dhis2-sandbox-epidemics.simple.org
+    secretName: dhis2-sandbox-epidemics.simple.org-tls
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: role-dhis2-sandbox-epidemics
+          operator: In
+          values:
+          - "true"

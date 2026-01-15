@@ -1,0 +1,10 @@
+apiVersion: v2
+name: datadog-operator-wrapper
+description: Datadog operator wrapper
+type: application
+version: 0.1.0
+
+dependencies:
+- name: datadog-operator
+  version: "1.4.1"
+  repository: "https://helm.datadoghq.com"

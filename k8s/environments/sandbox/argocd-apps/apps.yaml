@@ -1,0 +1,850 @@
+# Argocd
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+spec:
+  destination:
+    name: ''
+    namespace: argocd
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/argo-cd
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/argocd.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Cert manager
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+spec:
+  destination:
+    name: ''
+    namespace: cert-manager
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/cert-manager
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Configmaps
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: configmaps
+spec:
+  destination:
+    name: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/configmaps
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Nginx ingress
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+spec:
+  destination:
+    name: ''
+    namespace: ingress-nginx
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/ingress
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.aws-nlb.yaml
+        - values.affinity.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Reloader
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: reloader
+spec:
+  destination:
+    name: ''
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/reloader
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Sealed secrets
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sealed-secrets
+spec:
+  destination:
+    name: ''
+    namespace: sealed-secrets
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/sealed-secrets
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Secrets
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: secrets
+spec:
+  destination:
+    name: ''
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/secrets
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Postgres operator
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgo
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/pgo
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgo-postgres
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/simple-server
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# Cache redis
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cache-redis
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/redis
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.affinity-cache.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Worker redis
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: worker-redis
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/redis
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.affinity-worker.yaml
+        - ../../environments/sandbox/values/worker-redis.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Simple server, worker and cron
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: simple-server
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/simple-server
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.affinity.yaml
+        - ../../environments/sandbox/values/simple.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Metabase
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metabase
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/metabase
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.affinity.yaml
+        - ../../environments/sandbox/values/metabase.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# RTSL prometheus exporter
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rtsl-exporter
+spec:
+  destination:
+    namespace: rtsl-exporter
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: charts/rtsl-exporter
+    repoURL: 'https://github.com/simpledotorg/rtsl_exporter.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    directory:
+      jsonnet:
+        extVars:
+        - name: ENVIRONMENT
+          value: sandbox
+        libs:
+          - k8s/manifests/kube-prometheus/vendor
+      exclude: '*.json'
+    path: k8s/manifests/kube-prometheus
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Loki
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+spec:
+  destination:
+    namespace: loki
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/loki
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/loki.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-01 server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-01-server
+spec:
+  destination:
+    name: ''
+    namespace: dhis2-sandbox-01
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-sandbox-01.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-01 postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-01-postgres
+spec:
+  destination:
+    namespace: dhis2-sandbox-01
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres//dhis2-sandbox-01
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-epidemics server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-epidemics-server
+spec:
+  destination:
+    namespace: dhis2-sandbox-epidemics
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-sandbox-epidemics.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-sandbox-epidemics postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-sandbox-epidemics-postgres
+spec:
+  destination:
+    namespace: dhis2-sandbox-epidemics
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-sandbox-epidemics
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-demo-ecuador server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-demo-ecuador-server
+spec:
+  destination:
+    namespace: dhis2-demo-ecuador
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-demo-ecuador.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-demo-ecuador postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-demo-ecuador-postgres
+spec:
+  destination:
+    namespace: dhis2-demo-ecuador
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-demo-ecuador
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-htn-tracking server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-htn-tracking-server
+spec:
+  destination:
+    namespace: dhis2-htn-tracking
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-htn-tracking.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-htn-tracking postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-htn-tracking-postgres
+spec:
+  destination:
+    namespace: dhis2-htn-tracking
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-htn-tracking
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-phc server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-phc-server
+spec:
+  destination:
+    namespace: dhis2-phc
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-phc.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-phc postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-phc-postgres
+spec:
+  destination:
+    namespace: dhis2-phc
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-phc
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-ecuador-sandbox server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-ecuador-sandbox-server
+spec:
+  destination:
+    namespace: dhis2-ecuador-sandbox
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-ecuador-sandbox.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-ecuador-sandbox postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-ecuador-sandbox-postgres
+spec:
+  destination:
+    namespace: dhis2-ecuador-sandbox
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-ecuador-sandbox
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# dhis2-c61c699a server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-c61c699a-server
+spec:
+  destination:
+    namespace: dhis2-c61c699a
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/dhis2
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/sandbox/values/dhis2-c61c699a.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# dhis2-c61c699a postgres
+# Postgres cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dhis2-c61c699a-postgres
+spec:
+  destination:
+    namespace: dhis2-c61c699a
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/environments/sandbox/op-postgres/dhis2-c61c699a
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: true
+
+---
+
+# Prometheus Pushgateway - For batch job metrics (patient-scoring)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-pushgateway
+spec:
+  destination:
+    name: ''
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/prometheus-pushgateway
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Patient Scoring - ML model for patient risk scoring (runs every 15 days)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: patient-scoring
+spec:
+  destination:
+    name: ''
+    namespace: simple-v1
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/patient-scoring
+    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

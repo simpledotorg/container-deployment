@@ -1,0 +1,25 @@
+---
+
+all:
+  children:
+    k3s_master_node:
+      hosts:
+        node-01:
+          ansible_host: 10.122.0.20
+    k3s_master_nodes:
+      children:
+        k3s_master_node:
+      hosts:
+        node-02:
+          ansible_host: 10.122.0.21
+        node-03:
+          ansible_host: 10.122.0.22
+    k3s_worker_nodes:
+      hosts:
+    k3s_cluster:
+      children:
+        k3s_master_nodes:
+        k3s_worker_nodes:
+    test:
+      children:
+        k3s_cluster:

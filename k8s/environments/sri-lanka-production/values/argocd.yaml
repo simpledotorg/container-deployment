@@ -1,0 +1,47 @@
+argo-cd:
+  notifications:
+    argocdUrl: "https://argocd-simple.health.gov.lk"
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
+          more_set_headers "Referrer-Policy: no-referrer";
+      ingressClassName: "nginx"
+      hosts:
+        - argocd-simple.health.gov.lk
+      paths:
+        - /
+      pathType: Prefix
+      https: false
+  configs:
+    cm:
+      accounts.cicd: login
+      accounts.priyanga: login 
+      accounts.dan: login 
+      accounts.atharva: login 
+      accounts.roypeter: login 
+      accounts.ayushi: login
+      accounts.gyan: login
+      accounts.igbanam: login
+      accounts.arnaud: login
+      accounts.sagar: login
+       
+    # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
+    rbac:
+      policy.default: role:readonly
+      policy.csv: |
+        p, role:cicd, applications, sync, *, allow
+        p, role:cicd, applications, update, *, allow
+        g, cicd, role:cicd
+        g, priyanga, role:admin
+        g, dan, role:admin
+        g, atharva, role:admin
+        g, roypeter, role:admin
+        g, ayushi, role:admin
+        g, gyan, role:admin
+        g, igbanam, role:admin
+        g, arnaud, role:admin
+        g, sagar, role:admin

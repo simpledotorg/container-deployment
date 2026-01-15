@@ -1,0 +1,10 @@
+image:
+  repository: pgpool/pgpool
+  pullPolicy: IfNotPresent
+  tag: 4.4.3
+
+replicaCount: 1
+
+nodeSelector: {}
+affinity: {}
+tolerations: []

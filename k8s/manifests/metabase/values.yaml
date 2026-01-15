@@ -1,0 +1,12 @@
+metabase:
+  image:
+    tag: v0.44.5
+  config:
+    database:
+      type: postgres
+    security:
+     sessionAge: 1440
+  secrets:
+    existingSecret:
+      name: simple-pguser-metabase
+      connectionURIKey: jdbc-uri

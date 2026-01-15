@@ -1,0 +1,16 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    "cert-manager.io/cluster-issuer": "letsencrypt-staging"
+  hosts:
+    - host: api.local.simple.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api.local.simple.org
+    secretName: api.local.simple.org-tls
+metrics:
+  enabled: true

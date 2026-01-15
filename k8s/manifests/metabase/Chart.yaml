@@ -1,0 +1,12 @@
+apiVersion: v2
+name: metabase-wrapper
+description: Metabase wrapper
+type: application
+version: 0.1.0
+
+dependencies:
+# As of 4 Nov 2022, the Metabase v2 helm chart is not available as helm artifact
+# Hence dependency is added to `./charts` directory manually
+# Steps for adding/updating dependency https://github.com/metabase/metabase/tree/helm-chart/helm-chart
+- name: metabase
+  version: 1.0.0

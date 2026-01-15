@@ -1,0 +1,49 @@
+{{ if .Values.migration.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.migration.name }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: {{ .Values.migration.name }}
+      {{- with .Values.migration.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: {{ .Values.migration.name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args: ["bundle", "exec", "rake", "db:migrate:with_data"]
+        envFrom:
+          - secretRef:
+              name: {{ .Values.existingSecret }}
+          - configMapRef:
+              name: {{ .Values.existingConfigmap }}
+        env:
+          - name: SIMPLE_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.existingDBSecret.name }}
+                key: {{ .Values.existingDBSecret.key }}
+                optional: false
+      {{- with .Values.migration.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.migration.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.migration.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{ end }}

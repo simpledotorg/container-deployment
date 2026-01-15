@@ -1,0 +1,17 @@
+---
+
+- name: Download kubeseal binary
+  ansible.builtin.get_url:
+    url: "https://github.com/bitnami-labs/sealed-secrets/releases/download/v{{ kubeseal_version }}/kubeseal-{{ kubeseal_version }}-linux-amd64.tar.gz"
+    dest: /tmp/
+
+- name: Extract kubeseal binary
+  ansible.builtin.unarchive:
+    src: /tmp/kubeseal-{{ kubeseal_version }}-linux-amd64.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Remove tar file
+  file:
+    state: absent
+    path: /tmp/kubeseal-{{ kubeseal_version }}-linux-amd64.tar.gz

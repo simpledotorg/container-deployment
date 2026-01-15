@@ -1,0 +1,100 @@
+prometheus:
+  extraScrapeConfigs: |
+    - job_name: 'federate'
+      scheme: https
+      scrape_interval: 15s
+      honor_labels: true
+      metrics_path: '/federate'
+      params:
+        'match[]':
+          - '{__name__=~".+"}'
+      static_configs:
+        - targets:
+          - 'prometheus-sandbox.simple.org'
+      basic_auth:
+        username: 'db25a3474d90'
+        password_file: '/etc/secrets/default'
+  server:
+    persistentVolume:
+      size: 100Gi
+    extraSecretMounts:
+      - name: secret-files
+        mountPath: /etc/secrets
+        subPath: ""
+        secretName: prometheus-auth
+        readOnly: true
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/auth-type: basic
+        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+        nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+      hosts:
+        - prometheus.simple.org
+      tls:
+        - secretName: prometheus.simple.org-tls
+          hosts:
+            - prometheus.simple.org
+  alertmanager:
+    ingress:
+      className: nginx
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/auth-type: basic
+        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+        nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+      hosts:
+        - host: alertmanager.simple.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+        - secretName: alertmanager.simple.org-tls
+          hosts:
+            - alertmanager.simple.org
+    extraArgs:
+      web.external-url: "https://alertmanager.simple.org"
+      web.route-prefix: "/"
+grafana:
+  admin:
+    existingSecret: "grafana-secrets"
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+      - grafana.simple.org
+    tls:
+      - secretName: grafana.simple.org-tls
+        hosts:
+          - grafana.simple.org
+  persistence:
+    enabled: true
+    size: 50Gi
+  grafana.ini:
+    server:
+      root_url: "https://grafana.simple.org/"
+    auth.generic_oauth:
+      enabled: true
+      name: Keycloak-OAuth
+      allow_sign_up: true
+      client_id: $__file{/etc/secrets/oauth_client_id}
+      client_secret: $__file{/etc/secrets/oauth_client_secret}
+      scopes: openid email profile offline_access roles
+      email_attribute_path: email
+      login_attribute_path: username
+      name_attribute_path: full_name
+      auth_url: https://sso.simple.org/realms/master/protocol/openid-connect/auth
+      token_url: https://sso.simple.org/realms/master/protocol/openid-connect/token
+      api_url: https://sso.simple.org/realms/master/protocol/openid-connect/userinfo
+      role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
+  extraSecretMounts:
+    - name: grafana-sso
+      mountPath: /etc/secrets
+      secretName: grafana-sso
+      readOnly: true

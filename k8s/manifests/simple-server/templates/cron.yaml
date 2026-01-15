@@ -1,0 +1,109 @@
+{{ if .Values.cron.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.cron.name }}
+  annotations:
+    configmap.reloader.stakater.com/reload: {{ .Values.existingConfigmap }}
+    secret.reloader.stakater.com/reload: {{ .Values.existingSecret }}
+spec:
+  replicas: {{ .Values.cron.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.cron.name }}
+  serviceName: {{ .Values.cron.name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.cron.name }}
+        prometheus.io/app: simple-server
+      {{- with .Values.cron.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.cron.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ .Values.cron.name }}
+        image: "{{ if eq .Values.cron.image.tag "" }}{{ .Values.image.repository }}:{{ .Values.image.tag }}{{ else }}{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}{{ end }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args: ["bin/docker-cron"]
+        resources:
+          {{- toYaml .Values.cron.resources | nindent 12 }}
+        envFrom:
+          - secretRef:
+              name: {{ .Values.existingSecret }}
+          - configMapRef:
+              name: {{ .Values.existingConfigmap }}
+        env:
+          - name: SIMPLE_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.existingDBSecret.name }}
+                key: {{ .Values.existingDBSecret.key }}
+                optional: false
+        volumeMounts:
+        - name: logs
+          mountPath: /home/deploy/apps/simple-server/shared/log
+        - name: app-logs
+          mountPath: /home/app/log
+      {{ if .Values.metrics.enabled }}
+      - name: {{ .Values.server.name }}-exporter
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command: ["bundle", "exec", "prometheus_exporter", "--bind", "0.0.0.0"]
+        ports:
+          - name: metrics
+            containerPort: 9394
+            protocol: TCP
+      {{ end }}
+      {{ if .Values.logTailer.enabled }}
+      - name: log-tailer
+        image: "{{ .Values.logTailer.image.repository }}:{{ .Values.logTailer.image.tag }}"
+        command: ["/bin/bash", "-c", "tail -F -n 0 /home/deploy/apps/simple-server/shared/log/cron.log /home/app/log/production.log"]
+        tty: true
+        stdin: true
+        volumeMounts:
+        - name: logs
+          mountPath: /home/deploy/apps/simple-server/shared/log
+          readOnly: true
+        - name: app-logs
+          mountPath: /home/app/log
+          readOnly: true
+      {{ end }}
+      {{- with .Values.cron.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cron.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cron.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: logs
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .Values.cron.log.storage }}
+      volumeMode: Filesystem
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: app-logs
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .Values.cron.appLog.storage }}
+      volumeMode: Filesystem
+{{ end }}

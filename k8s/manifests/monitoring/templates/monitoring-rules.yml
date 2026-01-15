@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monitoring-rules
+data:
+  alerting-rules.yml: |
+{{ .Files.Get "rules.yml" | indent 4 }}

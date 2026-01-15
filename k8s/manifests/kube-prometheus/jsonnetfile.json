@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "dependencies": [
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/adinhodovic/ingress-nginx-mixin.git",
+          "subdir": ""
+        }
+      },
+      "version": "main"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/grafonnet.git",
+          "subdir": "gen/grafonnet-latest"
+        }
+      },
+      "version": "main"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/oliver006/redis_exporter.git",
+          "subdir": "contrib/redis-mixin"
+        }
+      },
+      "version": "master"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/prometheus-community/postgres_exporter.git",
+          "subdir": "postgres_mixin"
+        }
+      },
+      "version": "master"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/prometheus-operator/kube-prometheus.git",
+          "subdir": "jsonnet/kube-prometheus"
+        }
+      },
+      "version": "main"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/loki.git",
+          "subdir": "production/loki-mixin"
+        }
+      },
+      "version": "main"
+    }
+  ],
+  "legacyImports": true
+}

@@ -1,0 +1,5 @@
+redis:
+  replica:
+    persistence:
+      size: 8Gi # This value should be >= to redis instance memory size
+    replicaCount: 1

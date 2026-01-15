@@ -1,0 +1,7 @@
+---
+
+- name: Setup ssh users
+  hosts: all
+  become: true
+  roles:
+    - role: ssh

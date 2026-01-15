@@ -1,0 +1,8 @@
+datadog-operator:
+  apiKeyExistingSecret: datadog
+  appKeyExistingSecret: datadog
+  datadogMonitor:
+    enabled: true
+  logLevel: error
+  image:
+    tag: "1.3.0"

@@ -1,0 +1,115 @@
+{{ if .Values.server.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.server.name }}
+  annotations:
+    configmap.reloader.stakater.com/reload: {{ .Values.existingConfigmap }}
+    secret.reloader.stakater.com/reload: {{ .Values.existingSecret }}
+spec:
+  replicas: {{ .Values.server.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.server.name }}
+  serviceName: {{ .Values.server.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.server.name }}
+        prometheus.io/app: simple-server
+      {{- with .Values.server.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.server.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ .Values.server.name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args: ["/sbin/my_init"]
+        resources:
+          {{- toYaml .Values.server.resources | nindent 12 }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - "bin/docker-health-check"
+            - "120"
+          failureThreshold: 10
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 120
+        readinessProbe:
+          exec:
+            command:
+            - "bin/docker-health-check"
+            - "120"
+          failureThreshold: 10
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 120
+        envFrom:
+          - secretRef:
+              name: {{ .Values.existingSecret }}
+          - configMapRef:
+              name: {{ .Values.existingConfigmap }}
+        env:
+          - name: SIMPLE_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.existingDBSecret.name }}
+                key: {{ .Values.existingDBSecret.key }}
+                optional: false
+        volumeMounts:
+        - name: logs
+          mountPath: /home/app/log
+      {{ if .Values.metrics.enabled }}
+      - name: {{ .Values.server.name }}-exporter
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command: ["bundle", "exec", "prometheus_exporter", "--bind", "0.0.0.0"]
+        ports:
+          - name: metrics
+            containerPort: 9394
+            protocol: TCP
+      {{ end }}
+      {{ if .Values.logTailer.enabled }}
+      - name: log-tailer
+        image: "{{ .Values.logTailer.image.repository }}:{{ .Values.logTailer.image.tag }}"
+        command: ["/bin/bash", "-c", "tail -F -n 0 /home/app/log/production.log"]
+        tty: true
+        stdin: true
+        volumeMounts:
+        - name: logs
+          mountPath: /home/app/log
+          readOnly: true
+      {{ end }}
+      {{- with .Values.server.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: logs
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .Values.server.log.storage }}
+      volumeMode: Filesystem
+{{ end }}

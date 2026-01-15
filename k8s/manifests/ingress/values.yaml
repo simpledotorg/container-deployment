@@ -1,0 +1,34 @@
+# https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#values
+ingress-nginx:
+  controller:
+    kind: 'DaemonSet' 
+    hostNetwork: true
+    ingressClassResource:
+      default: true
+    service:
+      type: ''
+    admissionWebhooks:
+      enabled: false #TODO: check issues with enabling the same.
+    metrics:
+      enabled: true
+    config:
+      nginx-status-ipv4-whitelist: "10.0.0.0/8,172.16.0.0/12,172.33.0.0/16"
+      proxy-body-size: "4g"
+      keep-alive: 10
+      disable-access-log: true
+    podAnnotations:
+      ad.datadoghq.com/controller.checks: |
+        {
+          "nginx": {
+            "instances": [{"nginx_status_url": "http://%%host%%/nginx_status"}]
+          },
+          "nginx_ingress_controller" : {
+            "instances": [{"prometheus_url": "http://%%host%%:10254/metrics"}]
+          }
+        }
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "10254"
+      prometheus.io/scheme: http
+    podLabels:
+      prometheus.io/app: "ingress-nginx"
+

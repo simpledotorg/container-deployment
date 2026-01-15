@@ -1,0 +1,5 @@
+apiVersion: v2
+name: pgpool
+description: Pgpool
+type: application
+version: 0.1.0

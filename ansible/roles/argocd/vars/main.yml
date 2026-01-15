@@ -1,0 +1,10 @@
+---
+
+argocd_version: 'v2.5.2'
+argocd_helm_chart_version: '5.14.1'
+helm_version: 'v3.10.2'
+k8s_namespaces:
+  - argocd
+  - simple-v1
+  - datadog
+kubeconfig: /etc/rancher/k3s/k3s.yaml

@@ -1,0 +1,37 @@
+image:
+  repository: simpledotorg/simple_patient_scoring
+  pullPolicy: Always
+  tag: main
+
+# Cron schedule: Every 15 days at midnight
+# Format: minute hour day-of-month month day-of-week
+schedule: "0 0 */15 * *"
+
+# Database configuration
+database:
+  # Postgres Operator creates this secret automatically
+  secretName: "simple-pguser-simple"
+  # Use direct connection to primary (not pgpool) for ML workloads
+  host: "simple-primary"
+  port: "5432"
+  name: "simple"
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "200m"
+  limits:
+    memory: "4Gi"
+    cpu: "2000m"
+
+nodeSelector: {}
+affinity: {}
+tolerations: []
+
+# Pod security context
+podSecurityContext:
+  fsGroup: 9999
+
+# Pushgateway configuration for metrics
+pushgateway:
+  namespace: "monitoring"

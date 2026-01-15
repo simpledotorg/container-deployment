@@ -1,0 +1,15 @@
+metabase:
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      "cert-manager.io/cluster-issuer": "letsencrypt-staging"
+    hosts:
+      - host: metabase.local.simple.org
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - metabase.local.simple.org
+      secretName: metabase.local.simple.org-tls

@@ -1,0 +1,4 @@
+---
+- import_playbook: host_setup.yml
+- import_playbook: k3s_install.yml
+- import_playbook: k3s_setup.yml
