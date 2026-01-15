@@ -1,3 +1,0 @@
-# QA environment - no Prometheus Operator
-serviceMonitor:
-  enabled: false

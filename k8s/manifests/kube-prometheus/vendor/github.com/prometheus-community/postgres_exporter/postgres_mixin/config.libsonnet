@@ -1,5 +1,0 @@
-{
-  _config+:: {
-    postgresExporterSelector: '',
-  },
-}

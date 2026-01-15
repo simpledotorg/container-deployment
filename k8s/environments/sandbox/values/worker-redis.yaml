@@ -1,6 +1,0 @@
-redis:
-  commonConfiguration: |-
-    maxmemory 6gb
-  master:
-    persistence:
-      size: 16Gi

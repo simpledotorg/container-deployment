@@ -1,5 +1,0 @@
-apiVersion: v2
-name: simple-server
-description: Simple sever
-type: application
-version: 0.1.0

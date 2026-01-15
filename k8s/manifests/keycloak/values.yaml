@@ -1,8 +1,0 @@
-keycloak:
-  auth:
-    existingSecret: "keycloak-secrets"
-    passwordSecretKey: "admin-password"
-  postgresql:
-    auth:
-      existingSecret: "keycloak-secrets"
-      # key name is `postgres-password`
