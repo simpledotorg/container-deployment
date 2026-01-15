@@ -1,0 +1,34 @@
+version: v1.0
+name: Docker build and push images
+blocks:
+  - name: Docker build and push images
+    task:
+      jobs:
+      - name: Simple server base
+        commands:
+          - checkout
+          - image_name="$DOCKER_USERNAME/server-base"
+          - tag_latest="$image_name:latest"
+          - tag_git_sha="$image_name:$SEMAPHORE_GIT_SHA"
+          - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
+          - docker build -t $tag_latest -t $tag_git_sha -f docker/simple-server-base.Dockerfile  .
+          - docker images
+          - docker push $tag_latest
+          - docker push $tag_git_sha
+      - name: DHIS2
+        commands:
+          - checkout
+          - image_name="$DOCKER_USERNAME/dhis2"
+          - tag_git_sha="$image_name:$SEMAPHORE_GIT_SHA"
+          - tag_dhis2="$image_name:$(grep '^FROM' docker/dhis2.Dockerfile | cut -d':' -f2)"
+          - echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
+          - docker build -t $tag_dhis2 -t $tag_git_sha -f docker/dhis2.Dockerfile  .
+          - docker images
+          - docker push $tag_dhis2
+          - docker push $tag_git_sha
+      secrets:
+      - name: docker-hub
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
