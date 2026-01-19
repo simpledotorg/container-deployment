@@ -6,3 +6,7 @@ keycloak:
     auth:
       existingSecret: "keycloak-secrets"
       # key name is `postgres-password`
+  global:
+    compatibility:
+      openshift:
+        adaptSecurityContext: disabled # disable OpenShift specific security context adjustments
