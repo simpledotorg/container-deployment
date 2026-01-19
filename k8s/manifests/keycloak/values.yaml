@@ -6,6 +6,10 @@ keycloak:
     auth:
       existingSecret: "keycloak-secrets"
       # key name is `postgres-password`
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/postgresql
+      tag: 16.2.0-debian-12-r15
   image:
     registry: docker.io
     repository: bitnamilegacy/keycloak
