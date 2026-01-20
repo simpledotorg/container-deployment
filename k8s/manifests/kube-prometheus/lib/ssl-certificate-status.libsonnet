@@ -37,7 +37,7 @@ local prometheusRules = {
           {
             alert: 'ProductionInstanceDown',
             expr: |||
-              probe_http_status_code{environment="prod"} == 200
+              probe_http_status_code{environment="prod"} == 200 OR probe_http_status_code{environment="sandbox"} == 200
             |||,
             'for': '1m',
             labels: {

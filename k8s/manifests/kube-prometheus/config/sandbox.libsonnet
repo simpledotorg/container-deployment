@@ -33,5 +33,47 @@
       path: '/',
     },
   },
+  blackboxProbes: [
+    {
+      name: 'simple-server-sandbox',
+      targets: ['https://api-sandbox.simple.org/'],
+      labels: {
+        service: 'simple_server',
+        environment: 'sandbox',
+        country: 'ind',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-dashboard-sandbox',
+      targets: ['https://dashboard-sandbox.simple.org/'],
+      labels: {
+        service: 'simple_dashboard',
+        environment: 'sandbox',
+        country: 'ind',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-metabase-sandbox',
+      targets: ['https://metabase-sandbox.simple.org/'],
+      labels: {
+        service: 'metabase',
+        environment: 'sandbox',
+        country: 'ind',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-argocd-sandbox',
+      targets: ['https://argocd-sandbox.simple.org/'],
+      labels: {
+        service: 'argocd',
+        environment: 'sandbox',
+        country: 'ind',
+      },
+      module: 'http_2xx',
+    },
+  ],
   postgresNamespaces: ['simple-v1', 'dhis2-demo-ecuador', 'dhis2-sandbox-01', 'dhis2-sandbox-epidemics'],
 }

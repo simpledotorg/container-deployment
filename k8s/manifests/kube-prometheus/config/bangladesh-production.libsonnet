@@ -25,5 +25,47 @@
       path: '/',
     },
   },
+  blackboxProbes: [
+    {
+      name: 'simple-server-bgd',
+      targets: ['https://api.bd.simple.org/'],
+      labels: {
+        service: 'simple_server',
+        environment: 'prod',
+        country: 'bgd',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-dashboard-bgd',
+      targets: ['https://dashboard.bd.simple.org/'],
+      labels: {
+        service: 'simple_dashboard',
+        environment: 'prod',
+        country: 'bgd',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-metabase-bgd',
+      targets: ['https://metabase.bd.simple.org/'],
+      labels: {
+        service: 'metabase',
+        environment: 'prod',
+        country: 'bgd',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'simple-argocd-bgd',
+      targets: ['https://argocd.bd.simple.org/'],
+      labels: {
+        service: 'argocd',
+        environment: 'prod',
+        country: 'bgd',
+      },
+      module: 'http_2xx',
+    },
+  ],
   postgresNamespaces: ['simple-v1'],
 }
