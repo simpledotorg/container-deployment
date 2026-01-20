@@ -33,6 +33,20 @@ local prometheusRules = {
               summary: "Production environment is down",
               description: "The production environment instance {{ $labels.instance }} has been down for more than 5 minutes."
             }
+          },
+          {
+            alert: 'ProductionInstanceDown',
+            expr: |||
+              probe_http_status_code{environment="prod"} == 0 OR probe_http_status_code{environment="prod"} >= 500
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'critical'
+            },
+            annotations: {
+              summary: "P0: Production Instance Down",
+              description: "Production instance {{ $labels.instance }} ({{ $labels.service }}) is down or returning server error. HTTP Status: {{ $value }}"
+            }
           }
         ],
       },
