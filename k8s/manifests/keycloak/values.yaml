@@ -9,11 +9,11 @@ keycloak:
     image:
       registry: docker.io
       repository: bitnamilegacy/postgresql
-      tag: 16.4.0-debian-12-r9
+      tag: 17.6.0-debian-12-r0
   image:
     registry: docker.io
     repository: bitnamilegacy/keycloak
-    tag: 25.0.6-debian-12-r0
+    tag: 26.3.3-debian-12-r0
   global:
     compatibility:
       openshift:
