@@ -37,15 +37,15 @@ local prometheusRules = {
           {
             alert: 'ProductionInstanceDown',
             expr: |||
-              probe_http_status_code{environment="prod"} == 0 OR probe_http_status_code{environment="prod"} >= 500
+              probe_http_status_code{environment="prod"} == 200
             |||,
-            'for': '5m',
+            'for': '1m',
             labels: {
               severity: 'critical'
             },
             annotations: {
-              summary: "P0: Production Instance Down",
-              description: "Production instance {{ $labels.instance }} ({{ $labels.service }}) is down or returning server error. HTTP Status: {{ $value }}"
+              summary: "P0: Production Instance Down [TEST MODE]",
+              description: "[TESTING] Production instance {{ $labels.instance }} ({{ $labels.service }}) - Testing alert with status 200. HTTP Status: {{ $value }}"
             }
           }
         ],
