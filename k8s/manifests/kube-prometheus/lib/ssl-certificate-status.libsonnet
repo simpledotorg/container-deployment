@@ -39,7 +39,7 @@ local prometheusRules = {
             expr: |||
               probe_http_status_code{environment="prod"} == 0 OR probe_http_status_code{environment="prod"} >= 500
             |||,
-            'for': '1m',
+            'for': '5m',
             labels: {
               severity: 'critical'
             },
