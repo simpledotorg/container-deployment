@@ -422,6 +422,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - ../../environments/bangladesh-production/values/patient-scoring.yaml
   project: default
   syncPolicy:
     syncOptions:
