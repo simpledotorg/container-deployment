@@ -19,6 +19,8 @@ ssh_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDRWAWg26kzLUHbP1RD8O7RMIroZda284I0GgVr8Zx41fiFOs4RNAJkC2Q7b1cmrE2O7/VeVwSYdxWIM6LOQ+IeCmTk/vEP+1JLIrUX8MK4r4fojPSDEnm/FhdqMd2eu9lHWZnLuhGBQogKTbvGxroQsUpkEK2txkK1HExLZXWT+uiiHqokRCZW2KMIf2nf4HyTTvRu5zj4SCS6wpgbqDZw4cD7GFPB8m9OLSxQVYh29n3lCKW6QDF3XR1BWxhUbyc+w5riX7uHU7tZNTe9VnlALRBwoxJ4iqcCEs2nIQlo8AYzueCjdGKLW4ebZxhf+52W8yfIh8TebOEjLrpMK2t2qguJkow9S7tS2Dcja67OR/Jeue23XAoa4CsmXGIpqg8x/wI3HbxyAxn9+F9fTZQ6DjFzznlgSoiJ21THb3s04rMfa07AcZ7Rip9mVYHk7cc77scnSvILmwKxpqKfC7CinjBBn97x4y0Is6cFPVGqJGM+nz2iex2AlrbxAEd4EDf/TZesLF99MYuBuSnbtnWfieI2y8SvhjI8vJAvMwpv7eaqmwy4z0fcQWoJdlko42X3aFTSUQSGjznAmf/pqo58ezHk5EDx/jMNqlAIEMu4sAIP6Jm+8QlzyUIS4egjJZjNI/4a4phNHYAiGE1WuKbs6kAbtT94vmChuFGUFw9w8Q== ggupta@rtsl.org
   # Ayushi
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQQDDf/+T+ZJyONf471CjUPFPa6RPuVh7AtInjXHAlY ayushiagrawal@RTSL-P172G93770.local
+  # Ajay
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfnm5T5xhyzEQirz1gLM0fwSpQzMOTZVLGNn7HjshZF ajhala.consultant@resolvetosavelives.org
 
 # Append pem key path to set ssh key for ProxyCommand. Example: `ProxyCommand="ssh -W %h:%p -q ubuntu@3.109.6.46 -i ~/.ssh/simple-dev.pem"`
 ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q ubuntu@3.109.6.46 -o StrictHostKeyChecking=no" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' # Proxy to the bastion host
