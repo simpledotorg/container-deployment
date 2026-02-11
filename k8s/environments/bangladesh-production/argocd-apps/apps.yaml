@@ -250,6 +250,7 @@ spec:
     helm:
       valueFiles:
         - values.affinity-cache.yaml
+        - ../../environments/bangladesh-production/values/redis.yaml
   project: default
   syncPolicy:
     syncOptions:
