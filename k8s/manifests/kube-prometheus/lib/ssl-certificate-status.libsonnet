@@ -47,6 +47,62 @@ local prometheusRules = {
               summary: "P0: Production Instance Down",
               description: "Production instance {{ $labels.instance }} ({{ $labels.service }}) is down or returning server error. HTTP Status: {{ $value }}"
             }
+          },
+          {
+            alert: 'InstanceDown',
+            expr: |||
+              up{job=~"blackbox-.*"} == 0
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'critical'
+            },
+            annotations: {
+              summary: "Instance is down",
+              description: "Instance {{ $labels.instance }} ({{ $labels.service }}) in {{ $labels.environment }} environment has been down for more than 5 minutes."
+            }
+          },
+          {
+            alert: 'InstanceUnhealthy',
+            expr: |||
+              probe_http_status_code{job=~"blackbox-.*"} >= 500
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'critical'
+            },
+            annotations: {
+              summary: "Instance is unhealthy",
+              description: "Instance {{ $labels.instance }} ({{ $labels.service }}) in {{ $labels.environment }} environment is returning server error. HTTP Status: {{ $value }}"
+            }
+          },
+          {
+            alert: 'DHIS2InstanceDown',
+            expr: |||
+              up{job=~"blackbox-.*", service="dhis2"} == 0
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'critical'
+            },
+            annotations: {
+              summary: "DHIS2 Instance Down",
+              description: "DHIS2 instance {{ $labels.instance }} has been down for more than 5 minutes."
+            }
+          },
+          {
+            alert: 'DHIS2InstanceUnhealthy',
+            expr: |||
+              probe_http_status_code{job=~"blackbox-.*", service="dhis2"} >= 500
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'critical'
+            },
+            annotations: {
+              summary: "DHIS2 Instance Unhealthy",
+              description: "DHIS2 instance {{ $labels.instance }} is returning server error. HTTP Status: {{ $value }}"
+            }
           }
         ],
       },

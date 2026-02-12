@@ -74,6 +74,76 @@
       },
       module: 'http_2xx',
     },
+    {
+      name: 'dhis2-c61c699a',
+      targets: ['https://dhis2-c61c699a.simple.org/'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        instance: 'dhis2-c61c699a',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-demo-ecuador',
+      targets: ['https://dhis2-demo-ecuador.simple.org/'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        instance: 'dhis2-demo-ecuador',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-ecuador-sandbox',
+      targets: ['https://dhis2-ecuador-sandbox.simple.org/'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        instance: 'dhis2-ecuador-sandbox',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-htn-tracking',
+      targets: ['https://dhis2-htn-tracking.simple.org/'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        instance: 'dhis2-htn-tracking',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-phc',
+      targets: ['https://dhis2-phc.simple.org/'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        instance: 'dhis2-phc',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-sandbox-01',
+      targets: ['https://dhis2-sandbox1.simple.org/'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        instance: 'dhis2-sandbox-01',
+      },
+      module: 'http_2xx',
+    },
+    {
+      name: 'dhis2-sandbox-epidemics',
+      targets: ['https://dhis2-sandbox-epidemics.simple.org/'],
+      labels: {
+        service: 'dhis2',
+        environment: 'sandbox',
+        instance: 'dhis2-sandbox-epidemics',
+      },
+      module: 'http_2xx',
+    },
   ],
   postgresNamespaces: ['simple-v1', 'dhis2-demo-ecuador', 'dhis2-sandbox-01', 'dhis2-sandbox-epidemics'],
 }
