@@ -8,10 +8,10 @@ redis:
   metrics:
     enabled: true
     image:
-    registry: docker.io
-    repository: bitnamilegacy/redis-exporter
-    tag: 1.43.0-debian-11-r14
-    pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: bitnamilegacy/redis-exporter
+      tag: 1.43.0-debian-11-r14
+      pullPolicy: IfNotPresent
     podLabels:
       prometheus.io/app: "redis"
     service:
