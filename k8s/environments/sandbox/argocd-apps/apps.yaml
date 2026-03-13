@@ -840,6 +840,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - ../../environments/sandbox/values/patient-scoring.yaml
   project: default
   syncPolicy:
     syncOptions:
