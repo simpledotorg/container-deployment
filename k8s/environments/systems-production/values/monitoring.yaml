@@ -89,9 +89,9 @@ grafana:
       email_attribute_path: email
       login_attribute_path: username
       name_attribute_path: full_name
-      auth_url: https://sso.simple.org/realms/master/protocol/openid-connect/auth
-      token_url: https://sso.simple.org/realms/master/protocol/openid-connect/token
-      api_url: https://sso.simple.org/realms/master/protocol/openid-connect/userinfo
+      auth_url: https://sso.simple.org/realms/simple/protocol/openid-connect/auth
+      token_url: https://sso.simple.org/realms/simple/protocol/openid-connect/token
+      api_url: https://sso.simple.org/realms/simple/protocol/openid-connect/userinfo
       role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
   extraSecretMounts:
     - name: grafana-sso
