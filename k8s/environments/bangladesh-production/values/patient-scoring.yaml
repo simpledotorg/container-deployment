@@ -1,2 +1,10 @@
 database:
   name: "simple_db_bangladesh_production_001"
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "200m"
+  limits:
+    memory: "8Gi"
+    cpu: "2000m"
