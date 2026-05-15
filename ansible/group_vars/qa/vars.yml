@@ -20,7 +20,7 @@ ssh_keys:
   # Ayushi
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQQDDf/+T+ZJyONf471CjUPFPa6RPuVh7AtInjXHAlY ayushiagrawal@RTSL-P172G93770.local
   # Ajay
-  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfnm5T5xhyzEQirz1gLM0fwSpQzMOTZVLGNn7HjshZF ajhala.consultant@resolvetosavelives.org
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGdFQHnbJBQzyfNmV7OXmPisGJEh1oEhcSV20lwcihh4 ajay.jhala
 
 # Append pem key path to set ssh key for ProxyCommand. Example: `ProxyCommand="ssh -W %h:%p -q ubuntu@3.109.6.46 -i ~/.ssh/simple-dev.pem"`
 ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q ubuntu@3.109.6.46 -o StrictHostKeyChecking=no" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' # Proxy to the bastion host
