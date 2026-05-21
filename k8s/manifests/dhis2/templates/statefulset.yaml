@@ -62,6 +62,10 @@ spec:
               value: {{ .Values.dhis2.catalinaOpts }}
             - name: JAVA_OPTS
               value: "-Dlog4j2.configurationFile={{ .Values.dhis2.workingDirectory }}/{{ .Values.dhis2.log4j2ConfigFileName }} {{ .Values.dhis2.javaOpts }}"
+            {{- if .Values.dhis2.timezone }}
+            - name: TZ
+              value: {{ .Values.dhis2.timezone | quote }}
+            {{- end }}
             - name: DHIS2_HOME
               value: {{ .Values.dhis2.workingDirectory }}
           ports:
