@@ -1,5 +1,7 @@
 image:
   tag: 2.42
+dhis2:
+  javaOpts: "-Duser.timezone=Africa/Lagos"
 ingress:
   enabled: true
   className: "nginx"
