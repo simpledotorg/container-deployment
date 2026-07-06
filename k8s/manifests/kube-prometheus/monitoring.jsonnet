@@ -12,6 +12,7 @@ local loki = (import 'lib/loki.libsonnet');
 local sendgrid = (import 'lib/sendgrid.libsonnet');
 local sslCertificateStatus = (import 'lib/ssl-certificate-status.libsonnet');
 local blackboxProbes = (import 'lib/blackbox-probe.libsonnet');
+local patientScoring = (import 'lib/patient-scoring.libsonnet');
 
 local environment = std.extVar('ENVIRONMENT');
 local namespace = 'monitoring';
@@ -90,6 +91,10 @@ local kp =
     prometheus+:: {
       prometheus+: {
         spec+: {
+          additionalScrapeConfigs: if isEnvSystemsProduction then {
+            name: 'additional-scrape-configs',
+            key: 'prometheus-additional.yaml',
+          } else null,
           probeSelector+: {
             matchLabels: {
               release: 'prometheus-stack',
@@ -144,6 +149,6 @@ local manifests =
   [postgres.prometheusRules] +
   postgres.monitors(config.postgresNamespaces).exporterServices +
   postgres.monitors(config.postgresNamespaces).serviceMonitors +
-  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] + [loki.prometheusRules] else []);
+  (if isEnvSandbox then [alphasms.prometheusRules] + [sendgrid.prometheusRules] + [loki.prometheusRules] + [patientScoring.prometheusRules] else []);
 
 argocd.addArgoAnnotations(manifests, kp.values.common.namespace)

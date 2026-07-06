@@ -18,7 +18,7 @@ local prometheusRules = {
             },
             annotations: {
               summary: "Alphasms balance is below threshold",
-              description: "The AlphaSMS balance has fallen below threshold"
+              description: "The AlphaSMS balance has fallen below the threshold. Current balance: {{$value}} units."
             }
           },
           {

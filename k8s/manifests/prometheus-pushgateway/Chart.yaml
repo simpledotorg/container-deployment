@@ -1,0 +1,5 @@
+apiVersion: v2
+name: prometheus-pushgateway
+description: Prometheus Pushgateway for batch job metrics
+type: application
+version: 0.1.0

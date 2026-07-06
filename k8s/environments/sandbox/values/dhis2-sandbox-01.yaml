@@ -1,5 +1,8 @@
 image:
-  tag: 2.40.8.2
+  tag: 2.42
+dhis2:
+  timezone: Africa/Lagos
+  catalinaOpts: "-Dcontext.path='' -javaagent:/opt/dhis2-ext/jmx_prometheus_javaagent.jar=12345:/opt/dhis2/jmx_prometheus_javaagent.yaml -Duser.timezone=Africa/Lagos"
 ingress:
   enabled: true
   className: "nginx"

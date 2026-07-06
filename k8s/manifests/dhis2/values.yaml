@@ -89,6 +89,7 @@ dhis2:
   log4j2ConfigFileName: log4j2.xml
   catalinaOpts: "-Dcontext.path='' -javaagent:/opt/dhis2-ext/jmx_prometheus_javaagent.jar=12345:/opt/dhis2/jmx_prometheus_javaagent.yaml"
   javaOpts: ""
+  timezone: ""
 
 probes:
   liveness:

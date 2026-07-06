@@ -6,3 +6,15 @@ keycloak:
     auth:
       existingSecret: "keycloak-secrets"
       # key name is `postgres-password`
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/postgresql
+      tag: 16.4.0-debian-12-r9
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/keycloak
+    tag: 26.3.3-debian-12-r0
+  global:
+    compatibility:
+      openshift:
+        adaptSecurityContext: disabled # disable OpenShift specific security context adjustments
