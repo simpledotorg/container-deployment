@@ -1,0 +1,43 @@
+# FHIR Ingestor configuration for Sri Lanka Production
+
+image:
+  repository: simpledotorg/fhir-ingestor
+  tag: latest
+  pullPolicy: Always
+
+# Cron schedule: Daily at 2 AM Sri Lanka time (UTC+5:30)
+# 2 AM IST = 8:30 PM UTC previous day
+schedule: "30 20 * * *"
+
+# Operation mode
+operation: merger
+softDelete: true
+dryRun: false
+
+# FHIR data source - adjust based on how you provide FHIR data
+fhir:
+  localPath: "/data/fhir"
+  # If using S3:
+  # s3Bucket: "your-bucket-name"
+  # s3Key: "fhir-bundles/"
+
+# Database configuration (matches Simple server database)
+database:
+  secretName: "simple-pguser-simple"
+  host: "simple-primary"
+  port: "5432"
+  name: "simple_db_sri_lanka_production_001"
+
+# Pushgateway for metrics
+pushgateway:
+  enabled: true
+  namespace: "monitoring"
+
+# Resources
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "200m"
+  limits:
+    memory: "2Gi"
+    cpu: "1000m"
