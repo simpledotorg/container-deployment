@@ -3,7 +3,7 @@
     enable: false,
   },
   prometheus: {
-    externalUrl: 'https://prometheus-demo.bd.simple.org',
+    externalUrl: 'https://prometheus-demo-simpleapp.dghs.gov.bd',
     retention: {
       enable: true,
       retention: '30d',
@@ -11,16 +11,16 @@
     },
     ingress: {
       name: 'prometheus-k8s',
-      host: 'prometheus-demo.bd.simple.org',
+      host: 'prometheus-demo-simpleapp.dghs.gov.bd',
       port: 'web',
       path: '/',
     },
   },
   alertmanager: {
-    externalUrl: 'http://alertmanager-demo.bd.simple.org',
+    externalUrl: 'http://alertmanager-demo-simpleapp.dghs.gov.bd',
     ingress: {
       name: 'alertmanager-main',
-      host: 'alertmanager-demo.bd.simple.org',
+      host: 'alertmanager-demo-simpleapp.dghs.gov.bd',
       port: 'web',
       path: '/',
     },

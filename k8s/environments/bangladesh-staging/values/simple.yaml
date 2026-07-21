@@ -5,11 +5,11 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
-    - host: api-demo.bd.simple.org
+    - host: api-demo-simpleapp.dghs.gov.bd
       paths:
         - path: /
           pathType: ImplementationSpecific
-    - host: dashboard-demo.bd.simple.org
+    - host: dashboard-demo-simpleapp.dghs.gov.bd
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -23,11 +23,11 @@ ingress:
           pathType: ImplementationSpecific
   tls:
   - hosts:
-    - api-demo.bd.simple.org
-    secretName: api-demo.bd.simple.org-tls
+    - api-demo-simpleapp.dghs.gov.bd
+    secretName: api-demo-simpleapp.dghs.gov.bd-tls
   - hosts:
-    - dashboard-demo.bd.simple.org
-    secretName: dashboard-demo.bd.simple.org-tls
+    - dashboard-demo-simpleapp.dghs.gov.bd
+    secretName: dashboard-demo-simpleapp.dghs.gov.bd-tls
   - hosts:
     - api-demo.simple.org
     secretName: api-demo.simple.org-tls

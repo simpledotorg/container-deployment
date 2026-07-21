@@ -87,7 +87,7 @@
     },
     {
       name: 'simple-server-bgd',
-      targets: ['https://api-demo.bd.simple.org'],
+      targets: ['https://api-demo-simpleapp.dghs.gov.bd'],
       labels: {
         service: 'simple_server',
         environment: 'staging',

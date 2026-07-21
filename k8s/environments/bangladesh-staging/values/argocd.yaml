@@ -1,6 +1,6 @@
 argo-cd:
   notifications:
-    argocdUrl: "https://argocd-demo.bd.simple.org"
+    argocdUrl: "https://argocd-demo-simpleapp.dghs.gov.bd"
   server:
     ingress:
       enabled: true
@@ -10,14 +10,14 @@ argo-cd:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
       ingressClassName: "nginx"
       hosts:
-        - argocd-demo.bd.simple.org
+        - argocd-demo-simpleapp.dghs.gov.bd
       paths:
         - /
       pathType: Prefix
       tls:
-        - secretName: argocd-demo.bd.simple.org-tls
+        - secretName: argocd-demo-simpleapp.dghs.gov.bd-tls
           hosts:
-            - argocd-demo.bd.simple.org
+            - argocd-demo-simpleapp.dghs.gov.bd
       https: false
   configs:
     cm:
