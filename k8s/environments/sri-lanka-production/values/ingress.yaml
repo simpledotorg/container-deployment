@@ -2,3 +2,5 @@ ingress-nginx:
   controller:
     enableAnnotationValidations: true
     allowSnippetAnnotations: true
+    config:
+      disable-access-log: false
