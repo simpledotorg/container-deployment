@@ -1,0 +1,30 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: api-demo.dghs.gov.bd
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard-demo.dghs.gov.bd
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api-demo.dghs.gov.bd
+    secretName: api-demo.dghs.gov.bd-tls
+  - hosts:
+    - dashboard-demo.dghs.gov.bd
+    secretName: dashboard-demo.dghs.gov.bd-tls
+cron:
+  enabled: true
+worker:
+  enabled: true
+migration:
+  enabled: true
+metrics:
+  enabled: true

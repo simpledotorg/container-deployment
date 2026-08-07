@@ -28,6 +28,7 @@
 - name: Install kubernetes python package
   ansible.builtin.pip:
     name: kubernetes
+    extra_args: --break-system-packages
 
 - name: Create a k8s namespace
   kubernetes.core.k8s:
