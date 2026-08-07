@@ -2,6 +2,10 @@ FROM phusion/passenger-customizable:2.0.1
 
 RUN rm -rf /usr/local/rvm /etc/profile.d/rvm.sh
 
+# Remove the Phusion Passenger apt repo — its GPG key (D870AB033FB45BD1) is expired
+# and we don't install anything from it (Ruby is built from source below)
+RUN rm -f /etc/apt/sources.list.d/passenger.list
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
   libssl-dev \

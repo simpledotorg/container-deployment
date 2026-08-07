@@ -106,7 +106,7 @@ module "eks" {
   worker_instance_count  = 1
 
   metabase_instance_enable = true
-  metabase_instance_type   = "t3.small"
+  metabase_instance_type   = "t3.medium"
   metabase_instance_count  = 1
 
   cache_redis_instance_enable = true
