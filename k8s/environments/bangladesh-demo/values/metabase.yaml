@@ -8,11 +8,11 @@ metabase:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     hosts:
-      - host: metabase-demo.dghs.gov.bd
+      - host: metabase-demo-simpleapp.dghs.gov.bd
         paths:
           - path: /
             pathType: ImplementationSpecific
     tls:
     - hosts:
-      - metabase-demo.dghs.gov.bd
-      secretName: metabase-demo.bd-tls
+      - metabase-demo-simpleapp.dghs.gov.bd
+      secretName: metabase-demo-simpleapp.dghs.gov.bd-tls
