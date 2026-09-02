@@ -1,0 +1,68 @@
+image:
+  repository: simpledotorg/fhir-ingestor
+  pullPolicy: Always
+  tag: latest
+
+# Cron schedule: Daily at 2 AM UTC
+# Format: minute hour day-of-month month day-of-week
+schedule: "0 2 * * *"
+
+# Operation mode: "merger" or "gap_analysis"
+operation: merger
+
+# Enable soft delete (only for merger operation)
+softDelete: true
+
+# Dry run mode (no actual DB writes)
+dryRun: false
+
+# FHIR data source
+fhir:
+  # S3 bucket containing FHIR bundles
+  s3Bucket: ""
+  # S3 key/path to FHIR data (can be zip file or prefix)
+  s3Key: ""
+  # Or use a local/mounted path
+  localPath: "/data/fhir"
+
+# Database configuration
+database:
+  # Postgres Operator creates this secret automatically
+  secretName: "simple-pguser-simple"
+  # Use direct connection to primary (not pgpool) for data ingestion
+  host: "simple-primary"
+  port: "5432"
+  name: "simple"
+
+# AWS credentials for S3 access (if using S3)
+aws:
+  # Secret containing AWS credentials
+  secretName: ""
+  # Or use IAM role (recommended in EKS)
+  useIAMRole: true
+
+# Pushgateway configuration for metrics
+pushgateway:
+  enabled: true
+  namespace: "monitoring"
+
+# Resource limits
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+
+# Node selection
+nodeSelector: {}
+affinity: {}
+tolerations: []
+
+# Pod security context
+podSecurityContext:
+  fsGroup: 9999
+
+# Additional environment variables
+extraEnv: []

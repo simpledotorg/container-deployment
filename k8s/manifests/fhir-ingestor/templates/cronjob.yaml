@@ -1,0 +1,132 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: fhir-ingestor-cronjob
+  labels:
+    app.kubernetes.io/name: fhir-ingestor
+spec:
+  schedule: "{{ .Values.schedule }}"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: fhir-ingestor
+            app.kubernetes.io/component: cronjob
+        spec:
+          {{- with .Values.podSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: OnFailure
+          containers:
+          - name: fhir-ingestor
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            command:
+            - /bin/bash
+            - -c
+            - |
+              set -e
+
+              echo "============================================"
+              echo "FHIR Ingestor CronJob Started"
+              echo "============================================"
+              echo "Operation: {{ .Values.operation }}"
+              echo "Database Host: ${DB_HOST}:${DB_PORT}"
+              echo "Database Name: ${DB_NAME}"
+              {{- if .Values.softDelete }}
+              echo "Soft Delete: enabled"
+              {{- end }}
+              {{- if .Values.dryRun }}
+              echo "Dry Run: enabled"
+              {{- end }}
+              echo "============================================"
+
+              # Construct DATABASE_URL from environment variables
+              export SIMPLE_DATABASE_URL="postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
+
+              cd /app
+
+              {{- if eq .Values.operation "merger" }}
+              # Run merger
+              echo "Running FHIR merger..."
+              python -m app.merger {{ .Values.fhir.localPath }} \
+                {{- if .Values.softDelete }}
+                --soft-delete \
+                {{- end }}
+                {{- if .Values.dryRun }}
+                --dry-run \
+                {{- end }}
+
+              {{- else if eq .Values.operation "gap_analysis" }}
+              # Run gap analysis
+              echo "Running FHIR gap analysis..."
+              python -m app.gap_analysis {{ .Values.fhir.localPath }} --json
+              {{- end }}
+
+              echo "============================================"
+              echo "FHIR Ingestor CronJob Completed!"
+              echo "============================================"
+            env:
+            {{- if .Values.pushgateway.enabled }}
+            - name: PUSHGATEWAY_URL
+              value: "http://prometheus-pushgateway.{{ .Values.pushgateway.namespace }}.svc.cluster.local:9091"
+            {{- end }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.secretName }}
+                  key: user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.secretName }}
+                  key: password
+            - name: DB_HOST
+              value: "{{ .Values.database.host }}"
+            - name: DB_PORT
+              value: "{{ .Values.database.port }}"
+            - name: DB_NAME
+              value: "{{ .Values.database.name }}"
+            - name: LOG_LEVEL
+              value: "INFO"
+            {{- if .Values.fhir.s3Bucket }}
+            - name: S3_BUCKET
+              value: "{{ .Values.fhir.s3Bucket }}"
+            - name: S3_KEY
+              value: "{{ .Values.fhir.s3Key }}"
+            {{- end }}
+            {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            resources:
+              {{- toYaml .Values.resources | nindent 14 }}
+            {{- if .Values.fhir.localPath }}
+            volumeMounts:
+            - name: fhir-data
+              mountPath: {{ .Values.fhir.localPath }}
+              readOnly: true
+            {{- end }}
+          {{- if .Values.fhir.localPath }}
+          volumes:
+          - name: fhir-data
+            persistentVolumeClaim:
+              claimName: fhir-data-pvc
+          {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
