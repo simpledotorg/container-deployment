@@ -27,6 +27,9 @@ cron:
   image:
     repository: simpledotorg/server
     tag: ""
+  # Empty by default, so environments that do not set it render unchanged.
+  # Set per environment where a Pod Security Admission profile requires it.
+  containerSecurityContext: {}
 server:
   name: "simple-server"
   nodeSelector: {}
@@ -41,6 +44,7 @@ server:
   podSecurityContext: {
     fsGroup: 9999
   }
+  containerSecurityContext: {}
 worker:
   name: "simple-worker"
   nodeSelector: {}
@@ -55,6 +59,7 @@ worker:
   podSecurityContext: {
     fsGroup: 9999
   }
+  containerSecurityContext: {}
 workerCphc:
   name: "simple-worker-cphc"
   nodeSelector: {}
@@ -82,9 +87,16 @@ migration:
   enabled: false
   resources: {}
   podAnnotations: {}
-  podSecurityContext: {
-    fsGroup: 9999
-  }
+  # Both default empty so every existing environment renders unchanged.
+  #
+  # podSecurityContext was previously declared here as `{fsGroup: 9999}` but
+  # migration-job.yaml never referenced it, so it had no effect. Now that the
+  # template does reference it, keeping the old default would have silently added
+  # a securityContext to the migration Job in six environments. The Job mounts no
+  # volumes, so fsGroup bought nothing; defaulting to {} preserves the behaviour
+  # those environments have always had. Set it per environment if needed.
+  podSecurityContext: {}
+  containerSecurityContext: {}
 metrics:
   enabled: false
 logTailer:

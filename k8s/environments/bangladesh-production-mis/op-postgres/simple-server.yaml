@@ -1,0 +1,162 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: simple
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.5-1
+  postgresVersion: 14
+
+  # PGO 5.5.0 sets allowPrivilegeEscalation, capabilities and runAsNonRoot on the
+  # pods it manages, but not seccompProfile, and exposes no field to set one - the
+  # securityContext entries on the CRD apply to user-supplied sidecars only. The
+  # simple-v1 namespace therefore runs at the PSA level set in ../namespaces.
+  # Upgrading the operator via the ../pgo overlay would remove that dependency.
+
+  users:
+    - name: admin
+      databases:
+        - postgres
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+    - name: simple
+      databases:
+        - simple_db_bangladesh_production_001
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+    - name: metabase
+      databases:
+        - metabase
+      password:
+        type: AlphaNumeric
+
+  instances:
+    - name: instance1
+      replicas: 2
+      dataVolumeClaimSpec:
+        accessModes:
+        - "ReadWriteOnce"
+        # MIS has no default StorageClass, so this must be explicit. Late binding
+        # defers provisioning until the pod is scheduled, which matters here
+        # because node affinity pins these pods to a specific node pool.
+        storageClassName: "tanzu-storage-policy-latebinding"
+        resources:
+          requests:
+            # The AWS database is 174 GB on a 250Gi volume (73% used). Keeping 250Gi
+            # preserves that headroom.
+            # Sizing is constrained by the namespace storage quota.
+            storage: 250Gi
+      # AWS sets no resource requests. On MIS the node pool is small enough that
+      # scheduling has to be deliberate: the target nodes are 8 vCPU / 16 GiB with
+      # ~7.9 CPU / ~12.9 GiB allocatable, and there are only two of them.
+      resources:
+        requests:
+          cpu: "2"
+          memory: 6Gi
+        limits:
+          cpu: "7"
+          memory: 12Gi
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role-db
+                operator: In
+                values:
+                - "true"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: simple
+                  postgres-operator.crunchydata.com/instance-set: instance1
+      metadata:
+        labels:
+          prometheus.io/app: 'postgres'
+        annotations:
+          argocd.argoproj.io/sync-options: Delete=false
+
+  backups:
+    pgbackrest:
+      # No repo2. AWS backs up to S3 (production-simple-k8s-db-backup in
+      # ap-south-1); MIS has no S3-compatible object storage, so only the local
+      # repo1 PVC exists here. That makes backups single-site - an accepted
+      # risk for the first release.
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db-backup
+                  operator: In
+                  values:
+                  - "true"
+      global:
+        repo1-retention-full: "2"
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
+      repos:
+      - name: repo1
+        schedules:
+          full: "0 20 * * 0"
+          differential: "0 20 * * 1-6"
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            storageClassName: "tanzu-storage-policy-latebinding"
+            resources:
+              requests:
+                # 400Gi against AWS's 500Gi. Holds two full backups of a 174 GB
+                # database plus daily differentials.
+                storage: 400Gi
+      jobs:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role-db
+                  operator: In
+                  values:
+                  - "true"
+
+  patroni:
+    dynamicConfiguration:
+      synchronous_mode: true
+      postgresql:
+        parameters:
+          # Retuned for a 16 GiB node (~12.9 GiB allocatable). The AWS values
+          # (shared_buffers=8GB, effective_cache_size=24GB) assume a node at least
+          # twice this size and must not be carried over.
+          synchronous_commit: "off"
+          max_connections: "100"
+          shared_buffers: "3GB"
+          effective_cache_size: "8GB"
+          maintenance_work_mem: "512MB"
+          work_mem: "32MB"
+          checkpoint_completion_target: "0.9"
+          wal_buffers: "16MB"
+          default_statistics_target: "100"
+          # vSAN is SSD-backed, so the AWS values still apply.
+          random_page_cost: "1.1"
+          effective_io_concurrency: "200"
+          huge_pages: "off"
+          min_wal_size: "1GB"
+          max_wal_size: "4GB"
+          hot_standby_feedback: "on"
+          # Halved from AWS to match the smaller CPU allocation.
+          max_worker_processes: "4"
+          max_parallel_workers_per_gather: "2"
+          max_parallel_workers: "4"
+          max_parallel_maintenance_workers: "2"
+
+  monitoring:
+    pgmonitor:
+      exporter:
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.5.0-0

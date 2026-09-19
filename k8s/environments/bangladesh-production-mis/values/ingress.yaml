@@ -1,0 +1,42 @@
+# Ingress values for the MIS cluster.
+#
+# NOT WIRED UP. There is no ingress-nginx Application in ../argocd-apps/apps.yaml,
+# because the cluster already runs its own ingress-nginx v1.15.1 on the
+# `nginx` IngressClass. Two controllers claiming one class would conflict, so the default is to use theirs - our Ingress resources set
+# className "nginx" and are served by it unchanged.
+#
+# This file exists for the alternative, should we decide to run our own
+# controller. To use it, add an
+# ingress-nginx Application referencing values.yaml then this file, and settle
+# the IngressClass ownership with MIS first.
+#
+# The important difference from both existing options: MIS is a TKG cluster with
+# a working LoadBalancer implementation, so neither the hostNetwork model in
+# k8s/manifests/ingress/values.yaml nor the AWS NLB annotations in
+# values.aws-nlb.yaml are appropriate.
+
+ingress-nginx:
+  controller:
+    kind: 'Deployment'
+    # The shared values.yaml sets hostNetwork: true for the on-prem k3s
+    # environments. TKG provides LoadBalancer services, so this is unnecessary
+    # here and would also complicate PSA compliance.
+    hostNetwork: false
+    service:
+      type: 'LoadBalancer'
+    image:
+      # The chart pins a digest alongside the tag. Once images come from the
+      # DGHS registry the digest will not match the mirrored copy, because
+      # pull-then-push does not reliably preserve a multi-arch manifest digest.
+      # Unset it and rely on the tag.
+      digest: ""
+      digestChroot: ""
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: role-ingress
+              operator: In
+              values:
+              - "true"

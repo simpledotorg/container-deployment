@@ -1,0 +1,43 @@
+metabase:
+  image:
+    tag: v0.62.3
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    hosts:
+      # DGHS uses `analytics`, not `metabase`, for this service.
+      - host: analytics.ncdbd.dghs.gov.bd
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - analytics.ncdbd.dghs.gov.bd
+      secretName: analytics.ncdbd.dghs.gov.bd-tls
+  # simple-v1 runs at PSA `baseline` (see ../namespaces), so runAsNonRoot is not
+  # required. It is deliberately not set: the chart declares no runAsUser and
+  # whether metabase/metabase:v0.62.3 runs as root has not been verified, so
+  # setting it risks `image will run as root` for no gain. Add it once the image
+  # has been checked.
+  podSecurityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+  # The role-metabase node pool is 4 vCPU / 8 GiB per node.
+  resources:
+    requests:
+      cpu: "500m"
+      memory: 2Gi
+    limits:
+      cpu: "2"
+      memory: 4Gi

@@ -1,0 +1,99 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: api.ncdbd.dghs.gov.bd
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard.ncdbd.dghs.gov.bd
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api.ncdbd.dghs.gov.bd
+    secretName: api.ncdbd.dghs.gov.bd-tls
+  - hosts:
+    - dashboard.ncdbd.dghs.gov.bd
+    secretName: dashboard.ncdbd.dghs.gov.bd-tls
+
+# Security contexts. simple-v1 runs at PSA `baseline` (see ../namespaces), which
+# the simple-server image can satisfy; `restricted` it cannot, because the image
+# is built on phusion/passenger, ends with `USER root` and runs my_init, which
+# needs root to start runit and drop privileges itself. The cron container also
+# runs crond.
+#
+# `runAsNonRoot` is therefore deliberately NOT set. Under baseline it is not
+# required, and setting it would break the containers outright - kubelet refuses
+# with `container has runAsNonRoot and image will run as root`.
+#
+# Everything else `restricted` asks for IS satisfiable by the image as built, so
+# it is set anyway: the namespace audits and warns at `restricted`, and there is
+# no reason to trip those warnings gratuitously. The chart gained the
+# container-level hooks alongside this environment, defaulted empty so every
+# other environment renders byte-identically.
+#
+
+server:
+  podSecurityContext:
+    fsGroup: 9999
+    seccompProfile:
+      type: RuntimeDefault
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+  log:
+    storage: 10Gi
+
+worker:
+  enabled: true
+  podSecurityContext:
+    fsGroup: 9999
+    seccompProfile:
+      type: RuntimeDefault
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+  # 20Gi against AWS's 50Gi, to fit the namespace storage budget.
+  log:
+    storage: 20Gi
+
+cron:
+  enabled: true
+  podSecurityContext:
+    fsGroup: 9999
+    seccompProfile:
+      type: RuntimeDefault
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+  log:
+    storage: 10Gi
+
+migration:
+  enabled: true
+  podSecurityContext:
+    fsGroup: 9999
+    seccompProfile:
+      type: RuntimeDefault
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+
+metrics:
+  enabled: true
+
+# workerCphc stays disabled. It is an India/CPHC component, and it adds the
+# NET_ADMIN capability, which `restricted` forbids.

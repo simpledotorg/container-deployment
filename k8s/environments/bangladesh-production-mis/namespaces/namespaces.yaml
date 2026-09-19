@@ -1,0 +1,84 @@
+# Namespaces with their Pod Security Admission levels.
+#
+# The MIS cluster enforces `restricted` cluster-wide through an admission
+# default rather than through namespace labels, so every namespace inherits it
+# unless it carries its own label. Verified on the cluster: a namespace label
+# overrides that default in both directions, and our account has the RBAC to set
+# one.
+#
+# `enforce` is relaxed only as far as each namespace actually needs. `audit` and
+# `warn` stay at `restricted` throughout, so anything that would have failed the
+# stricter profile still shows up in audit logs and kubectl warnings - the
+# relaxation is visible, not silent.
+#
+# Owned by a single Application (`namespaces`) rather than by
+# managedNamespaceMetadata, because six Applications target simple-v1 and they
+# would otherwise contend for ownership of the same Namespace object.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: simple-v1
+  labels:
+    # baseline, for two reasons:
+    #   - simple-server is built on phusion/passenger and runs as root by design
+    #     (my_init, crond); `restricted` requires runAsNonRoot.
+    #   - PGO 5.5.0 sets no seccompProfile on the pods it manages and exposes no
+    #     field to set one.
+    # baseline still blocks privileged containers, host namespaces and hostPath.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+  labels:
+    # privileged, not baseline. node-exporter needs hostNetwork, hostPID and
+    # hostPath mounts to read node metrics, and baseline forbids all three -
+    # confirmed by testing both levels on this cluster.
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+  labels:
+    # cert-manager 1.9.1 sets runAsNonRoot but no seccompProfile on its
+    # containers, which `restricted` requires. Chart values may be able to supply
+    # it - if so, this can be tightened back to restricted.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sealed-secrets
+  labels:
+    # Same as cert-manager: no seccompProfile, no allowPrivilegeEscalation.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: postgres-operator
+  labels:
+    # The PGO operator pod itself sets allowPrivilegeEscalation and runAsNonRoot
+    # but no seccompProfile.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted

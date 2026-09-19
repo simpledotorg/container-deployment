@@ -17,11 +17,19 @@ spec:
       {{- end }}
     spec:
       restartPolicy: Never
+      {{- with .Values.migration.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       - name: {{ .Values.migration.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: ["bundle", "exec", "rake", "db:migrate:with_data"]
+        {{- with .Values.migration.containerSecurityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         envFrom:
           - secretRef:
               name: {{ .Values.existingSecret }}
