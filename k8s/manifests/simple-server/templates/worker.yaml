@@ -29,10 +29,6 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args: ["bin/docker-worker"]
-        {{- with .Values.worker.containerSecurityContext }}
-        securityContext:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
         resources:
           {{- toYaml .Values.worker.resources | nindent 12 }}
         envFrom:
@@ -54,10 +50,6 @@ spec:
       - name: {{ .Values.server.name }}-exporter
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         command: ["bundle", "exec", "prometheus_exporter", "--bind", "0.0.0.0"]
-        {{- with .Values.worker.containerSecurityContext }}
-        securityContext:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
         ports:
           - name: metrics
             containerPort: 9394
@@ -67,10 +59,6 @@ spec:
       - name: log-tailer
         image: "{{ .Values.logTailer.image.repository }}:{{ .Values.logTailer.image.tag }}"
         command: ["/bin/bash", "-c", "tail -F -n 0 /home/app/log/production.log"]
-        {{- with .Values.worker.containerSecurityContext }}
-        securityContext:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
         tty: true
         stdin: true
         volumeMounts:

@@ -20,19 +20,6 @@ metabase:
     - hosts:
       - analytics.ncdbd.dghs.gov.bd
       secretName: analytics.ncdbd.dghs.gov.bd-tls
-  # simple-v1 runs at PSA `baseline` (see ../namespaces), so runAsNonRoot is not
-  # required. It is deliberately not set: the chart declares no runAsUser and
-  # whether metabase/metabase:v0.62.3 runs as root has not been verified, so
-  # setting it risks `image will run as root` for no gain. Add it once the image
-  # has been checked.
-  podSecurityContext:
-    seccompProfile:
-      type: RuntimeDefault
-  securityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
   # The role-metabase node pool is 4 vCPU / 8 GiB per node.
   resources:
     requests:

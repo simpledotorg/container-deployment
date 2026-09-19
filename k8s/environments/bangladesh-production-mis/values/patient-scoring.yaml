@@ -7,22 +7,6 @@ database:
 # image:
 #   tag: "<pinned-tag>"
 
-# simple-v1 runs at PSA `baseline` (see ../namespaces), so runAsNonRoot is not
-# required and is not set - the user simpledotorg/simple_patient_scoring runs as
-# has not been verified.
-#
-# NOTE: the patient-scoring chart renders no securityContext at all, so these
-# have no effect until the chart gains the hook. Listed here so the intended
-# values are recorded alongside the rest of the environment.
-podSecurityContext:
-  seccompProfile:
-    type: RuntimeDefault
-containerSecurityContext:
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - ALL
-
 # Halved from AWS. The MIS worker node pool is 2 vCPU / 4 GiB per node, so the
 # AWS limits (2 CPU / 8Gi) cannot be scheduled.
 resources:

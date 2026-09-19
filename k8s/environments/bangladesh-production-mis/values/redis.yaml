@@ -21,36 +21,8 @@ redis:
         prometheus.io/path: /metrics
         prometheus.io/port: "9121"
         prometheus.io/scrape: "true"
-    containerSecurityContext:
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-          - ALL
-      runAsNonRoot: true
-      seccompProfile:
-        type: RuntimeDefault
   replica:
     replicaCount: 0
-    # The replica StatefulSet renders even at replicaCount 0, so no pod is ever
-    # admitted and PSA never evaluates it today. These are set so that scaling
-    # replicas up later does not fail on admission - the same `restricted`
-    # requirements apply to replica pods as to the master.
-    podSecurityContext:
-      enabled: true
-      fsGroup: 1001
-      runAsNonRoot: true
-      seccompProfile:
-        type: RuntimeDefault
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1001
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-          - ALL
-      seccompProfile:
-        type: RuntimeDefault
     persistence:
       storageClass: "tanzu-storage-policy-latebinding"
     resources:
@@ -64,23 +36,6 @@ redis:
     persistence:
       size: 8Gi # This value should be >= to redis instance memory size
       storageClass: "tanzu-storage-policy-latebinding"
-    # Required by the `restricted` PSA profile enforced on the MIS cluster.
-    podSecurityContext:
-      enabled: true
-      fsGroup: 1001
-      runAsNonRoot: true
-      seccompProfile:
-        type: RuntimeDefault
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1001
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-          - ALL
-      seccompProfile:
-        type: RuntimeDefault
     # The role-cache-redis / role-worker-redis node pool is 2 vCPU / 4 GiB.
     resources:
       requests:
