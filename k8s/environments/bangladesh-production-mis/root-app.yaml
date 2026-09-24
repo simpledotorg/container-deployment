@@ -9,8 +9,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/environments/bangladesh-production-mis/argocd-apps
-    # Swaps to the DGHS Gitea mirror once it exists.
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
   project: default
   syncPolicy:

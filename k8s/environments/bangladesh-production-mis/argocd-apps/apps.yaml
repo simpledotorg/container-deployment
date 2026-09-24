@@ -7,7 +7,8 @@
 #                           path, so the image can be repointed without dragging
 #                           India and Sri Lanka along.
 #
-# repoURL is GitHub for now and swaps to the Gitea mirror once it exists.
+# repoURL is the internal Gitea mirror, which pull-mirrors the GitHub repo.
+# The mirror is private, so Argo CD needs a repository credential for it.
 
 # Namespaces and their Pod Security Admission levels.
 # Sync wave -2 so the namespaces exist, correctly labelled, before anything is
@@ -25,7 +26,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/environments/bangladesh-production-mis/namespaces
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
   project: default
   syncPolicy:
@@ -49,7 +50,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/argo-cd
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
@@ -77,7 +78,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/cert-manager
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
@@ -104,7 +105,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/environments/bangladesh-production-mis/configmaps
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
   project: default
   syncPolicy:
@@ -129,7 +130,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/reloader
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
@@ -157,7 +158,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/sealed-secrets
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
   project: default
   syncPolicy:
@@ -181,7 +182,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/environments/bangladesh-production-mis/secrets
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
   project: default
   syncPolicy:
@@ -204,7 +205,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/environments/bangladesh-production-mis/pgo
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
   project: default
   syncPolicy:
@@ -230,7 +231,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/environments/bangladesh-production-mis/op-postgres
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
   project: default
   syncPolicy:
@@ -255,7 +256,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/redis
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
@@ -284,7 +285,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/redis
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
@@ -313,7 +314,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/simple-server
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
@@ -342,7 +343,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/metabase
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
@@ -378,7 +379,7 @@ spec:
           - k8s/manifests/kube-prometheus/vendor
       exclude: '*.json'
     path: k8s/manifests/kube-prometheus
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
   syncPolicy:
     syncOptions:
@@ -402,7 +403,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: k8s/manifests/patient-scoring
-    repoURL: 'https://github.com/simpledotorg/container-deployment.git'
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
     helm:
       valueFiles:
