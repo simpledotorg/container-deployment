@@ -1,0 +1,29 @@
+# Environment-scoped PGO overlay for the DGHS MIS cluster.
+#
+# The shared kustomization at k8s/manifests/pgo is used by every country. Editing
+# its `images:` transformer to point at the DGHS registry would silently move
+# India and Sri Lanka onto a registry they cannot reach. This overlay gives MIS a
+# seam to change the operator image, and its version, independently.
+#
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../manifests/pgo
+
+# Two changes are expected here, neither made yet:
+#
+# 1. A newer operator version. PGO 5.5.0 does not set seccompProfile on the pods
+#    it manages and offers no field to set one, so its pods are rejected by the
+#    `restricted` PSA profile enforced on this cluster. Pinning a newer PGO here
+#    lets MIS move without touching the other countries. Verify which release
+#    sets seccompProfile: RuntimeDefault before choosing a tag, and keep the
+#    app.kubernetes.io/version label in the shared base in step with the CRD.
+#
+# 2. The DGHS registry, once images are mirrored.
+#
+# images:
+#   - name: postgres-operator
+#     newName: git.dghs.gov.bd/<owner>/crunchydata-postgres-operator
+#     newTag: <version>

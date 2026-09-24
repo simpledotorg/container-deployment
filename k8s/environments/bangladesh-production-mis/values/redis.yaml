@@ -1,0 +1,46 @@
+redis:
+  # bitnami/redis was moved to bitnamilegacy upstream; this mirrors the override
+  # already in use for bangladesh-production on AWS.
+  image:
+    registry: "docker.io"
+    repository: "bitnamilegacy/redis"
+    tag: "7.0.5-debian-11-r7"
+  auth:
+    enabled: false
+  metrics:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/redis-exporter
+      tag: 1.43.0-debian-11-r14
+      pullPolicy: IfNotPresent
+    podLabels:
+      prometheus.io/app: "redis"
+    service:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "9121"
+        prometheus.io/scrape: "true"
+  replica:
+    replicaCount: 0
+    persistence:
+      storageClass: "tanzu-storage-policy-latebinding"
+    resources:
+      requests:
+        cpu: "100m"
+        memory: 512Mi
+      limits:
+        cpu: "1"
+        memory: 2Gi
+  master:
+    persistence:
+      size: 8Gi # This value should be >= to redis instance memory size
+      storageClass: "tanzu-storage-policy-latebinding"
+    # The role-cache-redis / role-worker-redis node pool is 2 vCPU / 4 GiB.
+    resources:
+      requests:
+        cpu: "100m"
+        memory: 512Mi
+      limits:
+        cpu: "1"
+        memory: 2Gi

@@ -1,0 +1,46 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: api.ncdbd.dghs.gov.bd
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: dashboard.ncdbd.dghs.gov.bd
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - api.ncdbd.dghs.gov.bd
+    secretName: api.ncdbd.dghs.gov.bd-tls
+  - hosts:
+    - dashboard.ncdbd.dghs.gov.bd
+    secretName: dashboard.ncdbd.dghs.gov.bd-tls
+
+server:
+  log:
+    storage: 10Gi
+
+worker:
+  enabled: true
+  # 20Gi against AWS's 50Gi, to fit the namespace storage budget.
+  log:
+    storage: 20Gi
+
+cron:
+  enabled: true
+  log:
+    storage: 10Gi
+
+migration:
+  enabled: true
+
+metrics:
+  enabled: true
+
+# workerCphc stays disabled. It is an India/CPHC component, and it adds the
+# NET_ADMIN capability, which `restricted` forbids.
