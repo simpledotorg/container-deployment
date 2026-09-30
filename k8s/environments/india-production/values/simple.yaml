@@ -46,7 +46,7 @@ cron:
             - "replica"
         topologyKey: "kubernetes.io/hostname"
 server:
-  replicaCount: 0
+  replicaCount: 6
   log:
     storage: 10Gi
 worker:
