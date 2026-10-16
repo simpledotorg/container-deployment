@@ -1,7 +1,8 @@
 # Application set for bangladesh-production on the DGHS MIS cluster.
 #
 # Differences from k8s/environments/bangladesh-production/argocd-apps/apps.yaml:
-#   - no ingress-nginx      MIS already runs its own controller on the `nginx` class.
+#   - ingress-nginx         uses ../values/ingress.yaml: LoadBalancer rather than
+#                           the hostNetwork model the k3s environments use.
 #   - no loki               deferred; needs S3-compatible storage MIS does not have.
 #   - pgo points at this environment's kustomize overlay, not the shared manifest
 #                           path, so the image can be repointed without dragging
@@ -107,6 +108,35 @@ spec:
     path: k8s/environments/bangladesh-production-mis/configmaps
     repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
+  project: default
+  syncPolicy:
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# Nginx ingress
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+spec:
+  destination:
+    name: ''
+    namespace: ingress-nginx
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/manifests/ingress
+    repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.affinity.yaml
+        - ../../environments/bangladesh-production-mis/values/ingress.yaml
   project: default
   syncPolicy:
     syncOptions:

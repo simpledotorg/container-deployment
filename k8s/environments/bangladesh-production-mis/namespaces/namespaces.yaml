@@ -82,3 +82,19 @@ metadata:
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: restricted
     pod-security.kubernetes.io/warn: restricted
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress-nginx
+  labels:
+    # The controller sets allowPrivilegeEscalation: true (it needs
+    # NET_BIND_SERVICE retained to bind 80/443) and no seccompProfile. The first
+    # is forbidden outright by `restricted`; baseline permits both. NET_BIND_SERVICE
+    # itself would have been fine under restricted - it is the one capability
+    # that profile allows to be added back.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
