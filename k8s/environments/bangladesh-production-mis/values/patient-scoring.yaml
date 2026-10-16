@@ -1,0 +1,18 @@
+database:
+  name: "simple_db_bangladesh_production_001"
+
+# The chart default is the floating tag `main`, which must not be used here: a
+# mirrored floating tag gives no way to tell what was actually copied into the
+# DGHS registry. Pin this to an immutable tag before the first mirror run.
+# image:
+#   tag: "<pinned-tag>"
+
+# Halved from AWS. The MIS worker node pool is 2 vCPU / 4 GiB per node, so the
+# AWS limits (2 CPU / 8Gi) cannot be scheduled.
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "200m"
+  limits:
+    memory: "3Gi"
+    cpu: "1500m"

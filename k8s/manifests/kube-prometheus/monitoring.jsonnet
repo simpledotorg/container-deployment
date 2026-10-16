@@ -22,6 +22,7 @@ local config = {
   'systems-production': (import 'config/systems-production.libsonnet'),
   'bangladesh-staging': (import 'config/bangladesh-staging.libsonnet'),
   'bangladesh-production': (import 'config/bangladesh-production.libsonnet'),
+  'bangladesh-production-mis': (import 'config/bangladesh-production-mis.libsonnet'),
   'sri-lanka-production': (import 'config/sri-lanka-production.libsonnet'),
   'india-production': (import 'config/india-production.libsonnet'),
   'bangladesh-demo': (import 'config/bangladesh-demo.libsonnet'),

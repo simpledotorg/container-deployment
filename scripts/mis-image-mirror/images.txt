@@ -1,0 +1,94 @@
+# Image inventory for the bangladesh-production -> DGHS MIS migration.
+#
+# Generated from the live AWS bangladesh-production cluster (context `bangladesh-prod`)
+# on 2026-09-06, covering every container and initContainer across pods and cronjobs.
+#
+# Consumed by ./mirror-images.sh, which flattens each reference to
+#   git.dghs.gov.bd/<owner>/<path-with-slashes-replaced-by-dashes>:<tag>
+# because the Gitea container registry only supports a single owner segment.
+#
+# Lines starting with `#` are comments. Blank lines are ignored.
+
+# ---------------------------------------------------------------------------
+# Simple application
+# ---------------------------------------------------------------------------
+# NOTE: the server tag is the currently deployed production build and changes on
+# every release. Re-mirror the new tag as part of each deploy after cutover.
+simpledotorg/server:19a7f2bbae85ed44f95c00db4e033836b3d33b96
+simpledotorg/simple_patient_scoring:main
+# log-tailer sidecar for simple-server / worker / cron
+ubuntu:22.04
+metabase/metabase:v0.62.3
+
+# ---------------------------------------------------------------------------
+# Postgres (Crunchy PGO)
+# ---------------------------------------------------------------------------
+registry.developers.crunchydata.com/crunchydata/postgres-operator:ubi8-5.5.0-0
+registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.5-1
+registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.40-1
+registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.5.0-0
+
+# ---------------------------------------------------------------------------
+# Redis (cache + worker)
+# ---------------------------------------------------------------------------
+docker.io/bitnamilegacy/redis:7.0.5-debian-11-r7
+docker.io/bitnamilegacy/redis-exporter:1.43.0-debian-11-r14
+
+# ---------------------------------------------------------------------------
+# GitOps and platform
+# ---------------------------------------------------------------------------
+quay.io/argoproj/argocd:v2.9.17
+ghcr.io/dexidp/dex:v2.35.3
+public.ecr.aws/docker/library/redis:7.0.5-alpine
+docker.io/bitnami/sealed-secrets-controller:v0.18.1
+stakater/reloader:v0.0.124
+
+# ---------------------------------------------------------------------------
+# cert-manager
+# ---------------------------------------------------------------------------
+quay.io/jetstack/cert-manager-controller:v1.9.1
+quay.io/jetstack/cert-manager-cainjector:v1.9.1
+quay.io/jetstack/cert-manager-webhook:v1.9.1
+
+# ---------------------------------------------------------------------------
+# Ingress
+# ---------------------------------------------------------------------------
+# MIS already runs ingress-nginx v1.15.1 in the `ingress-nginx` namespace. Mirror
+# ours anyway so the decision to adopt theirs or deploy ours stays open.
+registry.k8s.io/ingress-nginx/controller:v1.9.4
+
+# ---------------------------------------------------------------------------
+# Monitoring (kube-prometheus)
+# ---------------------------------------------------------------------------
+quay.io/prometheus/prometheus:v2.50.1
+quay.io/prometheus/alertmanager:v0.27.0
+quay.io/prometheus/node-exporter:v1.7.0
+quay.io/prometheus/blackbox-exporter:v0.24.0
+quay.io/prometheus-operator/prometheus-operator:v0.72.0
+quay.io/prometheus-operator/prometheus-config-reloader:v0.72.0
+quay.io/brancz/kube-rbac-proxy:v0.16.0
+registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.11.0
+registry.k8s.io/prometheus-adapter/prometheus-adapter:v0.11.2
+jimmidyson/configmap-reload:v0.5.0
+
+# ---------------------------------------------------------------------------
+# DEFERRED - Loki. Needs S3-compatible object storage that MIS does not yet
+# provide. The migration plan defers Loki past the first release; uncomment
+# only once MinIO (or equivalent) exists.
+# ---------------------------------------------------------------------------
+#docker.io/grafana/loki:3.1.1
+#docker.io/grafana/loki-canary:3.1.1
+#docker.io/grafana/promtail:3.0.0
+#docker.io/nginxinc/nginx-unprivileged:1.27-alpine
+#memcached:1.6.23-alpine
+#prom/memcached-exporter:v0.14.2
+#kiwigrid/k8s-sidecar:1.27.5
+
+# ---------------------------------------------------------------------------
+# NOT MIGRATED
+#   gcr.io/datadoghq/{agent,cluster-agent,operator} - Datadog is being
+#     decommissioned, see doc/DatadogdecommissioningNotes.md
+#   602401143452.dkr.ecr.ap-south-1.amazonaws.com/* (12 images) - EKS-managed
+#     CNI, CSI, CoreDNS and kube-proxy. TKG ships its own equivalents from the
+#     supervisor's localhost:5000 registry.
+# ---------------------------------------------------------------------------

@@ -1,0 +1,27 @@
+# Ingress values for the MIS cluster.
+#
+# We run our own controller here. MIS had one pre-installed on the `nginx`
+# IngressClass, which is why this file was initially unused, but the cluster
+# rebuild on 2026-10-11 removed it. Nothing else now claims that class.
+#
+# The important difference from both existing values files: this is a TKG
+# cluster with a working LoadBalancer implementation, so neither the hostNetwork
+# model in k8s/manifests/ingress/values.yaml nor the AWS NLB annotations in
+# values.aws-nlb.yaml are appropriate.
+
+ingress-nginx:
+  controller:
+    kind: 'Deployment'
+    # The shared values.yaml sets hostNetwork: true for the on-prem k3s
+    # environments. TKG provides LoadBalancer services, so this is unnecessary
+    # here and would also complicate PSA compliance.
+    hostNetwork: false
+    service:
+      type: 'LoadBalancer'
+    image:
+      # The chart pins a digest alongside the tag. Once images come from the
+      # DGHS registry the digest will not match the mirrored copy, because
+      # pull-then-push does not reliably preserve a multi-arch manifest digest.
+      # Unset it and rely on the tag.
+      digest: ""
+      digestChroot: ""
