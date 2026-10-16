@@ -16,5 +16,16 @@ argocd_password_setup_credentials.txt
 argocd_password_setup_users.txt
 .idea
 k8s/manifests/*/charts/*.tgz
+# Vendored chart dependencies. The MIS cluster has no reliable egress, so Argo CD's
+# repo-server cannot fetch these at render time; committing them makes rendering
+# deterministic for every environment. Versions stay pinned in Chart.yaml/Chart.lock,
+# so `helm dependency build` reproduces these files byte for byte.
+!k8s/manifests/argo-cd/charts/*.tgz
+!k8s/manifests/cert-manager/charts/*.tgz
+!k8s/manifests/ingress/charts/*.tgz
+!k8s/manifests/metabase/charts/*.tgz
+!k8s/manifests/redis/charts/*.tgz
+!k8s/manifests/reloader/charts/*.tgz
+!k8s/manifests/sealed-secrets/charts/*.tgz
 k8s/manifests/monitoring/vendor/
 
