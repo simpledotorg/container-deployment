@@ -12,6 +12,11 @@ kind: Kustomization
 resources:
   - ../../../manifests/pgo
 
+images:
+  - name: postgres-operator
+    newName: git.dghs.gov.bd/NHFB/crunchydata-postgres-operator
+    newTag: ubi8-5.5.0-0
+
 # Two changes are expected here, neither made yet:
 #
 # 1. A newer operator version. PGO 5.5.0 does not set seccompProfile on the pods
