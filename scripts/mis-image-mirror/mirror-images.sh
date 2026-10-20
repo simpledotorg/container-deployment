@@ -81,7 +81,30 @@ echo "==> ${#IMAGES[@]} images from $IMAGES_FILE (mode: $MODE)"
 
 [ "$MODE" = "save" ] && mkdir -p "$BUNDLE_DIR"
 
+# Fail before doing any work if the registry is not reachable. Without this the
+# script grinds through every image producing identical connection errors.
+if [ "$MODE" = "push" ] || [ "$MODE" = "load" ]; then
+  if ! curl -sS -o /dev/null -m 15 "https://$MIS_REGISTRY/v2/"; then
+    echo "ERROR: cannot reach https://$MIS_REGISTRY/v2/" >&2
+    echo "       The VPN tunnel is the usual cause - note the adapter can show" >&2
+    echo "       'Up' while carrying no traffic. Reconnect and retry." >&2
+    exit 1
+  fi
+fi
+
+# Run a docker command, discarding stdout but keeping stderr for the summary.
+# Progress output is noise; the error on failure is not, and losing it has cost
+# two debugging rounds already.
+run() {
+  local label="$1"; shift
+  local err
+  if err=$("$@" 2>&1 >/dev/null); then return 0; fi
+  LAST_ERR=$(printf '%s' "$err" | tail -2 | tr '\n' ' ')
+  return 1
+}
+
 failed=()
+consecutive=0
 for src in "${IMAGES[@]}"; do
   dest="$MIS_REGISTRY/$MIS_OWNER/$(flatten "$src")"
   tarball="$BUNDLE_DIR/$(flatten "$src" | tr ':/' '__').tar"
@@ -93,23 +116,38 @@ for src in "${IMAGES[@]}"; do
       ;;
     load)
       echo "==> load $tarball"
-      docker load -i "$tarball" >/dev/null || { failed+=("$src (load)"); continue; }
+      run load docker load -i "$tarball" || { failed+=("$src (load): $LAST_ERR"); continue; }
       ;;
     *)
       echo "==> pull $src"
-      docker pull --platform "$PLATFORM" "$src" >/dev/null || { failed+=("$src (pull)"); continue; }
+      run pull docker pull --platform "$PLATFORM" "$src" || { failed+=("$src (pull): $LAST_ERR"); continue; }
       ;;
   esac
 
   echo "    tag  $dest"
-  docker tag "$src" "$dest" || { failed+=("$src (tag)"); continue; }
+  run tag docker tag "$src" "$dest" || { failed+=("$src (tag): $LAST_ERR"); continue; }
 
   if [ "$MODE" = "save" ]; then
     echo "    save $tarball"
-    docker save -o "$tarball" "$dest" || failed+=("$src (save)")
+    run save docker save -o "$tarball" "$dest" || failed+=("$src (save): $LAST_ERR")
   else
     echo "    push $dest"
-    docker push "$dest" >/dev/null || failed+=("$src (push)")
+    if run push docker push "$dest"; then
+      consecutive=0
+    else
+      failed+=("$src (push): $LAST_ERR")
+      echo "    FAILED: $LAST_ERR" >&2
+      consecutive=$((consecutive + 1))
+      # Three in a row is a broken connection, not three bad images. Stop rather
+      # than reporting the same failure thirty times.
+      if [ "$consecutive" -ge 3 ]; then
+        echo >&2
+        echo "ERROR: $consecutive consecutive push failures - aborting." >&2
+        echo "       Everything already pulled stays cached, so re-running after" >&2
+        echo "       reconnecting resumes without downloading again." >&2
+        break
+      fi
+    fi
   fi
 done
 
