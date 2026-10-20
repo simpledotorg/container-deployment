@@ -46,6 +46,10 @@ while [ $# -gt 0 ]; do
   esac
 done
 
+# The Gitea organisation is "NHFB", but Docker rejects uppercase in a repository
+# name. Gitea's registry is case-insensitive on lookup, so lowercasing is safe.
+MIS_OWNER=$(printf '%s' "$MIS_OWNER" | tr '[:upper:]' '[:lower:]')
+
 if [ "$MODE" != "save" ] && [ "$MODE" != "dry-run" ] && [ -z "$MIS_OWNER" ]; then
   echo "MIS_OWNER must be set (the Gitea owner/organisation to push into)." >&2
   exit 2
@@ -64,7 +68,12 @@ flatten() {
     *.*|*:*) path="${repo#*/}" ;;
     *)       path="$repo" ;;
   esac
-  echo "${path//\//-}:${tag}"
+  path="${path//\//-}"
+  # Docker refuses any uppercase in a repository name ("must be lowercase"), and
+  # it fails at `docker tag` before anything is pushed. Tags are case-sensitive
+  # and are left alone.
+  path=$(printf '%s' "$path" | tr '[:upper:]' '[:lower:]')
+  echo "${path}:${tag}"
 }
 
 mapfile -t IMAGES < <(grep -vE '^\s*(#|$)' "$IMAGES_FILE")

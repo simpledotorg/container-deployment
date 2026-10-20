@@ -20,7 +20,7 @@ ingress-nginx:
       type: 'LoadBalancer'
     image:
       registry: git.dghs.gov.bd
-      image: NHFB/ingress-nginx-controller
+      image: nhfb/ingress-nginx-controller
       tag: "v1.9.4"
       # The chart pins a digest alongside the tag. The digest does not match the
       # mirrored copy, because pull-then-push does not reliably preserve a

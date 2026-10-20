@@ -5,7 +5,7 @@ redis:
   # segment belongs in `repository` here.
   image:
     registry: "git.dghs.gov.bd"
-    repository: "NHFB/bitnamilegacy-redis"
+    repository: "nhfb/bitnamilegacy-redis"
     tag: "7.0.5-debian-11-r7"
   auth:
     enabled: false
@@ -13,7 +13,7 @@ redis:
     enabled: true
     image:
       registry: git.dghs.gov.bd
-      repository: NHFB/bitnamilegacy-redis-exporter
+      repository: nhfb/bitnamilegacy-redis-exporter
       tag: 1.43.0-debian-11-r14
       pullPolicy: IfNotPresent
     podLabels:

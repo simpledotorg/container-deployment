@@ -1,6 +1,6 @@
 metabase:
   image:
-    repository: git.dghs.gov.bd/NHFB/metabase-metabase
+    repository: git.dghs.gov.bd/nhfb/metabase-metabase
     tag: v0.62.3
   ingress:
     enabled: true

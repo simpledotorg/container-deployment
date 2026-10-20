@@ -2,7 +2,7 @@ database:
   name: "simple_db_bangladesh_production_001"
 
 image:
-  repository: git.dghs.gov.bd/NHFB/simpledotorg-simple_patient_scoring
+  repository: git.dghs.gov.bd/nhfb/simpledotorg-simple_patient_scoring
   # STILL A FLOATING TAG. `main` moves, so there is no way to tell what was
   # actually copied into the DGHS registry, and re-mirroring silently changes
   # what runs. Pin to an immutable tag and re-mirror before this environment

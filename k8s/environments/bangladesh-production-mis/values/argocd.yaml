@@ -4,15 +4,15 @@ argo-cd:
   # cannot pull from quay.io, ghcr.io or public.ecr.aws reliably.
   global:
     image:
-      repository: git.dghs.gov.bd/NHFB/argoproj-argocd
+      repository: git.dghs.gov.bd/nhfb/argoproj-argocd
       tag: "v2.9.17"
   dex:
     image:
-      repository: git.dghs.gov.bd/NHFB/dexidp-dex
+      repository: git.dghs.gov.bd/nhfb/dexidp-dex
       tag: "v2.35.3"
   redis:
     image:
-      repository: git.dghs.gov.bd/NHFB/docker-library-redis
+      repository: git.dghs.gov.bd/nhfb/docker-library-redis
       tag: "7.0.5-alpine"
   notifications:
     argocdUrl: "https://argocd.ncdbd.dghs.gov.bd"

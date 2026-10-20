@@ -9,5 +9,5 @@ reloader:
     isArgoRollouts: true
     deployment:
       image:
-        name: git.dghs.gov.bd/NHFB/stakater-reloader
+        name: git.dghs.gov.bd/nhfb/stakater-reloader
         tag: v0.0.124

@@ -9,20 +9,20 @@ cert-manager:
   installCRDs: true
 
   image:
-    repository: git.dghs.gov.bd/NHFB/jetstack-cert-manager-controller
+    repository: git.dghs.gov.bd/nhfb/jetstack-cert-manager-controller
     tag: v1.9.1
 
   webhook:
     image:
-      repository: git.dghs.gov.bd/NHFB/jetstack-cert-manager-webhook
+      repository: git.dghs.gov.bd/nhfb/jetstack-cert-manager-webhook
       tag: v1.9.1
 
   cainjector:
     image:
-      repository: git.dghs.gov.bd/NHFB/jetstack-cert-manager-cainjector
+      repository: git.dghs.gov.bd/nhfb/jetstack-cert-manager-cainjector
       tag: v1.9.1
 
   startupapicheck:
     image:
-      repository: git.dghs.gov.bd/NHFB/jetstack-cert-manager-ctl
+      repository: git.dghs.gov.bd/nhfb/jetstack-cert-manager-ctl
       tag: v1.9.1

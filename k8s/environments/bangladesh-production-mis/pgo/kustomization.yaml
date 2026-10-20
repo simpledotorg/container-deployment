@@ -14,7 +14,7 @@ resources:
 
 images:
   - name: postgres-operator
-    newName: git.dghs.gov.bd/NHFB/crunchydata-postgres-operator
+    newName: git.dghs.gov.bd/nhfb/crunchydata-postgres-operator
     newTag: ubi8-5.5.0-0
 
 # Two changes are expected here, neither made yet:
