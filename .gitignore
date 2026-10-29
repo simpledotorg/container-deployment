@@ -16,5 +16,9 @@ argocd_password_setup_credentials.txt
 argocd_password_setup_users.txt
 .idea
 k8s/manifests/*/charts/*.tgz
+# The sealed-secrets chart repository (bitnami-labs.github.io/sealed-secrets) now
+# returns 404, so this dependency can no longer be fetched by any environment.
+# The chart is committed instead.
+!k8s/manifests/sealed-secrets/charts/*.tgz
 k8s/manifests/monitoring/vendor/
 
