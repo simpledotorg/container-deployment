@@ -19,9 +19,11 @@ ingress-nginx:
     service:
       type: 'LoadBalancer'
     image:
-      # The chart pins a digest alongside the tag. Once images come from the
-      # DGHS registry the digest will not match the mirrored copy, because
-      # pull-then-push does not reliably preserve a multi-arch manifest digest.
-      # Unset it and rely on the tag.
+      registry: git.dghs.gov.bd
+      image: nhfb/ingress-nginx-controller
+      tag: "v1.9.4"
+      # The chart pins a digest alongside the tag. The digest does not match the
+      # mirrored copy, because pull-then-push does not reliably preserve a
+      # multi-arch manifest digest. Unset both and rely on the tag.
       digest: ""
       digestChroot: ""

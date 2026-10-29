@@ -84,6 +84,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - ../../environments/bangladesh-production-mis/values/cert-manager.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -165,6 +166,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - ../../environments/bangladesh-production-mis/values/reloader.yaml
   project: default
   syncPolicy:
     syncOptions:
@@ -190,6 +192,9 @@ spec:
     path: k8s/manifests/sealed-secrets
     repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
     targetRevision: master
+    helm:
+      valueFiles:
+        - ../../environments/bangladesh-production-mis/values/sealed-secrets.yaml
   project: default
   syncPolicy:
     syncOptions:

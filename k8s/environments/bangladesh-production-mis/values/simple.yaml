@@ -21,6 +21,19 @@ ingress:
     - dashboard.ncdbd.dghs.gov.bd
     secretName: dashboard.ncdbd.dghs.gov.bd-tls
 
+# Images come from the DGHS registry. The cluster cannot reach public registries
+# reliably, so these must not fall back to the chart defaults. Mirrored by
+# scripts/mis-image-mirror; upstream paths are flattened with dashes because the
+# Gitea registry allows only one owner segment.
+image:
+  repository: git.dghs.gov.bd/nhfb/simpledotorg-server
+  tag: 19a7f2bbae85ed44f95c00db4e033836b3d33b96
+
+logTailer:
+  image:
+    repository: git.dghs.gov.bd/nhfb/ubuntu
+    tag: "22.04"
+
 server:
   log:
     storage: 10Gi
