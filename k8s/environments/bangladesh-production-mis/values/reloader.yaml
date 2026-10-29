@@ -1,0 +1,13 @@
+# reloader image from the DGHS registry.
+#
+# The path is doubled because our wrapper chart is also called `reloader`: the
+# outer key is the subchart name, the inner one is the chart's own `reloader`
+# block. The chart uses `image.name` rather than the more usual `repository`.
+
+reloader:
+  reloader:
+    isArgoRollouts: true
+    deployment:
+      image:
+        name: git.dghs.gov.bd/nhfb/stakater-reloader
+        tag: v0.0.124

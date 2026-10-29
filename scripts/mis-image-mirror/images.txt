@@ -49,6 +49,10 @@ stakater/reloader:v0.0.124
 quay.io/jetstack/cert-manager-controller:v1.9.1
 quay.io/jetstack/cert-manager-cainjector:v1.9.1
 quay.io/jetstack/cert-manager-webhook:v1.9.1
+# startupapicheck hook Job. It does not appear in a running-pod inventory because
+# the Job completes and is reaped, but the install blocks on it - so it has to be
+# mirrored too.
+quay.io/jetstack/cert-manager-ctl:v1.9.1
 
 # ---------------------------------------------------------------------------
 # Ingress

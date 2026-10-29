@@ -1,17 +1,19 @@
 redis:
-  # bitnami/redis was moved to bitnamilegacy upstream; this mirrors the override
-  # already in use for bangladesh-production on AWS.
+  # Mirrored from docker.io/bitnamilegacy/redis - bitnami/redis was moved to
+  # bitnamilegacy upstream, matching the override used for bangladesh-production
+  # on AWS. The bitnami chart splits registry from repository, so the owner
+  # segment belongs in `repository` here.
   image:
-    registry: "docker.io"
-    repository: "bitnamilegacy/redis"
+    registry: "git.dghs.gov.bd"
+    repository: "nhfb/bitnamilegacy-redis"
     tag: "7.0.5-debian-11-r7"
   auth:
     enabled: false
   metrics:
     enabled: true
     image:
-      registry: docker.io
-      repository: bitnamilegacy/redis-exporter
+      registry: git.dghs.gov.bd
+      repository: nhfb/bitnamilegacy-redis-exporter
       tag: 1.43.0-debian-11-r14
       pullPolicy: IfNotPresent
     podLabels:

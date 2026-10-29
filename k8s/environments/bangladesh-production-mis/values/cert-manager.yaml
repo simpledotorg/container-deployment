@@ -1,0 +1,28 @@
+# cert-manager images from the DGHS registry.
+#
+# Four images, not three: `startupapicheck` runs as a helm hook Job that the
+# install blocks on. It never shows up in a running-pod inventory because the
+# Job completes and is reaped, so it is easy to miss - and missing it leaves the
+# install hanging with no obvious cause on a cluster that cannot reach quay.io.
+
+cert-manager:
+  installCRDs: true
+
+  image:
+    repository: git.dghs.gov.bd/nhfb/jetstack-cert-manager-controller
+    tag: v1.9.1
+
+  webhook:
+    image:
+      repository: git.dghs.gov.bd/nhfb/jetstack-cert-manager-webhook
+      tag: v1.9.1
+
+  cainjector:
+    image:
+      repository: git.dghs.gov.bd/nhfb/jetstack-cert-manager-cainjector
+      tag: v1.9.1
+
+  startupapicheck:
+    image:
+      repository: git.dghs.gov.bd/nhfb/jetstack-cert-manager-ctl
+      tag: v1.9.1
