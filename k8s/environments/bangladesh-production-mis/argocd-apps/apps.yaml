@@ -238,6 +238,15 @@ metadata:
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
+  # The kustomize base creates this namespace itself, so it is not declared in
+  # ../namespaces - both declaring it produced a SharedResourceWarning. Its Pod
+  # Security level is set here instead, by the one Application that owns it.
+  # PGO 5.5.0 sets no seccompProfile, so it cannot satisfy `restricted`.
+  managedNamespaceMetadata:
+    labels:
+      pod-security.kubernetes.io/enforce: baseline
+      pod-security.kubernetes.io/audit: restricted
+      pod-security.kubernetes.io/warn: restricted
   source:
     path: k8s/environments/bangladesh-production-mis/pgo
     repoURL: 'https://git.dghs.gov.bd/NHFB/container-deployment.git'
@@ -403,6 +412,15 @@ spec:
   destination:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
+  # The jsonnet creates this namespace itself, so it is not declared in
+  # ../namespaces - both declaring it produced a SharedResourceWarning. It needs
+  # `privileged` rather than baseline: node-exporter uses hostNetwork, hostPID
+  # and hostPath, all of which baseline forbids.
+  managedNamespaceMetadata:
+    labels:
+      pod-security.kubernetes.io/enforce: privileged
+      pod-security.kubernetes.io/audit: restricted
+      pod-security.kubernetes.io/warn: restricted
   project: default
   source:
     directory:

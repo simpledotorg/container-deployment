@@ -1,4 +1,8 @@
 redis:
+  # The registry rejects anonymous pulls.
+  global:
+    imagePullSecrets:
+      - gitea-pull
   # Mirrored from docker.io/bitnamilegacy/redis - bitnami/redis was moved to
   # bitnamilegacy upstream, matching the override used for bangladesh-production
   # on AWS. The bitnami chart splits registry from repository, so the owner

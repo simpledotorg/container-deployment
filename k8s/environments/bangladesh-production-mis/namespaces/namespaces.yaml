@@ -35,20 +35,6 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: monitoring
-  labels:
-    # privileged, not baseline. node-exporter needs hostNetwork, hostPID and
-    # hostPath mounts to read node metrics, and baseline forbids all three -
-    # confirmed by testing both levels on this cluster.
-    pod-security.kubernetes.io/enforce: privileged
-    pod-security.kubernetes.io/audit: restricted
-    pod-security.kubernetes.io/warn: restricted
-
----
-
-apiVersion: v1
-kind: Namespace
-metadata:
   name: cert-manager
   labels:
     # cert-manager 1.9.1 sets runAsNonRoot but no seccompProfile on its
@@ -66,19 +52,6 @@ metadata:
   name: sealed-secrets
   labels:
     # Same as cert-manager: no seccompProfile, no allowPrivilegeEscalation.
-    pod-security.kubernetes.io/enforce: baseline
-    pod-security.kubernetes.io/audit: restricted
-    pod-security.kubernetes.io/warn: restricted
-
----
-
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: postgres-operator
-  labels:
-    # The PGO operator pod itself sets allowPrivilegeEscalation and runAsNonRoot
-    # but no seccompProfile.
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: restricted
     pod-security.kubernetes.io/warn: restricted

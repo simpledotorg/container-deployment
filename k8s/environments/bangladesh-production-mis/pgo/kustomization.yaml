@@ -17,18 +17,26 @@ images:
     newName: git.dghs.gov.bd/nhfb/crunchydata-postgres-operator
     newTag: ubi8-5.5.0-0
 
-# Two changes are expected here, neither made yet:
-#
-# 1. A newer operator version. PGO 5.5.0 does not set seccompProfile on the pods
-#    it manages and offers no field to set one, so its pods are rejected by the
-#    `restricted` PSA profile enforced on this cluster. Pinning a newer PGO here
-#    lets MIS move without touching the other countries. Verify which release
-#    sets seccompProfile: RuntimeDefault before choosing a tag, and keep the
-#    app.kubernetes.io/version label in the shared base in step with the CRD.
-#
-# 2. The DGHS registry, once images are mirrored.
-#
-# images:
-#   - name: postgres-operator
-#     newName: git.dghs.gov.bd/<owner>/crunchydata-postgres-operator
-#     newTag: <version>
+# The operator image comes from the DGHS registry, which rejects anonymous
+# pulls. The upstream base renders no imagePullSecrets field, so it is patched
+# in here. The Postgres pods the operator goes on to create get their own pull
+# secret from spec.imagePullSecrets on the PostgresCluster.
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: pgo
+    patch: |-
+      - op: add
+        path: /spec/template/spec/imagePullSecrets
+        value:
+          - name: gitea-pull
+
+# Still outstanding: a newer operator version. PGO 5.5.0 does not set
+# seccompProfile on the pods it manages and offers no field to set one, so its
+# pods cannot satisfy the `restricted` PSA profile - which is why simple-v1 runs
+# at baseline. Pinning a newer PGO here would let MIS move without touching the
+# other countries. Verify which release sets seccompProfile: RuntimeDefault
+# before choosing a tag, and keep the app.kubernetes.io/version label in the
+# shared base in step with the CRD.

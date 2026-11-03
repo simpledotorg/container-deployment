@@ -1,4 +1,7 @@
 metabase:
+  # The registry rejects anonymous pulls.
+  imagePullSecrets:
+    - name: gitea-pull
   image:
     repository: git.dghs.gov.bd/nhfb/metabase-metabase
     tag: v0.62.3

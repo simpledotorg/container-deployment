@@ -10,6 +10,9 @@
 # values.aws-nlb.yaml are appropriate.
 
 ingress-nginx:
+  # The registry rejects anonymous pulls.
+  imagePullSecrets:
+    - name: gitea-pull
   controller:
     kind: 'Deployment'
     # The shared values.yaml sets hostNetwork: true for the on-prem k3s
