@@ -88,6 +88,24 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: argocd
+  labels:
+    # Several Argo CD containers - notably init containers and the repo-server
+    # sidecars - do not set allowPrivilegeEscalation or drop all capabilities,
+    # so the chart as shipped cannot satisfy `restricted`.
+    #
+    # Note this namespace is created by `helm install` during bootstrap, before
+    # Argo CD manages anything. Label it at that point, or the first install is
+    # rejected. Declaring it here keeps it correct afterwards.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
   name: ingress-nginx
   labels:
     # The controller sets allowPrivilegeEscalation: true (it needs

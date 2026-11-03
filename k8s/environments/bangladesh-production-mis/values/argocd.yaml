@@ -6,6 +6,11 @@ argo-cd:
     image:
       repository: git.dghs.gov.bd/nhfb/argoproj-argocd
       tag: "v2.9.17"
+    # The registry rejects anonymous pulls, so every Argo CD pod needs this.
+    # The secret is created by hand during bootstrap, before this chart is
+    # installed - Argo CD cannot pull its own image otherwise.
+    imagePullSecrets:
+      - name: gitea-pull
   dex:
     image:
       repository: git.dghs.gov.bd/nhfb/dexidp-dex
