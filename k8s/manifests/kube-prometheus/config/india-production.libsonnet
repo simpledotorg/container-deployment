@@ -3,6 +3,7 @@
     enable: false,
   },
   prometheus: {
+    replicas: 0,
     externalUrl: 'https://prometheus.in.simple.org',
     retention: {
       enable: true,
@@ -17,6 +18,7 @@
     },
   },
   alertmanager: {
+    replicas: 0,
     externalUrl: 'http://alertmanager.in.simple.org',
     ingress: {
       name: 'alertmanager-main',

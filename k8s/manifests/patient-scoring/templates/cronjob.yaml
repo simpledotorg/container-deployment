@@ -6,6 +6,9 @@ metadata:
     app.kubernetes.io/name: patient-scoring
 spec:
   schedule: "{{ .Values.schedule }}"
+  {{- if .Values.suspend }}
+  suspend: {{ .Values.suspend }}
+  {{- end }}
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3

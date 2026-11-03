@@ -86,6 +86,7 @@ local kp =
       alertmanager+: {
         spec+: {
           externalUrl: config.alertmanager.externalUrl,
+          [if std.objectHas(config.alertmanager, 'replicas') then 'replicas']: config.alertmanager.replicas,
         },
       },
     },
@@ -118,6 +119,7 @@ local kp =
             },
           },
           [if std.objectHas(config.prometheus, 'affinity') && config.prometheus.affinity != null then 'affinity']: config.prometheus.affinity,
+          [if std.objectHas(config.prometheus, 'replicas') then 'replicas']: config.prometheus.replicas,
         },
       },
     },
