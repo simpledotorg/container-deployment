@@ -5,6 +5,14 @@
 # Job completes and is reaped, so it is easy to miss - and missing it leaves the
 # install hanging with no obvious cause on a cluster that cannot reach quay.io.
 
+# The registry rejects anonymous pulls, so every pod needs a pull secret. This
+# is top-level rather than nested under `cert-manager:` - Helm fills a
+# subchart's .Values.global from the parent's top-level `global` key, so putting
+# it inside the subchart's own block has no effect.
+global:
+  imagePullSecrets:
+    - name: gitea-pull
+
 cert-manager:
   installCRDs: true
 
