@@ -109,6 +109,10 @@ local kp =
               kind: 'PersistentVolumeClaim',
               spec: {
                 accessModes: ['ReadWriteOnce'],
+                // Optional: clusters with a default StorageClass do not need this
+                // and are unaffected. Required where there is no default, as the
+                // claim is otherwise left with no class and never binds.
+                [if std.objectHas(config.prometheus.retention, 'storageClassName') then 'storageClassName']: config.prometheus.retention.storageClassName,
                 resources: {
                   requests: {
                     storage: config.prometheus.retention.storage,
