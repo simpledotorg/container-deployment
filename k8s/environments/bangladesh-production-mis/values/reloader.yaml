@@ -8,9 +8,15 @@
 # is top-level rather than nested under `reloader:` - Helm fills a subchart's
 # .Values.global from the parent's top-level `global` key, so putting it inside
 # the subchart's own block has no effect.
+#
+# These have to be `- name: x` objects, not bare strings. The chart's
+# ServiceAccount template emits the list verbatim:
+#   imagePullSecrets: {{ toYaml .Values.global.imagePullSecrets | nindent 2 }}
+# and a ServiceAccount's imagePullSecrets is a list of LocalObjectReference, so
+# a bare string is rejected with "cannot restore struct from: string".
 global:
   imagePullSecrets:
-    - gitea-pull
+    - name: gitea-pull
 
 reloader:
   reloader:
