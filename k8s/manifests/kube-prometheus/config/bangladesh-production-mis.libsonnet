@@ -8,6 +8,10 @@
       enable: true,
       retention: '14d',
       storage: '30Gi',
+      // This cluster has no default StorageClass, so the claim must name one or
+      // it never binds. Late binding defers provisioning until the pod is
+      // scheduled, matching the rest of this environment.
+      storageClassName: 'tanzu-storage-policy-latebinding',
     },
     ingress: {
       name: 'prometheus-k8s',
