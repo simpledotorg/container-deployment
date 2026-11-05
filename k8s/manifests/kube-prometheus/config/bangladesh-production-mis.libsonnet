@@ -1,4 +1,11 @@
 {
+  // This cluster enforces `restricted` Pod Security by default, so the
+  // monitoring namespace must opt out explicitly or node-exporter is refused:
+  // it needs hostNetwork, hostPID and hostPath.
+  namespaceLabels: {
+    'pod-security.kubernetes.io/enforce': 'privileged',
+    'pod-security.kubernetes.io/enforce-version': 'latest',
+  },
   grafana: {
     enable: false,
   },

@@ -82,6 +82,24 @@ local kp =
         namespaces: [],
       },
     },
+    kubePrometheus+:: {
+      namespace+: {
+        metadata+: {
+          // Upstream labels this namespace with `warn` only, never `enforce`.
+          // Clusters that default to `privileged` are unaffected by the gap, so
+          // this is empty for them. Where the cluster-wide default is
+          // `restricted`, the namespace inherits it and node-exporter cannot
+          // start, as it needs hostNetwork, hostPID and hostPath. Such an
+          // environment sets the enforce level here.
+          //
+          // This has to live in the rendered manifest rather than in the
+          // Application's managedNamespaceMetadata: that only applies to
+          // namespaces Argo CD creates itself, and this one comes from the
+          // source, so the manifest wins.
+          labels+: if std.objectHas(config, 'namespaceLabels') then config.namespaceLabels else {},
+        },
+      },
+    },
     alertmanager+:: {
       alertmanager+: {
         spec+: {
