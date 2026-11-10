@@ -25,3 +25,26 @@ reloader:
       image:
         name: git.dghs.gov.bd/nhfb/stakater-reloader
         tag: v0.0.124
+      # This app lands in the `default` namespace, which carries no Pod
+      # Security labels, so it inherits this cluster's `restricted` default and
+      # the pod was refused outright:
+      #
+      #   violates PodSecurity "restricted:latest": allowPrivilegeEscalation
+      #   != false, unrestricted capabilities, seccompProfile
+      #
+      # Reloader is an ordinary workload with no need for host access, so it is
+      # made to satisfy `restricted` rather than the namespace loosened.
+      #
+      # runAsNonRoot and runAsUser repeat the chart's own defaults: this key is
+      # rendered with toYaml, so keeping them here states the whole pod-level
+      # context in one place rather than relying on the merge.
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        seccompProfile:
+          type: RuntimeDefault
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
