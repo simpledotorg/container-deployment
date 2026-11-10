@@ -413,14 +413,15 @@ spec:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   # The jsonnet creates this namespace itself, so it is not declared in
-  # ../namespaces - both declaring it produced a SharedResourceWarning. It needs
-  # `privileged` rather than baseline: node-exporter uses hostNetwork, hostPID
-  # and hostPath, all of which baseline forbids.
-  managedNamespaceMetadata:
-    labels:
-      pod-security.kubernetes.io/enforce: privileged
-      pod-security.kubernetes.io/audit: restricted
-      pod-security.kubernetes.io/warn: restricted
+  # ../namespaces - both declaring it produced a SharedResourceWarning.
+  #
+  # For the same reason there is no managedNamespaceMetadata here: that applies
+  # only to namespaces Argo CD creates itself, so on this app it was silently
+  # ignored and the namespace kept the labels the manifest gave it. The Pod
+  # Security level is set in the jsonnet config instead, at
+  # k8s/manifests/kube-prometheus/config/bangladesh-production-mis.libsonnet.
+  # It needs `privileged` rather than baseline: node-exporter uses hostNetwork,
+  # hostPID and hostPath, all of which baseline forbids.
   project: default
   source:
     directory:
