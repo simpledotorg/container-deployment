@@ -48,10 +48,22 @@ spec:
         storageClassName: "tanzu-storage-policy-latebinding"
         resources:
           requests:
-            # The AWS database is 174 GB on a 250Gi volume (73% used). Keeping 250Gi
-            # preserves that headroom.
-            # Sizing is constrained by the namespace storage quota.
-            storage: 250Gi
+            # Sized for the restore, measured 2026-11-10 rather than estimated.
+            #
+            # The AWS database is 190 GB, not the 174 GB assumed earlier, and it
+            # occupies 203 G of a 246 G volume there - 83% used, 43 G free. The
+            # same 250Gi here would leave the restored copy equally close to the
+            # edge, with index rebuild and WAL competing for what remains and the
+            # database growing daily.
+            #
+            # 400Gi puts the restored database near 52% and leaves ~190 G free.
+            # Quota is not the constraint: 976 Gi of the 2 Ti namespace quota is
+            # allocated, so +150Gi per instance (+300Gi over two) still leaves
+            # roughly 770 Gi unused.
+            #
+            # repo1 is deliberately left at 400Gi. Production holds one full set
+            # in 96 G, so the two kept here need about 192 G.
+            storage: 400Gi
       # AWS sets no resource requests. On MIS the node pool is small enough that
       # scheduling has to be deliberate: the target nodes are 8 vCPU / 16 GiB with
       # ~7.9 CPU / ~12.9 GiB allocatable, and there are only two of them.
