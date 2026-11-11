@@ -17,53 +17,47 @@ spec:
   # simple-v1 namespace therefore runs at the PSA level set in ../namespaces.
   # Upgrading the operator via the ../pgo overlay would remove that dependency.
 
-  # Bootstrap this cluster from the AWS production pgBackRest repository rather
-  # than shipping a 190 GB dump into the data centre. Verified 2026-11-10: both
-  # sides run PostgreSQL 14.5, S3 is reachable from the DC, and pgBackRest read
-  # the repo from inside this cluster (`status: ok`, full backup visible).
+  # NO dataSource HERE, DELIBERATELY. To restore from AWS at cutover, add the
+  # block below back with the freeze timestamp, then remove it again afterwards.
   #
-  # IMPORTANT - this block is inert on an existing cluster. PGO honours
-  # dataSource only when bootstrapping empty pgdata, so merging this changes
-  # nothing by itself. The restore starts only when the cluster is deleted and
-  # Argo CD recreates it. That deletion is the destructive step and is done
-  # deliberately, not by merging.
+  # It is kept out between restores because PGO acts on it as soon as it
+  # appears: the 2026-11-11 rehearsal restore began the moment Argo CD synced
+  # it, with no delete and no prompting. Left in place it is a standing hazard -
+  # if this cluster is ever recreated, or its pgdata wiped, PGO silently
+  # re-bootstraps from whatever backup the block names and rolls the database
+  # back to that date.
   #
-  # dataSource is used rather than an in-place restore because an in-place
-  # restore reads from a repo listed under backups.pgbackrest.repos, and adding
-  # production's bucket there would make this cluster schedule backups INTO the
-  # production repository. dataSource carries its own repo definition, so the
-  # repo is read and never adopted. The credential is read-only in any case.
-  dataSource:
-    pgbackrest:
-      stanza: db
-      configuration:
-        - secret:
-            name: pgo-s3-creds
-      global:
-        # Production's S3 repository is repo2, but a dataSource always refers to
-        # its own repository as repo1 - hence repo1-path pointing at the repo2
-        # path. Confirmed correct: `pgbackrest info` against exactly this path
-        # reported the backup set as `repo1:`.
-        repo1-path: /pgbackrest/postgres-operator/simple/repo2
-        repo1-s3-uri-style: host
-      repo:
-        name: repo1
-        s3:
-          bucket: production-simple-k8s-db-backup
-          endpoint: s3.ap-south-1.amazonaws.com
-          region: ap-south-1
-      options:
-        # Rehearsal settings. The backup set is pinned rather than left to
-        # default to "latest" so the run is reproducible, and --type=immediate
-        # stops recovery once consistency is reached instead of replaying every
-        # WAL segment archived since. Production keeps running throughout.
-        #
-        # For the real cutover these become:
-        #   --type=time
-        #   --target="<freeze timestamp UTC>"
-        # so the copy lands exactly at the point writes stopped.
-        - --set=20261108-220001F
-        - --type=immediate
+  #   dataSource:
+  #     pgbackrest:
+  #       stanza: db
+  #       configuration:
+  #         - secret:
+  #             name: pgo-s3-creds
+  #       global:
+  #         # Production's S3 repository is repo2, but a dataSource always refers
+  #         # to its own repository as repo1 - hence repo1-path pointing at the
+  #         # repo2 path. Confirmed: `pgbackrest info` against exactly this path
+  #         # reported the backup set as `repo1:`.
+  #         repo1-path: /pgbackrest/postgres-operator/simple/repo2
+  #         repo1-s3-uri-style: host
+  #       repo:
+  #         name: repo1
+  #         s3:
+  #           bucket: production-simple-k8s-db-backup
+  #           endpoint: s3.ap-south-1.amazonaws.com
+  #           region: ap-south-1
+  #       options:
+  #         - --type=time
+  #         - --target="<freeze timestamp UTC>"
+  #
+  # dataSource rather than an in-place restore: the latter reads from a repo
+  # listed under backups.pgbackrest.repos, and listing production's bucket there
+  # would make this cluster schedule backups INTO the production repository.
+  # dataSource carries its own repo definition and never adopts it.
+  #
+  # Two steps are required AFTER any restore completes - see the runbook. The
+  # pguser secrets must be deleted so PGO reapplies the passwords, and a full
+  # backup must land in repo1 before any replica is rebuilt.
 
   users:
     - name: admin
