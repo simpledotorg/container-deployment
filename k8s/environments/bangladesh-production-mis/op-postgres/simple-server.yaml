@@ -164,6 +164,30 @@ spec:
                   - "true"
       global:
         repo1-retention-full: "2"
+      # Lets a full backup be triggered on demand by annotating the cluster:
+      #
+      #   kubectl -n simple-v1 annotate postgrescluster simple \
+      #     postgres-operator.crunchydata.com/pgbackrest-backup="$(date +%F-%H%M)" \
+      #     --overwrite
+      #
+      # Needed after a restore. PGO builds replicas by restoring from repo1, and
+      # following an in-place restore repo1 still holds backups of the *previous*
+      # database - pgBackRest marks them `db (prior)`. A replica built from those
+      # comes up with the old system identifier and Patroni refuses to let it
+      # join, crash-looping on "system ID mismatch" indefinitely. A full backup
+      # of the restored cluster has to exist in repo1 first.
+      #
+      # Proven in the 2026-11-11 rehearsal: two replica rebuilds failed this way
+      # before the backup was taken, and the next one succeeded. The backup ran
+      # 1h45m for 190.5 GB (51.9 GB compressed).
+      #
+      # Without this block the only route is `pgbackrest backup` by hand in the
+      # repo host, which is not reproducible and dies with the kubectl exec
+      # stream - a VPN drop interrupted exactly that during the rehearsal.
+      manual:
+        repoName: repo1
+        options:
+          - --type=full
       image: git.dghs.gov.bd/nhfb/crunchydata-crunchy-pgbackrest:ubi8-2.40-1
       repos:
       - name: repo1
