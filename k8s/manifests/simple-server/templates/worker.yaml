@@ -89,5 +89,11 @@ spec:
       resources:
         requests:
           storage: {{ .Values.worker.log.storage }}
+{{- /* Optional. Clusters with a default StorageClass are unaffected and emit
+       nothing here. Required where there is no default, as the claim is
+       otherwise left with no class and never binds. */}}
+      {{- with .Values.worker.log.storageClassName }}
+      storageClassName: {{ . }}
+      {{- end }}
       volumeMode: Filesystem
 {{ end }}
