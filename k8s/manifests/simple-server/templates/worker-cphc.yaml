@@ -91,5 +91,11 @@ spec:
       resources:
         requests:
           storage: {{ .Values.workerCphc.log.storage }}
+{{- /* Optional. Clusters with a default StorageClass are unaffected and emit
+       nothing here. Required where there is no default, as the claim is
+       otherwise left with no class and never binds. */}}
+      {{- with .Values.workerCphc.log.storageClassName }}
+      storageClassName: {{ . }}
+      {{- end }}
       volumeMode: Filesystem
 {{ end }}

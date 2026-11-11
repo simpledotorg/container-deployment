@@ -34,20 +34,32 @@ logTailer:
     repository: git.dghs.gov.bd/nhfb/ubuntu
     tag: "22.04"
 
+# Every log volume below names a StorageClass. This cluster has no default, so
+# a claim that does not name one is left with no class and never binds - the
+# pods then sit unschedulable on "unbound immediate PersistentVolumeClaims".
+# Late binding defers provisioning until the pod is scheduled, matching the rest
+# of this environment.
+
 server:
   log:
     storage: 10Gi
+    storageClassName: tanzu-storage-policy-latebinding
 
 worker:
   enabled: true
   # 20Gi against AWS's 50Gi, to fit the namespace storage budget.
   log:
     storage: 20Gi
+    storageClassName: tanzu-storage-policy-latebinding
 
 cron:
   enabled: true
   log:
     storage: 10Gi
+    storageClassName: tanzu-storage-policy-latebinding
+  # Defaults to 1Gi in the chart; only the class needs setting here.
+  appLog:
+    storageClassName: tanzu-storage-policy-latebinding
 
 migration:
   enabled: true
