@@ -19,6 +19,24 @@ ingress-nginx:
     # environments. TKG provides LoadBalancer services, so this is unnecessary
     # here and would also complicate PSA compliance.
     hostNetwork: false
+    config:
+      # DGHS fronts this environment with a proxy on a public address that
+      # terminates TLS and forwards to the cluster over plain HTTP. Without
+      # this, the controller judges those requests insecure and redirects them
+      # to HTTPS, the proxy forwards the retry as HTTP again, and the browser
+      # loops until it gives up - every public URL was unusable while the
+      # application behind it was serving 200s perfectly well.
+      #
+      # Confirmed by patching a live cluster on 2026-11-13: the proxy does send
+      # X-Forwarded-Proto, so honouring it is enough and nothing is needed on
+      # the DGHS side. Both public hostnames went from a 50-redirect loop to
+      # 200 with no redirects.
+      #
+      # TODO: this trusts X-Forwarded-* from any source, so a client reaching
+      # the controller directly could spoof its scheme and apparent address.
+      # Everything arrives through the proxy today, but this should be narrowed
+      # with proxy-real-ip-cidr once DGHS confirm the proxy's source range.
+      use-forwarded-headers: "true"
     service:
       type: 'LoadBalancer'
       # DGHS publishes this environment on 172.16.48.8, and the address has to
