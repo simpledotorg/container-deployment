@@ -21,6 +21,19 @@ ingress-nginx:
     hostNetwork: false
     service:
       type: 'LoadBalancer'
+      # DGHS publishes this environment on 172.16.48.8, and the address has to
+      # be requested in two places: AKO reads its own annotation, and
+      # loadBalancerIP is the portable spelling.
+      #
+      # AKO binds the address when it first creates the VirtualService and does
+      # not re-assign an existing one. Setting these on a Service that already
+      # has an address changes nothing - the live Service carried both fields
+      # for days while AKO kept serving 172.16.48.6. Changing the address
+      # therefore means deleting the Service so it is created afresh, which
+      # drops all ingress traffic for as long as that takes.
+      loadBalancerIP: 172.16.48.8
+      annotations:
+        ako.vmware.com/load-balancer-ip: "172.16.48.8"
     image:
       registry: git.dghs.gov.bd
       image: nhfb/ingress-nginx-controller
