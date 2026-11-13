@@ -32,11 +32,28 @@ ingress-nginx:
       # the DGHS side. Both public hostnames went from a 50-redirect loop to
       # 200 with no redirects.
       #
-      # TODO: this trusts X-Forwarded-* from any source, so a client reaching
-      # the controller directly could spoof its scheme and apparent address.
-      # Everything arrives through the proxy today, but this should be narrowed
-      # with proxy-real-ip-cidr once DGHS confirm the proxy's source range.
       use-forwarded-headers: "true"
+      # Which sources may be believed when they set X-Forwarded-*. This is the
+      # NODE network, not the DGHS proxy's address, which is the opposite of
+      # what it looks like it should be: the Service runs with the default
+      # externalTrafficPolicy of Cluster, so kube-proxy rewrites the source of
+      # every external connection to a node address before nginx sees it. The
+      # proxy's own address never reaches the controller, and setting it here
+      # would simply never match - nginx would ignore the headers and the
+      # redirect loop would come back looking like the fix had failed.
+      #
+      # Validated against the live cluster on 2026-11-13 with exactly this
+      # value: all six public hostnames returned without a redirect (200, and
+      # 401 for the two behind basic auth).
+      #
+      # Note what this does and does not buy. The SNAT has already discarded
+      # the real client address by this point, so X-Forwarded-For from the
+      # proxy is the only remaining record of it; this narrows who may assert
+      # these headers to the cluster's own node network rather than anyone who
+      # can reach the controller, which is a real improvement but is not source
+      # verification. That would need externalTrafficPolicy: Local, which is a
+      # separate change with its own trade-offs.
+      proxy-real-ip-cidr: "10.244.0.0/16"
     service:
       type: 'LoadBalancer'
       # DGHS publishes this environment on 172.16.48.8, and the address has to
