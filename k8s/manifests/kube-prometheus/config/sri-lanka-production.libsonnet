@@ -1,13 +1,6 @@
 {
   grafana: {
-    enable: true,
-    externalUrl: 'https://grafana-simple.health.gov.lk/',
-    ingress: {
-      name: 'grafana',
-      host: 'grafana-simple.health.gov.lk',
-      port: 'http',
-      path: '/',
-    },
+    enable: false,
   },
   prometheus: {
     externalUrl: 'https://simples13.health.gov.lk/prometheus',
