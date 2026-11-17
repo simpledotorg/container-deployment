@@ -1,10 +1,10 @@
 {
   grafana: {
     enable: true,
-    externalUrl: 'https://grafana.health.gov.lk/',
+    externalUrl: 'https://grafana-simple.health.gov.lk/',
     ingress: {
       name: 'grafana',
-      host: 'grafana.health.gov.lk',
+      host: 'grafana-simple.health.gov.lk',
       port: 'http',
       path: '/',
     },
