@@ -75,4 +75,5 @@
     },
   ],
   postgresNamespaces: ['simple-v1'],
+  sslEnabled: true,
 }
