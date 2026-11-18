@@ -25,9 +25,21 @@ ingress:
 # reliably, so these must not fall back to the chart defaults. Mirrored by
 # scripts/mis-image-mirror; upstream paths are flattened with dashes because the
 # Gitea registry allows only one owner segment.
+#
+# This tag must track whatever bangladesh-production is running. This
+# environment holds a physical restore of that database, so the data is written
+# by production's code; a server build that lags it fails on rows whose classes
+# it does not have. The previous tag (19a7f2bb) raised
+#
+#   ActionView::Template::Error: The single-table inheritance mechanism failed
+#   to locate the subclass: 'DrRai::CustomIndicator'
+#
+# on every facility report, because dr_rai_indicators holds a row of that type
+# and the build had no such class. The pods were healthy throughout - the
+# mismatch is only visible from inside the application.
 image:
   repository: git.dghs.gov.bd/nhfb/simpledotorg-server
-  tag: 19a7f2bbae85ed44f95c00db4e033836b3d33b96
+  tag: 16eb2a73f799266d38eea12ffa7c09b4a98cc02e
 
 logTailer:
   image:
