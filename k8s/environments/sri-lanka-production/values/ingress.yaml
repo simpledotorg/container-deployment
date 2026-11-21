@@ -1,5 +1,11 @@
 ingress-nginx:
   controller:
+    # One replica per role-ingress=true node (moh-hrms-simple-05 / -09 / -13).
+    # hostNetwork + hostPort means only the node running a replica listens on
+    # 80/443, and the WAF in front routes each hostname to a fixed node IP.
+    # With a single replica, every hostname pointed at the other two nodes is
+    # unreachable. 3 pins one replica to each, so all three node IPs serve.
+    replicaCount: 3
     enableAnnotationValidations: true
     allowSnippetAnnotations: true
     config:
