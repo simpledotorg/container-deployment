@@ -12,6 +12,23 @@ ingress-nginx:
     metrics:
       enabled: true
     config:
+      # CVE-2026-123007 / CVE-2026-123633 (NGINX HTTP/2, disclosed 2026-11-18).
+      # Both require HTTP/2; 123633 also requires an upstream, which an ingress
+      # controller always has. This chart pins controller v1.9.4, whose nginx is
+      # 1.21.6 - inside the affected range for both (1.9.5+ and 1.19.7+).
+      #
+      # Unlike stock nginx, ingress-nginx turns HTTP/2 on for TLS listeners by
+      # default, so it has to be switched off explicitly here.
+      #
+      # This is the remediation, not a stopgap. kubernetes/ingress-nginx is
+      # retired - maintenance ended March 2026, the repo is archived, the last
+      # release was v1.15.1 - so no patched controller is coming upstream.
+      # Before removing this line, we need a patched build or a different
+      # ingress controller.
+      #
+      # Clients fall back to HTTP/1.1. Safe here: every backend-protocol
+      # annotation under k8s/environments is HTTPS, none is GRPC/GRPCS.
+      use-http2: "false"
       nginx-status-ipv4-whitelist: "10.0.0.0/8,172.16.0.0/12,172.33.0.0/16"
       proxy-body-size: "4g"
       keep-alive: 10
