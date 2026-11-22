@@ -883,10 +883,10 @@ local grafanaDashboards = { grafanaDashboards: {
         {
           "current": {
             "selected": false,
-            "text": "prometheus",
-            "value": "P1809F7CD0C75ACF3"
+            "text": "sandbox",
+            "value": "PB7AD567477C83756"
           },
-          "hide": 0,
+          "hide": 2,
           "includeAll": false,
           "multi": false,
           "name": "datasource",
