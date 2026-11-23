@@ -12,6 +12,8 @@ ingress-nginx:
     metrics:
       enabled: true
     config:
+      # CVE-2026-123007 / CVE-2026-123633 (disabling HTTP/2).
+      use-http2: "false"
       nginx-status-ipv4-whitelist: "10.0.0.0/8,172.16.0.0/12,172.33.0.0/16"
       proxy-body-size: "4g"
       keep-alive: 10
