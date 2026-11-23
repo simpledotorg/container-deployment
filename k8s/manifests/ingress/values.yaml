@@ -1,7 +1,7 @@
 # https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#values
 ingress-nginx:
   controller:
-    kind: 'Deployment'
+    kind: 'DaemonSet'
     hostNetwork: true
     ingressClassResource:
       default: true

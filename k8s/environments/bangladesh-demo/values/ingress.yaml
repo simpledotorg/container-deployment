@@ -1,0 +1,5 @@
+# AWS EKS environments use Deployment with LoadBalancer service.
+# The base values.yaml uses DaemonSet for on-prem k3s, so override here.
+ingress-nginx:
+  controller:
+    kind: 'Deployment'
