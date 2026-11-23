@@ -96,6 +96,7 @@ spec:
       valueFiles:
         - values.aws-nlb.yaml
         - values.affinity.yaml
+        - ../../environments/bangladesh-demo/values/ingress.yaml
   project: default
   syncPolicy:
     syncOptions:
