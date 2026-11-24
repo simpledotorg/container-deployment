@@ -1,2 +1,3 @@
 database:
   name: "simple_db_india_production_001"
+suspend: true
