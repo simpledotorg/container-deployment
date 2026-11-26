@@ -1,0 +1,6 @@
+apiVersion: v2
+name: fhir-ingestor
+description: FHIR to Simple database reconciliation and merge tool
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
